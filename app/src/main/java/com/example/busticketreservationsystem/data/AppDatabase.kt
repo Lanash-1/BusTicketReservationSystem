@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.busticketreservationsystem.dao.*
 import com.example.busticketreservationsystem.entity.*
 
 
@@ -20,6 +21,18 @@ import com.example.busticketreservationsystem.entity.*
             User::class
                      ], version = 1, exportSchema = false)
 abstract class AppDatabase: RoomDatabase() {
+
+    abstract fun bookingsDao(): BookingsDao
+    abstract fun busAmenitiesDao(): BusAmenitiesDao
+    abstract fun busDao(): BusDao
+    abstract fun busTimeInfoDao(): BusTimeInfoDao
+    abstract fun partnersDao(): PartnersDao
+    abstract fun passengerInformationDao(): PassengerInformationDao
+    abstract fun recentlyViewedDao(): RecentlyViewedDao
+    abstract fun reviewsDao(): ReviewsDao
+    abstract fun seatInformationDao(): SeatInformationDao
+    abstract fun userDao(): UserDao
+
 
     companion object{
         @Volatile

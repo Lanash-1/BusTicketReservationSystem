@@ -13,7 +13,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="#D13140"
+        android:background="#3FFA41"
         android:layout_marginTop="16dp"
         />
 
@@ -35,9 +35,11 @@
         >
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/mobile_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="phone" />
+            android:inputType="phone"
+            android:maxLength="10"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
