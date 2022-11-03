@@ -1,10 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RegistrationDetailsFragment">
 
+    <TextView
+        android:id="@+id/completeProfile_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Complete your Profile"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="16dp"
+        android:textStyle="bold"
+        android:textSize="32sp"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/username_input_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Username"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/completeProfile_text"
+        app:shapeAppearance="@style/Cut"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/username_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/email_input_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Email ID"
+        app:endIconMode="custom"
+        app:endIconDrawable="@drawable/ic_baseline_email_24"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toStartOf="@id/username_input_layout"
+        app:layout_constraintEnd_toEndOf="@id/username_input_layout"
+        app:layout_constraintTop_toBottomOf="@id/username_input_layout"
+        app:shapeAppearance="@style/Cut"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/email_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 
-</FrameLayout>
+    <RadioGroup
+        android:id="@+id/gender_radio_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@id/email_input_layout"
+        app:layout_constraintTop_toBottomOf="@id/email_input_layout"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gender: "
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <RadioButton
+            android:id="@+id/male_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="Male" />
+
+        <RadioButton
+            android:id="@+id/female_radio_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="Female" />
+
+    </RadioGroup>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/age_input_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Age"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintStart_toStartOf="@id/email_input_layout"
+        app:layout_constraintEnd_toEndOf="@id/email_input_layout"
+        app:layout_constraintTop_toBottomOf="@id/gender_radio_group"
+        android:layout_marginTop="16dp"
+        app:shapeAppearance="@style/Cut"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/age_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLength="3"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <Button
+        android:id="@+id/update_profile_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/age_input_layout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="16dp"
+        android:text="Update Profile"
+        />
+
+    <TextView
+        android:id="@+id/doItLater_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="skip and update later"
+        app:layout_constraintTop_toBottomOf="@id/update_profile_button"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="8dp"
+        android:textColor="#0000DD" />
+
+
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
