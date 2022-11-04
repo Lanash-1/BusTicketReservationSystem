@@ -5,8 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.commit
+import com.example.busticketreservationsystem.interfaces.BottomNavigationBackPressed
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MyAccountFragment : Fragment() {
+class MyAccountFragment : Fragment()
+//    , BottomNavigationBackPressed
+{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +27,19 @@ class MyAccountFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+//        val parentBottom = parentFragment?.view?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+//
+//        parentBottom?.menu?.findItem(R.id.myAccount)?.isChecked = true
+
+
+
 
     }
+
+//    override fun onBackPressed(): Boolean {
+//        parentFragmentManager.commit {
+//            replace(R.id.homePageFragmentContainer, DashBoardFragment())
+//        }
+//        return true
+//    }
 }

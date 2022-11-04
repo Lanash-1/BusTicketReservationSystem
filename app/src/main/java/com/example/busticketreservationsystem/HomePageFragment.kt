@@ -32,7 +32,10 @@ class HomePageFragment : Fragment() {
         val bookingHistoryFragment = BookingHistoryFragment()
         val myAccountFragment = MyAccountFragment()
 
-        setCurrentFragment(dashBoardFragment)
+        if(savedInstanceState == null){
+            setCurrentFragment(dashBoardFragment)
+        }
+
 
         bottomNavigationView.setOnNavigationItemSelectedListener {
             when(it.itemId){

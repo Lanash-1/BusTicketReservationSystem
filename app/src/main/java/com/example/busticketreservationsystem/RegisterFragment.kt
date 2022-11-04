@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import com.example.busticketreservationsystem.enums.LoginStatus
+import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
 import com.example.busticketreservationsystem.viewmodel.UserDbViewModel
 import com.example.busticketreservationsystem.viewmodel.UserViewModel
 import com.google.android.material.textfield.TextInputEditText
@@ -32,9 +33,12 @@ class RegisterFragment : Fragment() {
     private lateinit var mobileLayout: TextInputLayout
     private lateinit var newPasswordLayout: TextInputLayout
     private lateinit var confirmPasswordLayout: TextInputLayout
+
     private lateinit var editor: SharedPreferences.Editor
+
     private val userDbViewModel: UserDbViewModel by activityViewModels()
     private val userViewModel: UserViewModel by activityViewModels()
+    private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,6 +67,7 @@ class RegisterFragment : Fragment() {
         when(item.itemId){
             R.id.skip -> {
                 editor.putString("status", LoginStatus.SKIPPED.name)
+                loginStatusViewModel.status = LoginStatus.SKIPPED
                 editor.commit()
                 parentFragmentManager.commit {
                     replace(R.id.main_fragment_container, HomePageFragment())
@@ -140,6 +145,7 @@ class RegisterFragment : Fragment() {
                         }
                         editor.putString("status", LoginStatus.LOGGED_IN.name)
                         editor.commit()
+                        loginStatusViewModel.status = LoginStatus.LOGGED_IN
                         parentFragmentManager.commit {
                             replace(R.id.main_fragment_container, RegistrationDetailsFragment())
                         }

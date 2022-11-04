@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class BookingHistoryFragment : Fragment() {
 
@@ -17,6 +18,10 @@ class BookingHistoryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        val parentBottom = parentFragment?.view?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+
+        parentBottom?.menu?.findItem(R.id.myAccount)?.isChecked = true
+
         return inflater.inflate(R.layout.fragment_booking_history, container, false)
     }
 

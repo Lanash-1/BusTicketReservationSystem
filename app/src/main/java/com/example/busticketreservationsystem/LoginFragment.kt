@@ -3,6 +3,7 @@ package com.example.busticketreservationsystem
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.text.Html
 import android.view.*
 import android.widget.Button
 import androidx.fragment.app.Fragment
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import com.example.busticketreservationsystem.enums.LoginStatus
+import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
 import com.example.busticketreservationsystem.viewmodel.UserDbViewModel
 import com.example.busticketreservationsystem.viewmodel.UserViewModel
 import com.google.android.material.textfield.TextInputEditText
@@ -32,6 +34,7 @@ class LoginFragment : Fragment() {
 
     private val userDbViewModel: UserDbViewModel by activityViewModels()
     private val userViewModel: UserViewModel by activityViewModels()
+    private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
 
     private lateinit var editor: SharedPreferences.Editor
 
@@ -49,6 +52,7 @@ class LoginFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.apply{
             setDisplayHomeAsUpEnabled(false)
         }
+
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
@@ -62,6 +66,7 @@ class LoginFragment : Fragment() {
         when(item.itemId){
             R.id.skip -> {
                 editor.putString("status", LoginStatus.SKIPPED.name)
+                loginStatusViewModel.status = LoginStatus.SKIPPED
                 editor.commit()
                 parentFragmentManager.commit {
                     replace(R.id.main_fragment_container, HomePageFragment())
@@ -125,6 +130,7 @@ class LoginFragment : Fragment() {
                     withContext(Dispatchers.Main){
                         if(isPasswordMatches){
                             editor.putString("status", LoginStatus.LOGGED_IN.name)
+                            loginStatusViewModel.status = LoginStatus.LOGGED_IN
                             editor.commit()
                             GlobalScope.launch {
                                 userViewModel.user = userDbViewModel.getUserAccount(mobileInput.text.toString())
