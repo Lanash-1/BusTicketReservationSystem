@@ -115,36 +115,21 @@
                android:layout_marginTop="16dp"
                />
 
-           <com.google.android.material.floatingactionbutton.FloatingActionButton
-               android:id="@+id/switchLocation"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
+           <com.google.android.material.imageview.ShapeableImageView
+               android:id="@+id/switchCircle"
+               android:layout_width="48dp"
+               android:layout_height="48dp"
+               app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+               android:background="@color/customBlue"
+               android:src="@drawable/ic_baseline_swap_vert_24"
                app:layout_constraintRight_toRightOf="parent"
-               android:layout_margin="16dp"
-               android:rotation="90"
                app:layout_constraintTop_toTopOf="parent"
-               android:src="@drawable/ic_baseline_compare_arrows_24"
                app:layout_constraintBottom_toBottomOf="@id/second_divider"
-               />
+               android:layout_margin="16dp" />
 
 
        </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
-<!--        <ImageView-->
-<!--            android:id="@+id/sourceIcon"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:src="@drawable/ic_baseline_directions_bus_24"-->
-<!--            android:layout_margin="16dp" />-->
-<!--        -->
-<!--        <TextView-->
-<!--            android:id="@+id/sourceText"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Enter Source"-->
-<!--            />-->
 
     </androidx.cardview.widget.CardView>
 
