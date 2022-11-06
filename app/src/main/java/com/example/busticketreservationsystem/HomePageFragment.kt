@@ -1,15 +1,21 @@
 package com.example.busticketreservationsystem
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
+import com.example.busticketreservationsystem.enums.LoginStatus
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class HomePageFragment : Fragment() {
+
+    private lateinit var writeSharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,11 +32,18 @@ class HomePageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        (activity as AppCompatActivity)?.apply {
+            writeSharedPreferences= getSharedPreferences("LoginStatus",
+                Context.MODE_PRIVATE
+            )
+        }
+
         val bottomNavigationView = view.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
 
         val dashBoardFragment = DashBoardFragment()
         val bookingHistoryFragment = BookingHistoryFragment()
         val myAccountFragment = MyAccountFragment()
+        val myAccountGuestFragment = MyAccountGuestFragment()
 
         if(savedInstanceState == null){
             setCurrentFragment(dashBoardFragment)
@@ -46,7 +59,11 @@ class HomePageFragment : Fragment() {
                     setCurrentFragment(bookingHistoryFragment)
                 }
                 R.id.myAccount -> {
-                    setCurrentFragment(myAccountFragment)
+                    if(writeSharedPreferences.getString("status", "") == LoginStatus.LOGGED_IN.name){
+                        setCurrentFragment(myAccountFragment)
+                    }else{
+                        setCurrentFragment(myAccountGuestFragment)
+                    }
                 }
             }
             true

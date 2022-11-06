@@ -8,27 +8,44 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.busticketreservationsystem.adapter.MyAccountAdapter
 import com.example.busticketreservationsystem.enums.LoginStatus
-import com.example.busticketreservationsystem.interfaces.BottomNavigationBackPressed
+import com.example.busticketreservationsystem.enums.MyAccountOptions
+import com.example.busticketreservationsystem.interfaces.OnItemClickListener
 import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
+import com.example.busticketreservationsystem.viewmodel.UserViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.chip.Chip
+import org.w3c.dom.Text
 
-class MyAccountFragment : Fragment()
-{
+class MyAccountFragment : Fragment() {
 
-    private lateinit var accountItemLayout: ConstraintLayout
+    private lateinit var editProfileChip: Chip
+    private lateinit var accountLayout: ConstraintLayout
+
 
     private lateinit var editor: SharedPreferences.Editor
 
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
 
+    private val myAccountAdapter = MyAccountAdapter()
+
+    private lateinit var myAccountRecyclerView: RecyclerView
+
+    private val userViewModel: UserViewModel by activityViewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -36,11 +53,28 @@ class MyAccountFragment : Fragment()
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        (activity as AppCompatActivity).supportActionBar!!.apply {
+            setDisplayHomeAsUpEnabled(false)
+            title = "My Account"
+        }
         return inflater.inflate(R.layout.fragment_my_account, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        editProfileChip = view.findViewById(R.id.edit_profile_chip)
+        accountLayout = view.findViewById(R.id.account_profile_layout)
+
+        var text = view.findViewById<TextView>(R.id.username)
+        text.text = userViewModel.user.username
+
+        editProfileChip.setOnClickListener{
+            parentFragmentManager.commit {
+                replace(R.id.homePageFragmentContainer, EditProfileFragment())
+                addToBackStack(null)
+            }
+        }
 
         (activity as AppCompatActivity)?.apply {
             val writeSharedPreferences: SharedPreferences = getSharedPreferences("LoginStatus",
@@ -49,36 +83,67 @@ class MyAccountFragment : Fragment()
             editor = writeSharedPreferences.edit()
         }
 
-        accountItemLayout = view.findViewById(R.id.account_items_layout)
+        myAccountRecyclerView = view.findViewById(R.id.account_options_recyclerView)
+        myAccountRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        accountItemLayout.setOnClickListener {
-            val builder = AlertDialog.Builder(requireContext())
-            builder.setMessage("Booking will be seamless if logged in!")
-            builder.setTitle("Confirm Logout?")
-            builder.setCancelable(false)
-
-            builder.setNegativeButton("No"){
-                    dialog, _ -> dialog.cancel()
-            }
-
-            builder.setPositiveButton("Yes"){
-                dialog, _ ->
-                run {
-                    editor.putString("status", LoginStatus.LOGGED_OUT.name)
-                    loginStatusViewModel.status = LoginStatus.LOGGED_OUT
-                    editor.commit()
-                    parentFragmentManager.commit {
-                        replace(R.id.main_fragment_container, LoginFragment())
+        myAccountAdapter.setOnItemClickListener(object: OnItemClickListener{
+            override fun onItemClick(position: Int) {
+                when(MyAccountOptions.values()[position]){
+                    MyAccountOptions.MY_BOOKINGS -> {
+                        parentFragmentManager.commit {
+                            replace(R.id.homePageFragmentContainer, BookingHistoryFragment())
+                        }
+                    }
+                    MyAccountOptions.SETTINGS -> {
+                        parentFragmentManager.commit {
+                            replace(R.id.homePageFragmentContainer, SettingsFragment())
+                            addToBackStack(null)
+                        }
+                    }
+                    MyAccountOptions.ABOUT_US -> {
+                        Toast.makeText(requireContext(), "About Us Fragment", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                    MyAccountOptions.FEEDBACK -> {
+                        Toast.makeText(requireContext(), "Feedback Fragment", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                    MyAccountOptions.LOGOUT -> {
+                        logoutAction()
                     }
                 }
             }
 
-            val alertDialog = builder.create()
-            alertDialog.show()
+        })
+        myAccountRecyclerView.adapter = myAccountAdapter
+
+
+
+    }
+
+    private fun logoutAction() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setMessage("Booking will be seamless if logged in!")
+        builder.setTitle("Confirm Logout?")
+        builder.setCancelable(false)
+
+        builder.setNegativeButton("No"){
+                dialog, _ -> dialog.cancel()
         }
 
-
-
+        builder.setPositiveButton("Yes"){
+                _, _ ->
+            run {
+                editor.putString("status", LoginStatus.LOGGED_OUT.name)
+                loginStatusViewModel.status = LoginStatus.LOGGED_OUT
+                editor.commit()
+                parentFragmentManager.commit {
+                    replace(R.id.main_fragment_container, LoginFragment())
+                }
+            }
+        }
+        val alertDialog = builder.create()
+        alertDialog.show()
     }
 
 

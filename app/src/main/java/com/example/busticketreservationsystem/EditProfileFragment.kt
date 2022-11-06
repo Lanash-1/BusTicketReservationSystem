@@ -1,14 +1,14 @@
 package com.example.busticketreservationsystem
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class BookingHistoryFragment : Fragment() {
+
+class EditProfileFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,16 +20,29 @@ class BookingHistoryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(false)
-        return inflater.inflate(R.layout.fragment_booking_history, container, false)
+        (activity as AppCompatActivity).supportActionBar!!.apply {
+            setDisplayHomeAsUpEnabled(true)
+            title = "Edit Profile"
+        }
+        return inflater.inflate(R.layout.fragment_edit_profile, container, false)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            android.R.id.home -> {
+                parentFragmentManager.commit {
+                    replace(R.id.homePageFragmentContainer, MyAccountFragment())
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val parentBottom = parentFragment?.view?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
 
-        parentBottom?.menu?.findItem(R.id.myAccount)?.isChecked = true
+
     }
 
 }
