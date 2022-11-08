@@ -145,6 +145,13 @@ class RegisterFragment : Fragment() {
                         }
                         editor.putString("status", LoginStatus.LOGGED_IN.name)
                         editor.commit()
+                        GlobalScope.launch {
+                            var job = launch {
+                                userViewModel.user = userDbViewModel.getUserAccount(mobileInput.text.toString())
+                            }
+                            job.join()
+                            editor.putInt("userId", userViewModel.user.userId)
+                        }
                         loginStatusViewModel.status = LoginStatus.LOGGED_IN
                         parentFragmentManager.commit {
                             replace(R.id.main_fragment_container, RegistrationDetailsFragment())

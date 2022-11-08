@@ -90,36 +90,13 @@
             android:text="+91 9876543210"
             android:layout_marginLeft="8dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/password_text"
-            app:layout_constraintStart_toStartOf="@id/mobile_text"
-            app:layout_constraintTop_toBottomOf="@id/mobile_text"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_marginTop="16dp"
-            android:text="Password: "
-            android:textColor="@color/black" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/password"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:text="password is very strong to crack"
-            android:inputType="textPassword"
-            android:layout_marginLeft="8dp"
-            app:layout_constraintStart_toEndOf="@id/password_text"
-            app:layout_constraintTop_toTopOf="@id/password_text" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/dob_text"
             app:layout_constraintStart_toStartOf="@id/mobile_text"
-            app:layout_constraintTop_toBottomOf="@id/password_text"
+            app:layout_constraintTop_toBottomOf="@id/mobile_text"
             android:textStyle="bold"
             android:textSize="16sp"
             android:layout_marginTop="16dp"
@@ -155,7 +132,7 @@
             android:id="@+id/gender"
             android:textColor="@color/black"
             android:textSize="16sp"
-            android:text="male"
+            android:text="Male"
             android:layout_marginLeft="8dp"
             app:layout_constraintStart_toEndOf="@id/gender_text"
             app:layout_constraintTop_toTopOf="@id/gender_text"

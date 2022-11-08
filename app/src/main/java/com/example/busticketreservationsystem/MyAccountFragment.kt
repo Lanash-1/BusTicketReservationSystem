@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -17,16 +16,17 @@ import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.busticketreservationsystem.adapter.MyAccountAdapter
+import com.example.busticketreservationsystem.databinding.FragmentMyAccountBinding
 import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.enums.MyAccountOptions
 import com.example.busticketreservationsystem.interfaces.OnItemClickListener
 import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
 import com.example.busticketreservationsystem.viewmodel.UserViewModel
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.chip.Chip
-import org.w3c.dom.Text
 
 class MyAccountFragment : Fragment() {
+
+    private lateinit var binding: FragmentMyAccountBinding
 
     private lateinit var editProfileChip: Chip
     private lateinit var accountLayout: ConstraintLayout
@@ -57,7 +57,9 @@ class MyAccountFragment : Fragment() {
             setDisplayHomeAsUpEnabled(false)
             title = "My Account"
         }
-        return inflater.inflate(R.layout.fragment_my_account, container, false)
+        binding = FragmentMyAccountBinding.inflate(inflater, container, false)
+        return binding.root
+//        return inflater.inflate(R.layout.fragment_my_account, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -66,8 +68,11 @@ class MyAccountFragment : Fragment() {
         editProfileChip = view.findViewById(R.id.edit_profile_chip)
         accountLayout = view.findViewById(R.id.account_profile_layout)
 
-        var text = view.findViewById<TextView>(R.id.username)
-        text.text = userViewModel.user.username
+        binding.username.text = userViewModel.user.username
+        binding.email.text = userViewModel.user.emailId
+        binding.mobile.text = userViewModel.user.mobileNumber
+        binding.gender.text = userViewModel.user.gender
+        binding.dob.text = userViewModel.user.age.toString()
 
         editProfileChip.setOnClickListener{
             parentFragmentManager.commit {
@@ -116,7 +121,6 @@ class MyAccountFragment : Fragment() {
 
         })
         myAccountRecyclerView.adapter = myAccountAdapter
-
 
 
     }

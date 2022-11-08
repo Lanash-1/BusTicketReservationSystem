@@ -20,7 +20,10 @@ class BookingHistoryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(false)
+        (activity as AppCompatActivity).supportActionBar!!.apply {
+            setDisplayHomeAsUpEnabled(false)
+            title = "My Bookings"
+        }
         return inflater.inflate(R.layout.fragment_booking_history, container, false)
     }
 

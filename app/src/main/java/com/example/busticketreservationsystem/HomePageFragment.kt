@@ -8,14 +8,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import com.example.busticketreservationsystem.enums.LoginStatus
+import com.example.busticketreservationsystem.viewmodel.UserDbViewModel
+import com.example.busticketreservationsystem.viewmodel.UserViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class HomePageFragment : Fragment() {
 
     private lateinit var writeSharedPreferences: SharedPreferences
+
+    private val userViewModel: UserViewModel by activityViewModels()
+    private val userDbViewModel: UserDbViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +42,12 @@ class HomePageFragment : Fragment() {
             writeSharedPreferences= getSharedPreferences("LoginStatus",
                 Context.MODE_PRIVATE
             )
+        }
+
+        when(writeSharedPreferences.getString("Status", "")){
+            LoginStatus.LOGGED_IN.name -> {
+                userViewModel.user = userDbViewModel.getUserAccount(writeSharedPreferences.getInt("userID", 0))
+            }
         }
 
         val bottomNavigationView = view.findViewById<BottomNavigationView>(R.id.bottomNavigationView)

@@ -133,7 +133,11 @@ class LoginFragment : Fragment() {
                             loginStatusViewModel.status = LoginStatus.LOGGED_IN
                             editor.commit()
                             GlobalScope.launch {
-                                userViewModel.user = userDbViewModel.getUserAccount(mobileInput.text.toString())
+                                val job = launch {
+                                    userViewModel.user = userDbViewModel.getUserAccount(mobileInput.text.toString())
+                                }
+                                job.join()
+                                editor.putInt("userId", userViewModel.user.userId)
                             }
                             parentFragmentManager.commit {
                                 replace(R.id.main_fragment_container, HomePageFragment())
