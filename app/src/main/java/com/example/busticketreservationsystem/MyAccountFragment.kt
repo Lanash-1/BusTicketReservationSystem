@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.busticketreservationsystem.adapter.MyAccountAdapter
 import com.example.busticketreservationsystem.databinding.FragmentMyAccountBinding
+import com.example.busticketreservationsystem.entity.User
 import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.enums.MyAccountOptions
 import com.example.busticketreservationsystem.interfaces.OnItemClickListener
@@ -51,7 +52,7 @@ class MyAccountFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         (activity as AppCompatActivity).supportActionBar!!.apply {
             setDisplayHomeAsUpEnabled(false)
@@ -68,11 +69,13 @@ class MyAccountFragment : Fragment() {
         editProfileChip = view.findViewById(R.id.edit_profile_chip)
         accountLayout = view.findViewById(R.id.account_profile_layout)
 
+
         binding.username.text = userViewModel.user.username
         binding.email.text = userViewModel.user.emailId
         binding.mobile.text = userViewModel.user.mobileNumber
         binding.gender.text = userViewModel.user.gender
-        binding.dob.text = userViewModel.user.age.toString()
+        binding.dob.text = userViewModel.user.dob
+
 
         editProfileChip.setOnClickListener{
             parentFragmentManager.commit {
@@ -81,7 +84,7 @@ class MyAccountFragment : Fragment() {
             }
         }
 
-        (activity as AppCompatActivity)?.apply {
+        (activity as AppCompatActivity).apply {
             val writeSharedPreferences: SharedPreferences = getSharedPreferences("LoginStatus",
                 Context.MODE_PRIVATE
             )
@@ -122,7 +125,6 @@ class MyAccountFragment : Fragment() {
         })
         myAccountRecyclerView.adapter = myAccountAdapter
 
-
     }
 
     private fun logoutAction() {
@@ -138,6 +140,7 @@ class MyAccountFragment : Fragment() {
         builder.setPositiveButton("Yes"){
                 _, _ ->
             run {
+                userViewModel.user = User(0,"","","","","","")
                 editor.putString("status", LoginStatus.LOGGED_OUT.name)
                 loginStatusViewModel.status = LoginStatus.LOGGED_OUT
                 editor.commit()

@@ -7,7 +7,17 @@ class SearchViewModel: ViewModel() {
     var sourceLocation = "Chennai"
     var destinationLocation = "Bangalore"
 
-    var dateOfTravel = "Nov 12"
-
     var currentSearch = ""
+
+    val location = listOf(
+        "Chennai",
+        "Bangalore",
+        "Madurai",
+        "Tenkasi",
+        "Kerala",
+        "Tiruppur",
+        "Hyderabad",
+        "Trichy"
+    )
+
 }

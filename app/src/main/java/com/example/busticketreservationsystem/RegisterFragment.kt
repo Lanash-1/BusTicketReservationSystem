@@ -137,26 +137,30 @@ class RegisterFragment : Fragment() {
 //                        }
                         userViewModel.user.mobileNumber = mobileInput.text.toString()
                         userViewModel.user.password = newPasswordInput.text.toString()
+                        userViewModel.mobileNumber = mobileInput.text.toString()
+                        userViewModel.password = newPasswordInput.text.toString()
 
                         GlobalScope.launch {
                             userDbViewModel.insertUserData(userViewModel.user)
-                            val updatedUser = userDbViewModel.getUserAccount(userViewModel.user.mobileNumber)
+                            val updatedUser = userDbViewModel.getUserAccount(userViewModel.mobileNumber)
                             userViewModel.user = updatedUser
+                            editor.putInt("userId", userViewModel.user.userId)
+                            editor.commit()
                         }
                         editor.putString("status", LoginStatus.LOGGED_IN.name)
                         editor.commit()
-                        GlobalScope.launch {
-                            var job = launch {
-                                userViewModel.user = userDbViewModel.getUserAccount(mobileInput.text.toString())
-                            }
-                            job.join()
-                            editor.putInt("userId", userViewModel.user.userId)
-                        }
+//                        GlobalScope.launch {
+//                            var job = launch {
+//                                userViewModel.user = userDbViewModel.getUserAccount(userViewModel.mobileNumber)
+//                            }
+//                            job.join()
+//                            editor.putInt("userId", userViewModel.user.userId)
+//                            editor.commit()
+//                        }
                         loginStatusViewModel.status = LoginStatus.LOGGED_IN
                         parentFragmentManager.commit {
                             replace(R.id.main_fragment_container, RegistrationDetailsFragment())
                         }
-
                     }else{
                         mobileLayout.helperText = "Mobile Number already exists"
                     }

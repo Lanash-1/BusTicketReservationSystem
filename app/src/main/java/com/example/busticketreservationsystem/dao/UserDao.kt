@@ -1,9 +1,6 @@
 package com.example.busticketreservationsystem.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.busticketreservationsystem.entity.User
 
 @Dao
@@ -12,8 +9,8 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(user: User)
 
-    @Query("UPDATE user_table SET username=:userName, emailId=:emailId, mobileNumber=:mobileNumber, password=:password, age=:age, gender=:gender WHERE userId LIKE :userId")
-    fun updateUserData(userId: Int, userName: String, emailId: String, mobileNumber: String, password: String, age: Int, gender: String)
+    @Query("UPDATE user_table SET username=:userName, emailId=:emailId, mobileNumber=:mobileNumber, password=:password, dob=:age, gender=:gender WHERE userId LIKE :userId")
+    fun updateUserData(userId: Int, userName: String, emailId: String, mobileNumber: String, password: String, age: String, gender: String)
 
     @Query("SELECT count(*) FROM user_table WHERE mobileNumber=:mobileNumber")
     fun getAccountCount(mobileNumber: String): Int
@@ -32,5 +29,8 @@ interface UserDao {
 
     @Query("UPDATE user_table SET password=:password WHERE mobileNumber LIKE :mobileNumber")
     fun updateUserPassword(password: String, mobileNumber: String)
+
+    @Delete
+    fun deleteUserAccount(user: User)
 
 }

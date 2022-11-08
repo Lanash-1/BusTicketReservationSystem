@@ -10,6 +10,6 @@ data class User(
     var emailId: String,
     var mobileNumber: String,
     var password: String,
-    var age: Int,
+    var dob: String,
     var gender: String
 )

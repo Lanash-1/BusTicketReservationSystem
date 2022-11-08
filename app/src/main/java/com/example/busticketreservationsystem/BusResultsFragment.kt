@@ -2,6 +2,7 @@ package com.example.busticketreservationsystem
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
@@ -45,12 +46,13 @@ class BusResultsFragment : Fragment() {
             android.R.id.home -> {
                 parentFragmentManager.commit {
                     replace(R.id.homePageFragmentContainer, DashBoardFragment())
+                    Toast.makeText(requireContext(), "up button - ${parentFragmentManager.backStackEntryCount}", Toast.LENGTH_SHORT).show()
                     parentFragmentManager.popBackStack()
                 }
             }R.id.filter -> {
                 parentFragmentManager.commit {
                     replace(R.id.homePageFragmentContainer, SortAndFilterFragment())
-                    addToBackStack("sort")
+                    addToBackStack(null)
                 }
             }
         }
@@ -59,5 +61,7 @@ class BusResultsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Toast.makeText(requireContext(), "on create - ${parentFragmentManager.backStackEntryCount}", Toast.LENGTH_SHORT).show()
+
     }
 }

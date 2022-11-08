@@ -54,8 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter Email ID"
-        app:endIconMode="custom"
-        app:endIconDrawable="@drawable/ic_baseline_email_24"
+        app:startIconDrawable="@drawable/ic_baseline_email_24"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
@@ -104,42 +103,75 @@
             android:id="@+id/female_radio_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:text="Female" />
 
     </RadioGroup>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/age_input_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter Age"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintStart_toStartOf="@id/email_input_layout"
-        app:layout_constraintEnd_toEndOf="@id/email_input_layout"
-        app:layout_constraintTop_toBottomOf="@id/gender_radio_group"
-        android:layout_marginTop="16dp"
-        app:shapeAppearance="@style/Cut"
-        >
+<!--    <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:id="@+id/age_input_layout"-->
+<!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:hint="Date of Birth"-->
+<!--        app:endIconMode="custom"-->
+<!--        app:endIconDrawable="@drawable/ic_baseline_calendar_month_24"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginEnd="16dp"-->
+<!--        app:layout_constraintStart_toStartOf="@id/email_input_layout"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/email_input_layout"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/gender_radio_group"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        app:shapeAppearance="@style/Cut"-->
+<!--        >-->
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/age_input"
-            android:layout_width="match_parent"
+<!--        <com.google.android.material.textfield.TextInputEditText-->
+<!--            android:id="@+id/age_input"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:inputType="date"-->
+<!--            />-->
+
+<!--    </com.google.android.material.textfield.TextInputLayout>-->
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:maxLength="3"
+            android:id="@+id/dob_text"
+            android:text="Date of Birth: "
+            app:layout_constraintStart_toStartOf="@id/gender_radio_group"
+            app:layout_constraintTop_toBottomOf="@id/gender_radio_group"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/black"
             />
 
-    </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dob"
+            android:text="DD - MM - YYYY"
+            app:layout_constraintLeft_toRightOf="@id/dob_text"
+            app:layout_constraintTop_toTopOf="@id/dob_text"
+            android:textSize="16sp"
+            android:layout_marginLeft="16dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/calender_icon"
+            android:src="@drawable/ic_baseline_calendar_month_24"
+            app:layout_constraintLeft_toRightOf="@id/dob"
+            app:layout_constraintTop_toTopOf="@id/dob_text"
+            />
 
 
     <Button
         android:id="@+id/update_profile_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/age_input_layout"
+        app:layout_constraintTop_toBottomOf="@id/dob_text"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="16dp"
@@ -156,9 +188,6 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="8dp"
         android:textColor="#0000DD" />
-
-
-
 
 
 

@@ -1,6 +1,6 @@
 package com.example.busticketreservationsystem
 
-import android.content.Context
+import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -14,6 +14,8 @@ import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.viewmodel.UserDbViewModel
 import com.example.busticketreservationsystem.viewmodel.UserViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class HomePageFragment : Fragment() {
@@ -39,14 +41,15 @@ class HomePageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         (activity as AppCompatActivity)?.apply {
-            writeSharedPreferences= getSharedPreferences("LoginStatus",
-                Context.MODE_PRIVATE
-            )
+            writeSharedPreferences= getSharedPreferences("LoginStatus", MODE_PRIVATE)
         }
 
-        when(writeSharedPreferences.getString("Status", "")){
+        when(writeSharedPreferences.getString("status", "")){
             LoginStatus.LOGGED_IN.name -> {
-                userViewModel.user = userDbViewModel.getUserAccount(writeSharedPreferences.getInt("userID", 0))
+                GlobalScope.launch {
+                    println("ID - ${writeSharedPreferences.getInt("userId", 0)}")
+                    userViewModel.user = userDbViewModel.getUserAccount(writeSharedPreferences.getInt("userId", 0))
+                }
             }
         }
 

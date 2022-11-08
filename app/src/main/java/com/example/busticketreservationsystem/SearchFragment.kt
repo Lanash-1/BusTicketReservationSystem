@@ -9,12 +9,15 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
+import com.example.busticketreservationsystem.databinding.FragmentSearchBinding
 import com.example.busticketreservationsystem.entity.Bus
 import com.example.busticketreservationsystem.viewmodel.SearchViewModel
 import kotlinx.coroutines.flow.callbackFlow
 
 
 class SearchFragment : Fragment() {
+
+    private lateinit var binding: FragmentSearchBinding
 
     private val searchViewModel: SearchViewModel by activityViewModels()
 
@@ -60,7 +63,9 @@ class SearchFragment : Fragment() {
             title = "search location"
 
         }
-        return inflater.inflate(R.layout.fragment_search, container, false)
+        binding = FragmentSearchBinding.inflate(inflater, container, false)
+        return binding.root
+//        return inflater.inflate(R.layout.fragment_search, container, false)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

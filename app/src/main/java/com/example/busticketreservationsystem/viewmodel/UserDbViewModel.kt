@@ -16,7 +16,7 @@ class UserDbViewModel(
     }
 
     fun updateUserData(user: User){
-        appDb.userDao().updateUserData(user.userId, user.username, user.emailId, user.mobileNumber, user.password, user.age, user.gender)
+        appDb.userDao().updateUserData(user.userId, user.username, user.emailId, user.mobileNumber, user.password, user.dob, user.gender)
     }
 
     fun getAccountCount(mobileNumber: String): Boolean{
@@ -43,5 +43,9 @@ class UserDbViewModel(
 
     fun updateUserPassword(password: String, mobileNumber: String) {
         appDb.userDao().updateUserPassword(password, mobileNumber)
+    }
+
+    fun deleteUserAccount(user: User){
+        appDb.userDao().deleteUserAccount(user)
     }
 }

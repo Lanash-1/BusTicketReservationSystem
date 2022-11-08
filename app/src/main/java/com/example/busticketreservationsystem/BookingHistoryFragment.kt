@@ -6,9 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import com.example.busticketreservationsystem.databinding.FragmentBookingHistoryBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class BookingHistoryFragment : Fragment() {
+
+    private lateinit var binding: FragmentBookingHistoryBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,15 +27,13 @@ class BookingHistoryFragment : Fragment() {
             setDisplayHomeAsUpEnabled(false)
             title = "My Bookings"
         }
-        return inflater.inflate(R.layout.fragment_booking_history, container, false)
+        binding = FragmentBookingHistoryBinding.inflate(inflater, container, false)
+        return binding.root
+//        return inflater.inflate(R.layout.fragment_booking_history, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val parentBottom = parentFragment?.view?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-
-        parentBottom?.menu?.findItem(R.id.myAccount)?.isChecked = true
     }
 
 }

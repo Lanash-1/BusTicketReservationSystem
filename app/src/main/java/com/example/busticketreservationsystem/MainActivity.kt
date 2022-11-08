@@ -11,10 +11,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        supportFragmentManager.commit {
-//            replace(R.id.main_fragment_container, RegisterFragment())
-//        }
-
         val writeSharedPreferences: SharedPreferences = getSharedPreferences("LoginStatus", MODE_PRIVATE)
 
         val editor: SharedPreferences.Editor = writeSharedPreferences.edit()

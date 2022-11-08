@@ -12,5 +12,4 @@ interface BusDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(bus: Bus)
 
-
 }

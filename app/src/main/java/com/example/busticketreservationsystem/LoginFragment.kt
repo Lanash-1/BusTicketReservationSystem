@@ -3,7 +3,6 @@ package com.example.busticketreservationsystem
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.text.Html
 import android.view.*
 import android.widget.Button
 import androidx.fragment.app.Fragment
@@ -52,7 +51,6 @@ class LoginFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.apply{
             setDisplayHomeAsUpEnabled(false)
         }
-
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
@@ -138,6 +136,7 @@ class LoginFragment : Fragment() {
                                 }
                                 job.join()
                                 editor.putInt("userId", userViewModel.user.userId)
+                                editor.commit()
                             }
                             parentFragmentManager.commit {
                                 replace(R.id.main_fragment_container, HomePageFragment())

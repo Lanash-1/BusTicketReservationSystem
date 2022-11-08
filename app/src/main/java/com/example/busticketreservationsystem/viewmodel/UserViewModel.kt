@@ -11,7 +11,7 @@ class UserViewModel: ViewModel() {
         "",
         "",
         "",
-        0,
+        "",
         ""
     )
 
@@ -20,7 +20,7 @@ class UserViewModel: ViewModel() {
     var emailId = ""
     var mobileNumber = ""
     var password = ""
-    var age = 0
+    var age = ""
     var gender = ""
 
 
