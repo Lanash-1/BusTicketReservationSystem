@@ -9,5 +9,6 @@ import com.example.busticketreservationsystem.entity.Partners
 interface PartnersDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(partners: Partners)
+    fun insertPartnerData(list: List<Partners>)
+
 }

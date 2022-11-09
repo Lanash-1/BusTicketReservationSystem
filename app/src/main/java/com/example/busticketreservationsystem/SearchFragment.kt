@@ -61,7 +61,6 @@ class SearchFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar!!.apply {
             setDisplayHomeAsUpEnabled(true)
             title = "search location"
-
         }
         binding = FragmentSearchBinding.inflate(inflater, container, false)
         return binding.root
@@ -77,7 +76,6 @@ class SearchFragment : Fragment() {
         searchView.setQuery(searchViewModel.currentSearch, false)
 
         searchView.isIconified = false
-
 
         searchItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener{
             override fun onMenuItemActionExpand(p0: MenuItem?): Boolean {
@@ -104,7 +102,6 @@ class SearchFragment : Fragment() {
                 return true
             }
         })
-
 
         super.onCreateOptionsMenu(menu, inflater)
     }

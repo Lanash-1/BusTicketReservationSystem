@@ -104,31 +104,18 @@ class EditProfileFragment : Fragment() {
         if(validEmail){
             userViewModel.user.apply {
                 this.emailId = binding.emailInput.text.toString()
-//                if(ageInput.text.toString().isEmpty()){
-//                    this.age = 0
-//                }else{
-//                    this.age = ageInput.text.toString().toInt()
-//                }
+
                 if(dateViewModel.year != 0){
                     this.dob = "${dateViewModel.date} - ${dateViewModel.month} - ${dateViewModel.year}"
                 }else{
                     this.dob = "DD - MM - YYYY"
                 }
-//                if(selectedGenderRadioButton == null){
-//                    this.gender = ""
-//                }else{
-//                    if(selectedGenderRadioButton?.text.toString() == "Male"){
-//                        this.gender = Gender.MALE.name
-//                    }else{
-//                        this.gender = Gender.FEMALE.name
-//                    }
-//                }
+
                 if(binding.maleRadioButton.isChecked){
                     this.gender = Gender.MALE.name
                 }else if(binding.femaleRadioButton.isChecked){
                     this.gender = Gender.FEMALE.name
                 }
-//                this.gender = selectedGenderRadioButton.text.toString()
                 this.username = binding.usernameInput.text.toString()
             }
             GlobalScope.launch {

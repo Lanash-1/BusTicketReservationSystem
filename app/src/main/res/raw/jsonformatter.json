@@ -1,0 +1,192 @@
+{
+  "partners": [
+    {
+      "name": "orangeTravels",
+      "emailId": "orangetravels@gmail.com",
+      "mobileNumber": 1111111111,
+      "noOfBusOperated": 6,
+      "buses": [
+        {
+          "busname": "orangeBus",
+          "sourceLocation": "Chennai",
+          "destinationLocation": "Bangalore",
+          "perTicketCost": 600,
+          "busType": "SLEEPER",
+          "totalSeats": 30,
+          "amenities": [
+            "BLANKETS",
+            "CHARGING_POINT",
+            "WIFI",
+            "WATER_BOTTLE"
+          ]
+        },
+        {
+          "busname": "orangeBus",
+          "sourceLocation": "Chennai",
+          "destinationLocation": "Madurai",
+          "perTicketCost": 300,
+          "busType": "SEATER",
+          "totalSeats": 30,
+          "amenities": [
+            "WIFI",
+            "WATER_BOTTLE"
+          ]
+        },
+        {
+          "busname": "orangeBus",
+          "sourceLocation": "Bangalore",
+          "destinationLocation": "Chennai",
+          "perTicketCost": 600,
+          "busType": "SLEEPER",
+          "totalSeats": 30,
+          "amenities": [
+            "BLANKETS",
+            "CHARGING_POINT"
+          ]
+        },
+        {
+          "busname": "orangeBus",
+          "sourceLocation": "Madurai",
+          "destinationLocation": "Chennai",
+          "perTicketCost": 300,
+          "busType": "SEATER",
+          "totalSeats": 30,
+          "amenities": [
+            "BLANKETS",
+            "WATER_BOTTLE"
+          ]
+        },
+        {
+          "busname": "orangeBus",
+          "sourceLocation": "Madurai",
+          "destinationLocation": "Bangalore",
+          "perTicketCost": 700,
+          "busType": "SLEEPER",
+          "totalSeats": 30,
+          "amenities": [
+            "WATER_BOTTLE"
+          ]
+        },
+        {
+          "busname": "orangeBus",
+          "sourceLocation": "Bangalore",
+          "destinationLocation": "Madurai",
+          "perTicketCost": 700,
+          "busType": "SLEEPER",
+          "totalSeats": 30,
+          "amenities": [
+            "BLANKETS",
+            "WATER_BOTTLE"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "KPN Buses",
+      "emailId": "support@kpnbuses.com",
+      "mobileNumber": 2222222222,
+      "noOfBusOperated": 3,
+      "buses": [
+        {
+          "busname": "KPN",
+          "sourceLocation": "Chennai",
+          "destinationLocation": "Bangalore",
+          "perTicketCost": 600,
+          "busType": "SLEEPER",
+          "totalSeats": 30,
+          "amenities": [
+            "BLANKETS",
+            "CHARGING_POINT",
+            "WATER_BOTTLE"
+          ]
+        },
+        {
+          "busname": "KPN",
+          "sourceLocation": "Chennai",
+          "destinationLocation": "Madurai",
+          "perTicketCost": 300,
+          "busType": "SEATER",
+          "totalSeats": 30,
+          "amenities": [
+            "BLANKETS",
+            "WIFI",
+            "WATER_BOTTLE"
+          ]
+        },
+        {
+          "busname": "KPN",
+          "sourceLocation": "Bangalore",
+          "destinationLocation": "Chennai",
+          "perTicketCost": 600,
+          "busType": "SLEEPER",
+          "totalSeats": 30,
+          "amenities": [
+            "CHARGING_POINT",
+            "WIFI",
+            "WATER_BOTTLE"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "YBM Travels",
+      "emailId": "ybmtravels@yahoo.com",
+      "mobileNumber": 3333333333,
+      "noOfBusOperated": 4,
+      "buses": [
+        {
+          "busname": "YBM",
+          "sourceLocation": "Chennai",
+          "destinationLocation": "Tenkasi",
+          "perTicketCost": 450,
+          "busType": "SEATER",
+          "totalSeats": 30,
+          "amenities": [
+            "BLANKETS",
+            "CHARGING_POINT",
+            "WIFI"
+          ]
+        },
+        {
+          "busname": "YBM",
+          "sourceLocation": "Tenkasi",
+          "destinationLocation": "Madurai",
+          "perTicketCost": 200,
+          "busType": "SEATER",
+          "totalSeats": 30,
+          "amenities": [
+            "CHARGING_POINT",
+            "WIFI",
+            "WATER_BOTTLE"
+          ]
+        },
+        {
+          "busname": "YBM",
+          "sourceLocation": "Tenkasi",
+          "destinationLocation": "Chennai",
+          "perTicketCost": 450,
+          "busType": "SEATER",
+          "totalSeats": 30,
+          "amenities": [
+            "BLANKETS",
+            "WIFI",
+            "WATER_BOTTLE"
+          ]
+        },
+        {
+          "busname": "YBM",
+          "sourceLocation": "Madurai",
+          "destinationLocation": "Tenkasi",
+          "perTicketCost": 200,
+          "busType": "SEATER",
+          "totalSeats": 30,
+          "amenities": [
+            "BLANKETS",
+            "CHARGING_POINT",
+            "WATER_BOTTLE"
+          ]
+        }
+      ]
+    }
+  ]
+}

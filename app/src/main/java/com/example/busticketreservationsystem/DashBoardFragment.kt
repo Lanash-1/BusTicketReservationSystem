@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
+import com.example.busticketreservationsystem.databinding.FragmentDashBoardBinding
 import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -19,6 +20,8 @@ import org.w3c.dom.Text
 class DashBoardFragment : Fragment() {
 
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
+
+    private lateinit var binding: FragmentDashBoardBinding
 
     private lateinit var searchBusButton: Button
     private lateinit var switchRoutes: ShapeableImageView
@@ -40,7 +43,9 @@ class DashBoardFragment : Fragment() {
             setDisplayHomeAsUpEnabled(false)
             title = "DashBoard"
         }
-        return inflater.inflate(R.layout.fragment_dash_board, container, false)
+//        return inflater.inflate(R.layout.fragment_dash_board, container, false)
+        binding = FragmentDashBoardBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
 //    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -84,6 +89,7 @@ class DashBoardFragment : Fragment() {
             }
         }
 
+
         switchRoutes.setOnClickListener{
             val source = sourceText.text
             val destination = destinationText.text
@@ -91,11 +97,11 @@ class DashBoardFragment : Fragment() {
             destinationText.text =  source
         }
 
-        sourceText.setOnClickListener {
+        binding.sourceLayout.setOnClickListener {
             openSearchFragment()
         }
 
-        destinationText.setOnClickListener {
+        binding.destinationLayout.setOnClickListener {
             openSearchFragment()
         }
     }

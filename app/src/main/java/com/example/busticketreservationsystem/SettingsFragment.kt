@@ -68,7 +68,7 @@ class SettingsFragment : Fragment() {
             GlobalScope.launch {
                 userDbViewModel.deleteUserAccount(userViewModel.user)
             }
-            editor.putString("status", LoginStatus.NEW.name)
+            editor.putString("status", LoginStatus.LOGGED_OUT.name)
             editor.commit()
             parentFragmentManager.commit {
                 replace(R.id.main_fragment_container, RegisterFragment())

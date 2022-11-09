@@ -29,6 +29,17 @@
            android:layout_height="wrap_content"
            >
 
+           <androidx.constraintlayout.widget.ConstraintLayout
+               android:id="@+id/source_layout"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               app:layout_constraintLeft_toLeftOf="parent"
+               app:layout_constraintRight_toRightOf="parent"
+               app:layout_constraintTop_toTopOf="parent"
+
+               >
+
+
            <ImageView
                android:id="@+id/sourceIcon"
                android:layout_width="wrap_content"
@@ -50,23 +61,35 @@
                android:textSize="16sp"
                />
 
-           <com.google.android.material.divider.MaterialDivider
-               android:id="@+id/first_divider"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               app:layout_constraintLeft_toLeftOf="parent"
-               app:layout_constraintRight_toRightOf="parent"
-               app:layout_constraintTop_toBottomOf="@id/sourceText"
-               android:layout_marginTop="16dp"
-               />
+               <com.google.android.material.divider.MaterialDivider
+                   android:id="@+id/first_divider"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   app:layout_constraintLeft_toLeftOf="parent"
+                   app:layout_constraintRight_toRightOf="parent"
+                   app:layout_constraintTop_toBottomOf="@id/sourceText"
+                   android:layout_marginTop="16dp"
+                   />
+           </androidx.constraintlayout.widget.ConstraintLayout>
 
-           <ImageView
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/destination_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/source_layout"
+
+            >
+
+        <ImageView
                android:id="@+id/destinationIcon"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:src="@drawable/ic_baseline_directions_bus_24"
                app:layout_constraintLeft_toLeftOf="parent"
-               app:layout_constraintTop_toBottomOf="@id/first_divider"
+               app:layout_constraintTop_toTopOf="parent"
                android:layout_margin="16dp"
                />
 
@@ -91,13 +114,25 @@
                android:layout_marginTop="16dp"
                />
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/date_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/destination_layout"
+
+            >
+
            <ImageView
                android:id="@+id/calenderIcon"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:src="@drawable/ic_baseline_calendar_month_24"
                app:layout_constraintLeft_toLeftOf="parent"
-               app:layout_constraintTop_toBottomOf="@id/second_divider"
+               app:layout_constraintTop_toTopOf="parent"
                android:layout_margin="16dp"
                />
 
@@ -122,6 +157,9 @@
                android:layout_marginTop="16dp"
                />
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
            <com.google.android.material.imageview.ShapeableImageView
                android:id="@+id/switchCircle"
                android:layout_width="40dp"
@@ -131,7 +169,7 @@
                android:src="@drawable/ic_baseline_swap_vert_24"
                app:layout_constraintRight_toRightOf="parent"
                app:layout_constraintTop_toTopOf="parent"
-               app:layout_constraintBottom_toBottomOf="@id/second_divider"
+               app:layout_constraintBottom_toBottomOf="@id/destination_layout"
                android:layout_margin="16dp" />
 
            <Button
@@ -140,7 +178,7 @@
                android:layout_height="wrap_content"
                android:text="search buses"
                app:layout_constraintLeft_toLeftOf="parent"
-               app:layout_constraintTop_toBottomOf="@id/third_divider"
+               app:layout_constraintTop_toBottomOf="@id/date_layout"
                app:layout_constraintRight_toRightOf="parent"
                android:layout_marginHorizontal="32dp"
                />
