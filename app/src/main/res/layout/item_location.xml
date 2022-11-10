@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_city"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".BusResultsFragment">
+    android:layout_height="48dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/busResults_rv"
+        android:layout_height="wrap_content"
+        android:id="@+id/city_text"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:listitem="@layout/item_bus"
+        android:text="chennai"
+        android:layout_marginLeft="16dp"
         />
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

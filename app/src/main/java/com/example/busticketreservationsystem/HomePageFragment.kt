@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import com.example.busticketreservationsystem.enums.LoginStatus
+import com.example.busticketreservationsystem.viewmodel.BusDbViewModel
+import com.example.busticketreservationsystem.viewmodel.BusViewModel
 import com.example.busticketreservationsystem.viewmodel.UserDbViewModel
 import com.example.busticketreservationsystem.viewmodel.UserViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -24,6 +26,8 @@ class HomePageFragment : Fragment() {
 
     private val userViewModel: UserViewModel by activityViewModels()
     private val userDbViewModel: UserDbViewModel by activityViewModels()
+    private val busDbViewModel: BusDbViewModel by activityViewModels()
+    private val busViewModel: BusViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

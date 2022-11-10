@@ -12,5 +12,8 @@ class DateViewModel: ViewModel() {
 
     var edited = MutableLiveData<Boolean>()
 
+    var travelEdited = MutableLiveData<Boolean>()
+
+
 
 }

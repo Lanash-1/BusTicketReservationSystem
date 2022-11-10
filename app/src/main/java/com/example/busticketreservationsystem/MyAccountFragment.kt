@@ -21,7 +21,9 @@ import com.example.busticketreservationsystem.entity.User
 import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.enums.MyAccountOptions
 import com.example.busticketreservationsystem.interfaces.OnItemClickListener
+import com.example.busticketreservationsystem.viewmodel.DateViewModel
 import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
+import com.example.busticketreservationsystem.viewmodel.SearchViewModel
 import com.example.busticketreservationsystem.viewmodel.UserViewModel
 import com.google.android.material.chip.Chip
 
@@ -36,12 +38,14 @@ class MyAccountFragment : Fragment() {
     private lateinit var editor: SharedPreferences.Editor
 
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
+    private val userViewModel: UserViewModel by activityViewModels()
+    private val searchViewModel: SearchViewModel by activityViewModels()
+    private val dateViewModel: DateViewModel by activityViewModels()
 
     private val myAccountAdapter = MyAccountAdapter()
 
     private lateinit var myAccountRecyclerView: RecyclerView
 
-    private val userViewModel: UserViewModel by activityViewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -140,6 +144,16 @@ class MyAccountFragment : Fragment() {
         builder.setPositiveButton("Yes"){
                 _, _ ->
             run {
+                searchViewModel.apply {
+                    currentSearch = ""
+                    sourceLocation = ""
+                    destinationLocation = ""
+                }
+                dateViewModel.apply {
+                    year = 0
+                    month = 0
+                    date = 0
+                }
                 userViewModel.user = User(0,"","","","","","")
                 editor.putString("status", LoginStatus.LOGGED_OUT.name)
                 loginStatusViewModel.status = LoginStatus.LOGGED_OUT

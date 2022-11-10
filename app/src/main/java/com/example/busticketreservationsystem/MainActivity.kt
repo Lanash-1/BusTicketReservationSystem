@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import com.example.busticketreservationsystem.entity.Bus
 import com.example.busticketreservationsystem.entity.BusAmenities
 import com.example.busticketreservationsystem.entity.Partners
 import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.viewmodel.BusDbViewModel
+import com.example.busticketreservationsystem.viewmodel.BusViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.json.JSONArray
@@ -19,10 +21,19 @@ import org.json.JSONObject
 class MainActivity : AppCompatActivity() {
 
     private val busDbViewModel: BusDbViewModel by viewModels()
+    private val busViewModel: BusViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        GlobalScope.launch {
+            busViewModel.apply {
+                busList = busDbViewModel.getBusData()
+                partnerList = busDbViewModel.getPartnerData()
+                reviewsList = busDbViewModel.getReviewData()
+            }
+        }
 
         val writeSharedPreferences: SharedPreferences = getSharedPreferences("LoginStatus", MODE_PRIVATE)
 
@@ -33,7 +44,7 @@ class MainActivity : AppCompatActivity() {
                 "" -> {
                     getBusData()
                     editor.putString("status", LoginStatus.NEW.name)
-                    editor.commit()
+                    editor.apply()
                     supportFragmentManager.commit {
                         replace(R.id.main_fragment_container, RegisterFragment())
                     }
@@ -61,7 +72,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
     }
 
     private fun getBusData() {

@@ -1,25 +1,35 @@
 package com.example.busticketreservationsystem
 
+import android.app.DatePickerDialog
+import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import android.widget.Button
+import android.widget.DatePicker
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
+import androidx.lifecycle.Observer
 import com.example.busticketreservationsystem.databinding.FragmentDashBoardBinding
+import com.example.busticketreservationsystem.enums.LocationOptions
 import com.example.busticketreservationsystem.enums.LoginStatus
+import com.example.busticketreservationsystem.viewmodel.DateViewModel
 import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
+import com.example.busticketreservationsystem.viewmodel.SearchViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.imageview.ShapeableImageView
 import org.w3c.dom.Text
+import java.util.*
 
 
 class DashBoardFragment : Fragment() {
 
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
+    private val searchViewModel: SearchViewModel by activityViewModels()
+    private val dateViewModel: DateViewModel by activityViewModels()
 
     private lateinit var binding: FragmentDashBoardBinding
 
@@ -74,7 +84,11 @@ class DashBoardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Toast.makeText(requireContext(), "on create - ${parentFragmentManager.backStackEntryCount}", Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            requireContext(),
+            "on create - ${parentFragmentManager.backStackEntryCount}",
+            Toast.LENGTH_SHORT
+        ).show()
 
 
         searchBusButton = view.findViewById(R.id.searchBus_button)
@@ -89,20 +103,75 @@ class DashBoardFragment : Fragment() {
             }
         }
 
+//        var source = searchViewModel.sourceLocation
+//        var destination = searchViewModel.destinationLocation
 
-        switchRoutes.setOnClickListener{
-            val source = sourceText.text
-            val destination = destinationText.text
-            sourceText.text = destination
-            destinationText.text =  source
+        setLocation()
+
+
+
+        switchRoutes.setOnClickListener {
+            val temp = searchViewModel.sourceLocation
+            searchViewModel.sourceLocation = searchViewModel.destinationLocation
+            searchViewModel.destinationLocation = temp
+            setLocation()
+            if (searchViewModel.sourceLocation.isNotEmpty() || searchViewModel.destinationLocation.isNotEmpty()) {
+                switchRoutes.rotation = 180F
+            }
         }
 
         binding.sourceLayout.setOnClickListener {
+            searchViewModel.currentSearch = LocationOptions.SOURCE.name
             openSearchFragment()
         }
 
         binding.destinationLayout.setOnClickListener {
+            searchViewModel.currentSearch = LocationOptions.DESTINATION.name
             openSearchFragment()
+        }
+
+
+        binding.dateLayout.setOnClickListener {
+            val datePickerFragment = TravelDatePickerFragment()
+            datePickerFragment.show(parentFragmentManager, "datePicker")
+        }
+
+        dateViewModel.travelEdited.observe(viewLifecycleOwner, Observer {
+            if(dateViewModel.year != 0){
+                binding.dateText.text = "${dateViewModel.date} - ${dateViewModel.month} - ${dateViewModel.year}"
+                binding.dateText.setTextColor(Color.parseColor("#000000"))
+            }else{
+                binding.dateText.text = "DD - MM - YYYY"
+                binding.dateText.setTextColor(Color.parseColor("#808080"))
+            }
+        })
+
+    }
+
+    private fun setLocation(){
+        val source = searchViewModel.sourceLocation
+        val destination = searchViewModel.destinationLocation
+        if(source.isEmpty() && destination.isEmpty()){
+            sourceText.text = "Enter Source"
+            destinationText.text = "Enter Destination"
+            destinationText.setTextColor(Color.parseColor("#808080"))
+            sourceText.setTextColor(Color.parseColor("#808080"))
+        }
+        if(source.isNotEmpty() && destination.isNotEmpty()){
+            sourceText.text = source
+            destinationText.text = destination
+            sourceText.setTextColor(Color.BLACK)
+            destinationText.setTextColor(Color.BLACK)
+        }else if(source.isNotEmpty() && destination.isEmpty()){
+            sourceText.text = source
+            destinationText.text = "Enter Destination"
+            sourceText.setTextColor(Color.BLACK)
+            destinationText.setTextColor(Color.parseColor("#808080"))
+        }else if(source.isEmpty() && destination.isNotEmpty()) {
+            sourceText.text = "Enter Source"
+            destinationText.text = destination
+            destinationText.setTextColor(Color.BLACK)
+            sourceText.setTextColor(Color.parseColor("#808080"))
         }
     }
 

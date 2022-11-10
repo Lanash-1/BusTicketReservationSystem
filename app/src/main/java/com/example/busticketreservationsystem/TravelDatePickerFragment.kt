@@ -10,7 +10,7 @@ import androidx.fragment.app.activityViewModels
 import com.example.busticketreservationsystem.viewmodel.DateViewModel
 import java.util.*
 
-class DatePickerFragment: DialogFragment(), DatePickerDialog.OnDateSetListener {
+class TravelDatePickerFragment: DialogFragment(), DatePickerDialog.OnDateSetListener  {
 
     private val dateViewModel: DateViewModel by activityViewModels()
     private var date: Int = 0
@@ -28,8 +28,8 @@ class DatePickerFragment: DialogFragment(), DatePickerDialog.OnDateSetListener {
         this.year = dateViewModel.year
 
         val dialog = DatePickerDialog(requireContext(),this, year, month, date)
-        calendar.set(year-13, month, date)
-        dialog.datePicker.maxDate = calendar.timeInMillis
+        calendar.set(year, month, date)
+        dialog.datePicker.minDate = calendar.timeInMillis
         return dialog
 //        return DatePickerDialog(requireContext(), this,year, month, date)
     }
@@ -39,7 +39,7 @@ class DatePickerFragment: DialogFragment(), DatePickerDialog.OnDateSetListener {
         dateViewModel.date = date
         dateViewModel.month = month+1
         dateViewModel.year = year
-        dateViewModel.edited.value = true
+        dateViewModel.travelEdited.value = true
     }
 
     override fun onCancel(dialog: DialogInterface) {
@@ -50,5 +50,4 @@ class DatePickerFragment: DialogFragment(), DatePickerDialog.OnDateSetListener {
         }
         super.onCancel(dialog)
     }
-
 }

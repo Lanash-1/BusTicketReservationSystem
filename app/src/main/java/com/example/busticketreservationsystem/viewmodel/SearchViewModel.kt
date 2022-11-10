@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 
 class SearchViewModel: ViewModel() {
 
-    var sourceLocation = "Chennai"
-    var destinationLocation = "Bangalore"
+    var sourceLocation = ""
+    var destinationLocation = ""
 
     var currentSearch = ""
 
@@ -17,7 +17,23 @@ class SearchViewModel: ViewModel() {
         "Kerala",
         "Tiruppur",
         "Hyderabad",
-        "Trichy"
+        "Trichy",
+        "Sivagangai",
+        "Kanchipuram",
+        "Pune",
+        "Mumbai",
+        "Delhi",
+        "Coimbatore"
+    )
+
+    val popularCities = listOf(
+        "Pune",
+        "Mumbai",
+        "Delhi",
+        "Coimbatore",
+        "Chennai",
+        "Bangalore",
+        "Hyderabad"
     )
 
 }

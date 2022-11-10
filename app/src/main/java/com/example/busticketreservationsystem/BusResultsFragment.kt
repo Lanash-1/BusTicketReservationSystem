@@ -7,15 +7,25 @@ import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.busticketreservationsystem.adapter.BusResultAdapter
 import com.example.busticketreservationsystem.databinding.FragmentBusResultsBinding
+import com.example.busticketreservationsystem.interfaces.OnItemClickListener
+import com.example.busticketreservationsystem.viewmodel.BusDbViewModel
+import com.example.busticketreservationsystem.viewmodel.BusViewModel
 import com.example.busticketreservationsystem.viewmodel.SearchViewModel
 
 
 class BusResultsFragment : Fragment() {
 
-    private val searchViewModel: SearchViewModel by activityViewModels()
 
     private lateinit var binding: FragmentBusResultsBinding
+
+    private val busDbViewModel: BusDbViewModel by activityViewModels()
+    private val searchViewModel: SearchViewModel by activityViewModels()
+    private val busViewModel: BusViewModel by activityViewModels()
+
+    private var busResultAdapter = BusResultAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +72,24 @@ class BusResultsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Toast.makeText(requireContext(), "on create - ${parentFragmentManager.backStackEntryCount}", Toast.LENGTH_SHORT).show()
+
+        binding.busResultsRv.layoutManager = LinearLayoutManager(requireContext())
+        binding.busResultsRv.adapter = busResultAdapter
+
+        busResultAdapter.setBusList(busViewModel.busList)
+        busResultAdapter.setPartnerList(busViewModel.partnerList)
+
+        busResultAdapter.setOnItemClickListener(object : OnItemClickListener{
+            override fun onItemClick(position: Int) {
+                Toast.makeText(
+                    requireContext(),
+                    "Bus Selected: ${busViewModel.busList[position].busId}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+        })
+
 
     }
 }
