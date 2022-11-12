@@ -1,7 +1,7 @@
 {
   "partners": [
     {
-      "name": "orangeTravels",
+      "name": "OrangeTravels",
       "emailId": "orangetravels@gmail.com",
       "mobileNumber": 1111111111,
       "noOfBusOperated": 6,
@@ -19,24 +19,24 @@
             "WIFI",
             "WATER_BOTTLE"
           ],
-          "startTime": "08:15",
+          "startTime": "8:15",
           "reachTime": "15:00",
-          "duration": "6:45"
+          "duration": "6.45"
         },
         {
           "busname": "orangeBus",
           "sourceLocation": "Chennai",
           "destinationLocation": "Madurai",
           "perTicketCost": 300,
-          "busType": "SEATER",
+          "busType": "AC_SEATER",
           "totalSeats": 30,
           "amenities": [
             "WIFI",
             "WATER_BOTTLE"
           ],
-          "startTime": "08:15",
-          "reachTime": "15:00",
-          "duration": "6:45"
+          "startTime": "8:00",
+          "reachTime": "17:00",
+          "duration": "9"
         },
         {
           "busname": "orangeBus",
@@ -49,24 +49,24 @@
             "BLANKETS",
             "CHARGING_POINT"
           ],
-          "startTime": "08:15",
-          "reachTime": "15:00",
-          "duration": "6:45"
+          "startTime": "16:00",
+          "reachTime": "23:00",
+          "duration": "7"
         },
         {
           "busname": "orangeBus",
           "sourceLocation": "Madurai",
           "destinationLocation": "Chennai",
           "perTicketCost": 300,
-          "busType": "SEATER",
+          "busType": "NON_AC_SEATER",
           "totalSeats": 30,
           "amenities": [
             "BLANKETS",
             "WATER_BOTTLE"
           ],
-          "startTime": "08:15",
-          "reachTime": "15:00",
-          "duration": "6:45"
+          "startTime": "3:00",
+          "reachTime": "12:00",
+          "duration": "9"
         },
         {
           "busname": "orangeBus",
@@ -126,7 +126,7 @@
           "sourceLocation": "Chennai",
           "destinationLocation": "Madurai",
           "perTicketCost": 300,
-          "busType": "SEATER",
+          "busType": "AC_SEATER",
           "totalSeats": 30,
           "amenities": [
             "BLANKETS",
@@ -166,7 +166,7 @@
           "sourceLocation": "Chennai",
           "destinationLocation": "Tenkasi",
           "perTicketCost": 450,
-          "busType": "SEATER",
+          "busType": "NON_AC_SEATER",
           "totalSeats": 30,
           "amenities": [
             "BLANKETS",
@@ -182,7 +182,7 @@
           "sourceLocation": "Tenkasi",
           "destinationLocation": "Madurai",
           "perTicketCost": 200,
-          "busType": "SEATER",
+          "busType": "AC_SEATER",
           "totalSeats": 30,
           "amenities": [
             "CHARGING_POINT",
@@ -198,7 +198,7 @@
           "sourceLocation": "Tenkasi",
           "destinationLocation": "Chennai",
           "perTicketCost": 450,
-          "busType": "SEATER",
+          "busType": "NON_AC_SEATER",
           "totalSeats": 30,
           "amenities": [
             "BLANKETS",
@@ -214,7 +214,7 @@
           "sourceLocation": "Madurai",
           "destinationLocation": "Tenkasi",
           "perTicketCost": 200,
-          "busType": "SEATER",
+          "busType": "AC_SEATER",
           "totalSeats": 30,
           "amenities": [
             "BLANKETS",

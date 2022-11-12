@@ -2,16 +2,27 @@ package com.example.busticketreservationsystem
 
 import android.os.Bundle
 import android.view.*
+import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import com.example.busticketreservationsystem.databinding.FragmentSortAndFilterBinding
+import com.example.busticketreservationsystem.enums.BusTypes
+import com.example.busticketreservationsystem.viewmodel.BusViewModel
+import com.example.busticketreservationsystem.viewmodel.SearchViewModel
 
 
 class SortAndFilterFragment : Fragment() {
 
     private lateinit var binding: FragmentSortAndFilterBinding
+
+    private val busViewModel: BusViewModel by activityViewModels()
+    private val searchViewModel: SearchViewModel by activityViewModels()
+
+    private var selectedGenderRadioButton: RadioButton? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +32,7 @@ class SortAndFilterFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
 //        return inflater.inflate(R.layout.fragment_sort_and_filter, container, false)
         (activity as AppCompatActivity).supportActionBar?.apply {
@@ -47,6 +58,59 @@ class SortAndFilterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Toast.makeText(requireContext(), "on create - ${parentFragmentManager.backStackEntryCount}", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(requireContext(), "on create - ${parentFragmentManager.backStackEntryCount}", Toast.LENGTH_SHORT).show()
+
+        var currentBusList = busViewModel.filteredBusList
+
+
+
+        binding.sortByRadioGroup.setOnCheckedChangeListener { _, id ->
+            selectedGenderRadioButton = view.findViewById(id)
+        }
+
+        binding.applyText.setOnClickListener {
+            Toast.makeText(requireContext(), "Applied", Toast.LENGTH_SHORT).show()
+
+            if(selectedGenderRadioButton != null){
+                when(selectedGenderRadioButton!!.id){
+                    R.id.price_high_low -> {
+                        currentBusList = busViewModel.filteredBusList.sortedByDescending {
+                            it.perTicketCost
+                        }
+                    }
+                    R.id.price_low_high -> {
+                        currentBusList = busViewModel.filteredBusList.sortedBy {
+                            it.perTicketCost
+                        }
+                    }
+                    R.id.top_rated -> {
+                        currentBusList = busViewModel.filteredBusList.sortedByDescending {
+                            it.ratingOverall
+                        }
+                    }
+                    R.id.shortest_duration -> {
+                        currentBusList = busViewModel.filteredBusList.sortedBy {
+                            it.duration.toInt()
+                        }
+                    }
+                }
+            }
+
+            parentFragmentManager.commit {
+                replace(R.id.homePageFragmentContainer, BusResultsFragment())
+                parentFragmentManager.popBackStack()
+            }
+        }
+
+        binding.clearText.setOnClickListener {
+            Toast.makeText(requireContext(), "Cleared", Toast.LENGTH_SHORT).show()
+            busViewModel.filteredBusList = busViewModel.busList.filter {
+                it.sourceLocation == searchViewModel.sourceLocation && it.destination == searchViewModel.destinationLocation
+            }
+
+        }
+
+
+
     }
 }

@@ -13,4 +13,6 @@ class BusViewModel: ViewModel() {
 
     var reviewsList = listOf<Reviews>()
 
+    var filteredBusList = listOf<Bus>()
+
 }

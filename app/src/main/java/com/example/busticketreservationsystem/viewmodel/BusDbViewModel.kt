@@ -36,6 +36,18 @@ class BusDbViewModel(application: Application): AndroidViewModel(application) {
         return appDb.reviewsDao().getReviewsData()
     }
 
+    fun getRatingPeopleCount(busId: Int): Int{
+        return appDb.reviewsDao().getReviewCount(busId)
+    }
+
+    fun getBusRatings(busId: Int): List<Int>{
+        return appDb.reviewsDao().getRatingsOfABus(busId)
+    }
+
+    fun updateBusRating(peopleCount: Int, overallRating: Double, busId: Int){
+        appDb.busDao().updateBusRating(peopleCount, overallRating, busId)
+    }
+
 
 
 }

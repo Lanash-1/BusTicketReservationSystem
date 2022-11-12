@@ -24,8 +24,9 @@ data class Bus(
     var busType: String,
     var totalSeats: Int,
     var availableSeats: Int,
-//    var startTime: String,
-//    var reachTime: String,
-//    var duration: String,
-//    var ratingOverall: Double
+    var startTime: String,
+    var reachTime: String,
+    var duration: String,
+    var ratingOverall: Double,
+    var ratingPeopleCount: Int
 )

@@ -1,6 +1,7 @@
 package com.example.busticketreservationsystem.enums
 
 enum class BusTypes {
-    SEATER,
+    AC_SEATER,
+    NON_AC_SEATER,
     SLEEPER
 }

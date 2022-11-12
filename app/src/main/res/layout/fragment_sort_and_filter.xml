@@ -19,7 +19,7 @@
             android:id="@+id/sortBy_layout" >
 
             <RadioGroup
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/sortBy_radioGroup"
                 android:orientation="vertical"
@@ -38,7 +38,7 @@
 
                 <RadioButton
                     android:id="@+id/price_high_low"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:text="Price - High to Low" />
@@ -58,7 +58,7 @@
                     android:text="Top Rated" />
 
                 <RadioButton
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/shortest_duration"
                     android:layout_marginLeft="8dp"
@@ -86,42 +86,45 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/first_divider"
                 android:layout_marginTop="16dp"
-                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 />
 
             <CheckBox
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Seater"
                 android:id="@+id/seater_checkbox"
                 app:layout_constraintTop_toBottomOf="@id/filterBy_text"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="24dp"
                 app:layout_constraintStart_toStartOf="@id/filterBy_text"
                 />
 
             <CheckBox
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Sleeper"
                 android:id="@+id/sleeper_checkbox"
+                android:layout_marginStart="24dp"
                 app:layout_constraintTop_toBottomOf="@id/seater_checkbox"
                 app:layout_constraintStart_toStartOf="@id/seater_checkbox"
                 />
 
             <CheckBox
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="A/C"
                 android:id="@+id/ac_checkbox"
+                android:layout_marginStart="24dp"
                 app:layout_constraintTop_toBottomOf="@id/sleeper_checkbox"
                 app:layout_constraintStart_toStartOf="@id/seater_checkbox"
                 />
 
             <CheckBox
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Non A/C"
                 android:id="@+id/non_ac_checkbox"
+                android:layout_marginStart="24dp"
                 app:layout_constraintTop_toBottomOf="@id/ac_checkbox"
                 app:layout_constraintStart_toStartOf="@id/seater_checkbox"
                 />
@@ -135,6 +138,7 @@
                 app:layout_constraintTop_toBottomOf="@id/non_ac_checkbox" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
     </ScrollView>
@@ -159,7 +163,7 @@
             app:layout_constraintRight_toLeftOf="@id/apply_text"
             android:text="CLEAR"
             android:textAlignment="center"
-            android:textSize="24dp"
+            android:textSize="20sp"
             android:paddingVertical="8dp"
             android:background="@color/customBlue"
             android:textStyle="bold"
@@ -174,7 +178,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:text="APPLY"
-            android:textSize="24dp"
+            android:textSize="20sp"
             android:textAlignment="center"
             android:focusable="true"
             android:clickable="true"

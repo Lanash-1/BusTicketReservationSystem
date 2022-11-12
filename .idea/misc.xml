@@ -25,7 +25,7 @@
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.22447916666666667" />
         <entry key="app/src/main/res/layout/fragment_sort_and_filter.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_account.xml" value="0.2234375" />
-        <entry key="app/src/main/res/layout/item_bus.xml" value="0.29636383056640625" />
+        <entry key="app/src/main/res/layout/item_bus.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_location.xml" value="0.371875" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.371875" />
         <entry key="app/src/main/res/menu/bus_results_menu.xml" value="0.22447916666666667" />

@@ -16,6 +16,7 @@ import androidx.lifecycle.Observer
 import com.example.busticketreservationsystem.databinding.FragmentDashBoardBinding
 import com.example.busticketreservationsystem.enums.LocationOptions
 import com.example.busticketreservationsystem.enums.LoginStatus
+import com.example.busticketreservationsystem.viewmodel.BusViewModel
 import com.example.busticketreservationsystem.viewmodel.DateViewModel
 import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
 import com.example.busticketreservationsystem.viewmodel.SearchViewModel
@@ -30,6 +31,7 @@ class DashBoardFragment : Fragment() {
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
     private val searchViewModel: SearchViewModel by activityViewModels()
     private val dateViewModel: DateViewModel by activityViewModels()
+    private val busViewModel: BusViewModel by activityViewModels()
 
     private lateinit var binding: FragmentDashBoardBinding
 
@@ -97,10 +99,16 @@ class DashBoardFragment : Fragment() {
         destinationText = view.findViewById(R.id.destinationText)
 
         searchBusButton.setOnClickListener {
-            parentFragmentManager.commit {
-                replace(R.id.homePageFragmentContainer, BusResultsFragment())
-                addToBackStack(null)
+            if(searchViewModel.sourceLocation.isNotEmpty() && searchViewModel.destinationLocation.isNotEmpty() && searchViewModel.year != 0){
+                busViewModel.filteredBusList = busViewModel.busList.filter {
+                    it.sourceLocation == searchViewModel.sourceLocation && it.destination == searchViewModel.destinationLocation
+                }
+                parentFragmentManager.commit {
+                    replace(R.id.homePageFragmentContainer, BusResultsFragment())
+                    addToBackStack(null)
+                }
             }
+//            else if()
         }
 
 //        var source = searchViewModel.sourceLocation
@@ -139,9 +147,19 @@ class DashBoardFragment : Fragment() {
         dateViewModel.travelEdited.observe(viewLifecycleOwner, Observer {
             if(dateViewModel.year != 0){
                 binding.dateText.text = "${dateViewModel.date} - ${dateViewModel.month} - ${dateViewModel.year}"
+                searchViewModel.apply {
+                    year = dateViewModel.year
+                    month = dateViewModel.month
+                    date = dateViewModel.date
+                }
                 binding.dateText.setTextColor(Color.parseColor("#000000"))
             }else{
                 binding.dateText.text = "DD - MM - YYYY"
+                searchViewModel.apply {
+                    year = 0
+                    month = 0
+                    date = 0
+                }
                 binding.dateText.setTextColor(Color.parseColor("#808080"))
             }
         })

@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 class DateViewModel: ViewModel() {
 
 
-    var date: Int = 0
+    var date = 0
     var month = 0
     var year = 0
 

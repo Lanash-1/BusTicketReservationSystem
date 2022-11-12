@@ -13,4 +13,12 @@ interface ReviewsDao {
 
     @Query("SELECT * FROM reviews_table")
     fun getReviewsData(): List<Reviews>
+
+    @Query("SELECT count(*) FROM reviews_table WHERE busId LIKE :busId")
+    fun getReviewCount(busId: Int): Int
+
+    @Query("SELECT rating FROM reviews_table WHERE busId LIKE :busId")
+    fun getRatingsOfABus(busId: Int): List<Int>
+
+
 }

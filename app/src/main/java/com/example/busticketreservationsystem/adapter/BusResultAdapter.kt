@@ -8,6 +8,7 @@ import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.databinding.ItemBusBinding
 import com.example.busticketreservationsystem.entity.Bus
 import com.example.busticketreservationsystem.entity.Partners
+import com.example.busticketreservationsystem.enums.BusTypes
 import com.example.busticketreservationsystem.interfaces.OnItemClickListener
 
 class BusResultAdapter: RecyclerView.Adapter<BusResultAdapter.BusResultViewHolder>() {
@@ -51,17 +52,49 @@ class BusResultAdapter: RecyclerView.Adapter<BusResultAdapter.BusResultViewHolde
             priceText.text = busList[position].perTicketCost.toString()
 //            startTimeText.text = busList[position].startTime
 //            reachTimeText.text = busList[position].reachTime
-            busTypeText.text = busList[position].busType
             seatsText.text = busList[position].availableSeats.toString() + " Seats"
 
-            if(position%4 == 0){
-                ratingText.text = "2.3"
-                ratingText.setBackgroundColor(Color.parseColor("#D13140"))
-            }else if(position%3 == 0){
-                ratingText.text = "3.6"
+//            if(position%4 == 0){
+//                ratingText.text = "2.3"
+//                ratingText.setBackgroundColor(Color.parseColor("#D13140"))
+//            }else if(position%3 == 0){
+//                ratingText.text = "3.6"
+//                ratingText.setBackgroundColor(Color.parseColor("#F8C31F"))
+//            }else{
+//                ratingText.text = "4.5"
+//                ratingText.setBackgroundColor(Color.parseColor("#37B87C"))
+//            }
+
+            val rating = busList[position].ratingOverall
+
+            ratingText.text = rating.toString()
+            peopleCountText.text = busList[position].ratingPeopleCount.toString()
+
+            if(rating > 3.9){
+                ratingText.setBackgroundColor(Color.parseColor("#37B87C"))
+            }else if(rating > 2.9){
                 ratingText.setBackgroundColor(Color.parseColor("#F8C31F"))
+            }else if(rating == 0.0){
+                ratingText.text = "-/-"
+                ratingText.setBackgroundColor(Color.parseColor("#808080"))
             }else{
-                ratingText.text = "4.5"
+                ratingText.setBackgroundColor(Color.parseColor("#D13140"))
+            }
+
+            val busType = busList[position].busType
+
+            busTypeText.apply {
+                when(busType){
+                    BusTypes.AC_SEATER.name -> {
+                        text = "A/C Seater"
+                    }
+                    BusTypes.NON_AC_SEATER.name -> {
+                        text = "Non A/C Seater"
+                    }
+                    BusTypes.SLEEPER.name -> {
+                        text = "Sleeper"
+                    }
+                }
             }
         }
     }

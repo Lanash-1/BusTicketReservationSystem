@@ -36,4 +36,8 @@ class SearchViewModel: ViewModel() {
         "Hyderabad"
     )
 
+    var date = 0
+    var month = 0
+    var year = 0
+
 }

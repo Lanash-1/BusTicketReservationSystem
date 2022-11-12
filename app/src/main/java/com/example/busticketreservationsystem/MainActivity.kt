@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, "Bus data called", Toast.LENGTH_SHORT).show()
 
         val partnersList = mutableListOf<Partners>()
-        val busList = mutableListOf<Bus>()
+        var busList = mutableListOf<Bus>()
         val amenitiesList = mutableListOf<BusAmenities>()
 
         val jsonData = applicationContext.resources.openRawResource(
@@ -121,8 +121,11 @@ class MainActivity : AppCompatActivity() {
                 val perTicketCost = buses.getJSONObject(j).get("perTicketCost").toString().toDouble()
                 val busType = buses.getJSONObject(j).get("busType").toString()
                 val totalSeats = buses.getJSONObject(j).get("totalSeats").toString().toInt()
-
-                val bus = Bus(busId, partnerId, busName, sourceLocation, destinationLocation, perTicketCost, busType, totalSeats, 0)
+                val startTime = buses.getJSONObject(j).get("startTime").toString()
+                val reachTime = buses.getJSONObject(j).get("reachTime").toString()
+                val duration = buses.getJSONObject(j).get("duration").toString()
+//                val ratingOverall = buses.getJSONObject(j).get("startTime").toString()
+                val bus = Bus(busId, partnerId, busName, sourceLocation, destinationLocation, perTicketCost, busType, totalSeats, totalSeats, startTime, reachTime, duration, 0.0, 0)
                 busList.add(bus)
 
                 val amenities = buses.getJSONObject(j).getJSONArray("amenities") as JSONArray
@@ -142,9 +145,12 @@ class MainActivity : AppCompatActivity() {
             busDbViewModel.insertPartnerData(partnersList)
             busDbViewModel.insertBusData(busList)
             busDbViewModel.insertBusAmenitiesData(amenitiesList)
+            busViewModel.apply {
+                busViewModel.busList = busDbViewModel.getBusData()
+                partnerList = busDbViewModel.getPartnerData()
+                reviewsList = busDbViewModel.getReviewData()
+            }
         }
-
-
     }
 
 }

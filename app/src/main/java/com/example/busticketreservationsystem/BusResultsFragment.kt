@@ -71,12 +71,18 @@ class BusResultsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Toast.makeText(requireContext(), "on create - ${parentFragmentManager.backStackEntryCount}", Toast.LENGTH_SHORT).show()
 
         binding.busResultsRv.layoutManager = LinearLayoutManager(requireContext())
         binding.busResultsRv.adapter = busResultAdapter
 
-        busResultAdapter.setBusList(busViewModel.busList)
+//        val busResult = busViewModel.busList.filter {
+//            it.sourceLocation == searchViewModel.sourceLocation && it.destination == searchViewModel.destinationLocation
+//        }
+        Toast.makeText(requireContext(), "${busViewModel.filteredBusList.size} buses found", Toast.LENGTH_SHORT).show()
+
+
+
+        busResultAdapter.setBusList(busViewModel.filteredBusList)
         busResultAdapter.setPartnerList(busViewModel.partnerList)
 
         busResultAdapter.setOnItemClickListener(object : OnItemClickListener{
@@ -87,9 +93,6 @@ class BusResultsFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-
         })
-
-
     }
 }
