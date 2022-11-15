@@ -710,9 +710,9 @@
       "buses": [
         {
           "busName": "orangeBus",
-          "sourceLocation": "Chennai",
-          "destinationLocation": "Bangalore",
-          "perTicketCost": 600,
+          "sourceLocation": "Mumbai",
+          "destinationLocation": "Delhi",
+          "perTicketCost": 2000,
           "busType": "SLEEPER",
           "totalSeats": 30,
           "amenities": [
@@ -721,47 +721,41 @@
             "WIFI",
             "WATER_BOTTLE",
             "EMERGENCY_CONTACT_NUMBER",
-            "MOVIE",
             "TRACK_MY_BUS"
           ],
-          "startTime": "8:15",
-          "reachTime": "15:00",
-          "duration": "6.45"
+          "startTime": "6:00",
+          "reachTime": "18:00",
+          "duration": "12"
         },
         {
           "busName": "orangeBus",
-          "sourceLocation": "Chennai",
-          "destinationLocation": "Madurai",
-          "perTicketCost": 300,
+          "sourceLocation": "Delhi",
+          "destinationLocation": "Mumbai",
+          "perTicketCost": 1900,
           "busType": "AC_SEATER",
           "totalSeats": 30,
           "amenities": [
-            "BLANKETS",
             "CHARGING_POINT",
             "WIFI",
             "WATER_BOTTLE",
             "EMERGENCY_CONTACT_NUMBER",
-            "MOVIE",
             "TRACK_MY_BUS"
           ],
-          "startTime": "8:00",
-          "reachTime": "17:00",
-          "duration": "9"
+          "startTime": "12:00",
+          "reachTime": "22:00",
+          "duration": "10"
         },
         {
           "busName": "orangeBus",
-          "sourceLocation": "Bangalore",
-          "destinationLocation": "Chennai",
-          "perTicketCost": 600,
+          "sourceLocation": "Mumbai",
+          "destinationLocation": "Pune",
+          "perTicketCost": 750,
           "busType": "SLEEPER",
           "totalSeats": 30,
           "amenities": [
             "BLANKETS",
             "CHARGING_POINT",
-            "WIFI",
             "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "MOVIE",
             "TRACK_MY_BUS"
           ],
           "startTime": "16:00",
@@ -770,19 +764,14 @@
         },
         {
           "busName": "orangeBus",
-          "sourceLocation": "Madurai",
-          "destinationLocation": "Chennai",
-          "perTicketCost": 300,
+          "sourceLocation": "Pune",
+          "destinationLocation": "Mumbai",
+          "perTicketCost": 550,
           "busType": "NON_AC_SEATER",
           "totalSeats": 30,
           "amenities": [
-            "BLANKETS",
             "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "MOVIE",
-            "TRACK_MY_BUS"
+            "WATER_BOTTLE"
           ],
           "startTime": "3:00",
           "reachTime": "12:00",
@@ -790,38 +779,35 @@
         },
         {
           "busName": "orangeBus",
-          "sourceLocation": "Madurai",
-          "destinationLocation": "Bangalore",
-          "perTicketCost": 700,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
-          "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "MOVIE",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "08:15",
-          "reachTime": "15:00",
-          "duration": "6:45"
-        },
-        {
-          "busName": "orangeBus",
-          "sourceLocation": "Bangalore",
+          "sourceLocation": "Chennai",
           "destinationLocation": "Madurai",
           "perTicketCost": 700,
           "busType": "SLEEPER",
           "totalSeats": 30,
           "amenities": [
+            "CHARGING_POINT",
+            "WIFI",
+            "WATER_BOTTLE",
+            "EMERGENCY_CONTACT_NUMBER",
+            "TRACK_MY_BUS"
+          ],
+          "startTime": "8:45",
+          "reachTime": "12:00",
+          "duration": "3.15"
+        },
+        {
+          "busName": "orangeBus",
+          "sourceLocation": "Bangalore",
+          "destinationLocation": "Madurai",
+          "perTicketCost": 2000,
+          "busType": "SLEEPER",
+          "totalSeats": 30,
+          "amenities": [
             "BLANKETS",
             "CHARGING_POINT",
             "WIFI",
             "WATER_BOTTLE",
             "EMERGENCY_CONTACT_NUMBER",
-            "MOVIE",
             "TRACK_MY_BUS"
           ],
           "startTime": "08:15",
@@ -840,21 +826,18 @@
           "busName": "orangeBus",
           "sourceLocation": "Chennai",
           "destinationLocation": "Bangalore",
-          "perTicketCost": 600,
+          "perTicketCost": 1200,
           "busType": "SLEEPER",
           "totalSeats": 30,
           "amenities": [
             "BLANKETS",
             "CHARGING_POINT",
-            "WIFI",
             "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "MOVIE",
             "TRACK_MY_BUS"
           ],
-          "startTime": "8:15",
-          "reachTime": "15:00",
-          "duration": "6.45"
+          "startTime": "13:00",
+          "reachTime": "20:00",
+          "duration": "7"
         },
         {
           "busName": "orangeBus",
@@ -864,23 +847,18 @@
           "busType": "AC_SEATER",
           "totalSeats": 30,
           "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
             "EMERGENCY_CONTACT_NUMBER",
-            "MOVIE",
             "TRACK_MY_BUS"
           ],
-          "startTime": "8:00",
-          "reachTime": "17:00",
-          "duration": "9"
+          "startTime": "13:00",
+          "reachTime": "23:45",
+          "duration": "10.45"
         },
         {
           "busName": "orangeBus",
           "sourceLocation": "Bangalore",
           "destinationLocation": "Chennai",
-          "perTicketCost": 600,
+          "perTicketCost": 2500,
           "busType": "SLEEPER",
           "totalSeats": 30,
           "amenities": [
@@ -889,58 +867,47 @@
             "WIFI",
             "WATER_BOTTLE",
             "EMERGENCY_CONTACT_NUMBER",
-            "MOVIE",
             "TRACK_MY_BUS"
           ],
           "startTime": "16:00",
-          "reachTime": "23:00",
+          "reachTime": "20:00",
+          "duration": "4"
+        },
+        {
+          "busName": "orangeBus",
+          "sourceLocation": "Madurai",
+          "destinationLocation": "Chennai",
+          "perTicketCost": 525,
+          "busType": "NON_AC_SEATER",
+          "totalSeats": 30,
+          "amenities": [
+            "EMERGENCY_CONTACT_NUMBER"
+          ],
+          "startTime": "9:00",
+          "reachTime": "16:00",
           "duration": "7"
         },
         {
           "busName": "orangeBus",
           "sourceLocation": "Madurai",
-          "destinationLocation": "Chennai",
-          "perTicketCost": 300,
-          "busType": "NON_AC_SEATER",
-          "totalSeats": 30,
-          "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "MOVIE",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "3:00",
-          "reachTime": "12:00",
-          "duration": "9"
-        },
-        {
-          "busName": "orangeBus",
-          "sourceLocation": "Madurai",
           "destinationLocation": "Bangalore",
-          "perTicketCost": 700,
+          "perTicketCost": 750,
           "busType": "SLEEPER",
           "totalSeats": 30,
           "amenities": [
             "BLANKETS",
             "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "MOVIE",
             "TRACK_MY_BUS"
           ],
-          "startTime": "08:15",
-          "reachTime": "15:00",
-          "duration": "6:45"
+          "startTime": "14:00",
+          "reachTime": "22:00",
+          "duration": "8"
         },
         {
           "busName": "orangeBus",
           "sourceLocation": "Bangalore",
           "destinationLocation": "Madurai",
-          "perTicketCost": 700,
+          "perTicketCost": 1100,
           "busType": "SLEEPER",
           "totalSeats": 30,
           "amenities": [
@@ -949,12 +916,11 @@
             "WIFI",
             "WATER_BOTTLE",
             "EMERGENCY_CONTACT_NUMBER",
-            "MOVIE",
             "TRACK_MY_BUS"
           ],
-          "startTime": "08:15",
-          "reachTime": "15:00",
-          "duration": "6:45"
+          "startTime": "13:15",
+          "reachTime": "19:15",
+          "duration": "6"
         }
       ]
     },
@@ -968,16 +934,14 @@
           "busName": "orangeBus",
           "sourceLocation": "Chennai",
           "destinationLocation": "Bangalore",
-          "perTicketCost": 600,
+          "perTicketCost": 620,
           "busType": "SLEEPER",
           "totalSeats": 30,
           "amenities": [
             "BLANKETS",
             "CHARGING_POINT",
-            "WIFI",
             "WATER_BOTTLE",
             "EMERGENCY_CONTACT_NUMBER",
-            "MOVIE",
             "TRACK_MY_BUS"
           ],
           "startTime": "8:15",
@@ -988,16 +952,13 @@
           "busName": "orangeBus",
           "sourceLocation": "Chennai",
           "destinationLocation": "Madurai",
-          "perTicketCost": 300,
+          "perTicketCost": 350,
           "busType": "AC_SEATER",
           "totalSeats": 30,
           "amenities": [
-            "BLANKETS",
             "CHARGING_POINT",
-            "WIFI",
             "WATER_BOTTLE",
             "EMERGENCY_CONTACT_NUMBER",
-            "MOVIE",
             "TRACK_MY_BUS"
           ],
           "startTime": "8:00",
@@ -1008,21 +969,17 @@
           "busName": "orangeBus",
           "sourceLocation": "Bangalore",
           "destinationLocation": "Chennai",
-          "perTicketCost": 600,
+          "perTicketCost": 555,
           "busType": "SLEEPER",
           "totalSeats": 30,
           "amenities": [
-            "BLANKETS",
             "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
             "EMERGENCY_CONTACT_NUMBER",
-            "MOVIE",
             "TRACK_MY_BUS"
           ],
-          "startTime": "16:00",
+          "startTime": "15:00",
           "reachTime": "23:00",
-          "duration": "7"
+          "duration": "8"
         },
         {
           "busName": "orangeBus",
@@ -1032,57 +989,41 @@
           "busType": "NON_AC_SEATER",
           "totalSeats": 30,
           "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "MOVIE",
-            "TRACK_MY_BUS"
           ],
-          "startTime": "3:00",
-          "reachTime": "12:00",
-          "duration": "9"
+          "startTime": "13:00",
+          "reachTime": "21:00",
+          "duration": "8"
         },
         {
           "busName": "orangeBus",
           "sourceLocation": "Madurai",
           "destinationLocation": "Bangalore",
-          "perTicketCost": 700,
+          "perTicketCost": 770,
           "busType": "SLEEPER",
           "totalSeats": 30,
           "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
             "EMERGENCY_CONTACT_NUMBER",
-            "MOVIE",
             "TRACK_MY_BUS"
           ],
-          "startTime": "08:15",
-          "reachTime": "15:00",
-          "duration": "6:45"
+          "startTime": "10:15",
+          "reachTime": "17:00",
+          "duration": "6.45"
         },
         {
           "busName": "orangeBus",
           "sourceLocation": "Bangalore",
           "destinationLocation": "Madurai",
-          "perTicketCost": 700,
+          "perTicketCost": 710,
           "busType": "SLEEPER",
           "totalSeats": 30,
           "amenities": [
             "BLANKETS",
             "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "MOVIE",
             "TRACK_MY_BUS"
           ],
-          "startTime": "08:15",
-          "reachTime": "15:00",
-          "duration": "6:45"
+          "startTime": "15:00",
+          "reachTime": "22:00",
+          "duration": "7"
         }
       ]
     },
@@ -1096,7 +1037,7 @@
           "busName": "orangeBus",
           "sourceLocation": "Chennai",
           "destinationLocation": "Bangalore",
-          "perTicketCost": 600,
+          "perTicketCost": 1600,
           "busType": "SLEEPER",
           "totalSeats": 30,
           "amenities": [
@@ -1105,12 +1046,11 @@
             "WIFI",
             "WATER_BOTTLE",
             "EMERGENCY_CONTACT_NUMBER",
-            "MOVIE",
             "TRACK_MY_BUS"
           ],
-          "startTime": "8:15",
+          "startTime": "8:00",
           "reachTime": "15:00",
-          "duration": "6.45"
+          "duration": "7"
         },
         {
           "busName": "orangeBus",
@@ -1120,37 +1060,28 @@
           "busType": "AC_SEATER",
           "totalSeats": 30,
           "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "MOVIE",
             "TRACK_MY_BUS"
           ],
-          "startTime": "8:00",
+          "startTime": "8:50",
           "reachTime": "17:00",
-          "duration": "9"
+          "duration": "8.10"
         },
         {
           "busName": "orangeBus",
           "sourceLocation": "Bangalore",
           "destinationLocation": "Chennai",
-          "perTicketCost": 600,
+          "perTicketCost": 660,
           "busType": "SLEEPER",
           "totalSeats": 30,
           "amenities": [
-            "BLANKETS",
             "CHARGING_POINT",
-            "WIFI",
             "WATER_BOTTLE",
             "EMERGENCY_CONTACT_NUMBER",
-            "MOVIE",
             "TRACK_MY_BUS"
           ],
-          "startTime": "16:00",
+          "startTime": "14:00",
           "reachTime": "23:00",
-          "duration": "7"
+          "duration": "9"
         },
         {
           "busName": "orangeBus",
@@ -1160,23 +1091,18 @@
           "busType": "NON_AC_SEATER",
           "totalSeats": 30,
           "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
             "EMERGENCY_CONTACT_NUMBER",
-            "MOVIE",
             "TRACK_MY_BUS"
           ],
-          "startTime": "3:00",
+          "startTime": "5:00",
           "reachTime": "12:00",
-          "duration": "9"
+          "duration": "7"
         },
         {
           "busName": "orangeBus",
           "sourceLocation": "Madurai",
           "destinationLocation": "Bangalore",
-          "perTicketCost": 700,
+          "perTicketCost": 1700,
           "busType": "SLEEPER",
           "totalSeats": 30,
           "amenities": [
@@ -1185,12 +1111,11 @@
             "WIFI",
             "WATER_BOTTLE",
             "EMERGENCY_CONTACT_NUMBER",
-            "MOVIE",
             "TRACK_MY_BUS"
           ],
-          "startTime": "08:15",
+          "startTime": "5:55",
           "reachTime": "15:00",
-          "duration": "6:45"
+          "duration": "9.05"
         },
         {
           "busName": "orangeBus",
@@ -1200,17 +1125,14 @@
           "busType": "SLEEPER",
           "totalSeats": 30,
           "amenities": [
-            "BLANKETS",
             "CHARGING_POINT",
-            "WIFI",
             "WATER_BOTTLE",
             "EMERGENCY_CONTACT_NUMBER",
-            "MOVIE",
             "TRACK_MY_BUS"
           ],
-          "startTime": "08:15",
+          "startTime": "11:00",
           "reachTime": "15:00",
-          "duration": "6:45"
+          "duration": "4"
         }
       ]
     },
@@ -1224,36 +1146,29 @@
           "busName": "orangeBus",
           "sourceLocation": "Chennai",
           "destinationLocation": "Bangalore",
-          "perTicketCost": 600,
+          "perTicketCost": 1600,
           "busType": "SLEEPER",
           "totalSeats": 30,
           "amenities": [
-            "BLANKETS",
             "CHARGING_POINT",
-            "WIFI",
             "WATER_BOTTLE",
             "EMERGENCY_CONTACT_NUMBER",
-            "MOVIE",
             "TRACK_MY_BUS"
           ],
-          "startTime": "8:15",
+          "startTime": "10:00",
           "reachTime": "15:00",
-          "duration": "6.45"
+          "duration": "5"
         },
         {
           "busName": "orangeBus",
           "sourceLocation": "Chennai",
           "destinationLocation": "Madurai",
-          "perTicketCost": 300,
+          "perTicketCost": 1300,
           "busType": "AC_SEATER",
           "totalSeats": 30,
           "amenities": [
             "BLANKETS",
-            "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
             "EMERGENCY_CONTACT_NUMBER",
-            "MOVIE",
             "TRACK_MY_BUS"
           ],
           "startTime": "8:00",
@@ -1264,16 +1179,13 @@
           "busName": "orangeBus",
           "sourceLocation": "Bangalore",
           "destinationLocation": "Chennai",
-          "perTicketCost": 600,
+          "perTicketCost": 1160,
           "busType": "SLEEPER",
           "totalSeats": 30,
           "amenities": [
-            "BLANKETS",
             "CHARGING_POINT",
-            "WIFI",
             "WATER_BOTTLE",
             "EMERGENCY_CONTACT_NUMBER",
-            "MOVIE",
             "TRACK_MY_BUS"
           ],
           "startTime": "16:00",
@@ -1288,37 +1200,24 @@
           "busType": "NON_AC_SEATER",
           "totalSeats": 30,
           "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "MOVIE",
-            "TRACK_MY_BUS"
           ],
-          "startTime": "3:00",
-          "reachTime": "12:00",
+          "startTime": "13:00",
+          "reachTime": "22:00",
           "duration": "9"
         },
         {
           "busName": "orangeBus",
           "sourceLocation": "Madurai",
           "destinationLocation": "Bangalore",
-          "perTicketCost": 700,
+          "perTicketCost": 660,
           "busType": "SLEEPER",
           "totalSeats": 30,
           "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "MOVIE",
-            "TRACK_MY_BUS"
+            "EMERGENCY_CONTACT_NUMBER"
           ],
-          "startTime": "08:15",
+          "startTime": "8:00",
           "reachTime": "15:00",
-          "duration": "6:45"
+          "duration": "7"
         },
         {
           "busName": "orangeBus",
@@ -1328,17 +1227,13 @@
           "busType": "SLEEPER",
           "totalSeats": 30,
           "amenities": [
-            "BLANKETS",
             "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
             "EMERGENCY_CONTACT_NUMBER",
-            "MOVIE",
             "TRACK_MY_BUS"
           ],
-          "startTime": "08:15",
-          "reachTime": "15:00",
-          "duration": "6:45"
+          "startTime": "16:00",
+          "reachTime": "23:00",
+          "duration": "7"
         }
       ]
     }

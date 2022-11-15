@@ -15,4 +15,9 @@ class BusViewModel: ViewModel() {
 
     var filteredBusList = listOf<Bus>()
 
+
+    lateinit var selectedBus: Bus
+
+    var selectedSeats = mutableListOf<String>()
+
 }

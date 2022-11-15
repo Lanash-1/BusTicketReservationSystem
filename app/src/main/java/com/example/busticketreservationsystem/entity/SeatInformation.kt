@@ -14,5 +14,6 @@ import androidx.room.PrimaryKey
 data class SeatInformation(
     @PrimaryKey(autoGenerate = true) val seatInfoId: Int,
     @ColumnInfo(index = true) var passengerId: Int,
-    var seatNo: String
+    var seatNo: Int,
+    var seatType: String
 )

@@ -86,11 +86,13 @@ class BusResultsFragment : Fragment() {
 
         busResultAdapter.setOnItemClickListener(object : OnItemClickListener{
             override fun onItemClick(position: Int) {
-                Toast.makeText(
-                    requireContext(),
-                    "Bus Selected: ${busViewModel.busList[position].busId}",
-                    Toast.LENGTH_SHORT
-                ).show()
+//                Toast.makeText(
+//                    requireContext(),
+//                    "Bus Selected: ${busViewModel.busList[position].busId}",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//
+                busViewModel.selectedBus = busViewModel.filteredBusList[position]
 
                 parentFragmentManager.commit {
                     replace(R.id.homePageFragmentContainer, SelectedBusFragment())

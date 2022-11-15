@@ -97,6 +97,8 @@ class SortAndFilterFragment : Fragment() {
                 }
             }
 
+            busViewModel.filteredBusList = currentBusList
+
             parentFragmentManager.commit {
                 replace(R.id.homePageFragmentContainer, BusResultsFragment())
                 parentFragmentManager.popBackStack()
@@ -108,7 +110,10 @@ class SortAndFilterFragment : Fragment() {
             busViewModel.filteredBusList = busViewModel.busList.filter {
                 it.sourceLocation == searchViewModel.sourceLocation && it.destination == searchViewModel.destinationLocation
             }
-
+            parentFragmentManager.commit {
+                replace(R.id.homePageFragmentContainer, BusResultsFragment())
+                parentFragmentManager.popBackStack()
+            }
         }
 
 

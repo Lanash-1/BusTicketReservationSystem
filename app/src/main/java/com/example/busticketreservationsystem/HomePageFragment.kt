@@ -61,6 +61,7 @@ class HomePageFragment : Fragment() {
 
         val dashBoardFragment = DashBoardFragment()
         val bookingHistoryFragment = BookingHistoryFragment()
+        val bookingHistoryGuestFragment = BookingHistoryGuestFragment()
         val myAccountFragment = MyAccountFragment()
         val myAccountGuestFragment = MyAccountGuestFragment()
 
@@ -75,7 +76,12 @@ class HomePageFragment : Fragment() {
                     setCurrentFragment(dashBoardFragment)
                 }
                 R.id.bookingHistory -> {
-                    setCurrentFragment(bookingHistoryFragment)
+//                    setCurrentFragment(bookingHistoryFragment)
+                    if(writeSharedPreferences.getString("status", "") == LoginStatus.LOGGED_IN.name){
+                        setCurrentFragment(bookingHistoryFragment)
+                    }else{
+                        setCurrentFragment(bookingHistoryGuestFragment)
+                    }
                 }
                 R.id.myAccount -> {
                     if(writeSharedPreferences.getString("status", "") == LoginStatus.LOGGED_IN.name){
@@ -87,7 +93,6 @@ class HomePageFragment : Fragment() {
             }
             true
         }
-
     }
 
     private fun setCurrentFragment(fragment: Fragment) {
