@@ -81,7 +81,6 @@ class BusResultsFragment : Fragment() {
         Toast.makeText(requireContext(), "${busViewModel.filteredBusList.size} buses found", Toast.LENGTH_SHORT).show()
 
 
-
         busResultAdapter.setBusList(busViewModel.filteredBusList)
         busResultAdapter.setPartnerList(busViewModel.partnerList)
 
@@ -92,6 +91,11 @@ class BusResultsFragment : Fragment() {
                     "Bus Selected: ${busViewModel.busList[position].busId}",
                     Toast.LENGTH_SHORT
                 ).show()
+
+                parentFragmentManager.commit {
+                    replace(R.id.homePageFragmentContainer, SelectedBusFragment())
+                    addToBackStack(null)
+                }
             }
         })
     }

@@ -112,10 +112,10 @@ class MainActivity : AppCompatActivity() {
 
             for(j in 0 until buses.length()){
 
-                println("BUS NAME: ${buses.getJSONObject(j).get("busname")}")
+                println("BUS NAME: ${buses.getJSONObject(j).get("busName")}")
 
                 val busId = busList.size
-                val busName = buses.getJSONObject(j).get("busname").toString()
+                val busName = buses.getJSONObject(j).get("busName").toString()
                 val sourceLocation = buses.getJSONObject(j).get("sourceLocation").toString()
                 val destinationLocation = buses.getJSONObject(j).get("destinationLocation").toString()
                 val perTicketCost = buses.getJSONObject(j).get("perTicketCost").toString().toDouble()

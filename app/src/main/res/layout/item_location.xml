@@ -14,6 +14,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:text="chennai"
         android:layout_marginLeft="16dp"
+        android:textColor="@color/black"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

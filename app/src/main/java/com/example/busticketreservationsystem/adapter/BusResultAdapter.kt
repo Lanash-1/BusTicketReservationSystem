@@ -54,6 +54,11 @@ class BusResultAdapter: RecyclerView.Adapter<BusResultAdapter.BusResultViewHolde
 //            reachTimeText.text = busList[position].reachTime
             seatsText.text = busList[position].availableSeats.toString() + " Seats"
 
+            startTimeText.text = busList[position].startTime
+            reachTimeText.text = busList[position].reachTime
+            durationText.text = busList[position].duration
+
+
 //            if(position%4 == 0){
 //                ratingText.text = "2.3"
 //                ratingText.setBackgroundColor(Color.parseColor("#D13140"))

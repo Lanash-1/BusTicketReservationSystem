@@ -12,6 +12,7 @@ import com.example.busticketreservationsystem.databinding.FragmentSortAndFilterB
 import com.example.busticketreservationsystem.enums.BusTypes
 import com.example.busticketreservationsystem.viewmodel.BusViewModel
 import com.example.busticketreservationsystem.viewmodel.SearchViewModel
+import com.example.busticketreservationsystem.viewmodel.SortAndFilterViewModel
 
 
 class SortAndFilterFragment : Fragment() {
@@ -20,9 +21,9 @@ class SortAndFilterFragment : Fragment() {
 
     private val busViewModel: BusViewModel by activityViewModels()
     private val searchViewModel: SearchViewModel by activityViewModels()
+    private val sortAndFilterViewModel: SortAndFilterViewModel by activityViewModels()
 
     private var selectedGenderRadioButton: RadioButton? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,7 +91,7 @@ class SortAndFilterFragment : Fragment() {
                     }
                     R.id.shortest_duration -> {
                         currentBusList = busViewModel.filteredBusList.sortedBy {
-                            it.duration.toInt()
+                            it.duration.toFloat()
                         }
                     }
                 }
