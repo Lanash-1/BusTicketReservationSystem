@@ -12,6 +12,7 @@ import com.example.busticketreservationsystem.databinding.FragmentSettingsBindin
 import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.viewmodel.UserDbViewModel
 import com.example.busticketreservationsystem.viewmodel.UserViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -57,6 +58,9 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.GONE
+
         (activity as AppCompatActivity)?.apply {
             val writeSharedPreferences: SharedPreferences = getSharedPreferences("LoginStatus",
                 Context.MODE_PRIVATE

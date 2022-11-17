@@ -17,6 +17,7 @@ import com.example.busticketreservationsystem.entity.Bus
 import com.example.busticketreservationsystem.enums.LocationOptions
 import com.example.busticketreservationsystem.interfaces.OnItemClickListener
 import com.example.busticketreservationsystem.viewmodel.SearchViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.flow.callbackFlow
 
 
@@ -138,6 +139,9 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.GONE
+
 
 
         binding.searchResultsLayout.layoutManager = LinearLayoutManager(requireContext())

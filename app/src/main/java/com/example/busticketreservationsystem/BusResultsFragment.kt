@@ -14,6 +14,7 @@ import com.example.busticketreservationsystem.interfaces.OnItemClickListener
 import com.example.busticketreservationsystem.viewmodel.BusDbViewModel
 import com.example.busticketreservationsystem.viewmodel.BusViewModel
 import com.example.busticketreservationsystem.viewmodel.SearchViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class BusResultsFragment : Fragment() {
@@ -71,6 +72,9 @@ class BusResultsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.GONE
+
 
         binding.busResultsRv.layoutManager = LinearLayoutManager(requireContext())
         binding.busResultsRv.adapter = busResultAdapter

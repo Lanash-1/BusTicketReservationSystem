@@ -13,6 +13,7 @@ import com.example.busticketreservationsystem.enums.BusTypes
 import com.example.busticketreservationsystem.viewmodel.BusViewModel
 import com.example.busticketreservationsystem.viewmodel.SearchViewModel
 import com.example.busticketreservationsystem.viewmodel.SortAndFilterViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class SortAndFilterFragment : Fragment() {
@@ -60,6 +61,9 @@ class SortAndFilterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 //        Toast.makeText(requireContext(), "on create - ${parentFragmentManager.backStackEntryCount}", Toast.LENGTH_SHORT).show()
+
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.GONE
+
 
         var currentBusList = busViewModel.filteredBusList
 

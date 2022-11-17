@@ -1,11 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clickable="true"
     android:focusable="true"
     android:background="?android:selectableItemBackground">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/source_location_text"
+        android:text="Chennai"
+        android:layout_margin="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dash"
+        android:text=" - "
+        app:layout_constraintLeft_toRightOf="@id/source_location_text"
+        app:layout_constraintTop_toTopOf="@id/source_location_text"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textStyle="bold|italic"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/destination_location_text"
+        android:text="Bangalore"
+        app:layout_constraintLeft_toRightOf="@id/dash"
+        app:layout_constraintTop_toTopOf="@id/source_location_text"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/price_text"
+        android:text="2700"
+        app:layout_constraintTop_toTopOf="@id/source_location_text"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginEnd="16dp"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textStyle="bold|italic"
+        android:drawableStart="@drawable/ic_baseline_currency_rupee_24"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/start_time_text"
+        android:text="21:15"
+        app:layout_constraintStart_toStartOf="@id/source_location_text"
+        app:layout_constraintTop_toBottomOf="@id/source_location_text"
+        android:layout_marginTop="8dp"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dash2"
+        android:text=" - "
+        app:layout_constraintLeft_toRightOf="@id/start_time_text"
+        app:layout_constraintTop_toTopOf="@id/start_time_text"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/reach_time_text"
+        android:text="22:45"
+        app:layout_constraintTop_toTopOf="@id/start_time_text"
+        app:layout_constraintStart_toEndOf="@id/dash2"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/travels_text"
+        android:text="KGF Tours and Travels"
+        app:layout_constraintStart_toStartOf="@id/source_location_text"
+        app:layout_constraintTop_toBottomOf="@id/start_time_text"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+         />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/date_date_text"
+        android:text="Nov 12"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@id/price_text"
+        app:layout_constraintTop_toBottomOf="@id/price_text"
+        app:layout_constraintStart_toStartOf="@id/price_text"
+        android:layout_marginTop="8dp"
+        android:textAlignment="center"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/year_text"
+        android:text="2022"
+        app:layout_constraintTop_toBottomOf="@id/date_date_text"
+        app:layout_constraintStart_toStartOf="@id/date_date_text"
+        app:layout_constraintEnd_toEndOf="@id/date_date_text"
+        android:textSize="14sp"
+        android:textColor="@color/black" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

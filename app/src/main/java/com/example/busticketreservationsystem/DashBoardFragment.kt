@@ -86,6 +86,9 @@ class DashBoardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.VISIBLE
+
+
         Toast.makeText(
             requireContext(),
             "on create - ${parentFragmentManager.backStackEntryCount}",

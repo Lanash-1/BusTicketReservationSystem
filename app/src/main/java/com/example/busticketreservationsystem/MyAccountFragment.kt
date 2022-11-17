@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
@@ -25,6 +26,7 @@ import com.example.busticketreservationsystem.viewmodel.DateViewModel
 import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
 import com.example.busticketreservationsystem.viewmodel.SearchViewModel
 import com.example.busticketreservationsystem.viewmodel.UserViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.chip.Chip
 
 class MyAccountFragment : Fragment() {
@@ -69,6 +71,23 @@ class MyAccountFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.VISIBLE
+
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true){
+                override fun handleOnBackPressed() {
+                    Toast.makeText(requireContext(), "back presses", Toast.LENGTH_SHORT).show()
+                    parentFragmentManager.commit {
+                        replace(R.id.homePageFragmentContainer, DashBoardFragment())
+                    }
+                    requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).selectedItemId = R.id.dashboard
+
+                }
+            }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
 
         editProfileChip = view.findViewById(R.id.edit_profile_chip)
         accountLayout = view.findViewById(R.id.account_profile_layout)

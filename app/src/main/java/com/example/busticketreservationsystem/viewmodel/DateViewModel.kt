@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 
 class DateViewModel: ViewModel() {
 
-
     var date = 0
     var month = 0
     var year = 0
@@ -13,7 +12,5 @@ class DateViewModel: ViewModel() {
     var edited = MutableLiveData<Boolean>()
 
     var travelEdited = MutableLiveData<Boolean>()
-
-
 
 }

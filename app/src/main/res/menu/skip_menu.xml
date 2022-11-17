@@ -5,6 +5,7 @@
     <item
         android:title="skip"
         android:id="@+id/skip"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        />
 
 </menu>

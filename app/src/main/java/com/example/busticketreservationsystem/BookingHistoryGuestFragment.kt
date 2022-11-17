@@ -5,9 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import com.example.busticketreservationsystem.databinding.FragmentBookingHistoryGuestBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class BookingHistoryGuestFragment : Fragment() {
@@ -37,10 +40,25 @@ class BookingHistoryGuestFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.VISIBLE
+
         binding.loginOrRegisterButton.setOnClickListener {
             parentFragmentManager.commit {
                 replace(R.id.main_fragment_container, LoginFragment())
             }
         }
+
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true){
+                override fun handleOnBackPressed() {
+                    Toast.makeText(requireContext(), "back presses", Toast.LENGTH_SHORT).show()
+                    parentFragmentManager.commit {
+                        replace(R.id.homePageFragmentContainer, DashBoardFragment())
+                    }
+                    requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).selectedItemId = R.id.dashboard
+                }
+            }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 }

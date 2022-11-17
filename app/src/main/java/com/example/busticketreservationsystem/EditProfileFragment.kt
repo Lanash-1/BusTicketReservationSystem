@@ -14,6 +14,7 @@ import com.example.busticketreservationsystem.enums.Gender
 import com.example.busticketreservationsystem.viewmodel.DateViewModel
 import com.example.busticketreservationsystem.viewmodel.UserDbViewModel
 import com.example.busticketreservationsystem.viewmodel.UserViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -60,6 +61,8 @@ class EditProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.GONE
 
         binding.emailInputLayout.editText?.setText(userViewModel.user.emailId)
         binding.usernameInputLayout.editText?.setText(userViewModel.user.username)

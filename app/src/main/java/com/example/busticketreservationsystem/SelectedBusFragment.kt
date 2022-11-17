@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
@@ -16,6 +17,7 @@ import com.example.busticketreservationsystem.databinding.FragmentSelectedBusBin
 import com.example.busticketreservationsystem.databinding.ItemSeatBinding
 import com.example.busticketreservationsystem.interfaces.OnItemClickListener
 import com.example.busticketreservationsystem.viewmodel.BusViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class SelectedBusFragment : Fragment() {
 
@@ -57,6 +59,9 @@ class SelectedBusFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.GONE
+
 
         binding.selectAndContinueText.setOnClickListener {
             parentFragmentManager.commit {
@@ -106,7 +111,13 @@ class SelectedBusFragment : Fragment() {
 
         val seats = busViewModel.selectedSeats.toString()
 
-        binding.seatNameText.text = seats
+
+        if(busViewModel.selectedSeats.size > 1){
+            binding.seatNameText.text = "${busViewModel.selectedSeats.size} Seats | $seats"
+        }else{
+            binding.seatNameText.text = "${busViewModel.selectedSeats.size} Seat | $seats"
+        }
+
 
         binding.priceText.text = "₹ ${(busViewModel.selectedBus.perTicketCost * busViewModel.selectedSeats.size)}"
 
@@ -120,17 +131,21 @@ class SelectedBusFragment : Fragment() {
             override fun onItemClick(position: Int) {
 
                 if(seatsList[position] == 0){
-                    seatsList[position] = 1
-                    val row = position/4 + 1
-                    when(position%4){
-                        0 -> {
-                            busViewModel.selectedSeats.add("LW$row")
-                        }
-                        2 -> {
-                            busViewModel.selectedSeats.add("RA$row")
-                        }
-                        3 -> {
-                            busViewModel.selectedSeats.add("RW$row")
+                    if(busViewModel.selectedSeats.size == 6){
+                        Toast.makeText(requireContext(), "Maximum 6 seats only allowed", Toast.LENGTH_SHORT).show()
+                    }else {
+                        seatsList[position] = 1
+                        val row = position / 4 + 1
+                        when (position % 4) {
+                            0 -> {
+                                busViewModel.selectedSeats.add("LW$row")
+                            }
+                            2 -> {
+                                busViewModel.selectedSeats.add("RA$row")
+                            }
+                            3 -> {
+                                busViewModel.selectedSeats.add("RW$row")
+                            }
                         }
                     }
                 }else if(seatsList[position] == 1){
@@ -152,7 +167,13 @@ class SelectedBusFragment : Fragment() {
 
                 val seats = busViewModel.selectedSeats.toString()
 
-                binding.seatNameText.text = seats
+                if(busViewModel.selectedSeats.size > 1){
+                    binding.seatNameText.text = "${busViewModel.selectedSeats.size} Seats | $seats"
+                }else{
+                    binding.seatNameText.text = "${busViewModel.selectedSeats.size} Seat | $seats"
+                }
+
+//                binding.seatNameText.text = seats
 
                 binding.priceText.text = "₹ ${(busViewModel.selectedBus.perTicketCost * busViewModel.selectedSeats.size)}"
 
@@ -161,7 +182,6 @@ class SelectedBusFragment : Fragment() {
                 }else{
                     binding.nextCardLayout.visibility = View.VISIBLE
                 }
-                println("SEATS: ${busViewModel.selectedSeats}")
                 busSeatsAdapter.setBusSeatsList(seatsList)
                 busSeatsAdapter.notifyDataSetChanged()
             }

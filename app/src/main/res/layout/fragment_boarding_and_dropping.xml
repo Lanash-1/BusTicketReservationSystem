@@ -3,11 +3,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BoardingAndDroppingFragment">
+    tools:context=".BoardingAndDroppingFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/boarding_dropping_tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabMode="fixed"
+        >
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/boarding_dropping_viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/next_Button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/boarding_dropping_tabLayout" />
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="coming soon ...."/>
+        android:layout_height="wrap_content"
+        android:minHeight="0dp"
+        android:minWidth="0dp"
+        android:id="@+id/next_Button"
+        android:enabled="false"
+        android:text="Continue"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:textAlignment="center"
+        android:drawableEnd="@drawable/ic_baseline_keyboard_double_arrow_right_24"
+        android:drawableTint="@color/white"
+        android:padding="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@color/customRed"
+        android:foreground="?android:selectableItemBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/boarding_dropping_viewPager"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
