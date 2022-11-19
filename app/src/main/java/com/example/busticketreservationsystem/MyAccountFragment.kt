@@ -91,6 +91,12 @@ class MyAccountFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
 
+        if(loginStatusViewModel.status != LoginStatus.LOGGED_IN){
+            binding.accountProfileLayout.visibility = View.GONE
+        }else{
+            binding.accountProfileLayout.visibility = View.VISIBLE
+        }
+
         editProfileChip = view.findViewById(R.id.edit_profile_chip)
         accountLayout = view.findViewById(R.id.account_profile_layout)
 
@@ -118,6 +124,7 @@ class MyAccountFragment : Fragment() {
 
         myAccountRecyclerView = view.findViewById(R.id.account_options_recyclerView)
         myAccountRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        myAccountAdapter.setLoginStatus(loginStatusViewModel.status)
 
         myAccountAdapter.setOnItemClickListener(object: OnItemClickListener{
             override fun onItemClick(position: Int) {
@@ -142,8 +149,14 @@ class MyAccountFragment : Fragment() {
                         Toast.makeText(requireContext(), "Feedback Fragment", Toast.LENGTH_SHORT)
                             .show()
                     }
-                    MyAccountOptions.LOGOUT -> {
-                        logoutAction()
+                    MyAccountOptions.LOGIN_LOGOUT -> {
+                        if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
+                            logoutAction()
+                        }else{
+                            parentFragmentManager.commit {
+                                replace(R.id.main_fragment_container, LoginFragment())
+                            }
+                        }
                     }
                 }
             }

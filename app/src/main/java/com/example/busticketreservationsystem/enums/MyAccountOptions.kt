@@ -5,5 +5,5 @@ enum class MyAccountOptions {
     SETTINGS,
     ABOUT_US,
     FEEDBACK,
-    LOGOUT
+    LOGIN_LOGOUT
 }

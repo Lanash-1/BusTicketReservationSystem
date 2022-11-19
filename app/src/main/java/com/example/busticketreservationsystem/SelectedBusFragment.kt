@@ -224,7 +224,5 @@ class SelectedBusFragment : Fragment() {
                 busSeatsAdapter.notifyDataSetChanged()
             }
         })
-
     }
-
 }
