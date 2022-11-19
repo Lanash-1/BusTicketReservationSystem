@@ -14,5 +14,6 @@ import androidx.room.PrimaryKey
     )
 data class RecentlyViewed(
     @PrimaryKey(autoGenerate = true) val recentId: Int,
-    @ColumnInfo(index = true) var busId: Int
+    @ColumnInfo(index = true) var busId: Int,
+    var date: String
 )

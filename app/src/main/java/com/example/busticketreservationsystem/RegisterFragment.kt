@@ -80,7 +80,7 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as AppCompatActivity)?.apply {
+        (activity as AppCompatActivity).apply {
             val writeSharedPreferences: SharedPreferences = getSharedPreferences("LoginStatus", MODE_PRIVATE)
             editor = writeSharedPreferences.edit()
         }

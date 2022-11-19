@@ -4,6 +4,8 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Patterns
 import android.view.*
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
@@ -63,6 +65,20 @@ class EditProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.GONE
+
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true){
+                override fun handleOnBackPressed() {
+//                    Toast.makeText(requireContext(), "back presses", Toast.LENGTH_SHORT).show()
+                    parentFragmentManager.commit {
+                        replace(R.id.homePageFragmentContainer, MyAccountFragment())
+                    }
+//                    requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).selectedItemId = R.id.dashboard
+                }
+            }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
 
         binding.emailInputLayout.editText?.setText(userViewModel.user.emailId)
         binding.usernameInputLayout.editText?.setText(userViewModel.user.username)

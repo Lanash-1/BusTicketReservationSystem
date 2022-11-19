@@ -74,6 +74,8 @@ class MyAccountFragment : Fragment() {
 
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.VISIBLE
 
+
+        // handle back press in this fragment
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true){
                 override fun handleOnBackPressed() {
@@ -124,6 +126,7 @@ class MyAccountFragment : Fragment() {
                         parentFragmentManager.commit {
                             replace(R.id.homePageFragmentContainer, BookingHistoryFragment())
                         }
+                        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).selectedItemId = R.id.bookingHistory
                     }
                     MyAccountOptions.SETTINGS -> {
                         parentFragmentManager.commit {

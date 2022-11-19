@@ -86,15 +86,15 @@ class DashBoardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+//        println("LOGIN STATUS: ${loginStatusViewModel.status}")
+
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.VISIBLE
 
-
-        Toast.makeText(
-            requireContext(),
-            "on create - ${parentFragmentManager.backStackEntryCount}",
-            Toast.LENGTH_SHORT
-        ).show()
-
+//        Toast.makeText(
+//            requireContext(),
+//            "on create - ${parentFragmentManager.backStackEntryCount}",
+//            Toast.LENGTH_SHORT
+//        ).show()
 
         searchBusButton = view.findViewById(R.id.searchBus_button)
         switchRoutes = view.findViewById(R.id.switchCircle)
@@ -118,8 +118,6 @@ class DashBoardFragment : Fragment() {
 //        var destination = searchViewModel.destinationLocation
 
         setLocation()
-
-
 
         switchRoutes.setOnClickListener {
             val temp = searchViewModel.sourceLocation
@@ -166,6 +164,13 @@ class DashBoardFragment : Fragment() {
                 binding.dateText.setTextColor(Color.parseColor("#808080"))
             }
         })
+
+        binding.viewAllText.setOnClickListener {
+            parentFragmentManager.commit {
+                replace(R.id.homePageFragmentContainer, RecentlyViewedFragment())
+                addToBackStack(null)
+            }
+        }
 
     }
 

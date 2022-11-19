@@ -36,7 +36,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/completeProfile_text"
-        app:shapeAppearance="@style/Cut"
+        app:shapeAppearance="@style/Rounded"
         >
 
         <com.google.android.material.textfield.TextInputEditText
@@ -61,7 +61,7 @@
         app:layout_constraintStart_toStartOf="@id/username_input_layout"
         app:layout_constraintEnd_toEndOf="@id/username_input_layout"
         app:layout_constraintTop_toBottomOf="@id/username_input_layout"
-        app:shapeAppearance="@style/Cut"
+        app:shapeAppearance="@style/Rounded"
         >
 
         <com.google.android.material.textfield.TextInputEditText

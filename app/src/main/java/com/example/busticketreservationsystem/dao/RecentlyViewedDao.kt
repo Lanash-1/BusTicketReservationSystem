@@ -7,6 +7,8 @@ import com.example.busticketreservationsystem.entity.RecentlyViewed
 
 @Dao
 interface RecentlyViewedDao {
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(recentlyViewed: RecentlyViewed)
+
 }

@@ -13,6 +13,7 @@ import com.example.busticketreservationsystem.entity.Partners
 import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.viewmodel.BusDbViewModel
 import com.example.busticketreservationsystem.viewmodel.BusViewModel
+import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.json.JSONArray
@@ -22,6 +23,7 @@ class MainActivity : AppCompatActivity() {
 
     private val busDbViewModel: BusDbViewModel by viewModels()
     private val busViewModel: BusViewModel by viewModels()
+    private val loginStatusViewModel: LoginStatusViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,30 +44,40 @@ class MainActivity : AppCompatActivity() {
         if(savedInstanceState == null) {
             when (writeSharedPreferences.getString("status", "")) {
                 "" -> {
+                    println("EMPTY")
                     getBusData()
                     editor.putString("status", LoginStatus.NEW.name)
+                    loginStatusViewModel.status = LoginStatus.NEW
                     editor.apply()
                     supportFragmentManager.commit {
                         replace(R.id.main_fragment_container, RegisterFragment())
                     }
                 }
                 LoginStatus.SKIPPED.name -> {
+                    println("SKIPPED")
+                    loginStatusViewModel.status = LoginStatus.SKIPPED
                     supportFragmentManager.commit {
                         replace(R.id.main_fragment_container, HomePageFragment())
                     }
                 }
                 LoginStatus.LOGGED_IN.name -> {
+                    println("LOGGED IN")
+                    loginStatusViewModel.status = LoginStatus.LOGGED_IN
                     supportFragmentManager.commit {
                         replace(R.id.main_fragment_container, HomePageFragment())
                     }
                 }
                 LoginStatus.NEW.name -> {
+                    println("NEW")
                     getBusData()
+                    loginStatusViewModel.status = LoginStatus.NEW
                     supportFragmentManager.commit {
                         replace(R.id.main_fragment_container, RegisterFragment())
                     }
                 }
                 LoginStatus.LOGGED_OUT.name -> {
+                    println("LOGGED OUT")
+                    loginStatusViewModel.status = LoginStatus.LOGGED_OUT
                     supportFragmentManager.commit {
                         replace(R.id.main_fragment_container, LoginFragment())
                     }

@@ -68,7 +68,6 @@ class SortAndFilterFragment : Fragment() {
         var currentBusList = busViewModel.filteredBusList
 
 
-
         binding.sortByRadioGroup.setOnCheckedChangeListener { _, id ->
             selectedGenderRadioButton = view.findViewById(id)
         }

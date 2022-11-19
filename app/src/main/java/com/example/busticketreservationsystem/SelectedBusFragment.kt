@@ -2,12 +2,10 @@ package com.example.busticketreservationsystem
 
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
@@ -16,6 +14,7 @@ import com.example.busticketreservationsystem.adapter.BusSeatsAdapter
 import com.example.busticketreservationsystem.databinding.FragmentSelectedBusBinding
 import com.example.busticketreservationsystem.databinding.ItemSeatBinding
 import com.example.busticketreservationsystem.interfaces.OnItemClickListener
+import com.example.busticketreservationsystem.viewmodel.BookingViewModel
 import com.example.busticketreservationsystem.viewmodel.BusViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -26,6 +25,7 @@ class SelectedBusFragment : Fragment() {
     private val busSeatsAdapter = BusSeatsAdapter()
 
     private val busViewModel: BusViewModel by activityViewModels()
+    private val bookingViewModel: BookingViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +44,10 @@ class SelectedBusFragment : Fragment() {
         return binding.root
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.selected_bus_menu, menu)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home -> {
@@ -51,6 +55,12 @@ class SelectedBusFragment : Fragment() {
                 parentFragmentManager.commit {
                     replace(R.id.homePageFragmentContainer, BusResultsFragment())
                     parentFragmentManager.popBackStack()
+                }
+            }
+            R.id.info_icon -> {
+                parentFragmentManager.commit {
+                    replace(R.id.homePageFragmentContainer, BusInfoFragment())
+                    addToBackStack(null)
                 }
             }
         }
@@ -62,10 +72,31 @@ class SelectedBusFragment : Fragment() {
 
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.GONE
 
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true){
+                override fun handleOnBackPressed() {
+//                    Toast.makeText(requireContext(), "back presses", Toast.LENGTH_SHORT).show()
+                    parentFragmentManager.commit {
+                        replace(R.id.homePageFragmentContainer, BusResultsFragment())
+                        parentFragmentManager.popBackStack()
+
+                    }
+//                    requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).selectedItemId = R.id.dashboard
+                }
+            }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
         binding.selectAndContinueText.setOnClickListener {
             parentFragmentManager.commit {
                 replace(R.id.homePageFragmentContainer, BoardingAndDroppingFragment())
+                addToBackStack(null)
+            }
+        }
+
+        binding.aboutBusButton.setOnClickListener {
+            parentFragmentManager.commit {
+                replace(R.id.homePageFragmentContainer, BusInfoFragment())
                 addToBackStack(null)
             }
         }
@@ -123,8 +154,10 @@ class SelectedBusFragment : Fragment() {
 
         if(busViewModel.selectedSeats.size == 0){
             binding.nextCardLayout.visibility = View.GONE
+            binding.aboutBusCardLayout.visibility = View.VISIBLE
         }else{
             binding.nextCardLayout.visibility = View.VISIBLE
+            binding.aboutBusCardLayout.visibility = View.GONE
         }
 
         busSeatsAdapter.setOnItemClickListener(object: OnItemClickListener{
@@ -175,12 +208,17 @@ class SelectedBusFragment : Fragment() {
 
 //                binding.seatNameText.text = seats
 
-                binding.priceText.text = "₹ ${(busViewModel.selectedBus.perTicketCost * busViewModel.selectedSeats.size)}"
+                bookingViewModel.totalTicketCost = busViewModel.selectedBus.perTicketCost * busViewModel.selectedSeats.size
+                bookingViewModel.selectedSeats = busViewModel.selectedSeats
+
+                binding.priceText.text = "₹ ${bookingViewModel.totalTicketCost}"
 
                 if(busViewModel.selectedSeats.size == 0){
                     binding.nextCardLayout.visibility = View.GONE
+                    binding.aboutBusCardLayout.visibility = View.VISIBLE
                 }else{
                     binding.nextCardLayout.visibility = View.VISIBLE
+                    binding.aboutBusCardLayout.visibility = View.GONE
                 }
                 busSeatsAdapter.setBusSeatsList(seatsList)
                 busSeatsAdapter.notifyDataSetChanged()

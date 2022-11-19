@@ -3,6 +3,7 @@ package com.example.busticketreservationsystem
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
@@ -75,6 +76,21 @@ class BusResultsFragment : Fragment() {
 
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.GONE
 
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true){
+                override fun handleOnBackPressed() {
+//                    Toast.makeText(requireContext(), "back presses", Toast.LENGTH_SHORT).show()
+                    parentFragmentManager.commit {
+                        replace(R.id.homePageFragmentContainer, DashBoardFragment())
+                        parentFragmentManager.popBackStack()
+
+                    }
+//                    requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).selectedItemId = R.id.dashboard
+                }
+            }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
 
         binding.busResultsRv.layoutManager = LinearLayoutManager(requireContext())
         binding.busResultsRv.adapter = busResultAdapter
@@ -83,7 +99,6 @@ class BusResultsFragment : Fragment() {
 //            it.sourceLocation == searchViewModel.sourceLocation && it.destination == searchViewModel.destinationLocation
 //        }
         Toast.makeText(requireContext(), "${busViewModel.filteredBusList.size} buses found", Toast.LENGTH_SHORT).show()
-
 
         busResultAdapter.setBusList(busViewModel.filteredBusList)
         busResultAdapter.setPartnerList(busViewModel.partnerList)

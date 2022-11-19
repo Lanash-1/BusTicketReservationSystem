@@ -44,14 +44,13 @@ class HomePageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as AppCompatActivity)?.apply {
+        (activity as AppCompatActivity).apply {
             writeSharedPreferences= getSharedPreferences("LoginStatus", MODE_PRIVATE)
         }
 
         when(writeSharedPreferences.getString("status", "")){
             LoginStatus.LOGGED_IN.name -> {
                 GlobalScope.launch {
-                    println("ID - ${writeSharedPreferences.getInt("userId", 0)}")
                     userViewModel.user = userDbViewModel.getUserAccount(writeSharedPreferences.getInt("userId", 0))
                 }
             }

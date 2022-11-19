@@ -9,12 +9,14 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
-import com.example.busticketreservationsystem.databinding.FragmentBookingDetailsGuestBinding
+import com.example.busticketreservationsystem.databinding.FragmentBusInfoBinding
+import com.example.busticketreservationsystem.databinding.FragmentRecentlyViewedBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class BookingDetailsGuestFragment : Fragment() {
 
-    private lateinit var binding: FragmentBookingDetailsGuestBinding
+class BusInfoFragment : Fragment() {
+
+    private lateinit var binding: FragmentBusInfoBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,12 +28,12 @@ class BookingDetailsGuestFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_booking_details_guest, container, false)
-        (activity as AppCompatActivity).supportActionBar?.apply {
+//        return inflater.inflate(R.layout.fragment_bus_info, container, false)
+        (activity as AppCompatActivity).supportActionBar?.apply{
+            title = "Bus Info"
             setDisplayHomeAsUpEnabled(true)
-            title = "Login to continue"
         }
-        binding = FragmentBookingDetailsGuestBinding.inflate(inflater, container, false)
+        binding = FragmentBusInfoBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -39,7 +41,7 @@ class BookingDetailsGuestFragment : Fragment() {
         when(item.itemId){
             android.R.id.home -> {
                 parentFragmentManager.commit {
-                    replace(R.id.homePageFragmentContainer, BoardingAndDroppingFragment())
+                    replace(R.id.homePageFragmentContainer, SelectedBusFragment())
                     parentFragmentManager.popBackStack()
                 }
             }
@@ -50,27 +52,26 @@ class BookingDetailsGuestFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.GONE
 
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true){
                 override fun handleOnBackPressed() {
-//                    Toast.makeText(requireContext(), "back presses", Toast.LENGTH_SHORT).show()
                     parentFragmentManager.commit {
-                        replace(R.id.homePageFragmentContainer, BoardingAndDroppingFragment())
+                        replace(R.id.homePageFragmentContainer, SelectedBusFragment())
                         parentFragmentManager.popBackStack()
                     }
-//                    requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).selectedItemId = R.id.dashboard
-
                 }
             }
+
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
-        binding.loginRegisterButton.setOnClickListener {
-            parentFragmentManager.commit {
-                replace(R.id.main_fragment_container, LoginFragment())
-            }
-        }
+
+
+        
+
     }
+
 
 }

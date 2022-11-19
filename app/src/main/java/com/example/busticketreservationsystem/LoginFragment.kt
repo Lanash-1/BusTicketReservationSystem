@@ -108,7 +108,6 @@ class LoginFragment : Fragment() {
                 addToBackStack(null)
             }
         }
-
     }
 
     private fun checkLogin() {

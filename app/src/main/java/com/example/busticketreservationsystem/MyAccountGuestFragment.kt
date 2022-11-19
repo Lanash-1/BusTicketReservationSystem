@@ -47,7 +47,6 @@ class MyAccountGuestFragment : Fragment() {
                         replace(R.id.homePageFragmentContainer, DashBoardFragment())
                     }
                     requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).selectedItemId = R.id.dashboard
-
                 }
             }
 

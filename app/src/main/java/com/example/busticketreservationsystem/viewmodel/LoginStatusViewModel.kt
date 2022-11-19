@@ -5,6 +5,6 @@ import com.example.busticketreservationsystem.enums.LoginStatus
 
 class LoginStatusViewModel: ViewModel() {
 
-    var status: LoginStatus = LoginStatus.NEW
+    lateinit var status: LoginStatus
 
 }

@@ -10,5 +10,6 @@
     <color name="customYellow">#F8C31F</color>
     <color name="customBlue">#0E1B38</color>
     <color name="customRed">#D13140</color>
+    <color name="seatGreen">#5AB351</color>
 <!--    <color name="redForStatus">#D13140</color>-->
 </resources>

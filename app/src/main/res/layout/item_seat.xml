@@ -8,7 +8,7 @@
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:id="@+id/available_seat_icon"
-        android:src="@drawable/ic_baseline_event_seat_24"
+        android:src="@drawable/ic_baseline_event_seat_24_gray"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".DashBoardFragment">
+    tools:context=".DashBoardFragment"
+    android:background="#f8f8f8">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -13,6 +14,7 @@
 
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/bus_search_card_view"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -195,6 +197,44 @@
 
 
     </androidx.cardview.widget.CardView>
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/recently_viewed_text"
+            android:text="Recently Viewed"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bus_search_card_view"
+            android:layout_margin="16dp"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:padding="8dp"
+            />
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/view_all_text"
+            android:text="View All"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/recently_viewed_text"
+            android:layout_marginRight="16dp"
+            android:textSize="16sp"
+            android:textColor="#000099"
+            android:textStyle="bold"
+            android:padding="8dp" />
+        
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/recently_viewed_recycler_view"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recently_viewed_text"
+            android:layout_marginTop="8dp"
+            tools:listitem="@layout/item_recently_viewed"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
