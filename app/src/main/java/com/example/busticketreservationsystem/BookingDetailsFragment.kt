@@ -15,6 +15,8 @@ import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.busticketreservationsystem.adapter.PassengerInfoAdapter
 import com.example.busticketreservationsystem.databinding.FragmentBookingDetailsBinding
+import com.example.busticketreservationsystem.enums.Gender
+import com.example.busticketreservationsystem.interfaces.PassengerInfoChangeListener
 import com.example.busticketreservationsystem.viewmodel.BookingViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -91,6 +93,21 @@ class BookingDetailsFragment : Fragment() {
         binding.passengerInfoRecyclerView.adapter = passengerInfoAdapter
         passengerInfoAdapter.setSelectedSeats(bookingViewModel.selectedSeats)
         binding.passengerInfoRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        passengerInfoAdapter.setPassengerInfoChangeListener(object: PassengerInfoChangeListener{
+            override fun onPassengerNameChanged(position: Int, name: String) {
+                println("POSITION - $position \n Name: $name")
+            }
+
+            override fun onPassengerAgeChanged(position: Int, age: Int) {
+                println("POSITION - $position \n Age: $age")
+            }
+
+            override fun onPassengerGenderSelected(position: Int, gender: Gender) {
+                println("POSITION - $position \n GENDER: ${gender.name}")
+            }
+
+        })
 
     }
 }
