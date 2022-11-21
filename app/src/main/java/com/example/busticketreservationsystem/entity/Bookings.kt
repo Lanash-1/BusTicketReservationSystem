@@ -16,17 +16,11 @@ import androidx.room.PrimaryKey
         entity = User::class,
         childColumns = ["userId"],
         parentColumns = ["userId"]
-    ),
-    ForeignKey(
-        entity = BusTimeInfo::class,
-        childColumns = ["busTimeInfoId"],
-        parentColumns = ["busTimeInfoId"]
     )])
 data class Bookings(
     @PrimaryKey(autoGenerate = true) val bookingId: Int,
     @ColumnInfo(index = true) var userId: Int,
     @ColumnInfo(index = true) var busId: Int,
-    @ColumnInfo(index = true) var busTimeInfoId: Int,
     var boardingPoint: String,
     var droppingPoint: String,
     var totalCost: Double,

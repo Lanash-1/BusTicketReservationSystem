@@ -19,6 +19,11 @@ interface BusDao {
     @Query("UPDATE bus_table SET ratingPeopleCount=:peopleCount, ratingOverall=:overallRating WHERE busId LIKE :busId")
     fun updateBusRating(peopleCount: Int, overallRating: Double, busId: Int)
 
+    @Query("UPDATE bus_table SET availableSeats=:count WHERE busId LIKE :busId")
+    fun updateAvailableSeats(count: Int, busId: Int)
+
+    @Query("SELECT * FROM bus_table WHERE busId LIKE :busId")
+    fun getBus(busId: Int): Bus
 
 
 }

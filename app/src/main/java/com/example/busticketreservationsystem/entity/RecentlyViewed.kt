@@ -10,10 +10,16 @@ import androidx.room.PrimaryKey
         entity = Bus::class,
         childColumns = ["busId"],
         parentColumns = ["busId"]
+    ),
+    ForeignKey(
+        entity = User::class,
+        childColumns = ["userId"],
+        parentColumns = ["userId"]
     )]
     )
 data class RecentlyViewed(
     @PrimaryKey(autoGenerate = true) val recentId: Int,
     @ColumnInfo(index = true) var busId: Int,
+    @ColumnInfo(index = true) var userId: Int,
     var date: String
 )

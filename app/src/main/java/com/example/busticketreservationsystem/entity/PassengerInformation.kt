@@ -16,5 +16,6 @@ data class PassengerInformation(
     @ColumnInfo(index = true) var bookingId: Int,
     var passengerName: String,
     var passengerAge: Int,
-    var passengerGender: String
+    var passengerGender: String,
+    var passengerSeatCode: String
 )

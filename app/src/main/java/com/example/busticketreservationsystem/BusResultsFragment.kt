@@ -11,11 +11,12 @@ import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.busticketreservationsystem.adapter.BusResultAdapter
 import com.example.busticketreservationsystem.databinding.FragmentBusResultsBinding
+import com.example.busticketreservationsystem.entity.RecentlyViewed
 import com.example.busticketreservationsystem.interfaces.OnItemClickListener
-import com.example.busticketreservationsystem.viewmodel.BusDbViewModel
-import com.example.busticketreservationsystem.viewmodel.BusViewModel
-import com.example.busticketreservationsystem.viewmodel.SearchViewModel
+import com.example.busticketreservationsystem.viewmodel.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class BusResultsFragment : Fragment() {
@@ -26,6 +27,10 @@ class BusResultsFragment : Fragment() {
     private val busDbViewModel: BusDbViewModel by activityViewModels()
     private val searchViewModel: SearchViewModel by activityViewModels()
     private val busViewModel: BusViewModel by activityViewModels()
+    private val userViewModel: UserViewModel by activityViewModels()
+    private val bookingViewModel: BookingViewModel by activityViewModels()
+
+
 
     private var busResultAdapter = BusResultAdapter()
 
@@ -113,6 +118,9 @@ class BusResultsFragment : Fragment() {
 //
                 busViewModel.selectedBus = busViewModel.filteredBusList[position]
 
+                GlobalScope.launch {
+                    busDbViewModel.insertRecentlyViewed(RecentlyViewed(0, busViewModel.selectedBus.busId, userViewModel.user.userId, bookingViewModel.date))
+                }
                 parentFragmentManager.commit {
                     replace(R.id.homePageFragmentContainer, SelectedBusFragment())
                     addToBackStack(null)

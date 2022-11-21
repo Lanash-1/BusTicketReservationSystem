@@ -5,9 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.busticketreservationsystem.entity.Bus
 import com.example.busticketreservationsystem.entity.Partners
+import com.example.busticketreservationsystem.entity.RecentlyViewed
 import com.example.busticketreservationsystem.entity.Reviews
 
 class BusViewModel: ViewModel() {
+
 
     var busList = listOf<Bus>()
 
@@ -49,5 +51,10 @@ class BusViewModel: ViewModel() {
     var boardingPoint = MutableLiveData("")
 
     var droppingPoint = MutableLiveData("")
+
+    var recentlyViewedList = MutableLiveData<List<RecentlyViewed>>()
+    var recentlyViewedBusList = listOf<Bus>()
+    var recentlyViewedPartnerList = mutableListOf<String>()
+
 
 }

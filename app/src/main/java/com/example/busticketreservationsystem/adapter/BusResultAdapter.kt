@@ -49,7 +49,7 @@ class BusResultAdapter: RecyclerView.Adapter<BusResultAdapter.BusResultViewHolde
     override fun onBindViewHolder(holder: BusResultViewHolder, position: Int) {
         holder.binding.apply {
             travelsText.text = partnerList[busList[position].partnerId].partnerName
-            priceText.text = busList[position].perTicketCost.toString()
+            priceText.text = "₹ ${busList[position].perTicketCost}"
 //            startTimeText.text = busList[position].startTime
 //            reachTimeText.text = busList[position].reachTime
             seatsText.text = busList[position].availableSeats.toString() + " Seats"

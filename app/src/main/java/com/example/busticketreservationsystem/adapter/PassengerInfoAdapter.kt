@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
+import com.example.busticketreservationsystem.PassengerInfoModel
 import com.example.busticketreservationsystem.databinding.ItemPassengerInfoBinding
 import com.example.busticketreservationsystem.enums.Gender
 import com.example.busticketreservationsystem.interfaces.PassengerInfoChangeListener
 import java.lang.Exception
-import kotlin.math.abs
 
 class PassengerInfoAdapter: RecyclerView.Adapter<PassengerInfoAdapter.PassengerInfoViewHolder>() {
 
@@ -17,6 +17,12 @@ class PassengerInfoAdapter: RecyclerView.Adapter<PassengerInfoAdapter.PassengerI
 
     fun setSelectedSeats(selectedSeats: List<String>){
         this.selectedSeats = selectedSeats
+    }
+
+    private lateinit var infoList: List<PassengerInfoModel>
+
+    fun setPassengerInfoList(infoList: List<PassengerInfoModel>){
+        this.infoList = infoList
     }
 
     private lateinit var passengerInfoChangeListener: PassengerInfoChangeListener
@@ -57,6 +63,22 @@ class PassengerInfoAdapter: RecyclerView.Adapter<PassengerInfoAdapter.PassengerI
         holder.binding.apply {
             passengerTitleText.text = "Passenger ${position+1}"
             seatText.text = "Seat - ${selectedSeats[position]}"
+            if(infoList[position].name != null){
+                passengerNameInput.setText(infoList[position].name.toString())
+            }
+            if(infoList[position].age != null){
+                ageInput.setText(infoList[position].age.toString())
+            }
+            if(infoList[position].gender != null){
+                if(infoList[position].gender == Gender.MALE){
+                    maleRadioButton.isChecked = true
+                    femaleRadioButton.isChecked = false
+                }else{
+                    femaleRadioButton.isChecked = true
+                    maleRadioButton.isChecked = false
+                }
+            }
+
         }
     }
 

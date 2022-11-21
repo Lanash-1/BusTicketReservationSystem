@@ -13,10 +13,15 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.busticketreservationsystem.adapter.BusSeatsAdapter
 import com.example.busticketreservationsystem.databinding.FragmentSelectedBusBinding
 import com.example.busticketreservationsystem.databinding.ItemSeatBinding
+import com.example.busticketreservationsystem.entity.RecentlyViewed
 import com.example.busticketreservationsystem.interfaces.OnItemClickListener
 import com.example.busticketreservationsystem.viewmodel.BookingViewModel
+import com.example.busticketreservationsystem.viewmodel.BusDbViewModel
 import com.example.busticketreservationsystem.viewmodel.BusViewModel
+import com.example.busticketreservationsystem.viewmodel.UserViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class SelectedBusFragment : Fragment() {
 
@@ -26,6 +31,8 @@ class SelectedBusFragment : Fragment() {
 
     private val busViewModel: BusViewModel by activityViewModels()
     private val bookingViewModel: BookingViewModel by activityViewModels()
+    private val busDbViewModel: BusDbViewModel by activityViewModels()
+    private val userViewModel: UserViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,6 +93,11 @@ class SelectedBusFragment : Fragment() {
             }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
+
+//        GlobalScope.launch {
+//            busDbViewModel.insertRecentlyViewed(RecentlyViewed(0, busViewModel.selectedBus.busId, userViewModel.user.userId, bookingViewModel.date))
+//        }
 
         binding.selectAndContinueText.setOnClickListener {
             parentFragmentManager.commit {

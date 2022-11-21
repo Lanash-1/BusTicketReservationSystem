@@ -7,13 +7,14 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "seat_information_table",
     foreignKeys = [ForeignKey(
-        entity = PassengerInformation::class,
-        childColumns = ["passengerId"],
-        parentColumns = ["passengerId"]
+        entity = Bus::class,
+        childColumns = ["busId"],
+        parentColumns = ["busId"]
     )])
 data class SeatInformation(
+
     @PrimaryKey(autoGenerate = true) val seatInfoId: Int,
-    @ColumnInfo(index = true) var passengerId: Int,
-    var seatNo: Int,
-    var seatType: String
+    @ColumnInfo(index = true) var busId: Int,
+    var seatName: String
+    
 )
