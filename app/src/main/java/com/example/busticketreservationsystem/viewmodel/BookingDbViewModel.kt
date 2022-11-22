@@ -2,7 +2,6 @@ package com.example.busticketreservationsystem.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
 import com.example.busticketreservationsystem.data.AppDatabase
 import com.example.busticketreservationsystem.entity.Bookings
 import com.example.busticketreservationsystem.entity.PassengerInformation
@@ -31,5 +30,14 @@ class BookingDbViewModel(
         val list = appDb.bookingsDao().getBookingId(userId)
         return list[list.size-1]
     }
+
+    fun getAParticularBooking(bookingId: Int): Bookings{
+        return appDb.bookingsDao().getSingleBooking(bookingId)
+    }
+
+    fun getUserBookings(userId: Int): List<Bookings>{
+        return appDb.bookingsDao().getUserBookings(userId)
+    }
+
 
 }

@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.view.*
+import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -13,10 +14,13 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.busticketreservationsystem.adapter.RecentlyViewedAdapter
 import com.example.busticketreservationsystem.databinding.FragmentDashBoardBinding
+import com.example.busticketreservationsystem.entity.Bookings
 import com.example.busticketreservationsystem.entity.Bus
+import com.example.busticketreservationsystem.entity.Partners
 import com.example.busticketreservationsystem.entity.RecentlyViewed
 import com.example.busticketreservationsystem.enums.LocationOptions
 import com.example.busticketreservationsystem.enums.LoginStatus
+import com.example.busticketreservationsystem.interfaces.OnItemClickListener
 import com.example.busticketreservationsystem.viewmodel.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.imageview.ShapeableImageView
@@ -35,6 +39,7 @@ class DashBoardFragment : Fragment() {
     private val dateViewModel: DateViewModel by activityViewModels()
     private val busViewModel: BusViewModel by activityViewModels()
     private val bookingViewModel: BookingViewModel by activityViewModels()
+    private val bookingDbViewModel: BookingDbViewModel by activityViewModels()
     private val busDbViewModel: BusDbViewModel by activityViewModels()
     private val userViewModel: UserViewModel by activityViewModels()
 
@@ -102,35 +107,45 @@ class DashBoardFragment : Fragment() {
 //            Toast.LENGTH_SHORT
 //        ).show()
 
-        GlobalScope.launch {
-            var busList: MutableList<Bus> = mutableListOf()
-            var recentlyViewList: List<RecentlyViewed> = listOf()
-            var recentlyViewedPartnersList = mutableListOf<String>()
-            val job = launch {
-                recentlyViewList = busDbViewModel.getRecentlyViewed(userViewModel.user.userId)
-                for(i in recentlyViewList){
-                    busList.add(busDbViewModel.getBus(i.busId))
-                }
-
-            }
-            job.join()
-            val anotherJob = launch {
-                for(bus in busList){
-                    recentlyViewedPartnersList.add(busDbViewModel.getPartnerName(bus.partnerId))
-
-                }
-            }
-            anotherJob.join()
-            withContext(Dispatchers.Main){
-                busViewModel.recentlyViewedBusList = busList
-                busViewModel.recentlyViewedPartnerList = recentlyViewedPartnersList
-                busViewModel.recentlyViewedList.value = recentlyViewList
-            }
+//        GlobalScope.launch {
+//            var busList: MutableList<Bus> = mutableListOf()
+//            var recentlyViewList: List<RecentlyViewed> = listOf()
+//            var recentlyViewedPartnersList = mutableListOf<String>()
+//            val job = launch {
+//                recentlyViewList = busDbViewModel.getRecentlyViewed(userViewModel.user.userId)
+//                for(i in recentlyViewList){
+//                    busList.add(busDbViewModel.getBus(i.busId))
+//                }
+//            }
+//            job.join()
+//            val anotherJob = launch {
+//                for(bus in busList){
+//                    recentlyViewedPartnersList.add(busDbViewModel.getPartnerName(bus.partnerId))
+//
+//                }
+//            }
+//            anotherJob.join()
+//            withContext(Dispatchers.Main){
+//                busViewModel.recentlyViewedBusList = busList
+//                busViewModel.recentlyViewedPartnerList = recentlyViewedPartnersList
+//                busViewModel.recentlyViewedList.value = recentlyViewList
+//            }
+//        }
+        if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
+            getRecentlyViewedDetails()
+            getBookingHistoryList(userViewModel.user.userId)
         }
 
         binding.recentlyViewedRecyclerView.adapter = recentlyViewedAdapter
         binding.recentlyViewedRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 //        recentlyViewedAdapter.setRecentlyViewedList(listOf(), listOf())
+
+        recentlyViewedAdapter.setOnItemClickListener(object: OnItemClickListener{
+            override fun onItemClick(position: Int) {
+                removeRecentlyViewed(busViewModel.recentlyViewedList.value!![position])
+            }
+
+        })
 
         busViewModel.recentlyViewedList.observe(viewLifecycleOwner, Observer {
             recentlyViewedAdapter.setRecentlyViewedList(busViewModel.recentlyViewedBusList, it, busViewModel.recentlyViewedPartnerList)
@@ -160,17 +175,26 @@ class DashBoardFragment : Fragment() {
 
         setLocation()
 
+        val rotateAnimation = AnimationUtils.loadAnimation(
+            requireContext(),
+            R.anim.rotate_clockwise
+        )
+
+        // assigning that animation to
+        // the image and start animation
+
+
+
         switchRoutes.setOnClickListener {
             val temp = searchViewModel.sourceLocation
             searchViewModel.sourceLocation = searchViewModel.destinationLocation
             searchViewModel.destinationLocation = temp
             setLocation()
             if (searchViewModel.sourceLocation.isNotEmpty() || searchViewModel.destinationLocation.isNotEmpty()) {
-                switchRoutes.rotation = 180F
+                binding.switchCircle.startAnimation(rotateAnimation)
             }
+
         }
-
-
 
         binding.sourceLayout.setOnClickListener {
             searchViewModel.currentSearch = LocationOptions.SOURCE.name
@@ -186,6 +210,7 @@ class DashBoardFragment : Fragment() {
         binding.dateLayout.setOnClickListener {
             val datePickerFragment = TravelDatePickerFragment()
             datePickerFragment.show(parentFragmentManager, "datePicker")
+
         }
 
         dateViewModel.travelEdited.observe(viewLifecycleOwner, Observer {
@@ -215,6 +240,66 @@ class DashBoardFragment : Fragment() {
             }
         }
 
+    }
+
+    private fun getBookingHistoryList(userId: Int) {
+        GlobalScope.launch {
+            var bookingList = listOf<Bookings>()
+            var busList = mutableListOf<Bus>()
+            var partnerList = mutableListOf<String>()
+            val job = launch {
+                bookingList = bookingDbViewModel.getUserBookings(userId)
+                for (booking in bookingList){
+                    busList.add(busDbViewModel.getBus(booking.busId))
+                }
+                for(bus in busList){
+                    partnerList.add(busDbViewModel.getPartnerName(bus.partnerId))
+                }
+            }
+            job.join()
+            withContext(Dispatchers.IO){
+                bookingViewModel.bookingHistory = bookingList
+                bookingViewModel.bookedBusesList = busList
+                bookingViewModel.bookedPartnerList = partnerList
+            }
+        }
+    }
+
+    private fun removeRecentlyViewed(recentlyViewed: RecentlyViewed) {
+        GlobalScope.launch {
+            val job = launch {
+                busDbViewModel.removeRecentlyViewed(recentlyViewed)
+            }
+            job.join()
+            getRecentlyViewedDetails()
+        }
+    }
+
+    private fun getRecentlyViewedDetails() {
+        GlobalScope.launch {
+            val busList: MutableList<Bus> = mutableListOf()
+            var recentlyViewList: List<RecentlyViewed> = listOf()
+            val recentlyViewedPartnersList = mutableListOf<String>()
+            val job = launch {
+                recentlyViewList = busDbViewModel.getRecentlyViewed(userViewModel.user.userId)
+                for(i in recentlyViewList){
+                    busList.add(busDbViewModel.getBus(i.busId))
+                }
+            }
+            job.join()
+            val anotherJob = launch {
+                for(bus in busList){
+                    recentlyViewedPartnersList.add(busDbViewModel.getPartnerName(bus.partnerId))
+
+                }
+            }
+            anotherJob.join()
+            withContext(Dispatchers.Main){
+                busViewModel.recentlyViewedBusList = busList
+                busViewModel.recentlyViewedPartnerList = recentlyViewedPartnersList
+                busViewModel.recentlyViewedList.value = recentlyViewList
+            }
+        }
     }
 
     private fun setLocation(){

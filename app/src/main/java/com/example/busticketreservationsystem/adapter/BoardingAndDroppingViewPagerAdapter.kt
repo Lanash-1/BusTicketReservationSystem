@@ -6,9 +6,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.busticketreservationsystem.BoardingAndDroppingLocationFragment
-import com.example.busticketreservationsystem.CancelledBookingFragment
-import com.example.busticketreservationsystem.CompletedBookingFragment
-import com.example.busticketreservationsystem.UpcomingBookingFragment
 
 class BoardingAndDroppingViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle): FragmentStateAdapter(fragmentManager, lifecycle) {
 

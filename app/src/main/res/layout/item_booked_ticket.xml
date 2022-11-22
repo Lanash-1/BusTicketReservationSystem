@@ -48,14 +48,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/price_text"
-        android:text="2700"
+        android:text="₹ 2700"
         app:layout_constraintTop_toTopOf="@id/source_location_text"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginEnd="16dp"
         android:textSize="20sp"
         android:textColor="@color/black"
         android:textStyle="bold|italic"
-        android:drawableStart="@drawable/ic_baseline_currency_rupee_24"/>
+        />
 
     <TextView
         android:layout_width="wrap_content"
@@ -129,5 +129,13 @@
         app:layout_constraintEnd_toEndOf="@id/date_date_text"
         android:textSize="14sp"
         android:textColor="@color/black" />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/travels_text"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="8dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

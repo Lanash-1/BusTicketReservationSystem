@@ -1,9 +1,6 @@
 package com.example.busticketreservationsystem.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.busticketreservationsystem.entity.RecentlyViewed
 
 @Dao
@@ -14,5 +11,8 @@ interface RecentlyViewedDao {
 
     @Query("SELECT * FROM recently_viewed_table WHERE userId LIKE :userId")
     fun getRecentlyViewed(userId: Int): List<RecentlyViewed>
+
+    @Delete
+    fun deleteRecentlyViewed(recentlyViewed: RecentlyViewed)
 
 }

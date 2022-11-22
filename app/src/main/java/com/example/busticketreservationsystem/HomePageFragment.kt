@@ -54,7 +54,7 @@ class HomePageFragment : Fragment() {
                     userViewModel.user = userDbViewModel.getUserAccount(writeSharedPreferences.getInt("userId", 0))
                 }
             }
-        }
+    }
 
         val bottomNavigationView = view.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
 

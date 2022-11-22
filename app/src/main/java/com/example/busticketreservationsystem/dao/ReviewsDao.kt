@@ -20,5 +20,7 @@ interface ReviewsDao {
     @Query("SELECT rating FROM reviews_table WHERE busId LIKE :busId")
     fun getRatingsOfABus(busId: Int): List<Int>
 
+    @Query("SELECT * FROM reviews_table WHERE busId LIKE :busId AND userId LIKE :userId")
+    fun getReviewByUser(busId: Int, userId: Int): Reviews
 
 }

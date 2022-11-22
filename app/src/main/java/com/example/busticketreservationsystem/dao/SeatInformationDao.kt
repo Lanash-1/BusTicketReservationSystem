@@ -11,4 +11,5 @@ interface SeatInformationDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(seatInformation: SeatInformation)
 
+
 }

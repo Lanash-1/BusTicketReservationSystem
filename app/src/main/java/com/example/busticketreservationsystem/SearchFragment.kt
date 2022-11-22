@@ -81,7 +81,7 @@ class SearchFragment : Fragment() {
         inflater.inflate(R.menu.search_menu, menu)
         val searchItem = menu.findItem(R.id.search)
         val searchView = searchItem.actionView as SearchView
-
+        
         searchItem.expandActionView()
         searchView.setQuery("", false)
 

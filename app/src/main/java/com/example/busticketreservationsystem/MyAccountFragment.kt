@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_OPEN
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -138,6 +139,7 @@ class MyAccountFragment : Fragment() {
                     MyAccountOptions.SETTINGS -> {
                         parentFragmentManager.commit {
                             replace(R.id.homePageFragmentContainer, SettingsFragment())
+                            setTransition(TRANSIT_FRAGMENT_OPEN)
                             addToBackStack(null)
                         }
                     }

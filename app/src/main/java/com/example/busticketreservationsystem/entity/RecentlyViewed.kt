@@ -14,7 +14,8 @@ import androidx.room.PrimaryKey
     ForeignKey(
         entity = User::class,
         childColumns = ["userId"],
-        parentColumns = ["userId"]
+        parentColumns = ["userId"],
+        onDelete = ForeignKey.CASCADE
     )]
     )
 data class RecentlyViewed(

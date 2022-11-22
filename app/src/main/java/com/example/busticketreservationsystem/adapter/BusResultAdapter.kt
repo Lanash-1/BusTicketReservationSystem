@@ -56,7 +56,7 @@ class BusResultAdapter: RecyclerView.Adapter<BusResultAdapter.BusResultViewHolde
 
             startTimeText.text = busList[position].startTime
             reachTimeText.text = busList[position].reachTime
-            durationText.text = busList[position].duration
+            durationText.text = "${busList[position].duration} hrs"
 
 
 //            if(position%4 == 0){

@@ -4,6 +4,7 @@ import android.view.inspector.IntFlagMapping
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "bookings_table",
@@ -15,7 +16,8 @@ import androidx.room.PrimaryKey
     ForeignKey(
         entity = User::class,
         childColumns = ["userId"],
-        parentColumns = ["userId"]
+        parentColumns = ["userId"],
+        onDelete = CASCADE
     )])
 data class Bookings(
     @PrimaryKey(autoGenerate = true) val bookingId: Int,
@@ -25,5 +27,6 @@ data class Bookings(
     var droppingPoint: String,
     var totalCost: Double,
     var bookedTicketStatus: String,
-    var noOfTicketsBooked: Int
+    var noOfTicketsBooked: Int,
+    var date: String
 )

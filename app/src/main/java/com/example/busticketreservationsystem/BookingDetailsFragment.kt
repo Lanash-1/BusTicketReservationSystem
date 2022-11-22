@@ -3,6 +3,7 @@ package com.example.busticketreservationsystem
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -21,6 +22,10 @@ import com.example.busticketreservationsystem.enums.Gender
 import com.example.busticketreservationsystem.interfaces.PassengerInfoChangeListener
 import com.example.busticketreservationsystem.viewmodel.BookingViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class BookingDetailsFragment : Fragment() {
 
@@ -91,7 +96,10 @@ class BookingDetailsFragment : Fragment() {
         }
 
         binding.proceedText.setOnClickListener {
-            if(binding.emailInput.text?.isNotEmpty() == true && binding.mobileInput.text?.isNotEmpty() == true){
+            binding.emailLayout.error = validEmail()
+
+            val validEmail = binding.emailLayout.error == null
+            if(validEmail && binding.mobileInput.text?.isNotEmpty() == true){
                 var result = true
                 for(i in 0 until bookingViewModel.passengerInfo.size){
                     if(bookingViewModel.passengerInfo[i].name != null && bookingViewModel.passengerInfo[i].age != null && bookingViewModel.passengerInfo[i].gender != null){
@@ -115,8 +123,14 @@ class BookingDetailsFragment : Fragment() {
                 }
             }else{
 //                binding.emailLayout.helperText = "Enter a valid Email to proceed"
-                binding.mobileLayout.error = "Enter mobile number to proceed"
-                binding.emailLayout.error = "Enter a valid Email to proceed"
+                if(binding.mobileInput.text?.length != 10){
+                    binding.mobileLayout.error = "Enter a valid mobile number 1"
+                }else if(binding.mobileInput.text?.isEmpty() == true){
+                    binding.mobileLayout.error = "Enter mobile number to proceed"
+                }else{
+                    binding.mobileLayout.error = null
+                }
+//                binding.emailLayout.error = "Enter a valid Email to proceed"
             }
         }
         if(bookingViewModel.passengerInfo.isEmpty() || bookingViewModel.passengerInfo.size != bookingViewModel.selectedSeats.size){
@@ -163,5 +177,33 @@ class BookingDetailsFragment : Fragment() {
             }
         })
 
+    }
+
+    private fun emailFocusListener() {
+        binding.emailInput.setOnFocusChangeListener{ _ , focused ->
+            if(!focused){
+                binding.emailLayout.helperText = validEmail()
+            }
+        }
+    }
+
+    private fun validEmail(): String? {
+        val emailText = binding.emailInput.text.toString()
+
+//        if(emailText.isEmpty()){
+//            emailInput.error="Empty mail id"
+//            return emailInput.error as String
+//        }
+
+        if(emailText.isEmpty()){
+            return "Email should not be Empty"
+        }
+        if(emailText.isNotEmpty()) {
+            if(Patterns.EMAIL_ADDRESS.matcher(emailText).matches()) {
+                return null
+            }
+        }
+
+        return "Enter a valid email address"
     }
 }

@@ -70,5 +70,13 @@ class BusDbViewModel(application: Application): AndroidViewModel(application) {
         return appDb.partnersDao().getPartnerName(partnerId)
     }
 
+    fun removeRecentlyViewed(recentlyViewed: RecentlyViewed){
+        appDb.recentlyViewedDao().deleteRecentlyViewed(recentlyViewed)
+    }
+
+    fun insertReview(reviews: Reviews){
+        appDb.reviewsDao().insert(reviews)
+    }
+
 
 }

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.busticketreservationsystem.adapter.BusResultAdapter
 import com.example.busticketreservationsystem.databinding.FragmentBusResultsBinding
 import com.example.busticketreservationsystem.entity.RecentlyViewed
+import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.interfaces.OnItemClickListener
 import com.example.busticketreservationsystem.viewmodel.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -29,6 +30,7 @@ class BusResultsFragment : Fragment() {
     private val busViewModel: BusViewModel by activityViewModels()
     private val userViewModel: UserViewModel by activityViewModels()
     private val bookingViewModel: BookingViewModel by activityViewModels()
+    private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
 
 
 
@@ -118,9 +120,12 @@ class BusResultsFragment : Fragment() {
 //
                 busViewModel.selectedBus = busViewModel.filteredBusList[position]
 
-                GlobalScope.launch {
-                    busDbViewModel.insertRecentlyViewed(RecentlyViewed(0, busViewModel.selectedBus.busId, userViewModel.user.userId, bookingViewModel.date))
+                if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
+                    GlobalScope.launch {
+                        busDbViewModel.insertRecentlyViewed(RecentlyViewed(0, busViewModel.selectedBus.busId, userViewModel.user.userId, bookingViewModel.date))
+                    }
                 }
+
                 parentFragmentManager.commit {
                     replace(R.id.homePageFragmentContainer, SelectedBusFragment())
                     addToBackStack(null)

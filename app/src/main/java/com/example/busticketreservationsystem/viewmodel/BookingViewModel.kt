@@ -1,8 +1,12 @@
 package com.example.busticketreservationsystem.viewmodel
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.busticketreservationsystem.PassengerInfoModel
+import com.example.busticketreservationsystem.entity.Bookings
 import com.example.busticketreservationsystem.entity.Bus
+import com.example.busticketreservationsystem.entity.Partners
+import com.example.busticketreservationsystem.entity.RecentlyViewed
 
 class BookingViewModel: ViewModel() {
 
@@ -21,5 +25,11 @@ class BookingViewModel: ViewModel() {
     var droppingLocation: String = ""
 
     var date: String = ""
+
+//    var bookingHistory = MutableLiveData<List<Bookings>>()
+
+    var bookingHistory = listOf<Bookings>()
+    var bookedBusesList = listOf<Bus>()
+    var bookedPartnerList = listOf<String>()
 
 }

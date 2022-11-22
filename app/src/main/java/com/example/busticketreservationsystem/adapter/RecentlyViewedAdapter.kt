@@ -11,6 +11,7 @@ import com.example.busticketreservationsystem.diffutils.RecentlyViewedDiffUtils
 import com.example.busticketreservationsystem.entity.Bus
 import com.example.busticketreservationsystem.entity.Partners
 import com.example.busticketreservationsystem.entity.RecentlyViewed
+import com.example.busticketreservationsystem.interfaces.OnItemClickListener
 
 class RecentlyViewedAdapter: RecyclerView.Adapter<RecentlyViewedAdapter.RecentlyViewedViewHolder>() {
 
@@ -36,8 +37,18 @@ class RecentlyViewedAdapter: RecyclerView.Adapter<RecentlyViewedAdapter.Recently
 //        diffResults.dispatchUpdatesTo(this)
     }
 
-    class RecentlyViewedViewHolder(val binding: ItemRecentlyViewedBinding): RecyclerView.ViewHolder(binding.root) {
+    private lateinit var listener: OnItemClickListener
 
+    fun setOnItemClickListener(listener: OnItemClickListener){
+        this.listener = listener
+    }
+
+    inner class RecentlyViewedViewHolder(val binding: ItemRecentlyViewedBinding): RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.removeIcon.setOnClickListener{
+                listener.onItemClick(absoluteAdapterPosition)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentlyViewedViewHolder {

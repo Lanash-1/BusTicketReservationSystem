@@ -13,12 +13,14 @@ import androidx.room.PrimaryKey
     ),ForeignKey(
         entity = User::class,
         childColumns = ["userId"],
-        parentColumns = ["userId"]
+        parentColumns = ["userId"],
+        onDelete = ForeignKey.CASCADE
     )])
 data class Reviews(
     @PrimaryKey(autoGenerate = true) val reviewId: Int,
     @ColumnInfo(index = true) var userId: Int,
     @ColumnInfo(index = true) var busId: Int,
     var rating: Int,
-    var feedback: String
+    var feedback: String,
+    var date: String
 )
