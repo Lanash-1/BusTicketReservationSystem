@@ -66,6 +66,10 @@ class BusDbViewModel(application: Application): AndroidViewModel(application) {
         return appDb.recentlyViewedDao().getRecentlyViewed(userId)
     }
 
+    fun isRecentlyViewedAvailable(userId: Int, busId: Int, date: String): Boolean{
+        return appDb.recentlyViewedDao().isAvailable(userId, busId, date) != 0
+    }
+
     fun getPartnerName(partnerId: Int): String{
         return appDb.partnersDao().getPartnerName(partnerId)
     }
@@ -78,5 +82,8 @@ class BusDbViewModel(application: Application): AndroidViewModel(application) {
         appDb.reviewsDao().insert(reviews)
     }
 
+    fun getBookedSeats(busId: Int, date: String): List<String>{
+        return appDb.seatInformationDao().getBookedSeats(busId, date)
+    }
 
 }

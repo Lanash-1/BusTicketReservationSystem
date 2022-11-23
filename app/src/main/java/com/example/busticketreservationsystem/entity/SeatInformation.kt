@@ -15,6 +15,7 @@ data class SeatInformation(
 
     @PrimaryKey(autoGenerate = true) val seatInfoId: Int,
     @ColumnInfo(index = true) var busId: Int,
-    var seatName: String
+    var seatName: String,
+    var date: String
     
 )

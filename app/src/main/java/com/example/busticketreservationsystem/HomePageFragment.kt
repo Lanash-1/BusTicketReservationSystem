@@ -48,13 +48,13 @@ class HomePageFragment : Fragment() {
             writeSharedPreferences= getSharedPreferences("LoginStatus", MODE_PRIVATE)
         }
 
-        when(writeSharedPreferences.getString("status", "")){
-            LoginStatus.LOGGED_IN.name -> {
-                GlobalScope.launch {
-                    userViewModel.user = userDbViewModel.getUserAccount(writeSharedPreferences.getInt("userId", 0))
-                }
-            }
-    }
+//        when(writeSharedPreferences.getString("status", "")){
+//            LoginStatus.LOGGED_IN.name -> {
+//                GlobalScope.launch {
+//                    userViewModel.user = userDbViewModel.getUserAccount(writeSharedPreferences.getInt("userId", 0))
+//                }
+//            }
+//    }
 
         val bottomNavigationView = view.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
 

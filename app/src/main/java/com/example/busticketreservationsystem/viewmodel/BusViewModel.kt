@@ -26,14 +26,12 @@ class BusViewModel: ViewModel() {
 
 
     val boardingPoints = listOf(
+        "flower park",
+        "central bus stand",
+        "tech park",
         "location 1",
         "location 2",
-        "location 3",
-        "location 4",
-        "this location",
-        "that location",
-        "other location",
-        "another location"
+        "location 3"
     )
 
     val droppingPoints = listOf(
@@ -55,6 +53,9 @@ class BusViewModel: ViewModel() {
     var recentlyViewedList = MutableLiveData<List<RecentlyViewed>>()
     var recentlyViewedBusList = listOf<Bus>()
     var recentlyViewedPartnerList = mutableListOf<String>()
+
+
+    var notAvailableSeats = listOf<String>()
 
 
 }

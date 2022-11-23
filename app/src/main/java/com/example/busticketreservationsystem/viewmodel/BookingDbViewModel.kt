@@ -39,5 +39,9 @@ class BookingDbViewModel(
         return appDb.bookingsDao().getUserBookings(userId)
     }
 
+    fun updateTicketStatus(status: String, bookingId: Int){
+        appDb.bookingsDao().updateTicketStatus(status, bookingId)
+    }
+
 
 }

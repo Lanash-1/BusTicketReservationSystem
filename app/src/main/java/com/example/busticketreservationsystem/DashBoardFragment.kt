@@ -18,6 +18,7 @@ import com.example.busticketreservationsystem.entity.Bookings
 import com.example.busticketreservationsystem.entity.Bus
 import com.example.busticketreservationsystem.entity.Partners
 import com.example.busticketreservationsystem.entity.RecentlyViewed
+import com.example.busticketreservationsystem.enums.BookedTicketStatus
 import com.example.busticketreservationsystem.enums.LocationOptions
 import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.interfaces.OnItemClickListener
@@ -29,6 +30,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.w3c.dom.Text
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -131,6 +133,8 @@ class DashBoardFragment : Fragment() {
 //                busViewModel.recentlyViewedList.value = recentlyViewList
 //            }
 //        }
+
+
         if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
             getRecentlyViewedDetails()
             getBookingHistoryList(userViewModel.user.userId)
@@ -162,12 +166,28 @@ class DashBoardFragment : Fragment() {
                     it.sourceLocation == searchViewModel.sourceLocation && it.destination == searchViewModel.destinationLocation
                 }
                 bookingViewModel.date = "${searchViewModel.date}/${searchViewModel.month}/${searchViewModel.year}"
-                parentFragmentManager.commit {
-                    replace(R.id.homePageFragmentContainer, BusResultsFragment())
-                    addToBackStack(null)
+                GlobalScope.launch {
+                    val list = busViewModel.filteredBusList
+                    val job = launch {
+                        for (i in list.indices){
+                            val seats = busDbViewModel.getBookedSeats(list[i].busId, bookingViewModel.date)
+                            if(seats.isNotEmpty()){
+                                list[i].availableSeats = 30 - seats.size
+                            }else{
+                                list[i].availableSeats = 30
+                            }
+                        }
+                    }
+                    job.join()
+                    withContext(Dispatchers.Main){
+                        busViewModel.filteredBusList = list
+                        parentFragmentManager.commit {
+                            replace(R.id.homePageFragmentContainer, BusResultsFragment())
+                            addToBackStack(null)
+                        }
+                    }
                 }
             }
-//            else if()
         }
 
 //        var source = searchViewModel.sourceLocation
@@ -242,29 +262,42 @@ class DashBoardFragment : Fragment() {
 
     }
 
-    private fun getBookingHistoryList(userId: Int) {
-        GlobalScope.launch {
-            var bookingList = listOf<Bookings>()
-            var busList = mutableListOf<Bus>()
-            var partnerList = mutableListOf<String>()
-            val job = launch {
-                bookingList = bookingDbViewModel.getUserBookings(userId)
-                for (booking in bookingList){
-                    busList.add(busDbViewModel.getBus(booking.busId))
-                }
-                for(bus in busList){
-                    partnerList.add(busDbViewModel.getPartnerName(bus.partnerId))
-                }
+private fun getBookingHistoryList(userId: Int) {
+    GlobalScope.launch {
+        var bookingList = listOf<Bookings>()
+        val busList = mutableListOf<Bus>()
+        val partnerList = mutableListOf<String>()
+        val job = launch {
+            bookingList = bookingDbViewModel.getUserBookings(userId)
+            for (booking in bookingList){
+                busList.add(busDbViewModel.getBus(booking.busId))
             }
-            job.join()
-            withContext(Dispatchers.IO){
-                bookingViewModel.bookingHistory = bookingList
-                bookingViewModel.bookedBusesList = busList
-                bookingViewModel.bookedPartnerList = partnerList
+            for(bus in busList){
+                partnerList.add(busDbViewModel.getPartnerName(bus.partnerId))
+            }
+            for(i in bookingList.indices){
+                if(bookingList[i].bookedTicketStatus == BookedTicketStatus.UPCOMING.name){
+                    val sdf = SimpleDateFormat("dd/MM/yyyy")
+                    val strDate: Date = sdf.parse(bookingList[i].date)
+                    val time = Calendar.getInstance().time
+                    val current = sdf.format(time)
+                    val currentDate = sdf.parse(current)
+
+                    if (currentDate > strDate) {
+                        bookingList[i].bookedTicketStatus = BookedTicketStatus.COMPLETED.name
+                        bookingDbViewModel.updateTicketStatus(BookedTicketStatus.COMPLETED.name, bookingList[i].bookingId)
+                    }
+                }
             }
         }
+        job.join()
+        withContext(Dispatchers.IO){
+            bookingViewModel.bookingHistory = bookingList
+            bookingViewModel.bookedBusesList = busList
+            bookingViewModel.bookedPartnerList = partnerList
+        }
     }
-
+}
     private fun removeRecentlyViewed(recentlyViewed: RecentlyViewed) {
         GlobalScope.launch {
             val job = launch {

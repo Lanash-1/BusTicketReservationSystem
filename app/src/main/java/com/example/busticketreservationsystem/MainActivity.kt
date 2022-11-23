@@ -1,29 +1,35 @@
 package com.example.busticketreservationsystem
 
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.fragment.app.activityViewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
-import com.example.busticketreservationsystem.entity.Bus
-import com.example.busticketreservationsystem.entity.BusAmenities
-import com.example.busticketreservationsystem.entity.Partners
+import com.example.busticketreservationsystem.entity.*
+import com.example.busticketreservationsystem.enums.BookedTicketStatus
 import com.example.busticketreservationsystem.enums.LoginStatus
-import com.example.busticketreservationsystem.viewmodel.BusDbViewModel
-import com.example.busticketreservationsystem.viewmodel.BusViewModel
-import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
+import com.example.busticketreservationsystem.viewmodel.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
     private val busDbViewModel: BusDbViewModel by viewModels()
     private val busViewModel: BusViewModel by viewModels()
     private val loginStatusViewModel: LoginStatusViewModel by viewModels()
+    private val bookingDbViewModel: BookingDbViewModel by viewModels()
+    private val bookingViewModel: BookingViewModel by viewModels()
+    private val userViewModel: UserViewModel by viewModels()
+    private val userDbViewModel: UserDbViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,11 +67,22 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 LoginStatus.LOGGED_IN.name -> {
-                    println("LOGGED IN")
                     loginStatusViewModel.status = LoginStatus.LOGGED_IN
                     supportFragmentManager.commit {
                         replace(R.id.main_fragment_container, HomePageFragment())
                     }
+                    GlobalScope.launch {
+                        lateinit var user: User
+                        val job = launch {
+                            user = userDbViewModel.getUserAccount(writeSharedPreferences.getInt("userId", 0))
+                        }
+                        job.join()
+                        withContext(Dispatchers.IO){
+                            userViewModel.user = user
+                            bookingHistoryOperations(user.userId)
+                        }
+                    }
+
                 }
                 LoginStatus.NEW.name -> {
                     println("NEW")
@@ -82,6 +99,51 @@ class MainActivity : AppCompatActivity() {
                         replace(R.id.main_fragment_container, LoginFragment())
                     }
                 }
+            }
+        }
+    }
+
+    /*private fun getUserDetails() {
+
+    }
+*/
+    private fun bookingHistoryOperations(userId: Int) {
+        getBookingHistoryList(userId)
+    }
+
+    private fun getBookingHistoryList(userId: Int) {
+        GlobalScope.launch {
+            var bookingList = listOf<Bookings>()
+            val busList = mutableListOf<Bus>()
+            val partnerList = mutableListOf<String>()
+            val job = launch {
+                bookingList = bookingDbViewModel.getUserBookings(userId)
+                for (booking in bookingList){
+                    busList.add(busDbViewModel.getBus(booking.busId))
+                }
+                for(bus in busList){
+                    partnerList.add(busDbViewModel.getPartnerName(bus.partnerId))
+                }
+                for(i in bookingList.indices){
+                    if(bookingList[i].bookedTicketStatus == BookedTicketStatus.UPCOMING.name){
+                        val sdf = SimpleDateFormat("dd/MM/yyyy")
+                        val strDate: Date = sdf.parse(bookingList[i].date)
+                        val time = Calendar.getInstance().time
+                        val current = sdf.format(time)
+                        val currentDate = sdf.parse(current)
+
+                        if (currentDate.compareTo(strDate) > 0) {
+                            bookingList[i].bookedTicketStatus = BookedTicketStatus.COMPLETED.name
+                            bookingDbViewModel.updateTicketStatus(BookedTicketStatus.COMPLETED.name, bookingList[i].bookingId)
+                        }
+                    }
+                }
+            }
+            job.join()
+            withContext(Dispatchers.IO){
+                bookingViewModel.bookingHistory = bookingList
+                bookingViewModel.bookedBusesList = busList
+                bookingViewModel.bookedPartnerList = partnerList
             }
         }
     }

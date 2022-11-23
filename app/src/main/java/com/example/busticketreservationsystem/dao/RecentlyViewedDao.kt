@@ -15,4 +15,7 @@ interface RecentlyViewedDao {
     @Delete
     fun deleteRecentlyViewed(recentlyViewed: RecentlyViewed)
 
+    @Query("select count(*) from recently_viewed_table where userId like :userId and busId like :busId and date like :date")
+    fun isAvailable(userId: Int, busId: Int, date: String): Int
+
 }

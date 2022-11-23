@@ -16,8 +16,10 @@ import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.interfaces.OnItemClickListener
 import com.example.busticketreservationsystem.viewmodel.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class BusResultsFragment : Fragment() {
@@ -120,8 +122,21 @@ class BusResultsFragment : Fragment() {
 //
                 busViewModel.selectedBus = busViewModel.filteredBusList[position]
 
+
+                GlobalScope.launch {
+                    var seats = listOf<String>()
+                    val job = launch {
+                        seats = busDbViewModel.getBookedSeats(busViewModel.selectedBus.busId, bookingViewModel.date)
+                    }
+                    job.join()
+                    withContext(Dispatchers.IO){
+                        busViewModel.notAvailableSeats = seats
+                    }
+                }
+
                 if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
                     GlobalScope.launch {
+                        if(!(busDbViewModel.isRecentlyViewedAvailable(userViewModel.user.userId, busViewModel.selectedBus.busId, bookingViewModel.date)))
                         busDbViewModel.insertRecentlyViewed(RecentlyViewed(0, busViewModel.selectedBus.busId, userViewModel.user.userId, bookingViewModel.date))
                     }
                 }

@@ -124,21 +124,30 @@ class SelectedBusFragment : Fragment() {
             val row = i/4 + 1
             when(i%4){
                 0 -> {
-                    if(busViewModel.selectedSeats.contains("LW$row")){
+                    if(busViewModel.notAvailableSeats.contains("LW$row")){
+                        seatsList.add(-1)
+                    }
+                    else if(busViewModel.selectedSeats.contains("LW$row")){
                         seatsList.add(1)
                     }else{
                         seatsList.add(0)
                     }
                 }
                 2 -> {
-                    if(busViewModel.selectedSeats.contains("RA$row")){
+                    if(busViewModel.notAvailableSeats.contains("RA$row")){
+                        seatsList.add(-1)
+                    }
+                    else if(busViewModel.selectedSeats.contains("RA$row")){
                         seatsList.add(1)
                     }else{
                         seatsList.add(0)
                     }
                 }
                 3 -> {
-                    if(busViewModel.selectedSeats.contains("RW$row")){
+                    if(busViewModel.notAvailableSeats.contains("RW$row")){
+                        seatsList.add(-1)
+                    }
+                    else if(busViewModel.selectedSeats.contains("RW$row")){
                         seatsList.add(1)
                     }else{
                         seatsList.add(0)

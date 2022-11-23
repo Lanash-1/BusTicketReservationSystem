@@ -43,6 +43,7 @@ class SettingsFragment : Fragment() {
         // Inflate the layout for this fragment
         (activity as AppCompatActivity).supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
+            title = "Settings"
         }
 //        return inflater.inflate(R.layout.fragment_settings, container, false)
         binding = FragmentSettingsBinding.inflate(inflater, container, false)

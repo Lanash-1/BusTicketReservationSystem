@@ -22,4 +22,7 @@ interface BookingsDao {
     @Query("select * from bookings_table where bookingId like :bookingId")
     fun getSingleBooking(bookingId: Int): Bookings
 
+    @Query("update bookings_table set bookedTicketStatus=:status where bookingId like :bookingId")
+    fun updateTicketStatus(status: String, bookingId: Int)
+
 }

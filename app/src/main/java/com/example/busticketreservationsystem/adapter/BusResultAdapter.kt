@@ -59,6 +59,7 @@ class BusResultAdapter: RecyclerView.Adapter<BusResultAdapter.BusResultViewHolde
             durationText.text = "${busList[position].duration} hrs"
 
 
+
 //            if(position%4 == 0){
 //                ratingText.text = "2.3"
 //                ratingText.setBackgroundColor(Color.parseColor("#D13140"))
