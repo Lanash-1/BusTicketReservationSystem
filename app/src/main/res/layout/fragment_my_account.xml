@@ -28,12 +28,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="UserName: "
-            android:textColor="@color/black"
-            android:textSize="16sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_margin="16dp"
-            android:textStyle="bold"
+            style="@style/TitleTextStyle"
             />
 
         <TextView
@@ -42,22 +40,21 @@
             android:layout_height="wrap_content"
             android:text="User test 123"
             android:textSize="16sp"
-            android:textColor="@color/black"
             app:layout_constraintStart_toEndOf="@id/username_text"
             app:layout_constraintTop_toTopOf="@id/username_text"
-            android:layout_marginLeft="8dp"/>
+            android:layout_marginLeft="8dp"
+            style="@style/TextColor"
+            />
 
         <TextView
             android:id="@+id/email_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Email ID: "
-            android:textColor="@color/black"
-            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@id/username_text"
             app:layout_constraintTop_toBottomOf="@id/username_text"
-            android:textStyle="bold"
             android:layout_marginTop="16dp"
+            style="@style/TitleTextStyle"
             />
 
         <TextView
@@ -66,34 +63,34 @@
             android:layout_height="wrap_content"
             android:text="testuser123@mail.com"
             android:textSize="16sp"
-            android:textColor="@color/black"
             app:layout_constraintStart_toEndOf="@id/email_text"
             app:layout_constraintTop_toTopOf="@id/email_text"
-            android:layout_marginLeft="8dp"/>
+            android:layout_marginLeft="8dp"
+            style="@style/TextColor"
+            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/mobile_text"
-            android:textStyle="bold"
-            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@id/email_text"
             app:layout_constraintTop_toBottomOf="@id/email_text"
             android:layout_marginTop="16dp"
             android:text="Mobile Number: "
-            android:textColor="@color/black"
+            style="@style/TitleTextStyle"
         />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/mobile"
-            android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@id/mobile_text"
             app:layout_constraintTop_toTopOf="@id/mobile_text"
             android:text="+91 9876543210"
-            android:layout_marginLeft="8dp"/>
+            android:layout_marginLeft="8dp"
+            style="@style/TextColor"
+            />
 
 
         <TextView
@@ -102,22 +99,22 @@
             android:id="@+id/dob_text"
             app:layout_constraintStart_toStartOf="@id/mobile_text"
             app:layout_constraintTop_toBottomOf="@id/mobile_text"
-            android:textStyle="bold"
-            android:textSize="16sp"
             android:layout_marginTop="16dp"
             android:text="Date of Birth: "
-            android:textColor="@color/black" />
+            style="@style/TitleTextStyle"
+            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/dob"
-            android:textColor="@color/black"
             android:textSize="16sp"
             android:text="01 - 01- 2001"
             android:layout_marginLeft="8dp"
             app:layout_constraintStart_toEndOf="@id/dob_text"
-            app:layout_constraintTop_toTopOf="@id/dob_text" />
+            app:layout_constraintTop_toTopOf="@id/dob_text"
+            style="@style/TextColor"
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -125,22 +122,21 @@
             android:id="@+id/gender_text"
             app:layout_constraintStart_toStartOf="@id/mobile_text"
             app:layout_constraintTop_toBottomOf="@id/dob_text"
-            android:textStyle="bold"
-            android:textSize="16sp"
             android:layout_marginTop="16dp"
             android:text="Gender: "
-            android:textColor="@color/black" />
+            style="@style/TitleTextStyle"
+            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/gender"
-            android:textColor="@color/black"
             android:textSize="16sp"
             android:text="Male"
             android:layout_marginLeft="8dp"
             app:layout_constraintStart_toEndOf="@id/gender_text"
             app:layout_constraintTop_toTopOf="@id/gender_text"
+            style="@style/TextColor"
             />
 
 
@@ -148,7 +144,7 @@
             android:id="@+id/edit_profile_chip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="edit profile"
+            android:text="Edit profile"
             android:textSize="16sp"
             app:chipIconSize="20dp"
             app:chipStartPadding="8dp"
@@ -158,6 +154,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:chipIcon="@drawable/ic_baseline_edit_24"
             android:layout_marginTop="8dp"
+            style="@style/chipIcon"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -168,6 +165,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/account_profile_layout"
+        style="@style/DividerColor"
         />
 
     <androidx.recyclerview.widget.RecyclerView

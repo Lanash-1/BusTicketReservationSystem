@@ -57,7 +57,7 @@
         <RadioButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/darl_radio_button"
+            android:id="@+id/dark_radio_button"
             android:text="Dark"
             android:textSize="16sp"
             android:layoutDirection="rtl"
@@ -197,13 +197,20 @@
         android:src="@drawable/ic_baseline_keyboard_double_arrow_right_24"
         app:tint="@color/customRed" />
 
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/divider2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/right_arrow_icon"
+            android:layout_marginTop="8dp"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.divider.MaterialDivider
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/divider2"
-        app:layout_constraintTop_toBottomOf="@id/delete_account_layout" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

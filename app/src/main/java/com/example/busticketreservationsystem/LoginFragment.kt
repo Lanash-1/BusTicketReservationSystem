@@ -50,6 +50,7 @@ class LoginFragment : Fragment() {
         // Inflate the layout for this fragment
         (activity as AppCompatActivity).supportActionBar?.apply{
             setDisplayHomeAsUpEnabled(false)
+            title = "Login"
         }
         return inflater.inflate(R.layout.fragment_login, container, false)
     }

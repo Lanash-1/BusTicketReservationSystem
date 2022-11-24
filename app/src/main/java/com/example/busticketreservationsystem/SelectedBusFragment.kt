@@ -14,14 +14,15 @@ import com.example.busticketreservationsystem.adapter.BusSeatsAdapter
 import com.example.busticketreservationsystem.databinding.FragmentSelectedBusBinding
 import com.example.busticketreservationsystem.databinding.ItemSeatBinding
 import com.example.busticketreservationsystem.entity.RecentlyViewed
+import com.example.busticketreservationsystem.entity.Reviews
+import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.interfaces.OnItemClickListener
-import com.example.busticketreservationsystem.viewmodel.BookingViewModel
-import com.example.busticketreservationsystem.viewmodel.BusDbViewModel
-import com.example.busticketreservationsystem.viewmodel.BusViewModel
-import com.example.busticketreservationsystem.viewmodel.UserViewModel
+import com.example.busticketreservationsystem.viewmodel.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class SelectedBusFragment : Fragment() {
 
@@ -33,6 +34,7 @@ class SelectedBusFragment : Fragment() {
     private val bookingViewModel: BookingViewModel by activityViewModels()
     private val busDbViewModel: BusDbViewModel by activityViewModels()
     private val userViewModel: UserViewModel by activityViewModels()
+    private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +48,10 @@ class SelectedBusFragment : Fragment() {
         // Inflate the layout for this fragment
         (activity as AppCompatActivity).supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
+            title = "${busViewModel.selectedBus.sourceLocation} - ${busViewModel.selectedBus.destination}"
         }
+        busViewModel.boardingPoint.value = ""
+        busViewModel.droppingPoint.value = ""
         binding = FragmentSelectedBusBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -82,13 +87,13 @@ class SelectedBusFragment : Fragment() {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true){
                 override fun handleOnBackPressed() {
-//                    Toast.makeText(requireContext(), "back presses", Toast.LENGTH_SHORT).show()
+                    busViewModel.selectedSeats.clear()
+
                     parentFragmentManager.commit {
                         replace(R.id.homePageFragmentContainer, BusResultsFragment())
                         parentFragmentManager.popBackStack()
 
                     }
-//                    requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).selectedItemId = R.id.dashboard
                 }
             }
 
@@ -98,6 +103,8 @@ class SelectedBusFragment : Fragment() {
 //        GlobalScope.launch {
 //            busDbViewModel.insertRecentlyViewed(RecentlyViewed(0, busViewModel.selectedBus.busId, userViewModel.user.userId, bookingViewModel.date))
 //        }
+
+        ratingAndReviewOperations(busViewModel.selectedBus.busId)
 
         binding.selectAndContinueText.setOnClickListener {
             parentFragmentManager.commit {
@@ -245,5 +252,39 @@ class SelectedBusFragment : Fragment() {
                 busSeatsAdapter.notifyDataSetChanged()
             }
         })
+    }
+
+    private fun ratingAndReviewOperations(busId: Int) {
+        GlobalScope.launch {
+            var ratingsList = listOf<Reviews>()
+            var ratingCount: Int = 0
+            var ratings = listOf<Int>()
+            var averageRating: Double = 0.0
+            lateinit var userReview: Reviews
+
+            val job = launch {
+                ratingsList = busDbViewModel.getReviewData(busId)
+                ratingCount = ratingsList.size
+                ratings = busDbViewModel.getBusRatings(busId)
+                for(i in ratings){
+                    averageRating += i
+                }
+                averageRating /= ratingCount
+                if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
+                    val list = busDbViewModel.getReviewOfUser(userViewModel.user.userId, busId)
+                    if(list.size == 1){
+                        userReview = list[0]
+                    }
+                }
+            }
+            job.join()
+            withContext(Dispatchers.IO){
+                busViewModel.ratingsList = ratingsList
+                busViewModel.ratingCount = ratingCount
+                busViewModel.ratings = ratings
+                busViewModel.averageRating = averageRating
+//                busViewModel.userReview = userReview
+            }
+        }
     }
 }

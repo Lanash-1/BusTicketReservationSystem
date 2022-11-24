@@ -25,5 +25,7 @@ interface BusDao {
     @Query("SELECT * FROM bus_table WHERE busId LIKE :busId")
     fun getBus(busId: Int): Bus
 
+    @Query("update bus_table set ratingPeopleCount = :count, ratingOverall = :average where busId like :busId")
+    fun updateRating(busId: Int, count: Int, average: Double)
 
 }

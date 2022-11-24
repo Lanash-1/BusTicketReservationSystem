@@ -57,6 +57,7 @@ class BoardingAndDroppingFragment : Fragment() {
                     replace(R.id.homePageFragmentContainer, SelectedBusFragment())
                     parentFragmentManager.popBackStack()
                 }
+
             }
         }
         return super.onOptionsItemSelected(item)
@@ -70,12 +71,10 @@ class BoardingAndDroppingFragment : Fragment() {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true){
                 override fun handleOnBackPressed() {
-//                    Toast.makeText(requireContext(), "back presses", Toast.LENGTH_SHORT).show()
                     parentFragmentManager.commit {
                         replace(R.id.homePageFragmentContainer, SelectedBusFragment())
                         parentFragmentManager.popBackStack()
                     }
-//                    requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).selectedItemId = R.id.dashboard
                 }
             }
 

@@ -23,6 +23,8 @@ data class Bookings(
     @PrimaryKey(autoGenerate = true) val bookingId: Int,
     @ColumnInfo(index = true) var userId: Int,
     @ColumnInfo(index = true) var busId: Int,
+    var contactEmail: String,
+    var contactNumber: String,
     var boardingPoint: String,
     var droppingPoint: String,
     var totalCost: Double,

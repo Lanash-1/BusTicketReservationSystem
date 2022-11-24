@@ -35,7 +35,6 @@ class BusResultsFragment : Fragment() {
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
 
 
-
     private var busResultAdapter = BusResultAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,13 +45,14 @@ class BusResultsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
 //        return inflater.inflate(R.layout.fragment_bus_results, container, false)
         (activity as AppCompatActivity).supportActionBar!!.apply {
             setDisplayHomeAsUpEnabled(true)
             title = "${searchViewModel.sourceLocation} - ${searchViewModel.destinationLocation}"
         }
+
         binding = FragmentBusResultsBinding.inflate(inflater, container, false)
         return binding.root
     }

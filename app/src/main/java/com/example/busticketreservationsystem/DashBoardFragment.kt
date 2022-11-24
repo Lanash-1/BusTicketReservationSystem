@@ -99,6 +99,10 @@ class DashBoardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        for(i in 0 until parentFragmentManager.backStackEntryCount){
+            parentFragmentManager.popBackStack()
+        }
+
 //        println("LOGIN STATUS: ${loginStatusViewModel.status}")
 
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.VISIBLE
@@ -133,6 +137,8 @@ class DashBoardFragment : Fragment() {
 //                busViewModel.recentlyViewedList.value = recentlyViewList
 //            }
 //        }
+
+        getBusList()
 
 
         if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
@@ -262,7 +268,21 @@ class DashBoardFragment : Fragment() {
 
     }
 
-private fun getBookingHistoryList(userId: Int) {
+    private fun getBusList() {
+        var buses = listOf<Bus>()
+        GlobalScope.launch {
+            val job = launch {
+                buses = busDbViewModel.getBusData()
+            }
+            job.join()
+            withContext(Dispatchers.IO){
+                busViewModel.busList = buses
+            }
+        }
+
+    }
+
+    private fun getBookingHistoryList(userId: Int) {
     GlobalScope.launch {
         var bookingList = listOf<Bookings>()
         val busList = mutableListOf<Bus>()

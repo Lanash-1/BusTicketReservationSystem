@@ -6,13 +6,265 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".BusInfoFragment">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ratings_and_review_layout">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ratings_and_reviews_text"
+                android:text="Ratings &amp; Reviews"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                style="@style/TitleTextStyle"
+                android:layout_margin="16dp"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/star_icon"
+                style="@style/IconTint"
+                android:src="@drawable/ic_baseline_star_24"
+                app:layout_constraintStart_toStartOf="@id/ratings_and_reviews_text"
+                app:layout_constraintTop_toBottomOf="@id/ratings_and_reviews_text"
+                app:tint="@color/black"
+                android:layout_marginTop="16dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rating_text"
+                android:text="4.6"
+                app:layout_constraintLeft_toRightOf="@id/star_icon"
+                app:layout_constraintTop_toTopOf="@id/star_icon"
+                app:layout_constraintBottom_toBottomOf="@id/star_icon"
+                style="@style/TitleTextStyle"
+                android:textSize="24sp"
+                android:layout_marginLeft="4dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rating_count_text"
+                android:text="(183 ratings)"
+                app:layout_constraintLeft_toRightOf="@id/rating_text"
+                app:layout_constraintTop_toTopOf="@id/rating_text"
+                app:layout_constraintBottom_toBottomOf="@id/rating_text"
+                android:layout_marginLeft="8dp"
+                android:textSize="16sp"/>
 
 
-    </ScrollView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rating_5_text"
+                android:text="5"
+                style="@style/TextColor"
+                app:layout_constraintStart_toStartOf="@id/star_icon"
+                app:layout_constraintTop_toBottomOf="@id/rating_text"
+                android:layout_marginTop="16dp"
+                android:textSize="16sp" />
+
+            <ProgressBar
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/progress_bar_5"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                app:layout_constraintLeft_toRightOf="@id/rating_5_text"
+                app:layout_constraintTop_toTopOf="@id/rating_5_text"
+                app:layout_constraintBottom_toBottomOf="@id/rating_5_text"
+                app:layout_constraintRight_toLeftOf="@id/percentage_text5"
+                android:layout_marginLeft="16dp"
+                android:scaleY="2"
+                android:layout_marginHorizontal="16dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/percentage_text5"
+                app:layout_constraintTop_toTopOf="@id/rating_5_text"
+                app:layout_constraintBottom_toBottomOf="@id/rating_5_text"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginRight="16dp"
+                android:text="62 %"
+                style="@style/TextColor"
+                android:textSize="16sp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rating_4_text"
+                android:text="4"
+                style="@style/TextColor"
+                app:layout_constraintStart_toStartOf="@id/star_icon"
+                app:layout_constraintTop_toBottomOf="@id/percentage_text5"
+                android:layout_marginTop="16dp"
+                android:textSize="16sp" />
+
+            <ProgressBar
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/progress_bar_4"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                app:layout_constraintLeft_toRightOf="@id/rating_4_text"
+                app:layout_constraintTop_toTopOf="@id/rating_4_text"
+                app:layout_constraintBottom_toBottomOf="@id/rating_4_text"
+                app:layout_constraintRight_toLeftOf="@id/percentage_text4"
+                android:layout_marginLeft="16dp"
+                android:scaleY="2"
+                android:layout_marginHorizontal="16dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/percentage_text4"
+                app:layout_constraintTop_toTopOf="@id/rating_4_text"
+                app:layout_constraintBottom_toBottomOf="@id/rating_4_text"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginRight="16dp"
+                android:text="62 %"
+                style="@style/TextColor"
+                android:textSize="16sp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rating_3_text"
+                android:text="3"
+                style="@style/TextColor"
+                app:layout_constraintStart_toStartOf="@id/star_icon"
+                app:layout_constraintTop_toBottomOf="@id/percentage_text4"
+                android:layout_marginTop="16dp"
+                android:textSize="16sp" />
+
+            <ProgressBar
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/progress_bar_3"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                app:layout_constraintLeft_toRightOf="@id/rating_3_text"
+                app:layout_constraintTop_toTopOf="@id/rating_3_text"
+                app:layout_constraintBottom_toBottomOf="@id/rating_3_text"
+                app:layout_constraintRight_toLeftOf="@id/percentage_text3"
+                android:layout_marginLeft="16dp"
+                android:scaleY="2"
+                android:layout_marginHorizontal="16dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/percentage_text3"
+                app:layout_constraintTop_toTopOf="@id/rating_3_text"
+                app:layout_constraintBottom_toBottomOf="@id/rating_3_text"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginRight="16dp"
+                android:text="62 %"
+                style="@style/TextColor"
+                android:textSize="16sp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rating_2_text"
+                android:text="2"
+                style="@style/TextColor"
+                app:layout_constraintStart_toStartOf="@id/star_icon"
+                app:layout_constraintTop_toBottomOf="@id/percentage_text3"
+                android:layout_marginTop="16dp"
+                android:textSize="16sp" />
+
+            <ProgressBar
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/progress_bar_2"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                app:layout_constraintLeft_toRightOf="@id/rating_2_text"
+                app:layout_constraintTop_toTopOf="@id/rating_2_text"
+                app:layout_constraintBottom_toBottomOf="@id/rating_2_text"
+                app:layout_constraintRight_toLeftOf="@id/percentage_text2"
+                android:layout_marginLeft="16dp"
+                android:scaleY="2"
+                android:layout_marginHorizontal="16dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/percentage_text2"
+                app:layout_constraintTop_toTopOf="@id/rating_2_text"
+                app:layout_constraintBottom_toBottomOf="@id/rating_2_text"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginRight="16dp"
+                android:text="62 %"
+                style="@style/TextColor"
+                android:textSize="16sp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rating_1_text"
+                android:text="1"
+                style="@style/TextColor"
+                app:layout_constraintStart_toStartOf="@id/star_icon"
+                app:layout_constraintTop_toBottomOf="@id/percentage_text2"
+                android:layout_marginTop="16dp"
+                android:textSize="16sp" />
+
+            <ProgressBar
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/progress_bar_1"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                app:layout_constraintLeft_toRightOf="@id/rating_1_text"
+                app:layout_constraintTop_toTopOf="@id/rating_1_text"
+                app:layout_constraintBottom_toBottomOf="@id/rating_1_text"
+                app:layout_constraintRight_toLeftOf="@id/percentage_text1"
+                android:layout_marginLeft="16dp"
+                android:scaleY="2"
+                android:layout_marginHorizontal="16dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/percentage_text1"
+                app:layout_constraintTop_toTopOf="@id/rating_1_text"
+                app:layout_constraintBottom_toBottomOf="@id/rating_1_text"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginRight="16dp"
+                android:text="62 %"
+                style="@style/TextColor"
+                android:textSize="16sp"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/read_reviews_button"
+                android:text="Read All Reviews"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/percentage_text1"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/customBlue"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 
     <Button

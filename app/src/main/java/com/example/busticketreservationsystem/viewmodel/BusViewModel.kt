@@ -15,8 +15,6 @@ class BusViewModel: ViewModel() {
 
     var partnerList = listOf<Partners>()
 
-    var reviewsList = listOf<Reviews>()
-
     var filteredBusList = listOf<Bus>()
 
 
@@ -56,6 +54,20 @@ class BusViewModel: ViewModel() {
 
 
     var notAvailableSeats = listOf<String>()
+
+
+
+    // ratings and reviews
+
+    var ratingsList = listOf<Reviews>()
+
+    var ratingCount: Int = 0
+
+    var ratings = listOf<Int>()
+
+    var averageRating: Double = 0.0
+
+    lateinit var userReview: Reviews
 
 
 }

@@ -33,20 +33,24 @@ class BusDbViewModel(application: Application): AndroidViewModel(application) {
         return appDb.partnersDao().getPartnersData()
     }
 
-    fun getReviewData(): List<Reviews>{
-        return appDb.reviewsDao().getReviewsData()
+    fun getReviewData(busId: Int): List<Reviews>{
+        return appDb.reviewsDao().getReviewsData(busId)
     }
 
     fun getRatingPeopleCount(busId: Int): Int{
         return appDb.reviewsDao().getReviewCount(busId)
     }
 
+    fun updateBusRating(busId: Int, count: Int, average: Double){
+        appDb.busDao().updateRating(busId, count, average)
+    }
+
     fun getBusRatings(busId: Int): List<Int>{
         return appDb.reviewsDao().getRatingsOfABus(busId)
     }
 
-    fun updateBusRating(peopleCount: Int, overallRating: Double, busId: Int){
-        appDb.busDao().updateBusRating(peopleCount, overallRating, busId)
+    fun getReviewOfUser(userId: Int, busId: Int): List<Reviews>{
+        return appDb.reviewsDao().getReviewByUser(busId, userId)
     }
 
 

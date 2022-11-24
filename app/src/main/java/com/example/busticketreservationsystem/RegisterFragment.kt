@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import com.example.busticketreservationsystem.enums.LoginStatus
@@ -53,6 +54,7 @@ class RegisterFragment : Fragment() {
         // Inflate the layout for this fragment
         (activity as AppCompatActivity).supportActionBar?.apply{
             setDisplayHomeAsUpEnabled(false)
+            title = "Register"
         }
         return inflater.inflate(R.layout.fragment_register, container, false)
     }
@@ -188,16 +190,16 @@ class RegisterFragment : Fragment() {
     private fun validNumber(): String? {
         val number = mobileInput.text.toString()
 
-        if(number.isEmpty()){
-            return null
-        }
         if(!number.matches(".*[0-9].*".toRegex()))
         {
-            return "Must be all Digits"
+            return "Invalid mobile number"
         }
         if(number.length != 10)
         {
             return "Must be 10 Digits"
+        }
+        if(number.isEmpty()){
+            return "Should not be empty"
         }
         return null
     }
@@ -234,9 +236,13 @@ class RegisterFragment : Fragment() {
     }
 
     private fun confirmPasswordFocusListener() {
-        newPasswordInput.setOnFocusChangeListener { _, focused ->
-            if(!focused){
-                confirmPasswordLayout.helperText = validConfirmPassword()
+        confirmPasswordInput.addTextChangedListener {
+            if (it != null) {
+                if(it.isEmpty()){
+                    confirmPasswordLayout.isHelperTextEnabled = false
+                }else{
+                    confirmPasswordLayout.helperText = validConfirmPassword()
+                }
             }
         }
     }

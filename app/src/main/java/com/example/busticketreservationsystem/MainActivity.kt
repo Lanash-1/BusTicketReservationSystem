@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.commit
 import com.example.busticketreservationsystem.entity.*
 import com.example.busticketreservationsystem.enums.BookedTicketStatus
 import com.example.busticketreservationsystem.enums.LoginStatus
+import com.example.busticketreservationsystem.enums.Themes
 import com.example.busticketreservationsystem.viewmodel.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -39,18 +41,43 @@ class MainActivity : AppCompatActivity() {
             busViewModel.apply {
                 busList = busDbViewModel.getBusData()
                 partnerList = busDbViewModel.getPartnerData()
-                reviewsList = busDbViewModel.getReviewData()
+//                ratingsList = busDbViewModel.getReviewData(busViewModel.selectedBus.busId)
             }
         }
 
         val writeSharedPreferences: SharedPreferences = getSharedPreferences("LoginStatus", MODE_PRIVATE)
+        val themePreference: SharedPreferences = getSharedPreferences("ThemeStatus", MODE_PRIVATE)
+
+        val themeEditor: SharedPreferences.Editor = themePreference.edit()
+
+        when(themePreference.getString("theme", "")){
+            Themes.LIGHT.name -> {
+                themeEditor.putString("theme", Themes.LIGHT.name)
+                themeEditor.apply()
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+            Themes.DARK.name -> {
+                themeEditor.putString("theme", Themes.DARK.name)
+                themeEditor.apply()
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            }
+            Themes.SYSTEM_DEFAULT.name -> {
+                themeEditor.putString("theme", Themes.SYSTEM_DEFAULT.name)
+                themeEditor.apply()
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            }
+            "" -> {
+                themeEditor.putString("theme", Themes.SYSTEM_DEFAULT.name)
+                themeEditor.apply()
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            }
+        }
 
         val editor: SharedPreferences.Editor = writeSharedPreferences.edit()
 
         if(savedInstanceState == null) {
             when (writeSharedPreferences.getString("status", "")) {
                 "" -> {
-                    println("EMPTY")
                     getBusData()
                     editor.putString("status", LoginStatus.NEW.name)
                     loginStatusViewModel.status = LoginStatus.NEW
@@ -60,7 +87,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 LoginStatus.SKIPPED.name -> {
-                    println("SKIPPED")
                     loginStatusViewModel.status = LoginStatus.SKIPPED
                     supportFragmentManager.commit {
                         replace(R.id.main_fragment_container, HomePageFragment())
@@ -85,7 +111,6 @@ class MainActivity : AppCompatActivity() {
 
                 }
                 LoginStatus.NEW.name -> {
-                    println("NEW")
                     getBusData()
                     loginStatusViewModel.status = LoginStatus.NEW
                     supportFragmentManager.commit {
@@ -93,7 +118,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 LoginStatus.LOGGED_OUT.name -> {
-                    println("LOGGED OUT")
                     loginStatusViewModel.status = LoginStatus.LOGGED_OUT
                     supportFragmentManager.commit {
                         replace(R.id.main_fragment_container, LoginFragment())
@@ -222,7 +246,7 @@ class MainActivity : AppCompatActivity() {
             busViewModel.apply {
                 busViewModel.busList = busDbViewModel.getBusData()
                 partnerList = busDbViewModel.getPartnerData()
-                reviewsList = busDbViewModel.getReviewData()
+//                ratingsList = busDbViewModel.getReviewData(busViewModel.selectedBus.busId)
             }
         }
     }

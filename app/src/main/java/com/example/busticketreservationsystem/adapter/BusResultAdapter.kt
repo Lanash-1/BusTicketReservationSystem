@@ -73,7 +73,7 @@ class BusResultAdapter: RecyclerView.Adapter<BusResultAdapter.BusResultViewHolde
 
             val rating = busList[position].ratingOverall
 
-            ratingText.text = rating.toString()
+            ratingText.text = "${String.format("%.1f", rating).toDouble()}"
             peopleCountText.text = busList[position].ratingPeopleCount.toString()
 
             if(rating > 3.9){
@@ -81,7 +81,7 @@ class BusResultAdapter: RecyclerView.Adapter<BusResultAdapter.BusResultViewHolde
             }else if(rating > 2.9){
                 ratingText.setBackgroundColor(Color.parseColor("#F8C31F"))
             }else if(rating == 0.0){
-                ratingText.text = "-/-"
+                ratingText.text = "0.0"
                 ratingText.setBackgroundColor(Color.parseColor("#808080"))
             }else{
                 ratingText.setBackgroundColor(Color.parseColor("#D13140"))

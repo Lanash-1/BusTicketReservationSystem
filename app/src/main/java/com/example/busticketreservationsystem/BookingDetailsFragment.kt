@@ -116,6 +116,8 @@ class BookingDetailsFragment : Fragment() {
                 }
                 if(result){
                     Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show()
+                    bookingViewModel.contactEmail = binding.emailInput.text.toString()
+                    bookingViewModel.contactNumber = binding.mobileInput.text.toString()
                     parentFragmentManager.commit {
                         replace(R.id.homePageFragmentContainer, PaymentOptionsFragment())
                         addToBackStack(null)

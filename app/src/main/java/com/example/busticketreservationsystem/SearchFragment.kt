@@ -81,7 +81,8 @@ class SearchFragment : Fragment() {
         inflater.inflate(R.menu.search_menu, menu)
         val searchItem = menu.findItem(R.id.search)
         val searchView = searchItem.actionView as SearchView
-        
+
+
         searchItem.expandActionView()
         searchView.setQuery("", false)
 
@@ -89,17 +90,16 @@ class SearchFragment : Fragment() {
 
         searchItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener{
             override fun onMenuItemActionExpand(p0: MenuItem?): Boolean {
-                Toast.makeText(requireContext(), "expand view", Toast.LENGTH_SHORT).show()
                 return true
             }
 
             override fun onMenuItemActionCollapse(p0: MenuItem?): Boolean {
-                Toast.makeText(requireContext(), "collapse view", Toast.LENGTH_SHORT).show()
+
                 parentFragmentManager.commit {
                     replace(R.id.homePageFragmentContainer, DashBoardFragment())
                     parentFragmentManager.popBackStack()
                 }
-                return true
+                return false
             }
         })
 

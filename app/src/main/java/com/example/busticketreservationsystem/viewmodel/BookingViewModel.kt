@@ -26,6 +26,9 @@ class BookingViewModel: ViewModel() {
 
     var date: String = ""
 
+    var contactEmail: String = ""
+    var contactNumber: String = ""
+
 //    var bookingHistory = MutableLiveData<List<Bookings>>()
 
     var bookingHistory = listOf<Bookings>()

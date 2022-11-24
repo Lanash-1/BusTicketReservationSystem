@@ -9,11 +9,13 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import com.example.busticketreservationsystem.databinding.FragmentSettingsBinding
 import com.example.busticketreservationsystem.entity.User
 import com.example.busticketreservationsystem.enums.LoginStatus
+import com.example.busticketreservationsystem.enums.Themes
 import com.example.busticketreservationsystem.viewmodel.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.GlobalScope
@@ -66,6 +68,14 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+
+        var preferences: SharedPreferences
+        (activity as AppCompatActivity).apply {
+            preferences = getSharedPreferences("ThemeStatus", Context.MODE_PRIVATE)
+        }
+        val themeEditor: SharedPreferences.Editor = preferences.edit()
+
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.GONE
 
         val callback: OnBackPressedCallback =
@@ -90,12 +100,52 @@ class SettingsFragment : Fragment() {
             editor = writeSharedPreferences.edit()
         }
 
+        if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
+            binding.deleteAccountLayout.visibility = View.VISIBLE
+        }else{
+            binding.deleteAccountLayout.visibility = View.GONE
+        }
+
         binding.deleteAccountLayout.setOnClickListener {
             deleteAction()
 
         }
 
-        binding.lightRadioButton.isChecked = true
+        when(preferences.getString("theme", "")){
+            Themes.LIGHT.name -> {
+                binding.lightRadioButton.isChecked = true
+            }
+            Themes.DARK.name -> {
+                binding.darkRadioButton.isChecked = true
+            }
+            Themes.SYSTEM_DEFAULT.name -> {
+                binding.systemDefaultRadioButton.isChecked = true
+            }
+            "" -> {
+                binding.systemDefaultRadioButton.isChecked = true
+            }
+        }
+
+
+        binding.themeRadioGroup.setOnCheckedChangeListener { radioGroup, i ->
+            when(i){
+                R.id.light_radio_button -> {
+                    themeEditor.putString("theme", Themes.LIGHT.name)
+                    themeEditor.apply()
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                }
+                R.id.dark_radio_button -> {
+                    themeEditor.putString("theme", Themes.DARK.name)
+                    themeEditor.apply()
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                }
+                R.id.system_default_radio_button -> {
+                    themeEditor.putString("theme", Themes.SYSTEM_DEFAULT.name)
+                    themeEditor.apply()
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                }
+            }
+        }
 
     }
 
