@@ -22,6 +22,7 @@ import com.example.busticketreservationsystem.enums.BookedTicketStatus
 import com.example.busticketreservationsystem.enums.LocationOptions
 import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.interfaces.OnItemClickListener
+import com.example.busticketreservationsystem.interfaces.OnRemoveClickListener
 import com.example.busticketreservationsystem.viewmodel.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.imageview.ShapeableImageView
@@ -44,6 +45,7 @@ class DashBoardFragment : Fragment() {
     private val bookingDbViewModel: BookingDbViewModel by activityViewModels()
     private val busDbViewModel: BusDbViewModel by activityViewModels()
     private val userViewModel: UserViewModel by activityViewModels()
+    private val navigationViewModel: NavigationViewModel by activityViewModels()
 
     private lateinit var binding: FragmentDashBoardBinding
 
@@ -99,13 +101,24 @@ class DashBoardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+//        val f = SelectedBusFragment()
+//
+//        when(f){
+//            is SelectedBusFragment -> {
+//                println("working")
+//            }
+//            else -> {
+//                println("Not working")
+//            }
+//        }
+
         for(i in 0 until parentFragmentManager.backStackEntryCount){
             parentFragmentManager.popBackStack()
         }
 
 //        println("LOGIN STATUS: ${loginStatusViewModel.status}")
 
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.VISIBLE
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.visibility = View.VISIBLE
 
 //        Toast.makeText(
 //            requireContext(),
@@ -144,21 +157,47 @@ class DashBoardFragment : Fragment() {
         if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
             getRecentlyViewedDetails()
             getBookingHistoryList(userViewModel.user.userId)
+        }else{
+            binding.recentlyViewedRecyclerView.visibility = View.GONE
+            binding.recentlyViewedText.visibility = View.GONE
         }
 
         binding.recentlyViewedRecyclerView.adapter = recentlyViewedAdapter
         binding.recentlyViewedRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 //        recentlyViewedAdapter.setRecentlyViewedList(listOf(), listOf())
 
-        recentlyViewedAdapter.setOnItemClickListener(object: OnItemClickListener{
-            override fun onItemClick(position: Int) {
+        recentlyViewedAdapter.setOnRemoveClickListener(object: OnRemoveClickListener{
+            override fun onRemoveClick(position: Int) {
                 removeRecentlyViewed(busViewModel.recentlyViewedList.value!![position])
             }
-
         })
 
         busViewModel.recentlyViewedList.observe(viewLifecycleOwner, Observer {
             recentlyViewedAdapter.setRecentlyViewedList(busViewModel.recentlyViewedBusList, it, busViewModel.recentlyViewedPartnerList)
+        })
+
+        recentlyViewedAdapter.setOnItemClickListener(object : OnItemClickListener{
+            override fun onItemClick(position: Int) {
+                busViewModel.selectedBus = busViewModel.recentlyViewedBusList[position]
+                bookingViewModel.date = busViewModel.recentlyViewedList.value!![position].date
+
+                GlobalScope.launch {
+                    var seats = listOf<String>()
+                    val job = launch {
+                        seats = busDbViewModel.getBookedSeats(busViewModel.selectedBus.busId, busViewModel.recentlyViewedList.value!![position].date)
+                    }
+                    job.join()
+                    withContext(Dispatchers.IO){
+                        busViewModel.notAvailableSeats = seats
+                    }
+                }
+                navigationViewModel.fragment = DashBoardFragment()
+
+                parentFragmentManager.commit {
+                    replace(R.id.homePageFragmentContainer, SelectedBusFragment())
+                }
+            }
+
         })
 
         searchBusButton = view.findViewById(R.id.searchBus_button)
@@ -331,10 +370,24 @@ class DashBoardFragment : Fragment() {
     private fun getRecentlyViewedDetails() {
         GlobalScope.launch {
             val busList: MutableList<Bus> = mutableListOf()
-            var recentlyViewList: List<RecentlyViewed> = listOf()
+            var recentlyViewList: MutableList<RecentlyViewed> = mutableListOf()
+            var list = listOf<RecentlyViewed>()
             val recentlyViewedPartnersList = mutableListOf<String>()
             val job = launch {
-                recentlyViewList = busDbViewModel.getRecentlyViewed(userViewModel.user.userId)
+                list = busDbViewModel.getRecentlyViewed(userViewModel.user.userId)
+                for(i in list){
+                    val sdf = SimpleDateFormat("dd/MM/yyyy")
+                    val strDate: Date = sdf.parse(i.date)
+                    val time = Calendar.getInstance().time
+                    val current = sdf.format(time)
+                    val currentDate = sdf.parse(current)
+                    if (currentDate.compareTo(strDate) > 0) {
+                        println("Past")
+                    }else{
+                        recentlyViewList.add(i)
+                    }
+                }
+
                 for(i in recentlyViewList){
                     busList.add(busDbViewModel.getBus(i.busId))
                 }
@@ -348,6 +401,7 @@ class DashBoardFragment : Fragment() {
             }
             anotherJob.join()
             withContext(Dispatchers.Main){
+
                 busViewModel.recentlyViewedBusList = busList
                 busViewModel.recentlyViewedPartnerList = recentlyViewedPartnersList
                 busViewModel.recentlyViewedList.value = recentlyViewList

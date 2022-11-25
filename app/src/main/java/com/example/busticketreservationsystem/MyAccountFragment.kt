@@ -73,23 +73,23 @@ class MyAccountFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.VISIBLE
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.visibility = View.VISIBLE
 
 
         // handle back press in this fragment
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true){
                 override fun handleOnBackPressed() {
-                    Toast.makeText(requireContext(), "back presses", Toast.LENGTH_SHORT).show()
                     parentFragmentManager.commit {
                         replace(R.id.homePageFragmentContainer, DashBoardFragment())
                     }
-                    requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).selectedItemId = R.id.dashboard
+                    requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.selectedItemId = R.id.dashboard
 
                 }
             }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
 
 
         if(loginStatusViewModel.status != LoginStatus.LOGGED_IN){

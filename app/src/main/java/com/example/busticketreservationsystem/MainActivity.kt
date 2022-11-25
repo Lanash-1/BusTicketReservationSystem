@@ -124,6 +124,11 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
+        }else{
+            println("ELSE COMING - ${savedInstanceState.size()}")
+//            supportFragmentManager.commit {
+//                replace(R.id.main_fragment_container, LoginFragment())
+//            }
         }
     }
 

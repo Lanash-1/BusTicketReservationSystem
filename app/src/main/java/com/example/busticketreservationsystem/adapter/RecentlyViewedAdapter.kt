@@ -12,6 +12,7 @@ import com.example.busticketreservationsystem.entity.Bus
 import com.example.busticketreservationsystem.entity.Partners
 import com.example.busticketreservationsystem.entity.RecentlyViewed
 import com.example.busticketreservationsystem.interfaces.OnItemClickListener
+import com.example.busticketreservationsystem.interfaces.OnRemoveClickListener
 
 class RecentlyViewedAdapter: RecyclerView.Adapter<RecentlyViewedAdapter.RecentlyViewedViewHolder>() {
 
@@ -43,9 +44,18 @@ class RecentlyViewedAdapter: RecyclerView.Adapter<RecentlyViewedAdapter.Recently
         this.listener = listener
     }
 
+    private lateinit var removeListener: OnRemoveClickListener
+
+    fun setOnRemoveClickListener(removeListener: OnRemoveClickListener){
+        this.removeListener = removeListener
+    }
+
     inner class RecentlyViewedViewHolder(val binding: ItemRecentlyViewedBinding): RecyclerView.ViewHolder(binding.root) {
         init {
             binding.removeIcon.setOnClickListener{
+                removeListener.onRemoveClick(absoluteAdapterPosition)
+            }
+            binding.recentlyViewedCardView.setOnClickListener{
                 listener.onItemClick(absoluteAdapterPosition)
             }
         }

@@ -66,7 +66,7 @@ class BoardingAndDroppingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.GONE
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.visibility = View.GONE
 
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true){
@@ -93,17 +93,17 @@ class BoardingAndDroppingFragment : Fragment() {
         val viewPager = binding.boardingDroppingViewPager
 
         binding.nextButton.setOnClickListener{
-            if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
+//            if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
                 parentFragmentManager.commit {
                     replace(R.id.homePageFragmentContainer, BookingDetailsFragment())
                     addToBackStack(null)
                 }
-            }else{
-                parentFragmentManager.commit {
-                    replace(R.id.homePageFragmentContainer, BookingDetailsGuestFragment())
-                    addToBackStack(null)
-                }
-            }
+//            }else{
+//                parentFragmentManager.commit {
+//                    replace(R.id.homePageFragmentContainer, BookingDetailsGuestFragment())
+//                    addToBackStack(null)
+//                }
+//            }
         }
 
         viewPager.registerOnPageChangeCallback(

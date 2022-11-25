@@ -76,7 +76,7 @@ class SettingsFragment : Fragment() {
         }
         val themeEditor: SharedPreferences.Editor = preferences.edit()
 
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.GONE
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.visibility = View.GONE
 
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true){

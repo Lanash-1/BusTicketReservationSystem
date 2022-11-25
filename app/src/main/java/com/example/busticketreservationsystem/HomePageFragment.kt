@@ -10,11 +10,9 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
+import com.example.busticketreservationsystem.databinding.FragmentHomePageBinding
 import com.example.busticketreservationsystem.enums.LoginStatus
-import com.example.busticketreservationsystem.viewmodel.BusDbViewModel
-import com.example.busticketreservationsystem.viewmodel.BusViewModel
-import com.example.busticketreservationsystem.viewmodel.UserDbViewModel
-import com.example.busticketreservationsystem.viewmodel.UserViewModel
+import com.example.busticketreservationsystem.viewmodel.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -24,10 +22,14 @@ class HomePageFragment : Fragment() {
 
     private lateinit var writeSharedPreferences: SharedPreferences
 
+    private lateinit var binding: FragmentHomePageBinding
+
     private val userViewModel: UserViewModel by activityViewModels()
     private val userDbViewModel: UserDbViewModel by activityViewModels()
     private val busDbViewModel: BusDbViewModel by activityViewModels()
     private val busViewModel: BusViewModel by activityViewModels()
+    private val navigationViewModel: NavigationViewModel by activityViewModels()
+    private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,17 +38,29 @@ class HomePageFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home_page, container, false)
+//        return inflater.inflate(R.layout.fragment_home_page, container, false)
+        binding = FragmentHomePageBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as AppCompatActivity).apply {
-            writeSharedPreferences= getSharedPreferences("LoginStatus", MODE_PRIVATE)
-        }
+        when(navigationViewModel.fragment) {
+            is BookingDetailsFragment -> {
+                println("COMING ")
+                navigationViewModel.fragment = null
+                parentFragmentManager.commit {
+                    replace(R.id.homePageFragmentContainer, BookingDetailsFragment())
+                }
+            }
+//        }
+            else -> {
+//                (activity as AppCompatActivity).apply {
+//                    writeSharedPreferences= getSharedPreferences("LoginStatus", MODE_PRIVATE)
+//                }
 
 //        when(writeSharedPreferences.getString("status", "")){
 //            LoginStatus.LOGGED_IN.name -> {
@@ -56,32 +70,37 @@ class HomePageFragment : Fragment() {
 //            }
 //    }
 
-        val bottomNavigationView = view.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+//                val bottomNavigationView = view.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
 
-        val dashBoardFragment = DashBoardFragment()
-        val bookingHistoryFragment = BookingHistoryFragment()
-        val bookingHistoryGuestFragment = BookingHistoryGuestFragment()
-        val myAccountFragment = MyAccountFragment()
+                val dashBoardFragment = DashBoardFragment()
+                val bookingHistoryFragment = BookingHistoryFragment()
+                val bookingHistoryGuestFragment = BookingHistoryGuestFragment()
+                val myAccountFragment = MyAccountFragment()
 
-        if(savedInstanceState == null){
-            setCurrentFragment(dashBoardFragment)
-        }
+                if(savedInstanceState == null){
+                    setCurrentFragment(dashBoardFragment)
+                }
 
 
-        bottomNavigationView.setOnNavigationItemSelectedListener {
+        binding.bottomNavigationView.setOnNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.dashboard -> {
+                    println("COMING")
                     setCurrentFragment(dashBoardFragment)
                 }
                 R.id.bookingHistory -> {
 //                    setCurrentFragment(bookingHistoryFragment)
-                    if(writeSharedPreferences.getString("status", "") == LoginStatus.LOGGED_IN.name){
+                    println("COMING 1")
+
+                    if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
                         setCurrentFragment(bookingHistoryFragment)
                     }else{
                         setCurrentFragment(bookingHistoryGuestFragment)
                     }
                 }
                 R.id.myAccount -> {
+                    println("COMING 2")
+
 //                    if(writeSharedPreferences.getString("status", "") == LoginStatus.LOGGED_IN.name){
                         setCurrentFragment(myAccountFragment)
 //                    }
@@ -93,6 +112,9 @@ class HomePageFragment : Fragment() {
             true
         }
     }
+            }}
+//        }
+//    }
 
     private fun setCurrentFragment(fragment: Fragment) {
         parentFragmentManager.commit {

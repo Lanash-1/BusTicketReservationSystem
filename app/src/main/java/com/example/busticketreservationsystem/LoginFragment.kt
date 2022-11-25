@@ -12,6 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
+import com.example.busticketreservationsystem.viewmodel.NavigationViewModel
 import com.example.busticketreservationsystem.viewmodel.UserDbViewModel
 import com.example.busticketreservationsystem.viewmodel.UserViewModel
 import com.google.android.material.textfield.TextInputEditText
@@ -34,6 +35,7 @@ class LoginFragment : Fragment() {
     private val userDbViewModel: UserDbViewModel by activityViewModels()
     private val userViewModel: UserViewModel by activityViewModels()
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
+    private val navigationViewModel: NavigationViewModel by activityViewModels()
 
     private lateinit var editor: SharedPreferences.Editor
 
@@ -79,9 +81,7 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         (activity as AppCompatActivity)?.apply {
-            val writeSharedPreferences: SharedPreferences = getSharedPreferences("LoginStatus",
-                Context.MODE_PRIVATE
-            )
+            val writeSharedPreferences: SharedPreferences = getSharedPreferences("LoginStatus", Context.MODE_PRIVATE)
             editor = writeSharedPreferences.edit()
         }
 
@@ -138,9 +138,21 @@ class LoginFragment : Fragment() {
                                 editor.putInt("userId", userViewModel.user.userId)
                                 editor.commit()
                             }
-                            parentFragmentManager.commit {
-                                replace(R.id.main_fragment_container, HomePageFragment())
-                            }
+//                            when(navigationViewModel.fragment){
+//                                is BookingDetailsFragment -> {
+//                                    navigationViewModel.fragment = null
+//                                    parentFragmentManager.commit {
+////                                        replace(R.id.homePageFragmentContainer, BookingDetailsFragment())
+//                                        replace(R.id.homePageFragmentContainer, HomePageFragment)
+//                                    }
+//                                }
+//                                else -> {
+                                    parentFragmentManager.commit {
+                                        replace(R.id.main_fragment_container, HomePageFragment())
+                                    }
+//                                }
+//                            }
+
                         }else{
                             passwordLayout.helperText = "Invalid password"
                         }

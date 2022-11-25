@@ -170,7 +170,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/rating_3_text"
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_marginRight="16dp"
-                android:text="62 %"
+                android:text="100 %"
                 style="@style/TextColor"
                 android:textSize="16sp"
                 />
@@ -184,7 +184,8 @@
                 app:layout_constraintStart_toStartOf="@id/star_icon"
                 app:layout_constraintTop_toBottomOf="@id/percentage_text3"
                 android:layout_marginTop="16dp"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                />
 
             <ProgressBar
                 android:layout_width="0dp"

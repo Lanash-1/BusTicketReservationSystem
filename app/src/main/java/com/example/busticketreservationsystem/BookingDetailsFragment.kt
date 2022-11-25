@@ -19,8 +19,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.busticketreservationsystem.adapter.PassengerInfoAdapter
 import com.example.busticketreservationsystem.databinding.FragmentBookingDetailsBinding
 import com.example.busticketreservationsystem.enums.Gender
+import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.interfaces.PassengerInfoChangeListener
 import com.example.busticketreservationsystem.viewmodel.BookingViewModel
+import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
+import com.example.busticketreservationsystem.viewmodel.NavigationViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -32,6 +35,8 @@ class BookingDetailsFragment : Fragment() {
     private lateinit var binding: FragmentBookingDetailsBinding
 
     private val bookingViewModel: BookingViewModel by activityViewModels()
+    private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
+    private val navigationViewModel: NavigationViewModel by activityViewModels()
 
     private var passengerInfoAdapter = PassengerInfoAdapter()
 
@@ -70,7 +75,20 @@ class BookingDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.GONE
+        if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
+            binding.proceedCardView.visibility = View.VISIBLE
+        }else{
+            binding.loginRegisterButton.visibility = View.VISIBLE
+        }
+
+        binding.loginRegisterButton.setOnClickListener {
+            navigationViewModel.fragment = BookingDetailsFragment()
+            parentFragmentManager.commit {
+                replace(R.id.main_fragment_container, LoginFragment())
+            }
+        }
+
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.visibility = View.GONE
 
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true){

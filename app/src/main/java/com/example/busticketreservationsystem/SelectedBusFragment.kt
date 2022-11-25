@@ -35,6 +35,7 @@ class SelectedBusFragment : Fragment() {
     private val busDbViewModel: BusDbViewModel by activityViewModels()
     private val userViewModel: UserViewModel by activityViewModels()
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
+    private val navigationViewModel: NavigationViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,11 +64,12 @@ class SelectedBusFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home -> {
-                busViewModel.selectedSeats.clear()
-                parentFragmentManager.commit {
-                    replace(R.id.homePageFragmentContainer, BusResultsFragment())
-                    parentFragmentManager.popBackStack()
-                }
+                backPressLogic()
+//                busViewModel.selectedSeats.clear()
+//                parentFragmentManager.commit {
+//                    replace(R.id.homePageFragmentContainer, BusResultsFragment())
+//                    parentFragmentManager.popBackStack()
+//                }
             }
             R.id.info_icon -> {
                 parentFragmentManager.commit {
@@ -79,21 +81,34 @@ class SelectedBusFragment : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
+    private fun backPressLogic() {
+        busViewModel.selectedSeats.clear()
+        when(navigationViewModel.fragment){
+            is DashBoardFragment -> {
+                navigationViewModel.fragment = null
+                parentFragmentManager.commit {
+                    replace(R.id.homePageFragmentContainer, DashBoardFragment())
+                }
+            }
+            else -> {
+                parentFragmentManager.commit {
+                    replace(R.id.homePageFragmentContainer, BusResultsFragment())
+                    parentFragmentManager.popBackStack()
+                }
+            }
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.GONE
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.visibility = View.GONE
 
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true){
                 override fun handleOnBackPressed() {
-                    busViewModel.selectedSeats.clear()
+                    backPressLogic()
 
-                    parentFragmentManager.commit {
-                        replace(R.id.homePageFragmentContainer, BusResultsFragment())
-                        parentFragmentManager.popBackStack()
-
-                    }
                 }
             }
 
@@ -260,7 +275,7 @@ class SelectedBusFragment : Fragment() {
             var ratingCount: Int = 0
             var ratings = listOf<Int>()
             var averageRating: Double = 0.0
-            lateinit var userReview: Reviews
+            var userReview = listOf<Reviews>()
 
             val job = launch {
                 ratingsList = busDbViewModel.getReviewData(busId)
@@ -271,10 +286,7 @@ class SelectedBusFragment : Fragment() {
                 }
                 averageRating /= ratingCount
                 if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
-                    val list = busDbViewModel.getReviewOfUser(userViewModel.user.userId, busId)
-                    if(list.size == 1){
-                        userReview = list[0]
-                    }
+                    userReview = busDbViewModel.getReviewOfUser(userViewModel.user.userId, busId)
                 }
             }
             job.join()
@@ -284,6 +296,7 @@ class SelectedBusFragment : Fragment() {
                 busViewModel.ratings = ratings
                 busViewModel.averageRating = averageRating
 //                busViewModel.userReview = userReview
+                busViewModel.userReview = userReview
             }
         }
     }

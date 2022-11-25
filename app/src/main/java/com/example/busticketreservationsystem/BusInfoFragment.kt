@@ -73,7 +73,7 @@ class BusInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.GONE
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.visibility = View.GONE
 
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true){
@@ -135,32 +135,40 @@ class BusInfoFragment : Fragment() {
 
         if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
             binding.rateBusButton.visibility = View.VISIBLE
+            if(busViewModel.userReview.size == 1){
+                binding.rateBusButton.text = "Update Rating"
+            }
         }
 
         binding.rateBusButton.setOnClickListener {
-            val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.rating_dialog, null)
+            if(busViewModel.userReview.size == 1){
+                println("UPDATE METHOD")
+            }else{
+                val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.rating_dialog, null)
 
-            val builder = AlertDialog.Builder(requireContext())
-                .setView(dialogView)
-                .setTitle("Rating and Review")
-                .setPositiveButton("Submit"){
-                        _, _ ->
-                    run {
-                        val feedback: String = dialogView.findViewById<TextInputEditText>(R.id.review_input).text.toString()
-                        val rating: Int = dialogView.findViewById<RatingBar>(R.id.ratingBar).rating.toString().toDouble().toInt()
-                        if(rating > 0){
-                            Toast.makeText(requireContext(), "$rating - $feedback", Toast.LENGTH_SHORT).show()
-                            postRating(userViewModel.user.userId, busViewModel.selectedBus.busId, rating, feedback, "${dateViewModel.date} / ${dateViewModel.month} / ${dateViewModel.year}")
-                        }else{
-                            Toast.makeText(requireContext(), "Rating should be selected", Toast.LENGTH_SHORT).show()
+                val builder = AlertDialog.Builder(requireContext())
+                    .setView(dialogView)
+                    .setTitle("Rating and Review")
+                    .setPositiveButton("Submit"){
+                            _, _ ->
+                        run {
+                            val feedback: String = dialogView.findViewById<TextInputEditText>(R.id.review_input).text.toString()
+                            val rating: Int = dialogView.findViewById<RatingBar>(R.id.ratingBar).rating.toString().toDouble().toInt()
+                            if(rating > 0){
+                                Toast.makeText(requireContext(), "$rating - $feedback", Toast.LENGTH_SHORT).show()
+                                postRating(userViewModel.user.userId, busViewModel.selectedBus.busId, rating, feedback, "${dateViewModel.date} / ${dateViewModel.month} / ${dateViewModel.year}")
+                            }else{
+                                Toast.makeText(requireContext(), "Rating should be selected", Toast.LENGTH_SHORT).show()
+                            }
                         }
                     }
-                }
-                .setNegativeButton("Cancel"){
-                    dialog, _ -> dialog.cancel()
-                }
+                    .setNegativeButton("Cancel"){
+                            dialog, _ -> dialog.cancel()
+                    }
 
-            val alertDialog = builder.show()
+                val alertDialog = builder.show()
+
+            }
 
         }
     }

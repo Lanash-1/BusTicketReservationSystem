@@ -55,6 +55,7 @@ class EditProfileFragment : Fragment() {
             android.R.id.home -> {
                 parentFragmentManager.commit {
                     replace(R.id.homePageFragmentContainer, MyAccountFragment())
+                    parentFragmentManager.popBackStack()
                 }
             }
         }
@@ -64,7 +65,7 @@ class EditProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.GONE
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.visibility = View.GONE
 
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true){
@@ -72,6 +73,7 @@ class EditProfileFragment : Fragment() {
 //                    Toast.makeText(requireContext(), "back presses", Toast.LENGTH_SHORT).show()
                     parentFragmentManager.commit {
                         replace(R.id.homePageFragmentContainer, MyAccountFragment())
+                        parentFragmentManager.popBackStack()
                     }
 //                    requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).selectedItemId = R.id.dashboard
                 }

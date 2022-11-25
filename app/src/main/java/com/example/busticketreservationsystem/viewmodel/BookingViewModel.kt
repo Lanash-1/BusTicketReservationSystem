@@ -12,7 +12,7 @@ class BookingViewModel: ViewModel() {
 
     var totalTicketCost: Double = 0.0
 
-    var selectedSeats: List<String> = listOf()
+    var selectedSeats: MutableList<String> = mutableListOf()
 
     var passengerInfo: MutableList<PassengerInfoModel> = mutableListOf()
 

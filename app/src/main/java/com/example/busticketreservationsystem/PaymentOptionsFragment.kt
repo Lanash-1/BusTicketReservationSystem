@@ -32,6 +32,7 @@ class PaymentOptionsFragment : Fragment() {
     private val bookingDbViewModel: BookingDbViewModel by activityViewModels()
     private val busViewModel: BusViewModel by activityViewModels()
     private val busDbViewModel: BusDbViewModel by activityViewModels()
+    private val searchViewModel: SearchViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -109,8 +110,25 @@ class PaymentOptionsFragment : Fragment() {
             }
             otherJob.join()
             withContext(Dispatchers.Main){
+                busViewModel.apply {
+                    selectedSeats.clear()
+                }
+                bookingViewModel.apply {
+                    selectedSeats.clear()
+                    passengerInfo.clear()
+                    contactEmail = ""
+                    contactNumber = ""
+                    bookingEmail = null
+                    bookingMobile = null
+                }
+                searchViewModel.apply {
+                    sourceLocation = ""
+                    destinationLocation = ""
+                    year = 0
+                    currentSearch = ""
+                }
                 parentFragmentManager.commit {
-                    replace(R.id.homePageFragmentContainer, DashBoardFragment())
+                    replace(R.id.main_fragment_container, HomePageFragment())
                     for(i in 0 until parentFragmentManager.backStackEntryCount){
                         parentFragmentManager.popBackStack()
                     }

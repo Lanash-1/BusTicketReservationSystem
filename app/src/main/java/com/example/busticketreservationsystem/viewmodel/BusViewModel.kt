@@ -67,7 +67,7 @@ class BusViewModel: ViewModel() {
 
     var averageRating: Double = 0.0
 
-    lateinit var userReview: Reviews
+    var userReview = listOf<Reviews>()
 
 
 }

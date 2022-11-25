@@ -62,7 +62,7 @@ class SortAndFilterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 //        Toast.makeText(requireContext(), "on create - ${parentFragmentManager.backStackEntryCount}", Toast.LENGTH_SHORT).show()
 
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.GONE
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.visibility = View.GONE
 
 
         var currentBusList = busViewModel.filteredBusList
@@ -76,6 +76,7 @@ class SortAndFilterFragment : Fragment() {
             Toast.makeText(requireContext(), "Applied", Toast.LENGTH_SHORT).show()
 
             if(selectedGenderRadioButton != null){
+
                 when(selectedGenderRadioButton!!.id){
                     R.id.price_high_low -> {
                         currentBusList = busViewModel.filteredBusList.sortedByDescending {
