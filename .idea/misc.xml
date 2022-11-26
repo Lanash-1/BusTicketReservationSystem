@@ -19,11 +19,12 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3880208333333333" />
         <entry key="app/src/main/res/layout/fragment_boarding_and_dropping.xml" value="0.21893866184294092" />
         <entry key="app/src/main/res/layout/fragment_boarding_and_dropping_location.xml" value="0.35885416666666664" />
+        <entry key="app/src/main/res/layout/fragment_booked_ticket.xml" value="0.24270833333333333" />
         <entry key="app/src/main/res/layout/fragment_booking_details.xml" value="0.3225225225225225" />
         <entry key="app/src/main/res/layout/fragment_booking_details_guest.xml" value="0.17864583333333334" />
         <entry key="app/src/main/res/layout/fragment_booking_history.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_booking_history_guest.xml" value="0.17864583333333334" />
-        <entry key="app/src/main/res/layout/fragment_booking_history_list.xml" value="0.17864583333333334" />
+        <entry key="app/src/main/res/layout/fragment_booking_history_list.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_bus_info.xml" value="0.40412241617838535" />
         <entry key="app/src/main/res/layout/fragment_bus_results.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_cancelled_booking.xml" value="0.17864583333333334" />
@@ -39,6 +40,7 @@
         <entry key="app/src/main/res/layout/fragment_recently_viewed.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_register.xml" value="0.230181884765625" />
         <entry key="app/src/main/res/layout/fragment_registration_details.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_reviews.xml" value="0.22760416666666666" />
         <entry key="app/src/main/res/layout/fragment_search.xml" value="0.35323383084577115" />
         <entry key="app/src/main/res/layout/fragment_selected_bus.xml" value="0.3671783447265625" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.35829925537109375" />
@@ -52,6 +54,7 @@
         <entry key="app/src/main/res/layout/item_radio_location.xml" value="0.371875" />
         <entry key="app/src/main/res/layout/item_recently_viewed.xml" value="0.3099817911783854" />
         <entry key="app/src/main/res/layout/item_recently_viewed_extra.xml" value="0.25104166666666666" />
+        <entry key="app/src/main/res/layout/item_review.xml" value="0.2265625" />
         <entry key="app/src/main/res/layout/item_seat.xml" value="0.2573898315429688" />
         <entry key="app/src/main/res/layout/rating_dialog.xml" value="0.25047454833984373" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />

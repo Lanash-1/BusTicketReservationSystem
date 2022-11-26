@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
 import androidx.viewpager2.widget.ViewPager2
 import com.example.busticketreservationsystem.adapter.BookingHistoryViewPagerAdapter
@@ -47,6 +48,7 @@ class BookingHistoryFragment : Fragment() {
                 override fun handleOnBackPressed() {
                     Toast.makeText(requireContext(), "back presses", Toast.LENGTH_SHORT).show()
                     parentFragmentManager.commit {
+                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                         replace(R.id.homePageFragmentContainer, DashBoardFragment())
                     }
                     requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.selectedItemId = R.id.dashboard
@@ -63,13 +65,13 @@ class BookingHistoryFragment : Fragment() {
             object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
-                    Toast.makeText(requireContext(), "Select page: $position", Toast.LENGTH_SHORT)
-                        .show()
+//                    Toast.makeText(requireContext(), "Select page: $position", Toast.LENGTH_SHORT)
+//                        .show()
                 }
             }
         )
 
-        val adapter = BookingHistoryViewPagerAdapter(childFragmentManager, lifecycle)
+        val adapter = BookingHistoryViewPagerAdapter(parentFragmentManager, lifecycle)
 
         viewPager.adapter = adapter
         viewPager.isSaveEnabled = false

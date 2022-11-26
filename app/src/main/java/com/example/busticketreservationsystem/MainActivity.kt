@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
 import com.example.busticketreservationsystem.entity.*
 import com.example.busticketreservationsystem.enums.BookedTicketStatus
@@ -83,18 +84,21 @@ class MainActivity : AppCompatActivity() {
                     loginStatusViewModel.status = LoginStatus.NEW
                     editor.apply()
                     supportFragmentManager.commit {
+                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         replace(R.id.main_fragment_container, RegisterFragment())
                     }
                 }
                 LoginStatus.SKIPPED.name -> {
                     loginStatusViewModel.status = LoginStatus.SKIPPED
                     supportFragmentManager.commit {
+                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         replace(R.id.main_fragment_container, HomePageFragment())
                     }
                 }
                 LoginStatus.LOGGED_IN.name -> {
                     loginStatusViewModel.status = LoginStatus.LOGGED_IN
                     supportFragmentManager.commit {
+                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         replace(R.id.main_fragment_container, HomePageFragment())
                     }
                     GlobalScope.launch {
@@ -114,12 +118,14 @@ class MainActivity : AppCompatActivity() {
                     getBusData()
                     loginStatusViewModel.status = LoginStatus.NEW
                     supportFragmentManager.commit {
+                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         replace(R.id.main_fragment_container, RegisterFragment())
                     }
                 }
                 LoginStatus.LOGGED_OUT.name -> {
                     loginStatusViewModel.status = LoginStatus.LOGGED_OUT
                     supportFragmentManager.commit {
+                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         replace(R.id.main_fragment_container, LoginFragment())
                     }
                 }

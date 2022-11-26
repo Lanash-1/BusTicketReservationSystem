@@ -6,6 +6,7 @@ import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import com.example.busticketreservationsystem.databinding.FragmentSortAndFilterBinding
@@ -49,8 +50,8 @@ class SortAndFilterFragment : Fragment() {
         when(item.itemId){
             android.R.id.home -> {
                 parentFragmentManager.commit {
+                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                     replace(R.id.homePageFragmentContainer, BusResultsFragment())
-                    Toast.makeText(requireContext(), "up button - ${parentFragmentManager.backStackEntryCount}", Toast.LENGTH_SHORT).show()
                     parentFragmentManager.popBackStack()
                 }
             }
@@ -104,6 +105,7 @@ class SortAndFilterFragment : Fragment() {
             busViewModel.filteredBusList = currentBusList
 
             parentFragmentManager.commit {
+                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                 replace(R.id.homePageFragmentContainer, BusResultsFragment())
                 parentFragmentManager.popBackStack()
             }
@@ -115,6 +117,7 @@ class SortAndFilterFragment : Fragment() {
                 it.sourceLocation == searchViewModel.sourceLocation && it.destination == searchViewModel.destinationLocation
             }
             parentFragmentManager.commit {
+                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                 replace(R.id.homePageFragmentContainer, BusResultsFragment())
                 parentFragmentManager.popBackStack()
             }

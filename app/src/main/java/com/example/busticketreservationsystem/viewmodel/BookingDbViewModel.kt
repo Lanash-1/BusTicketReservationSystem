@@ -43,5 +43,9 @@ class BookingDbViewModel(
         appDb.bookingsDao().updateTicketStatus(status, bookingId)
     }
 
+    fun deleteBooking(bookings: Bookings) {
+        appDb.bookingsDao().deleteBooking(bookings)
+    }
+
 
 }

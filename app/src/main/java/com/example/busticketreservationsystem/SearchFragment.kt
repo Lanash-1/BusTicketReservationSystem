@@ -8,6 +8,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -96,6 +97,7 @@ class SearchFragment : Fragment() {
             override fun onMenuItemActionCollapse(p0: MenuItem?): Boolean {
 
                 parentFragmentManager.commit {
+                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                     replace(R.id.homePageFragmentContainer, DashBoardFragment())
                     parentFragmentManager.popBackStack()
                 }
@@ -129,6 +131,7 @@ class SearchFragment : Fragment() {
             android.R.id.home -> {
                 Toast.makeText(requireContext(), "search up button", Toast.LENGTH_SHORT).show()
                 parentFragmentManager.commit {
+                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                     replace(R.id.homePageFragmentContainer, DashBoardFragment())
                     parentFragmentManager.popBackStack()
                 }
@@ -162,6 +165,7 @@ class SearchFragment : Fragment() {
                 }
             }
             parentFragmentManager.commit {
+                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                 replace(R.id.homePageFragmentContainer, DashBoardFragment())
                 parentFragmentManager.popBackStack()
             }
@@ -179,6 +183,7 @@ class SearchFragment : Fragment() {
                     }
                 }
                 parentFragmentManager.commit {
+                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                     replace(R.id.homePageFragmentContainer, DashBoardFragment())
                     parentFragmentManager.popBackStack()
                 }

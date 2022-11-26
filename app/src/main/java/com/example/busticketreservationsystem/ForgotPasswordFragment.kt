@@ -5,11 +5,14 @@ import android.view.*
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import com.example.busticketreservationsystem.viewmodel.UserDbViewModel
 import com.example.busticketreservationsystem.viewmodel.UserViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.Dispatchers
@@ -56,6 +59,7 @@ class ForgotPasswordFragment : Fragment() {
         when(item.itemId){
             android.R.id.home -> {
                 parentFragmentManager.commit {
+                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                     replace(R.id.main_fragment_container, LoginFragment())
                     parentFragmentManager.popBackStack()
                 }
@@ -77,8 +81,23 @@ class ForgotPasswordFragment : Fragment() {
         confirmPasswordLayout = view.findViewById(R.id.confirm_password_input_layout)
         resetPasswordButton = view.findViewById(R.id.reset_button)
 
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true){
+                override fun handleOnBackPressed() {
+                    parentFragmentManager.commit {
+                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                        replace(R.id.main_fragment_container, LoginFragment())
+                        parentFragmentManager.popBackStack()
+                    }
+                }
+            }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
+
         backToLoginText.setOnClickListener {
             parentFragmentManager.commit {
+                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                 replace(R.id.main_fragment_container, LoginFragment())
                 parentFragmentManager.popBackStack()
             }
@@ -110,6 +129,7 @@ class ForgotPasswordFragment : Fragment() {
                             userDbViewModel.updateUserPassword(password, mobileNumber)
                         }
                         parentFragmentManager.commit {
+                            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                             replace(R.id.main_fragment_container, LoginFragment())
                             parentFragmentManager.popBackStack()
                         }

@@ -7,6 +7,7 @@ import com.example.busticketreservationsystem.entity.Bookings
 import com.example.busticketreservationsystem.databinding.ItemBookedTicketBinding
 import com.example.busticketreservationsystem.entity.Bus
 import com.example.busticketreservationsystem.entity.Partners
+import com.example.busticketreservationsystem.interfaces.OnItemClickListener
 
 class BookingHistoryListAdapter: RecyclerView.Adapter<BookingHistoryListAdapter.BookingHistoryListViewHolder>() {
 
@@ -20,9 +21,17 @@ class BookingHistoryListAdapter: RecyclerView.Adapter<BookingHistoryListAdapter.
         this.bookedPartnersList = bookedPartnersList
     }
 
+    private lateinit var listener: OnItemClickListener
+
+    fun setOnItemClickListener(listener: OnItemClickListener){
+        this.listener = listener
+    }
+
     inner class BookingHistoryListViewHolder(val binding: ItemBookedTicketBinding): RecyclerView.ViewHolder(binding.root) {
         init {
-
+            itemView.setOnClickListener{
+                listener.onItemClick(absoluteAdapterPosition)
+            }
         }
     }
 

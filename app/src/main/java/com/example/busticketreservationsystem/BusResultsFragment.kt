@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -66,12 +67,14 @@ class BusResultsFragment : Fragment() {
         when(item.itemId){
             android.R.id.home -> {
                 parentFragmentManager.commit {
+                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                     replace(R.id.homePageFragmentContainer, DashBoardFragment())
-                    Toast.makeText(requireContext(), "up button - ${parentFragmentManager.backStackEntryCount}", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(requireContext(), "up button - ${parentFragmentManager.backStackEntryCount}", Toast.LENGTH_SHORT).show()
                     parentFragmentManager.popBackStack()
                 }
             }R.id.filter -> {
                 parentFragmentManager.commit {
+                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     replace(R.id.homePageFragmentContainer, SortAndFilterFragment())
                     addToBackStack(null)
                 }
@@ -90,6 +93,7 @@ class BusResultsFragment : Fragment() {
                 override fun handleOnBackPressed() {
 //                    Toast.makeText(requireContext(), "back presses", Toast.LENGTH_SHORT).show()
                     parentFragmentManager.commit {
+                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                         replace(R.id.homePageFragmentContainer, DashBoardFragment())
                         parentFragmentManager.popBackStack()
 
@@ -111,6 +115,11 @@ class BusResultsFragment : Fragment() {
 
         busResultAdapter.setBusList(busViewModel.filteredBusList)
         busResultAdapter.setPartnerList(busViewModel.partnerList)
+        if(busViewModel.filteredBusList.isEmpty()){
+            binding.emptyListImage.visibility = View.VISIBLE
+        }else{
+            binding.emptyListImage.visibility = View.GONE
+        }
 
         busResultAdapter.setOnItemClickListener(object : OnItemClickListener{
             override fun onItemClick(position: Int) {
@@ -142,6 +151,7 @@ class BusResultsFragment : Fragment() {
                 }
 
                 parentFragmentManager.commit {
+                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     replace(R.id.homePageFragmentContainer, SelectedBusFragment())
                     addToBackStack(null)
                 }

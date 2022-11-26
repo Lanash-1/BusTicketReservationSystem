@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
@@ -54,6 +55,7 @@ class EditProfileFragment : Fragment() {
         when(item.itemId){
             android.R.id.home -> {
                 parentFragmentManager.commit {
+                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                     replace(R.id.homePageFragmentContainer, MyAccountFragment())
                     parentFragmentManager.popBackStack()
                 }
@@ -72,6 +74,7 @@ class EditProfileFragment : Fragment() {
                 override fun handleOnBackPressed() {
 //                    Toast.makeText(requireContext(), "back presses", Toast.LENGTH_SHORT).show()
                     parentFragmentManager.commit {
+                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                         replace(R.id.homePageFragmentContainer, MyAccountFragment())
                         parentFragmentManager.popBackStack()
                     }
@@ -86,6 +89,11 @@ class EditProfileFragment : Fragment() {
         binding.usernameInputLayout.editText?.setText(userViewModel.user.username)
 
         binding.calenderIcon.setOnClickListener {
+            val datePickerFragment = DatePickerFragment()
+            datePickerFragment.show(parentFragmentManager, "datePicker")
+        }
+
+        binding.dob.setOnClickListener {
             val datePickerFragment = DatePickerFragment()
             datePickerFragment.show(parentFragmentManager, "datePicker")
         }
@@ -126,7 +134,7 @@ class EditProfileFragment : Fragment() {
             userViewModel.user.apply {
                 this.emailId = binding.emailInput.text.toString()
 
-                if(dateViewModel.year != 0){
+                if(dateViewModel.edited.value == true){
                     this.dob = "${dateViewModel.date} - ${dateViewModel.month} - ${dateViewModel.year}"
                 }else{
                     this.dob = "DD - MM - YYYY"
@@ -145,7 +153,9 @@ class EditProfileFragment : Fragment() {
             }
             Snackbar.make(requireView(), "Saved changes successfully", Snackbar.LENGTH_SHORT).show()
             parentFragmentManager.commit {
+                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 replace(R.id.homePageFragmentContainer, MyAccountFragment())
+                parentFragmentManager.popBackStack()
             }
         }
     }

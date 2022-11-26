@@ -90,4 +90,8 @@ class BusDbViewModel(application: Application): AndroidViewModel(application) {
         return appDb.seatInformationDao().getBookedSeats(busId, date)
     }
 
+    fun deleteSeatsOfBus(bookingId: Int){
+        appDb.seatInformationDao().deleteSeatsOfBooking(bookingId)
+    }
+
 }

@@ -35,4 +35,11 @@ class BookingViewModel: ViewModel() {
     var bookedBusesList = listOf<Bus>()
     var bookedPartnerList = listOf<String>()
 
+
+    var filteredBookingHistory = listOf<Bookings>()
+    var filteredBookedBusesList = listOf<Bus>()
+    var filteredBookedPartnerList = listOf<String>()
+
+    var selectedTicket: Int = 0
+
 }

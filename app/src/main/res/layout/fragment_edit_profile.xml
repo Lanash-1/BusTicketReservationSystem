@@ -124,6 +124,8 @@
             android:src="@drawable/ic_baseline_calendar_month_24"
             app:layout_constraintLeft_toRightOf="@id/dob"
             app:layout_constraintTop_toTopOf="@id/dob_text"
+            app:layout_constraintBottom_toBottomOf="@id/dob_text"
+            android:padding="12dp"
             />
 
 

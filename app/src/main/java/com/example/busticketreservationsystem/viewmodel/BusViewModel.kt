@@ -27,16 +27,9 @@ class BusViewModel: ViewModel() {
         "flower park",
         "central bus stand",
         "tech park",
-        "location 1",
-        "location 2",
-        "location 3"
     )
 
     val droppingPoints = listOf(
-        "this location",
-        "that location",
-        "other location",
-        "another location",
         "location 1",
         "location 2",
         "location 3",

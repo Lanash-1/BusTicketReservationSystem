@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
@@ -50,7 +51,7 @@ class RegistrationDetailsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentRegistrationDetailsBinding.inflate(inflater, container, false)
         return binding.root
@@ -65,6 +66,7 @@ class RegistrationDetailsFragment : Fragment() {
                 override fun handleOnBackPressed() {
 //                    Toast.makeText(requireContext(), "back presses", Toast.LENGTH_SHORT).show()
                     parentFragmentManager.commit {
+                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         replace(R.id.main_fragment_container, HomePageFragment())
                     }
 //                    requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).selectedItemId = R.id.dashboard
@@ -97,6 +99,7 @@ class RegistrationDetailsFragment : Fragment() {
 
         skipText.setOnClickListener {
             parentFragmentManager.commit {
+                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 replace(R.id.main_fragment_container, HomePageFragment())
             }
         }
@@ -144,6 +147,7 @@ class RegistrationDetailsFragment : Fragment() {
                 userViewModel.user = userDbViewModel.getUserAccount(userViewModel.user.userId)
             }
             parentFragmentManager.commit {
+                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 replace(R.id.main_fragment_container, HomePageFragment())
             }
         }

@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_CLOSE
+import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_OPEN
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
@@ -54,8 +56,10 @@ class BoardingAndDroppingFragment : Fragment() {
         when(item.itemId){
             android.R.id.home -> {
                 parentFragmentManager.commit {
+                    setTransition(TRANSIT_FRAGMENT_CLOSE)
                     replace(R.id.homePageFragmentContainer, SelectedBusFragment())
                     parentFragmentManager.popBackStack()
+
                 }
 
             }
@@ -72,6 +76,7 @@ class BoardingAndDroppingFragment : Fragment() {
             object : OnBackPressedCallback(true){
                 override fun handleOnBackPressed() {
                     parentFragmentManager.commit {
+                        setTransition(TRANSIT_FRAGMENT_CLOSE)
                         replace(R.id.homePageFragmentContainer, SelectedBusFragment())
                         parentFragmentManager.popBackStack()
                     }
@@ -95,6 +100,7 @@ class BoardingAndDroppingFragment : Fragment() {
         binding.nextButton.setOnClickListener{
 //            if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
                 parentFragmentManager.commit {
+                    setTransition(TRANSIT_FRAGMENT_OPEN)
                     replace(R.id.homePageFragmentContainer, BookingDetailsFragment())
                     addToBackStack(null)
                 }

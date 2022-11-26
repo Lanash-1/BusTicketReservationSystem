@@ -8,6 +8,7 @@ import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
@@ -194,6 +195,7 @@ class DashBoardFragment : Fragment() {
                 navigationViewModel.fragment = DashBoardFragment()
 
                 parentFragmentManager.commit {
+                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     replace(R.id.homePageFragmentContainer, SelectedBusFragment())
                 }
             }
@@ -227,6 +229,7 @@ class DashBoardFragment : Fragment() {
                     withContext(Dispatchers.Main){
                         busViewModel.filteredBusList = list
                         parentFragmentManager.commit {
+                            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                             replace(R.id.homePageFragmentContainer, BusResultsFragment())
                             addToBackStack(null)
                         }
@@ -438,6 +441,7 @@ class DashBoardFragment : Fragment() {
 
     private fun openSearchFragment() {
         parentFragmentManager.commit {
+            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             replace(R.id.homePageFragmentContainer, SearchFragment())
             addToBackStack(null)
         }

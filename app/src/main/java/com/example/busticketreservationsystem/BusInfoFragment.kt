@@ -13,6 +13,7 @@ import android.widget.RatingBar
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import com.example.busticketreservationsystem.databinding.FragmentBusInfoBinding
@@ -62,6 +63,7 @@ class BusInfoFragment : Fragment() {
         when(item.itemId){
             android.R.id.home -> {
                 parentFragmentManager.commit {
+                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                     replace(R.id.homePageFragmentContainer, SelectedBusFragment())
                     parentFragmentManager.popBackStack()
                 }
@@ -79,6 +81,7 @@ class BusInfoFragment : Fragment() {
             object : OnBackPressedCallback(true){
                 override fun handleOnBackPressed() {
                     parentFragmentManager.commit {
+                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                         replace(R.id.homePageFragmentContainer, SelectedBusFragment())
                         parentFragmentManager.popBackStack()
                     }
@@ -88,14 +91,23 @@ class BusInfoFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
 
+        binding.readReviewsButton.isEnabled = busViewModel.ratingsList.isNotEmpty()
+
+        binding.readReviewsButton.setOnClickListener {
+            parentFragmentManager.commit {
+                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                replace(R.id.homePageFragmentContainer, ReviewsFragment())
+                addToBackStack(null)
+            }
+        }
+
+
         if(busViewModel.averageRating.isNaN()){
             binding.ratingText.text = "0.0"
         }else{
             binding.ratingText.text = "${String.format("%.2f", busViewModel.averageRating).toDouble()}"
         }
         binding.ratingCountText.text = "(${busViewModel.ratingCount} reviews)"
-
-
 
 
         for(i in 1 until 6){
@@ -141,9 +153,9 @@ class BusInfoFragment : Fragment() {
         }
 
         binding.rateBusButton.setOnClickListener {
-            if(busViewModel.userReview.size == 1){
-                println("UPDATE METHOD")
-            }else{
+//            if(busViewModel.userReview.size == 1){
+//                println("UPDATE METHOD")
+//            }else{
                 val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.rating_dialog, null)
 
                 val builder = AlertDialog.Builder(requireContext())
@@ -152,6 +164,10 @@ class BusInfoFragment : Fragment() {
                     .setPositiveButton("Submit"){
                             _, _ ->
                         run {
+//                            if(busViewModel.userReview.size == 1){
+//                                dialogView.findViewById<TextInputEditText>(R.id.review_input).setText(busViewModel.userReview[0].feedback)
+//                                dialogView.findViewById<RatingBar>(R.id.ratingBar).rating = busViewModel.userReview[0].rating.toFloat()
+//                            }
                             val feedback: String = dialogView.findViewById<TextInputEditText>(R.id.review_input).text.toString()
                             val rating: Int = dialogView.findViewById<RatingBar>(R.id.ratingBar).rating.toString().toDouble().toInt()
                             if(rating > 0){
@@ -168,7 +184,7 @@ class BusInfoFragment : Fragment() {
 
                 val alertDialog = builder.show()
 
-            }
+//            }
 
         }
     }

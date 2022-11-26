@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -64,6 +65,7 @@ class BookingDetailsFragment : Fragment() {
         when(item.itemId){
             android.R.id.home -> {
                 parentFragmentManager.commit {
+                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                     replace(R.id.homePageFragmentContainer, BoardingAndDroppingFragment())
                     parentFragmentManager.popBackStack()
                 }
@@ -84,6 +86,7 @@ class BookingDetailsFragment : Fragment() {
         binding.loginRegisterButton.setOnClickListener {
             navigationViewModel.fragment = BookingDetailsFragment()
             parentFragmentManager.commit {
+                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 replace(R.id.main_fragment_container, LoginFragment())
             }
         }
@@ -95,6 +98,7 @@ class BookingDetailsFragment : Fragment() {
                 override fun handleOnBackPressed() {
 //                    Toast.makeText(requireContext(), "back presses", Toast.LENGTH_SHORT).show()
                     parentFragmentManager.commit {
+                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                         replace(R.id.homePageFragmentContainer, BoardingAndDroppingFragment())
                         parentFragmentManager.popBackStack()
                     }
@@ -121,7 +125,7 @@ class BookingDetailsFragment : Fragment() {
                 var result = true
                 for(i in 0 until bookingViewModel.passengerInfo.size){
                     if(bookingViewModel.passengerInfo[i].name != null && bookingViewModel.passengerInfo[i].age != null && bookingViewModel.passengerInfo[i].gender != null){
-                        if(bookingViewModel.passengerInfo[i].name!!.isEmpty() && bookingViewModel.passengerInfo[i].age.toString().isEmpty()){
+                        if(bookingViewModel.passengerInfo[i].name!!.isEmpty() || bookingViewModel.passengerInfo[i].age.toString().isEmpty()){
                             Toast.makeText(requireContext(), "Fields cannot be empty", Toast.LENGTH_SHORT).show()
                             result = false
                             break
@@ -133,10 +137,10 @@ class BookingDetailsFragment : Fragment() {
                     }
                 }
                 if(result){
-                    Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show()
                     bookingViewModel.contactEmail = binding.emailInput.text.toString()
                     bookingViewModel.contactNumber = binding.mobileInput.text.toString()
                     parentFragmentManager.commit {
+                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                         replace(R.id.homePageFragmentContainer, PaymentOptionsFragment())
                         addToBackStack(null)
                     }

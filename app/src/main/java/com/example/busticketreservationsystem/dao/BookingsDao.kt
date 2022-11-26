@@ -1,9 +1,6 @@
 package com.example.busticketreservationsystem.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.busticketreservationsystem.entity.Bookings
 
 @Dao
@@ -24,5 +21,8 @@ interface BookingsDao {
 
     @Query("update bookings_table set bookedTicketStatus=:status where bookingId like :bookingId")
     fun updateTicketStatus(status: String, bookingId: Int)
+
+    @Delete
+    fun deleteBooking(bookings: Bookings)
 
 }

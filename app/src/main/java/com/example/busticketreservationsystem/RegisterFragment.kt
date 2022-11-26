@@ -8,8 +8,10 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Button
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import com.example.busticketreservationsystem.enums.LoginStatus
@@ -72,6 +74,7 @@ class RegisterFragment : Fragment() {
                 loginStatusViewModel.status = LoginStatus.SKIPPED
                 editor.commit()
                 parentFragmentManager.commit {
+                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     replace(R.id.main_fragment_container, HomePageFragment())
                 }
             }
@@ -87,6 +90,15 @@ class RegisterFragment : Fragment() {
             editor = writeSharedPreferences.edit()
         }
 
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true){
+                override fun handleOnBackPressed() {
+                   requireActivity().finish()
+                }
+            }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
         alreadyUserLoginText = view.findViewById(R.id.alreadyUser_text)
         registerButton = view.findViewById(R.id.register_button)
         mobileInput = view.findViewById(R.id.mobile_input)
@@ -98,6 +110,7 @@ class RegisterFragment : Fragment() {
 
         alreadyUserLoginText.setOnClickListener {
             parentFragmentManager.commit {
+                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 replace(R.id.main_fragment_container, LoginFragment())
 //                parentFragmentManager.popBackStack()
             }
@@ -161,6 +174,7 @@ class RegisterFragment : Fragment() {
 //                        }
                         loginStatusViewModel.status = LoginStatus.LOGGED_IN
                         parentFragmentManager.commit {
+                            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                             replace(R.id.main_fragment_container, RegistrationDetailsFragment())
                         }
                     }else{

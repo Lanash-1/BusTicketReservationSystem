@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import com.example.busticketreservationsystem.databinding.FragmentHomePageBinding
@@ -48,11 +49,16 @@ class HomePageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val dashBoardFragment = DashBoardFragment()
+        val bookingHistoryFragment = BookingHistoryFragment()
+        val bookingHistoryGuestFragment = BookingHistoryGuestFragment()
+        val myAccountFragment = MyAccountFragment()
+
         when(navigationViewModel.fragment) {
             is BookingDetailsFragment -> {
-                println("COMING ")
                 navigationViewModel.fragment = null
                 parentFragmentManager.commit {
+                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                     replace(R.id.homePageFragmentContainer, BookingDetailsFragment())
                 }
             }
@@ -72,10 +78,7 @@ class HomePageFragment : Fragment() {
 
 //                val bottomNavigationView = view.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
 
-                val dashBoardFragment = DashBoardFragment()
-                val bookingHistoryFragment = BookingHistoryFragment()
-                val bookingHistoryGuestFragment = BookingHistoryGuestFragment()
-                val myAccountFragment = MyAccountFragment()
+
 
                 if(savedInstanceState == null){
                     setCurrentFragment(dashBoardFragment)
@@ -85,12 +88,10 @@ class HomePageFragment : Fragment() {
         binding.bottomNavigationView.setOnNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.dashboard -> {
-                    println("COMING")
                     setCurrentFragment(dashBoardFragment)
                 }
                 R.id.bookingHistory -> {
 //                    setCurrentFragment(bookingHistoryFragment)
-                    println("COMING 1")
 
                     if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
                         setCurrentFragment(bookingHistoryFragment)
@@ -99,7 +100,6 @@ class HomePageFragment : Fragment() {
                     }
                 }
                 R.id.myAccount -> {
-                    println("COMING 2")
 
 //                    if(writeSharedPreferences.getString("status", "") == LoginStatus.LOGGED_IN.name){
                         setCurrentFragment(myAccountFragment)
@@ -118,6 +118,7 @@ class HomePageFragment : Fragment() {
 
     private fun setCurrentFragment(fragment: Fragment) {
         parentFragmentManager.commit {
+            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             replace(R.id.homePageFragmentContainer, fragment)
         }
     }

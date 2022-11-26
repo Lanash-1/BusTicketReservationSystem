@@ -7,7 +7,9 @@ import android.view.*
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import com.example.busticketreservationsystem.enums.LoginStatus
@@ -70,6 +72,7 @@ class LoginFragment : Fragment() {
                 loginStatusViewModel.status = LoginStatus.SKIPPED
                 editor.commit()
                 parentFragmentManager.commit {
+                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     replace(R.id.main_fragment_container, HomePageFragment())
                 }
             }
@@ -85,6 +88,16 @@ class LoginFragment : Fragment() {
             editor = writeSharedPreferences.edit()
         }
 
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true){
+                override fun handleOnBackPressed() {
+                    requireActivity().finish()
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
+
+
         createAccountText = view.findViewById(R.id.create_account_text)
         forgotPasswordText = view.findViewById(R.id.forgot_password_text)
         loginButton = view.findViewById(R.id.login_button)
@@ -99,12 +112,14 @@ class LoginFragment : Fragment() {
 
         createAccountText.setOnClickListener {
             parentFragmentManager.commit {
+                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 replace(R.id.main_fragment_container, RegisterFragment())
             }
         }
 
         forgotPasswordText.setOnClickListener {
             parentFragmentManager.commit {
+                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 replace(R.id.main_fragment_container, ForgotPasswordFragment())
                 addToBackStack(null)
             }
@@ -148,6 +163,7 @@ class LoginFragment : Fragment() {
 //                                }
 //                                else -> {
                                     parentFragmentManager.commit {
+                                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                                         replace(R.id.main_fragment_container, HomePageFragment())
                                     }
 //                                }

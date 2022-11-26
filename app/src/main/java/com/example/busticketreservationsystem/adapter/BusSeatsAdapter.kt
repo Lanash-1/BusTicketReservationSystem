@@ -44,10 +44,14 @@ class BusSeatsAdapter: RecyclerView.Adapter<BusSeatsAdapter.BusSeatsViewHolder>(
                 availableSeatIcon.visibility = View.INVISIBLE
             }else if(seatsList[position] == 0){
                 availableSeatIcon.visibility = View.VISIBLE
+//                println("$position - available")
             }else if(seatsList[position] == 1){
                 selectedSeatIcon.visibility = View.VISIBLE
+//                println("$position - selected")
             }else if(seatsList[position] == -1){
                 notAvailableSeatIcon.visibility = View.VISIBLE
+//                println("$position -notAvailable")
+
             }
             //            else{
 //                emptySpaceView.visibility = View.GONE

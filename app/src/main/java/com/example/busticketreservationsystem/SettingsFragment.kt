@@ -10,6 +10,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import com.example.busticketreservationsystem.databinding.FragmentSettingsBinding
@@ -56,6 +57,7 @@ class SettingsFragment : Fragment() {
         when(item.itemId){
             android.R.id.home -> {
                 parentFragmentManager.commit {
+                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                     replace(R.id.homePageFragmentContainer, MyAccountFragment())
                     parentFragmentManager.popBackStack()
                 }
@@ -83,11 +85,11 @@ class SettingsFragment : Fragment() {
                 override fun handleOnBackPressed() {
                     Toast.makeText(requireContext(), "back presses", Toast.LENGTH_SHORT).show()
                     parentFragmentManager.commit {
+                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                         replace(R.id.homePageFragmentContainer, MyAccountFragment())
                         parentFragmentManager.popBackStack()
                     }
 //                    requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).selectedItemId = R.id.dashboard
-
                 }
             }
 

@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_OPEN
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
@@ -81,10 +82,10 @@ class MyAccountFragment : Fragment() {
             object : OnBackPressedCallback(true){
                 override fun handleOnBackPressed() {
                     parentFragmentManager.commit {
+                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                         replace(R.id.homePageFragmentContainer, DashBoardFragment())
                     }
                     requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.selectedItemId = R.id.dashboard
-
                 }
             }
 
@@ -111,6 +112,7 @@ class MyAccountFragment : Fragment() {
 
         editProfileChip.setOnClickListener{
             parentFragmentManager.commit {
+                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 replace(R.id.homePageFragmentContainer, EditProfileFragment())
                 addToBackStack(null)
             }
@@ -132,9 +134,10 @@ class MyAccountFragment : Fragment() {
                 when(MyAccountOptions.values()[position]){
                     MyAccountOptions.MY_BOOKINGS -> {
                         parentFragmentManager.commit {
+                            setTransition(TRANSIT_FRAGMENT_OPEN)
                             replace(R.id.homePageFragmentContainer, BookingHistoryFragment())
                         }
-                        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).selectedItemId = R.id.bookingHistory
+                        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.selectedItemId = R.id.bookingHistory
                     }
                     MyAccountOptions.SETTINGS -> {
                         parentFragmentManager.commit {
@@ -144,18 +147,25 @@ class MyAccountFragment : Fragment() {
                         }
                     }
                     MyAccountOptions.ABOUT_US -> {
-                        Toast.makeText(requireContext(), "About Us Fragment", Toast.LENGTH_SHORT)
-                            .show()
+                        parentFragmentManager.commit {
+                            setTransition(TRANSIT_FRAGMENT_OPEN)
+                            replace(R.id.homePageFragmentContainer, AboutUsFragment())
+                            addToBackStack(null)
+                        }
                     }
                     MyAccountOptions.FEEDBACK -> {
-                        Toast.makeText(requireContext(), "Feedback Fragment", Toast.LENGTH_SHORT)
-                            .show()
+                        parentFragmentManager.commit {
+                            setTransition(TRANSIT_FRAGMENT_OPEN)
+                            replace(R.id.homePageFragmentContainer, FeedbackFragment())
+                            addToBackStack(null)
+                        }
                     }
                     MyAccountOptions.LOGIN_LOGOUT -> {
                         if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
                             logoutAction()
                         }else{
                             parentFragmentManager.commit {
+                                setTransition(TRANSIT_FRAGMENT_OPEN)
                                 replace(R.id.main_fragment_container, LoginFragment())
                             }
                         }
@@ -196,6 +206,7 @@ class MyAccountFragment : Fragment() {
                 loginStatusViewModel.status = LoginStatus.LOGGED_OUT
                 editor.commit()
                 parentFragmentManager.commit {
+                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                     replace(R.id.main_fragment_container, LoginFragment())
                 }
             }

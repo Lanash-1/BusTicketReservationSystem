@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.busticketreservationsystem.adapter.BookingHistoryListAdapter
 import com.example.busticketreservationsystem.databinding.FragmentBookingHistoryListBinding
@@ -13,6 +14,7 @@ import com.example.busticketreservationsystem.entity.Bookings
 import com.example.busticketreservationsystem.entity.Bus
 import com.example.busticketreservationsystem.entity.Partners
 import com.example.busticketreservationsystem.enums.BookedTicketStatus
+import com.example.busticketreservationsystem.interfaces.OnItemClickListener
 import com.example.busticketreservationsystem.viewmodel.BookingViewModel
 
 
@@ -47,6 +49,16 @@ class BookingHistoryListFragment : Fragment() {
         binding.bookingHistoryRecyclerView.adapter = bookingHistoryListAdapter
         binding.bookingHistoryRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
+        bookingHistoryListAdapter.setOnItemClickListener(object : OnItemClickListener{
+            override fun onItemClick(position: Int) {
+               bookingViewModel.selectedTicket = position
+                parentFragmentManager.commit {
+                    replace(R.id.homePageFragmentContainer, BookedTicketFragment())
+                    addToBackStack(null)
+                }
+            }
+        })
+
         when (currentPosition) {
             0 -> {
                 filterBookingList(BookedTicketStatus.UPCOMING.name)
@@ -72,6 +84,17 @@ class BookingHistoryListFragment : Fragment() {
                     partnerList.add(bookingViewModel.bookedPartnerList[i])
                 }
             }
+            bookingViewModel.apply {
+                filteredBookedBusesList = busList
+                filteredBookedPartnerList = partnerList
+                filteredBookingHistory = bookingList
+            }
             bookingHistoryListAdapter.setBookedTicketList(bookingList, busList, partnerList)
+            if(bookingList.isEmpty()){
+                binding.emptyListImage.visibility = View.VISIBLE
+            }
+            else{
+                binding.emptyListImage.visibility = View.GONE
+            }
         }
     }

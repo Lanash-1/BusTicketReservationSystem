@@ -100,7 +100,7 @@ class PaymentOptionsFragment : Fragment() {
             }
             anotherJob.join()
             for(i in 0 until bookingViewModel.selectedSeats.size){
-                bookingDbViewModel.insertSeatInformation(SeatInformation(0, bookingViewModel.selectedBus.busId, bookingViewModel.selectedSeats[i], bookingViewModel.date))
+                bookingDbViewModel.insertSeatInformation(SeatInformation(0, bookingViewModel.selectedBus.busId, bookingId, bookingViewModel.selectedSeats[i], bookingViewModel.date))
             }
 //            busDbViewModel.updateBusSeatAvailableCount(bookingViewModel.selectedBus.availableSeats-bookingViewModel.selectedSeats.size, bookingViewModel.selectedBus.busId)
             val otherJob = launch {

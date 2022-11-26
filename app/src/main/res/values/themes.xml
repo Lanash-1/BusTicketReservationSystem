@@ -35,7 +35,7 @@
     </style>
 
     <style name="DividerColor">
-        <item name="dividerColor">@color/white</item>
+        <item name="dividerColor">@color/black</item>
     </style>
 
 

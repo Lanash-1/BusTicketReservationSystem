@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.recyclerview.widget.GridLayoutManager
@@ -73,6 +74,7 @@ class SelectedBusFragment : Fragment() {
             }
             R.id.info_icon -> {
                 parentFragmentManager.commit {
+                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     replace(R.id.homePageFragmentContainer, BusInfoFragment())
                     addToBackStack(null)
                 }
@@ -87,11 +89,13 @@ class SelectedBusFragment : Fragment() {
             is DashBoardFragment -> {
                 navigationViewModel.fragment = null
                 parentFragmentManager.commit {
+                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                     replace(R.id.homePageFragmentContainer, DashBoardFragment())
                 }
             }
             else -> {
                 parentFragmentManager.commit {
+                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                     replace(R.id.homePageFragmentContainer, BusResultsFragment())
                     parentFragmentManager.popBackStack()
                 }
@@ -123,6 +127,7 @@ class SelectedBusFragment : Fragment() {
 
         binding.selectAndContinueText.setOnClickListener {
             parentFragmentManager.commit {
+                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 replace(R.id.homePageFragmentContainer, BoardingAndDroppingFragment())
                 addToBackStack(null)
             }
@@ -130,6 +135,7 @@ class SelectedBusFragment : Fragment() {
 
         binding.aboutBusButton.setOnClickListener {
             parentFragmentManager.commit {
+                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 replace(R.id.homePageFragmentContainer, BusInfoFragment())
                 addToBackStack(null)
             }
