@@ -2,16 +2,17 @@ package com.example.busticketreservationsystem
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_OPEN
 import androidx.fragment.app.activityViewModels
@@ -24,10 +25,7 @@ import com.example.busticketreservationsystem.entity.User
 import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.enums.MyAccountOptions
 import com.example.busticketreservationsystem.interfaces.OnItemClickListener
-import com.example.busticketreservationsystem.viewmodel.DateViewModel
-import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
-import com.example.busticketreservationsystem.viewmodel.SearchViewModel
-import com.example.busticketreservationsystem.viewmodel.UserViewModel
+import com.example.busticketreservationsystem.viewmodel.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.chip.Chip
 
@@ -45,6 +43,7 @@ class MyAccountFragment : Fragment() {
     private val userViewModel: UserViewModel by activityViewModels()
     private val searchViewModel: SearchViewModel by activityViewModels()
     private val dateViewModel: DateViewModel by activityViewModels()
+    private val navigationViewModel: NavigationViewModel by activityViewModels()
 
     private val myAccountAdapter = MyAccountAdapter()
 
@@ -133,6 +132,7 @@ class MyAccountFragment : Fragment() {
             override fun onItemClick(position: Int) {
                 when(MyAccountOptions.values()[position]){
                     MyAccountOptions.MY_BOOKINGS -> {
+                        navigationViewModel.fragment = MyAccountFragment()
                         parentFragmentManager.commit {
                             setTransition(TRANSIT_FRAGMENT_OPEN)
                             replace(R.id.homePageFragmentContainer, BookingHistoryFragment())
@@ -146,19 +146,19 @@ class MyAccountFragment : Fragment() {
                             addToBackStack(null)
                         }
                     }
-                    MyAccountOptions.ABOUT_US -> {
-                        parentFragmentManager.commit {
-                            setTransition(TRANSIT_FRAGMENT_OPEN)
-                            replace(R.id.homePageFragmentContainer, AboutUsFragment())
-                            addToBackStack(null)
-                        }
+                    MyAccountOptions.CALL_SUPPORT -> {
+                        val callIntent = Intent(Intent.ACTION_DIAL)
+                        callIntent.data = Uri.parse("tel:9551422921")
+                        startActivity(callIntent)
                     }
                     MyAccountOptions.FEEDBACK -> {
-                        parentFragmentManager.commit {
-                            setTransition(TRANSIT_FRAGMENT_OPEN)
-                            replace(R.id.homePageFragmentContainer, FeedbackFragment())
-                            addToBackStack(null)
+
+                        val intent = Intent(Intent.ACTION_SENDTO).apply {
+                            data = Uri.parse("mailto:")
+                            putExtra(Intent.EXTRA_EMAIL, "lanashdamodharan@gmail.com")
+                            putExtra(Intent.EXTRA_SUBJECT, "App Usage Feedback")
                         }
+                        startActivity(intent)
                     }
                     MyAccountOptions.LOGIN_LOGOUT -> {
                         if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){

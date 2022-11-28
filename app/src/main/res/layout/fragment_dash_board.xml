@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".DashBoardFragment"
-    android:background="#f8f8f8">
+    style="@style/PageBackground"
+   >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -50,6 +51,7 @@
                app:layout_constraintLeft_toLeftOf="parent"
                app:layout_constraintTop_toTopOf="parent"
                android:layout_margin="16dp"
+               style="@style/IconTint"
                />
 
            <TextView
@@ -60,7 +62,7 @@
                app:layout_constraintLeft_toRightOf="@id/sourceIcon"
                app:layout_constraintTop_toTopOf="@id/sourceIcon"
                android:layout_marginLeft="16dp"
-               android:textSize="16sp"
+               style="@style/TextDefault"
                />
 
                <com.google.android.material.divider.MaterialDivider
@@ -93,6 +95,7 @@
                app:layout_constraintLeft_toLeftOf="parent"
                app:layout_constraintTop_toTopOf="parent"
                android:layout_margin="16dp"
+               style="@style/IconTint"
                />
 
            <TextView
@@ -103,7 +106,7 @@
                app:layout_constraintLeft_toRightOf="@id/destinationIcon"
                app:layout_constraintTop_toTopOf="@id/destinationIcon"
                android:layout_marginLeft="16dp"
-               android:textSize="16sp"
+               style="@style/TextDefault"
                />
 
            <com.google.android.material.divider.MaterialDivider
@@ -136,6 +139,7 @@
                app:layout_constraintLeft_toLeftOf="parent"
                app:layout_constraintTop_toTopOf="parent"
                android:layout_margin="16dp"
+               style="@style/IconTint"
                />
 
            <TextView
@@ -146,7 +150,7 @@
                app:layout_constraintLeft_toRightOf="@id/calenderIcon"
                app:layout_constraintTop_toTopOf="@id/calenderIcon"
                android:layout_marginLeft="16dp"
-               android:textSize="16sp"
+               style="@style/TextDefault"
                />
 
            <com.google.android.material.divider.MaterialDivider
@@ -206,9 +210,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/bus_search_card_view"
             android:layout_margin="16dp"
-            android:textSize="16sp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
+            style="@style/TitleTextStyle"
             android:padding="8dp"
             />
         
@@ -235,6 +237,8 @@
             app:layout_constraintTop_toBottomOf="@id/recently_viewed_text"
             android:layout_marginTop="8dp"
             tools:listitem="@layout/item_recently_viewed"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

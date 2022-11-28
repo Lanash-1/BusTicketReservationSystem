@@ -15,10 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.busticketreservationsystem.adapter.RecentlyViewedAdapter
 import com.example.busticketreservationsystem.databinding.FragmentDashBoardBinding
-import com.example.busticketreservationsystem.entity.Bookings
-import com.example.busticketreservationsystem.entity.Bus
-import com.example.busticketreservationsystem.entity.Partners
-import com.example.busticketreservationsystem.entity.RecentlyViewed
+import com.example.busticketreservationsystem.entity.*
 import com.example.busticketreservationsystem.enums.BookedTicketStatus
 import com.example.busticketreservationsystem.enums.LocationOptions
 import com.example.busticketreservationsystem.enums.LoginStatus
@@ -50,10 +47,6 @@ class DashBoardFragment : Fragment() {
 
     private lateinit var binding: FragmentDashBoardBinding
 
-    private lateinit var searchBusButton: Button
-    private lateinit var switchRoutes: ShapeableImageView
-    private lateinit var sourceText: TextView
-    private lateinit var destinationText: TextView
 
     private var recentlyViewedAdapter = RecentlyViewedAdapter()
 
@@ -71,86 +64,22 @@ class DashBoardFragment : Fragment() {
             setDisplayHomeAsUpEnabled(false)
             title = "Dashboard"
         }
-//        return inflater.inflate(R.layout.fragment_dash_board, container, false)
         binding = FragmentDashBoardBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//        super.onCreateOptionsMenu(menu, inflater)
-//        when(loginStatusViewModel.status){
-//            LoginStatus.SKIPPED -> {
-//                inflater.inflate(R.menu.dashboard_menu, menu)
-//            }
-//            LoginStatus.NEW -> {
-//                inflater.inflate(R.menu.dashboard_menu, menu)
-//            }
-//        }
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when(item.itemId){
-//            R.id.login_icon -> {
-//                parentFragmentManager.commit {
-//                    replace(R.id.main_fragment_container, LoginFragment())
-//                }
-//            }
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        val f = SelectedBusFragment()
-//
-//        when(f){
-//            is SelectedBusFragment -> {
-//                println("working")
-//            }
-//            else -> {
-//                println("Not working")
-//            }
-//        }
 
         for(i in 0 until parentFragmentManager.backStackEntryCount){
             parentFragmentManager.popBackStack()
         }
 
-//        println("LOGIN STATUS: ${loginStatusViewModel.status}")
 
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.visibility = View.VISIBLE
 
-//        Toast.makeText(
-//            requireContext(),
-//            "on create - ${parentFragmentManager.backStackEntryCount}",
-//            Toast.LENGTH_SHORT
-//        ).show()
-
-//        GlobalScope.launch {
-//            var busList: MutableList<Bus> = mutableListOf()
-//            var recentlyViewList: List<RecentlyViewed> = listOf()
-//            var recentlyViewedPartnersList = mutableListOf<String>()
-//            val job = launch {
-//                recentlyViewList = busDbViewModel.getRecentlyViewed(userViewModel.user.userId)
-//                for(i in recentlyViewList){
-//                    busList.add(busDbViewModel.getBus(i.busId))
-//                }
-//            }
-//            job.join()
-//            val anotherJob = launch {
-//                for(bus in busList){
-//                    recentlyViewedPartnersList.add(busDbViewModel.getPartnerName(bus.partnerId))
-//
-//                }
-//            }
-//            anotherJob.join()
-//            withContext(Dispatchers.Main){
-//                busViewModel.recentlyViewedBusList = busList
-//                busViewModel.recentlyViewedPartnerList = recentlyViewedPartnersList
-//                busViewModel.recentlyViewedList.value = recentlyViewList
-//            }
-//        }
 
         getBusList()
 
@@ -165,7 +94,6 @@ class DashBoardFragment : Fragment() {
 
         binding.recentlyViewedRecyclerView.adapter = recentlyViewedAdapter
         binding.recentlyViewedRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-//        recentlyViewedAdapter.setRecentlyViewedList(listOf(), listOf())
 
         recentlyViewedAdapter.setOnRemoveClickListener(object: OnRemoveClickListener{
             override fun onRemoveClick(position: Int) {
@@ -184,12 +112,15 @@ class DashBoardFragment : Fragment() {
 
                 GlobalScope.launch {
                     var seats = listOf<String>()
+                    var amenities = listOf<String>()
                     val job = launch {
                         seats = busDbViewModel.getBookedSeats(busViewModel.selectedBus.busId, busViewModel.recentlyViewedList.value!![position].date)
+                        amenities = busDbViewModel.getBusAmenities(busViewModel.selectedBus.busId)
                     }
                     job.join()
                     withContext(Dispatchers.IO){
                         busViewModel.notAvailableSeats = seats
+                        busViewModel.busAmenities = amenities
                     }
                 }
                 navigationViewModel.fragment = DashBoardFragment()
@@ -199,15 +130,9 @@ class DashBoardFragment : Fragment() {
                     replace(R.id.homePageFragmentContainer, SelectedBusFragment())
                 }
             }
-
         })
 
-        searchBusButton = view.findViewById(R.id.searchBus_button)
-        switchRoutes = view.findViewById(R.id.switchCircle)
-        sourceText = view.findViewById(R.id.sourceText)
-        destinationText = view.findViewById(R.id.destinationText)
-
-        searchBusButton.setOnClickListener {
+        binding.searchBusButton.setOnClickListener {
             if(searchViewModel.sourceLocation.isNotEmpty() && searchViewModel.destinationLocation.isNotEmpty() && searchViewModel.year != 0){
                 busViewModel.filteredBusList = busViewModel.busList.filter {
                     it.sourceLocation == searchViewModel.sourceLocation && it.destination == searchViewModel.destinationLocation
@@ -215,8 +140,12 @@ class DashBoardFragment : Fragment() {
                 bookingViewModel.date = "${searchViewModel.date}/${searchViewModel.month}/${searchViewModel.year}"
                 GlobalScope.launch {
                     val list = busViewModel.filteredBusList
+                    var amenities = listOf<String>()
+                    var amenitiesList = mutableListOf<List<String>>()
                     val job = launch {
                         for (i in list.indices){
+                            amenities = busDbViewModel.getBusAmenities(list[i].busId)
+                            amenitiesList.add(amenities)
                             val seats = busDbViewModel.getBookedSeats(list[i].busId, bookingViewModel.date)
                             if(seats.isNotEmpty()){
                                 list[i].availableSeats = 30 - seats.size
@@ -228,6 +157,9 @@ class DashBoardFragment : Fragment() {
                     job.join()
                     withContext(Dispatchers.Main){
                         busViewModel.filteredBusList = list
+                        busViewModel.filteredBusAmenities = amenitiesList
+//                        val animationSlideUp = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_up)
+//                        binding..startAnimation(animationSlideUp)
                         parentFragmentManager.commit {
                             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                             replace(R.id.homePageFragmentContainer, BusResultsFragment())
@@ -235,11 +167,13 @@ class DashBoardFragment : Fragment() {
                         }
                     }
                 }
+            }else{
+                Toast.makeText(requireContext(), "Enter required information", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
 
-//        var source = searchViewModel.sourceLocation
-//        var destination = searchViewModel.destinationLocation
+
 
         setLocation()
 
@@ -248,12 +182,7 @@ class DashBoardFragment : Fragment() {
             R.anim.rotate_clockwise
         )
 
-        // assigning that animation to
-        // the image and start animation
-
-
-
-        switchRoutes.setOnClickListener {
+        binding.switchCircle.setOnClickListener {
             val temp = searchViewModel.sourceLocation
             searchViewModel.sourceLocation = searchViewModel.destinationLocation
             searchViewModel.destinationLocation = temp
@@ -261,7 +190,6 @@ class DashBoardFragment : Fragment() {
             if (searchViewModel.sourceLocation.isNotEmpty() || searchViewModel.destinationLocation.isNotEmpty()) {
                 binding.switchCircle.startAnimation(rotateAnimation)
             }
-
         }
 
         binding.sourceLayout.setOnClickListener {
@@ -307,7 +235,6 @@ class DashBoardFragment : Fragment() {
                 addToBackStack(null)
             }
         }
-
     }
 
     private fun getBusList() {
@@ -321,21 +248,27 @@ class DashBoardFragment : Fragment() {
                 busViewModel.busList = buses
             }
         }
-
-    }
+}
 
     private fun getBookingHistoryList(userId: Int) {
     GlobalScope.launch {
         var bookingList = listOf<Bookings>()
         val busList = mutableListOf<Bus>()
         val partnerList = mutableListOf<String>()
+        var passengerList = listOf<PassengerInformation>()
+        val partnerDetailList = mutableListOf<Partners>()
+
+
         val job = launch {
             bookingList = bookingDbViewModel.getUserBookings(userId)
+            passengerList = bookingDbViewModel.getPassengerInfo()
             for (booking in bookingList){
                 busList.add(busDbViewModel.getBus(booking.busId))
             }
             for(bus in busList){
                 partnerList.add(busDbViewModel.getPartnerName(bus.partnerId))
+                partnerDetailList.add(busDbViewModel.getPartnerDetails(bus.partnerId))
+
             }
             for(i in bookingList.indices){
                 if(bookingList[i].bookedTicketStatus == BookedTicketStatus.UPCOMING.name){
@@ -357,9 +290,13 @@ class DashBoardFragment : Fragment() {
             bookingViewModel.bookingHistory = bookingList
             bookingViewModel.bookedBusesList = busList
             bookingViewModel.bookedPartnerList = partnerList
+            bookingViewModel.bookedPassengerInfo = passengerList
+            bookingViewModel.bookedPartnerDetail = partnerDetailList
+
         }
     }
 }
+
     private fun removeRecentlyViewed(recentlyViewed: RecentlyViewed) {
         GlobalScope.launch {
             val job = launch {
@@ -399,15 +336,13 @@ class DashBoardFragment : Fragment() {
             val anotherJob = launch {
                 for(bus in busList){
                     recentlyViewedPartnersList.add(busDbViewModel.getPartnerName(bus.partnerId))
-
                 }
             }
             anotherJob.join()
             withContext(Dispatchers.Main){
-
-                busViewModel.recentlyViewedBusList = busList
-                busViewModel.recentlyViewedPartnerList = recentlyViewedPartnersList
-                busViewModel.recentlyViewedList.value = recentlyViewList
+                busViewModel.recentlyViewedBusList = busList.reversed()
+                busViewModel.recentlyViewedPartnerList = recentlyViewedPartnersList.reversed()
+                busViewModel.recentlyViewedList.value = recentlyViewList.reversed()
             }
         }
     }
@@ -416,26 +351,26 @@ class DashBoardFragment : Fragment() {
         val source = searchViewModel.sourceLocation
         val destination = searchViewModel.destinationLocation
         if(source.isEmpty() && destination.isEmpty()){
-            sourceText.text = "Enter Source"
-            destinationText.text = "Enter Destination"
-            destinationText.setTextColor(Color.parseColor("#808080"))
-            sourceText.setTextColor(Color.parseColor("#808080"))
+            binding.sourceText.text = "Enter Source"
+            binding.destinationText.text = "Enter Destination"
+//            binding.destinationText.setTextColor(Color.parseColor("#808080"))
+//            binding.sourceText.setTextColor(Color.parseColor("#808080"))
         }
         if(source.isNotEmpty() && destination.isNotEmpty()){
-            sourceText.text = source
-            destinationText.text = destination
-            sourceText.setTextColor(Color.BLACK)
-            destinationText.setTextColor(Color.BLACK)
+            binding.sourceText.text = source
+            binding.destinationText.text = destination
+//            binding.sourceText.setTextColor(Color.BLACK)
+//            binding.destinationText.setTextColor(Color.BLACK)
         }else if(source.isNotEmpty() && destination.isEmpty()){
-            sourceText.text = source
-            destinationText.text = "Enter Destination"
-            sourceText.setTextColor(Color.BLACK)
-            destinationText.setTextColor(Color.parseColor("#808080"))
+            binding.sourceText.text = source
+            binding.destinationText.text = "Enter Destination"
+//            binding.sourceText.setTextColor(Color.BLACK)
+//            binding.destinationText.setTextColor(Color.parseColor("#808080"))
         }else if(source.isEmpty() && destination.isNotEmpty()) {
-            sourceText.text = "Enter Source"
-            destinationText.text = destination
-            destinationText.setTextColor(Color.BLACK)
-            sourceText.setTextColor(Color.parseColor("#808080"))
+            binding.sourceText.text = "Enter Source"
+            binding.destinationText.text = destination
+//            binding.destinationText.setTextColor(Color.BLACK)
+//            binding.sourceText.setTextColor(Color.parseColor("#808080"))
         }
     }
 

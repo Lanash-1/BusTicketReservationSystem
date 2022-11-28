@@ -3,7 +3,7 @@ package com.example.busticketreservationsystem.enums
 enum class MyAccountOptions {
     MY_BOOKINGS,
     SETTINGS,
-    ABOUT_US,
+    CALL_SUPPORT,
     FEEDBACK,
     LOGIN_LOGOUT
 }

@@ -51,7 +51,6 @@ class HomePageFragment : Fragment() {
 
         val dashBoardFragment = DashBoardFragment()
         val bookingHistoryFragment = BookingHistoryFragment()
-        val bookingHistoryGuestFragment = BookingHistoryGuestFragment()
         val myAccountFragment = MyAccountFragment()
 
         when(navigationViewModel.fragment) {
@@ -79,7 +78,6 @@ class HomePageFragment : Fragment() {
 //                val bottomNavigationView = view.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
 
 
-
                 if(savedInstanceState == null){
                     setCurrentFragment(dashBoardFragment)
                 }
@@ -88,19 +86,20 @@ class HomePageFragment : Fragment() {
         binding.bottomNavigationView.setOnNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.dashboard -> {
+                    navigationViewModel.fragment = null
                     setCurrentFragment(dashBoardFragment)
                 }
                 R.id.bookingHistory -> {
 //                    setCurrentFragment(bookingHistoryFragment)
 
-                    if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
+//                    if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
                         setCurrentFragment(bookingHistoryFragment)
-                    }else{
-                        setCurrentFragment(bookingHistoryGuestFragment)
-                    }
+//                    }else{
+//                        setCurrentFragment(bookingHistoryGuestFragment)
+//                    }
                 }
                 R.id.myAccount -> {
-
+                    navigationViewModel.fragment = null
 //                    if(writeSharedPreferences.getString("status", "") == LoginStatus.LOGGED_IN.name){
                         setCurrentFragment(myAccountFragment)
 //                    }

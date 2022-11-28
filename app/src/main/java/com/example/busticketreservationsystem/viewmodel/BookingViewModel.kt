@@ -3,12 +3,10 @@ package com.example.busticketreservationsystem.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.busticketreservationsystem.PassengerInfoModel
-import com.example.busticketreservationsystem.entity.Bookings
-import com.example.busticketreservationsystem.entity.Bus
-import com.example.busticketreservationsystem.entity.Partners
-import com.example.busticketreservationsystem.entity.RecentlyViewed
+import com.example.busticketreservationsystem.entity.*
 
 class BookingViewModel: ViewModel() {
+
 
     var totalTicketCost: Double = 0.0
 
@@ -29,17 +27,26 @@ class BookingViewModel: ViewModel() {
     var contactEmail: String = ""
     var contactNumber: String = ""
 
-//    var bookingHistory = MutableLiveData<List<Bookings>>()
+
+//    booking history
 
     var bookingHistory = listOf<Bookings>()
     var bookedBusesList = listOf<Bus>()
     var bookedPartnerList = listOf<String>()
+    var bookedPassengerInfo = listOf<PassengerInformation>()
+    var bookedPartnerDetail = listOf<Partners>()
 
+    lateinit var filteredBookedPartnerDetailList: MutableList<Partners>
 
     var filteredBookingHistory = listOf<Bookings>()
     var filteredBookedBusesList = listOf<Bus>()
     var filteredBookedPartnerList = listOf<String>()
 
     var selectedTicket: Int = 0
+
+    var tabPosition = MutableLiveData<Int>()
+
+
+
 
 }

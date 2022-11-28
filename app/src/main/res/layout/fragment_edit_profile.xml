@@ -45,6 +45,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             app:layout_constraintStart_toStartOf="@id/username_input_layout"
+            app:helperTextTextColor="@color/customRed"
             app:layout_constraintEnd_toEndOf="@id/username_input_layout"
             app:layout_constraintTop_toBottomOf="@id/username_input_layout"
             app:shapeAppearance="@style/Rounded"
@@ -74,23 +75,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Gender: "
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
+                style="@style/TitleTextStyle"
+                android:layout_gravity="center"/>
 
             <RadioButton
                 android:id="@+id/male_radio_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:text="Male" />
+                android:text="Male"
+                style="@style/TextDefault"/>
 
             <RadioButton
                 android:id="@+id/female_radio_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:text="Female" />
+                android:text="Female"
+                style="@style/TextDefault"/>
 
         </RadioGroup>
 
@@ -101,10 +103,8 @@
             android:text="Date of Birth: "
             app:layout_constraintStart_toStartOf="@id/gender_radio_group"
             app:layout_constraintTop_toBottomOf="@id/gender_radio_group"
-            android:textStyle="bold"
-            android:textSize="16sp"
             android:layout_marginTop="8dp"
-            android:textColor="@color/black"
+            style="@style/TitleTextStyle"
             />
 
         <TextView
@@ -114,7 +114,8 @@
             android:text="DD - MM - YYYY"
             app:layout_constraintLeft_toRightOf="@id/dob_text"
             app:layout_constraintTop_toTopOf="@id/dob_text"
-            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/dob_text"
+            style="@style/TextColor"
             android:layout_marginLeft="16dp" />
 
         <ImageView
@@ -126,6 +127,7 @@
             app:layout_constraintTop_toTopOf="@id/dob_text"
             app:layout_constraintBottom_toBottomOf="@id/dob_text"
             android:padding="12dp"
+            style="@style/IconTint"
             />
 
 

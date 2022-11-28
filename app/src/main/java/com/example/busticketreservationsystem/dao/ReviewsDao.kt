@@ -23,4 +23,7 @@ interface ReviewsDao {
     @Query("SELECT * FROM reviews_table WHERE busId LIKE :busId AND userId LIKE :userId")
     fun getReviewByUser(busId: Int, userId: Int): List<Reviews>
 
+    @Query("update reviews_table set rating = :rating, feedback = :feedback where reviewId like :reviewId")
+    fun updateReviews(reviewId: Int, rating: Int, feedback: String)
+
 }

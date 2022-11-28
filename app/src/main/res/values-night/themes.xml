@@ -18,8 +18,26 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <style name="TitleTextStyle">
+    <style name="DetailsEditText">
+        <item name="android:foreground">#414141</item>
+    </style>
+
+    <style name="TextDefault">
         <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="PageBackground">
+        <item name="android:background">#212121</item>
+    </style>
+
+    <style name="TextLink">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#FF0000</item>
+    </style>
+
+    <style name="TitleTextStyle">
+        <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textStyle">bold</item>
     </style>
@@ -34,6 +52,10 @@
 
     <style name="DividerColor">
         <item name="dividerColor">@color/white</item>
+    </style>
+
+    <style name="Image">
+        <item name="srcCompat">@drawable/no_result_white</item>
     </style>
 
 </resources>

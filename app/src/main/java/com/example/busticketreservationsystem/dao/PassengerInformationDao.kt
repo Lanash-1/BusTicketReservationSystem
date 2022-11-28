@@ -14,4 +14,7 @@ interface PassengerInformationDao {
     @Query("SELECT * FROM passenger_information_table WHERE bookingId LIKE :bookingId")
     fun getPassengerInfo(bookingId: Int): List<PassengerInformation>
 
+    @Query("select * from passenger_information_table")
+    fun getPassengersInformation(): List<PassengerInformation>
+
 }

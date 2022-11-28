@@ -17,6 +17,7 @@
         android:drawableStart="@drawable/ic_baseline_invert_colors_24"
         android:drawablePadding="8dp"
         style="@style/TitleTextStyle"
+        android:textSize="20sp"
         />
 
 

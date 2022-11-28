@@ -18,4 +18,7 @@ interface PartnersDao {
     @Query("SELECT partnerName FROM partners_table WHERE partnerId LIKE :partnerId")
     fun getPartnerName(partnerId: Int): String
 
+    @Query("select * from partners_table where partnerId like :partnerId")
+    fun getPartnerDetails(partnerId: Int): Partners
+
 }

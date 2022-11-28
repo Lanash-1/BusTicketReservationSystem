@@ -47,5 +47,9 @@ class BookingDbViewModel(
         appDb.bookingsDao().deleteBooking(bookings)
     }
 
+    fun getPassengerInfo(): List<PassengerInformation> {
+        return appDb.passengerInformationDao().getPassengersInformation()
+    }
+
 
 }

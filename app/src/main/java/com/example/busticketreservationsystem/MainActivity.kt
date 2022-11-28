@@ -42,11 +42,10 @@ class MainActivity : AppCompatActivity() {
             busViewModel.apply {
                 busList = busDbViewModel.getBusData()
                 partnerList = busDbViewModel.getPartnerData()
-//                ratingsList = busDbViewModel.getReviewData(busViewModel.selectedBus.busId)
             }
         }
 
-        val writeSharedPreferences: SharedPreferences = getSharedPreferences("LoginStatus", MODE_PRIVATE)
+//        Theme preference start
         val themePreference: SharedPreferences = getSharedPreferences("ThemeStatus", MODE_PRIVATE)
 
         val themeEditor: SharedPreferences.Editor = themePreference.edit()
@@ -74,6 +73,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+
+//      login preference start
+
+        val writeSharedPreferences: SharedPreferences = getSharedPreferences("LoginStatus", MODE_PRIVATE)
         val editor: SharedPreferences.Editor = writeSharedPreferences.edit()
 
         if(savedInstanceState == null) {
@@ -130,18 +133,9 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-        }else{
-            println("ELSE COMING - ${savedInstanceState.size()}")
-//            supportFragmentManager.commit {
-//                replace(R.id.main_fragment_container, LoginFragment())
-//            }
         }
     }
 
-    /*private fun getUserDetails() {
-
-    }
-*/
     private fun bookingHistoryOperations(userId: Int) {
         getBookingHistoryList(userId)
     }
@@ -151,8 +145,10 @@ class MainActivity : AppCompatActivity() {
             var bookingList = listOf<Bookings>()
             val busList = mutableListOf<Bus>()
             val partnerList = mutableListOf<String>()
+            var passengerList = listOf<PassengerInformation>()
             val job = launch {
                 bookingList = bookingDbViewModel.getUserBookings(userId)
+                passengerList = bookingDbViewModel.getPassengerInfo()
                 for (booking in bookingList){
                     busList.add(busDbViewModel.getBus(booking.busId))
                 }
@@ -179,16 +175,15 @@ class MainActivity : AppCompatActivity() {
                 bookingViewModel.bookingHistory = bookingList
                 bookingViewModel.bookedBusesList = busList
                 bookingViewModel.bookedPartnerList = partnerList
+                bookingViewModel.bookedPassengerInfo = passengerList
             }
         }
     }
 
     private fun getBusData() {
 
-        Toast.makeText(this, "Bus data called", Toast.LENGTH_SHORT).show()
-
         val partnersList = mutableListOf<Partners>()
-        var busList = mutableListOf<Bus>()
+        val busList = mutableListOf<Bus>()
         val amenitiesList = mutableListOf<BusAmenities>()
 
         val jsonData = applicationContext.resources.openRawResource(
@@ -221,7 +216,6 @@ class MainActivity : AppCompatActivity() {
 
             for(j in 0 until buses.length()){
 
-                println("BUS NAME: ${buses.getJSONObject(j).get("busName")}")
 
                 val busId = busList.size
                 val busName = buses.getJSONObject(j).get("busName").toString()
@@ -233,7 +227,6 @@ class MainActivity : AppCompatActivity() {
                 val startTime = buses.getJSONObject(j).get("startTime").toString()
                 val reachTime = buses.getJSONObject(j).get("reachTime").toString()
                 val duration = buses.getJSONObject(j).get("duration").toString()
-//                val ratingOverall = buses.getJSONObject(j).get("startTime").toString()
                 val bus = Bus(busId, partnerId, busName, sourceLocation, destinationLocation, perTicketCost, busType, totalSeats, totalSeats, startTime, reachTime, duration, 0.0, 0)
                 busList.add(bus)
 
@@ -241,10 +234,8 @@ class MainActivity : AppCompatActivity() {
 
                 for(k in 0 until amenities.length()){
 
-//                    println("AMENITIES: ${amenities[k]}")
                     val amenity = BusAmenities(0, busId, amenities[k].toString())
                     amenitiesList.add(amenity)
-//                    println("AMENITY k=$k =  ${amenities}")
 
                 }
             }
@@ -255,9 +246,8 @@ class MainActivity : AppCompatActivity() {
             busDbViewModel.insertBusData(busList)
             busDbViewModel.insertBusAmenitiesData(amenitiesList)
             busViewModel.apply {
-                busViewModel.busList = busDbViewModel.getBusData()
-                partnerList = busDbViewModel.getPartnerData()
-//                ratingsList = busDbViewModel.getReviewData(busViewModel.selectedBus.busId)
+                this.busList = busDbViewModel.getBusData()
+                this.partnerList = busDbViewModel.getPartnerData()
             }
         }
     }

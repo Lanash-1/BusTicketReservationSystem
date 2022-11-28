@@ -3,25 +3,43 @@ package com.example.busticketreservationsystem.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.busticketreservationsystem.entity.Bus
-import com.example.busticketreservationsystem.entity.Partners
-import com.example.busticketreservationsystem.entity.RecentlyViewed
-import com.example.busticketreservationsystem.entity.Reviews
+import com.example.busticketreservationsystem.entity.*
 
 class BusViewModel: ViewModel() {
 
 
+//    bus data
     var busList = listOf<Bus>()
+
+    var busAmenities = listOf<String>()
 
     var partnerList = listOf<Partners>()
 
+
+
+
+
+//    bus results data's
+
     var filteredBusList = listOf<Bus>()
 
+    var filteredBusAmenities = listOf<List<String>>()
 
     lateinit var selectedBus: Bus
 
+    var selectedBusPosition: Int = 0
+
+    lateinit var selectedPartner: Partners
+
     var selectedSeats = mutableListOf<String>()
 
+    var notAvailableSeats = listOf<String>()
+
+
+
+
+
+//    boarding and dropping
 
     val boardingPoints = listOf(
         "flower park",
@@ -41,12 +59,17 @@ class BusViewModel: ViewModel() {
 
     var droppingPoint = MutableLiveData("")
 
+
+
+
+
+//    recently viewed
+
     var recentlyViewedList = MutableLiveData<List<RecentlyViewed>>()
     var recentlyViewedBusList = listOf<Bus>()
-    var recentlyViewedPartnerList = mutableListOf<String>()
+    var recentlyViewedPartnerList = listOf<String>()
 
 
-    var notAvailableSeats = listOf<String>()
 
 
 
@@ -61,6 +84,7 @@ class BusViewModel: ViewModel() {
     var averageRating: Double = 0.0
 
     var userReview = listOf<Reviews>()
+
 
 
 }

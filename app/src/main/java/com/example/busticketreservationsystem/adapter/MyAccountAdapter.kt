@@ -49,9 +49,9 @@ class MyAccountAdapter: RecyclerView.Adapter<MyAccountAdapter.MyAccountViewHolde
                     optionText.text = "Settings"
                     optionIcon.setImageResource(R.drawable.ic_baseline_settings_24)
                 }
-                MyAccountOptions.ABOUT_US -> {
-                    optionText.text = "About Us"
-                    optionIcon.setImageResource(R.drawable.ic_baseline_info_24)
+                MyAccountOptions.CALL_SUPPORT -> {
+                    optionText.text = "Call Support"
+                    optionIcon.setImageResource(R.drawable.ic_baseline_support_agent_24)
                 }
                 MyAccountOptions.FEEDBACK -> {
                     optionText.text = "FeedBack"

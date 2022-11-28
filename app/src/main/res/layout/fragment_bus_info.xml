@@ -88,14 +88,15 @@
                 />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:textAlignment="viewEnd"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/percentage_text5"
                 app:layout_constraintTop_toTopOf="@id/rating_5_text"
                 app:layout_constraintBottom_toBottomOf="@id/rating_5_text"
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_marginRight="16dp"
-                android:text="62 %"
+                android:text="100%"
                 style="@style/TextColor"
                 android:textSize="16sp"
                 />
@@ -126,14 +127,15 @@
                 />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:textAlignment="viewEnd"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/percentage_text4"
                 app:layout_constraintTop_toTopOf="@id/rating_4_text"
                 app:layout_constraintBottom_toBottomOf="@id/rating_4_text"
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_marginRight="16dp"
-                android:text="62 %"
+                android:text="62%"
                 style="@style/TextColor"
                 android:textSize="16sp"
                 />
@@ -163,14 +165,15 @@
                 />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:textAlignment="viewEnd"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/percentage_text3"
                 app:layout_constraintTop_toTopOf="@id/rating_3_text"
                 app:layout_constraintBottom_toBottomOf="@id/rating_3_text"
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_marginRight="16dp"
-                android:text="100 %"
+                android:text="100%"
                 style="@style/TextColor"
                 android:textSize="16sp"
                 />
@@ -202,14 +205,15 @@
                 />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:textAlignment="viewEnd"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/percentage_text2"
                 app:layout_constraintTop_toTopOf="@id/rating_2_text"
                 app:layout_constraintBottom_toBottomOf="@id/rating_2_text"
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_marginRight="16dp"
-                android:text="62 %"
+                android:text="62%"
                 style="@style/TextColor"
                 android:textSize="16sp"
                 />
@@ -239,14 +243,15 @@
                 />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:textAlignment="viewEnd"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/percentage_text1"
                 app:layout_constraintTop_toTopOf="@id/rating_1_text"
                 app:layout_constraintBottom_toBottomOf="@id/rating_1_text"
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_marginRight="16dp"
-                android:text="62 %"
+                android:text="100%"
                 style="@style/TextColor"
                 android:textSize="16sp"
                 />
@@ -263,7 +268,43 @@
                 android:backgroundTint="@color/customBlue"
                 />
 
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/divider1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/read_reviews_button"
+                android:layout_marginTop="8dp"
+                style="@style/DividerColor" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/amenities_text"
+                android:text="Amenities"
+                style="@style/TitleTextStyle"
+                app:layout_constraintTop_toBottomOf="@id/divider1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/amenity_recycler_view"
+                app:layout_constraintTop_toBottomOf="@id/amenities_text"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+
+                android:layout_marginTop="16dp"/>
+
+
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
     </androidx.core.widget.NestedScrollView>
 

@@ -157,16 +157,18 @@
             style="@style/chipIcon"
             />
 
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_profile_chip"
+            style="@style/DividerColor"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.divider.MaterialDivider
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/account_profile_layout"
-        style="@style/DividerColor"
-        />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/account_options_recyclerView"

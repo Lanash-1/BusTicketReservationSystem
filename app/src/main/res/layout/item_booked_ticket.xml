@@ -15,9 +15,7 @@
         android:layout_margin="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
+        style="@style/TitleTextStyle"
         />
 
     <TextView
@@ -27,9 +25,7 @@
         android:text=" - "
         app:layout_constraintLeft_toRightOf="@id/source_location_text"
         app:layout_constraintTop_toTopOf="@id/source_location_text"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:textStyle="bold|italic"
+        style="@style/TitleTextStyle"
         />
 
     <TextView
@@ -39,9 +35,7 @@
         android:text="Bangalore"
         app:layout_constraintLeft_toRightOf="@id/dash"
         app:layout_constraintTop_toTopOf="@id/source_location_text"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
+        style="@style/TitleTextStyle"
         />
 
     <TextView
@@ -52,9 +46,7 @@
         app:layout_constraintTop_toTopOf="@id/source_location_text"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginEnd="16dp"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:textStyle="bold|italic"
+        style="@style/TitleTextStyle"
         />
 
     <TextView
@@ -65,8 +57,7 @@
         app:layout_constraintStart_toStartOf="@id/source_location_text"
         app:layout_constraintTop_toBottomOf="@id/source_location_text"
         android:layout_marginTop="8dp"
-        android:textSize="16sp"
-        android:textColor="@color/black"
+        style="@style/TextDefault"
         />
 
     <TextView
@@ -76,8 +67,7 @@
         android:text=" - "
         app:layout_constraintLeft_toRightOf="@id/start_time_text"
         app:layout_constraintTop_toTopOf="@id/start_time_text"
-        android:textSize="16sp"
-        android:textColor="@color/black"
+        style="@style/TextDefault"
         />
 
     <TextView
@@ -87,8 +77,7 @@
         android:text="22:45"
         app:layout_constraintTop_toTopOf="@id/start_time_text"
         app:layout_constraintStart_toEndOf="@id/dash2"
-        android:textSize="16sp"
-        android:textColor="@color/black"
+        style="@style/TextDefault"
         />
 
     <TextView
@@ -101,17 +90,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-         />
+        style="@style/TextDefault"
+        />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/date_date_text"
         android:text="Nov 12"
-        android:textSize="16sp"
-        android:textColor="@color/black"
+        style="@style/TextDefault"
         app:layout_constraintEnd_toEndOf="@id/price_text"
         app:layout_constraintTop_toBottomOf="@id/price_text"
         app:layout_constraintStart_toStartOf="@id/price_text"
@@ -128,7 +115,8 @@
         app:layout_constraintStart_toStartOf="@id/date_date_text"
         app:layout_constraintEnd_toEndOf="@id/date_date_text"
         android:textSize="14sp"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        android:visibility="gone"/>
 
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"

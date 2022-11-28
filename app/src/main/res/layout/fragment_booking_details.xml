@@ -42,7 +42,8 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/contact_information_text"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp">
+            android:layout_marginTop="8dp"
+           >
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -82,7 +83,9 @@
                     app:boxBackgroundColor="@color/white"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    style="@style/DetailsEditText"
+                    >
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/email_input"
@@ -107,7 +110,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:counterEnabled="true"
                     app:counterMaxLength="10"
-
+                    style="@style/DetailsEditText"
                     >
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -315,21 +318,21 @@
                 android:id="@+id/price_text"
                 android:text="12345"
                 android:textStyle="bold"
-                android:textColor="@color/black"
                 android:textSize="20sp"
                 android:drawableStart="@drawable/ic_baseline_currency_rupee_24"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_marginLeft="16dp"
-                app:layout_constraintRight_toLeftOf="@id/proceed_text" />
+                app:layout_constraintRight_toLeftOf="@id/proceed_text"
+                />
 
 
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/proceed_text"
-            android:text="Proceed to Payments"
+            android:text="Confirm Booking"
             android:background="@color/customRed"
             android:textColor="@color/white"
             android:textSize="16sp"

@@ -4,7 +4,432 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".BookedTicketFragment">
+    tools:context=".BookedTicketFragment"
+    style="@style/PageBackground"
+    >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/travel_details_layout"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_margin="16dp"
+                app:cardCornerRadius="10dp"
+                android:elevation="1dp"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp">
+
+                    <TextView
+                        android:id="@+id/source_location_text"
+                        style="@style/TitleTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Chennai"
+                        android:textSize="24sp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/start_time_text"
+                        android:text="(9:00 AM)"
+                        style="@style/TitleTextStyle"
+                        app:layout_constraintLeft_toRightOf="@id/source_location_text"
+                        app:layout_constraintTop_toTopOf="@id/source_location_text"
+                        app:layout_constraintBottom_toBottomOf="@id/source_location_text"
+                        android:layout_marginLeft="16dp" />
+
+                    <ImageView
+                        android:id="@+id/swap_icon"
+                        style="@style/IconTint"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_marginVertical="8dp"
+                        android:src="@drawable/ic_baseline_swap_vert_24"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/source_location_text" />
+
+                    <TextView
+                        android:id="@+id/destination_text"
+                        style="@style/TitleTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Hyderabad"
+                        android:textSize="24sp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/swap_icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/reach_time_text"
+                        android:text="(23:45 PM)"
+                        style="@style/TitleTextStyle"
+                        app:layout_constraintLeft_toRightOf="@id/destination_text"
+                        app:layout_constraintTop_toTopOf="@id/destination_text"
+                        app:layout_constraintBottom_toBottomOf="@id/destination_text"
+                        android:layout_marginLeft="16dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/date_layout"
+                        android:orientation="vertical"
+                        app:layout_constraintTop_toTopOf="@id/swap_icon"
+                        app:layout_constraintBottom_toBottomOf="@id/swap_icon"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:layout_marginRight="16dp"
+                        >
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/day_text"
+                            android:text="28"
+                            style="@style/TitleTextStyle"
+                            android:textAlignment="center"
+                            />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/month_text"
+                            android:text="DEC"
+                            android:textSize="24sp"
+                            style="@style/TitleTextStyle"
+                            android:textAlignment="center"
+
+                            />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/year_text"
+                            android:text="2022"
+                            style="@style/TitleTextStyle"
+                            android:textAlignment="center"
+
+                            />
+
+                    </LinearLayout>
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/passenger_details_layout"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/travel_details_layout"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="10dp"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ticket_count_text"
+                    android:text="Tickets: 5"
+                    style="@style/TitleTextStyle"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_margin="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/price_text"
+                        android:text="₹ 2500"
+                        android:textSize="24sp"
+                        style="@style/TitleTextStyle"
+                        app:layout_constraintTop_toTopOf="@id/ticket_count_text"
+                        app:layout_constraintBottom_toBottomOf="@id/ticket_count_text"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:layout_marginRight="8dp"/>
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/divider1"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/price_text"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/divider1"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
+                        android:id="@+id/passenger_name_layout"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/passenger1"
+                            android:text="1. Passenger"
+                            style="@style/TextDefault"
+                            android:layout_marginBottom="8dp"
+                            android:visibility="gone"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/passenger2"
+                            android:text="2. Passenger"
+                            android:layout_marginBottom="8dp"
+                            style="@style/TextDefault"
+                            android:visibility="gone"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/passenger3"
+                            android:text="3. Passenger"
+                            android:layout_marginBottom="8dp"
+                            style="@style/TextDefault"
+                            android:visibility="gone"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/passenger4"
+                            android:text="4. EPassenger"
+                            android:layout_marginBottom="8dp"
+                            style="@style/TextDefault"
+                            android:visibility="gone"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/passenger5"
+                            android:text="5. Passenger"
+                            android:layout_marginBottom="8dp"
+                            style="@style/TextDefault"
+                            android:visibility="gone"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/passenger6"
+                            android:text="6. Elango adikalaar"
+                            android:layout_marginBottom="8dp"
+                            style="@style/TextDefault"
+                            android:visibility="gone"
+                            />
+
+                    </LinearLayout>
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/divider2"
+                        app:layout_constraintTop_toBottomOf="@id/passenger_name_layout"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/email_text"
+                        app:layout_constraintTop_toBottomOf="@id/divider2"
+                        android:layout_marginTop="8dp"
+                        android:text="Email: "
+                        style="@style/TitleTextStyle"
+                        app:layout_constraintLeft_toLeftOf="@id/ticket_count_text"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/email"
+                        android:text="lanash@zohocorp.com"
+                        app:layout_constraintTop_toTopOf="@id/email_text"
+                        app:layout_constraintBottom_toBottomOf="@id/email_text"
+                        app:layout_constraintLeft_toRightOf="@id/email_text"
+                        style="@style/TextDefault"
+                        android:layout_marginLeft="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/mobile_text"
+                        app:layout_constraintTop_toBottomOf="@id/email_text"
+                        android:text="Mobile Number: "
+                        style="@style/TitleTextStyle"
+                        app:layout_constraintLeft_toLeftOf="@id/ticket_count_text"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginBottom="8dp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/mobile"
+                        android:text="0987654321"
+                        app:layout_constraintTop_toTopOf="@id/mobile_text"
+                        app:layout_constraintBottom_toBottomOf="@id/mobile_text"
+                        app:layout_constraintLeft_toRightOf="@id/mobile_text"
+                        style="@style/TextDefault"
+                        android:layout_marginLeft="8dp" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/bus_details_card_view"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/passenger_details_layout"
+                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="16dp"
+                app:cardCornerRadius="10dp"
+                android:elevation="1dp"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/bus_details_layout"
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/partner_name_text"
+                        android:text="KGF TOURS AND TRAVELS"
+                        android:textAlignment="center"
+                        style="@style/TitleTextStyle"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        />
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:id="@+id/email_icon"
+                        android:src="@drawable/ic_baseline_email_24"
+                        style="@style/IconTint"
+                        android:paddingLeft="8dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/partner_name_text"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:id="@+id/bus_email_text"
+                        android:text="qwerty@skjdnc.cikmnd"
+                        android:gravity="center"
+                        app:layout_constraintTop_toTopOf="@id/email_icon"
+                        app:layout_constraintBottom_toBottomOf="@id/email_icon"
+                        app:layout_constraintLeft_toRightOf="@id/email_icon"
+                        style="@style/TextLink"
+                        android:paddingStart="8dp"
+                        />
+
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:id="@+id/phone_icon"
+                        android:src="@drawable/ic_baseline_local_phone_24"
+                        style="@style/IconTint"
+                        android:paddingLeft="8dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/email_icon"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:id="@+id/bus_mobile_text"
+                        android:text="9098765432"
+                        android:gravity="center"
+                        app:layout_constraintTop_toTopOf="@id/phone_icon"
+                        app:layout_constraintBottom_toBottomOf="@id/phone_icon"
+                        app:layout_constraintLeft_toRightOf="@id/phone_icon"
+                        style="@style/TextLink"
+                        android:paddingLeft="8dp"
+                        />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/more_info_button"
+                        android:text="More info"
+                        app:layout_constraintTop_toBottomOf="@id/bus_mobile_text"
+                        android:background="@color/white"
+                        android:foreground="?android:selectableItemBackground"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+            </androidx.cardview.widget.CardView>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
     <Button
         android:layout_width="match_parent"

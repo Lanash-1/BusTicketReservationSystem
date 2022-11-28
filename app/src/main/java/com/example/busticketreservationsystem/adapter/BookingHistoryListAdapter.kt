@@ -1,10 +1,14 @@
 package com.example.busticketreservationsystem.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.busticketreservationsystem.entity.Bookings
 import com.example.busticketreservationsystem.databinding.ItemBookedTicketBinding
+import com.example.busticketreservationsystem.diffutils.BookingHistoryDiffUtils
+import com.example.busticketreservationsystem.diffutils.LocationDiffUtils
 import com.example.busticketreservationsystem.entity.Bus
 import com.example.busticketreservationsystem.entity.Partners
 import com.example.busticketreservationsystem.interfaces.OnItemClickListener
@@ -16,9 +20,12 @@ class BookingHistoryListAdapter: RecyclerView.Adapter<BookingHistoryListAdapter.
     private var bookedPartnersList = listOf<String>()
 
     fun setBookedTicketList(bookedTicketList: List<Bookings>, bookedBusList: List<Bus>, bookedPartnersList: List<String>){
+        val bookingDiffUtil = BookingHistoryDiffUtils(this.bookedTicketList, bookedTicketList)
+        val diffResults = DiffUtil.calculateDiff(bookingDiffUtil)
         this.bookedTicketList = bookedTicketList
         this.bookedBusList = bookedBusList
         this.bookedPartnersList = bookedPartnersList
+        diffResults.dispatchUpdatesTo(this)
     }
 
     private lateinit var listener: OnItemClickListener
@@ -48,6 +55,9 @@ class BookingHistoryListAdapter: RecyclerView.Adapter<BookingHistoryListAdapter.
             destinationLocationText.text = bookedBusList[position].destination
             dateDateText.text = bookedTicketList[position].date
             travelsText.text = bookedPartnersList[position]
+            startTimeText.text = bookedBusList[position].startTime
+            reachTimeText.text = bookedBusList[position].reachTime
+            yearText.visibility = View.GONE
         }
     }
 

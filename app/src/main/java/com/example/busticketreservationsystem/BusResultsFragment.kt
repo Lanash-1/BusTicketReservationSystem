@@ -47,8 +47,6 @@ class BusResultsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_bus_results, container, false)
         (activity as AppCompatActivity).supportActionBar!!.apply {
             setDisplayHomeAsUpEnabled(true)
             title = "${searchViewModel.sourceLocation} - ${searchViewModel.destinationLocation}"
@@ -68,8 +66,7 @@ class BusResultsFragment : Fragment() {
             android.R.id.home -> {
                 parentFragmentManager.commit {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-                    replace(R.id.homePageFragmentContainer, DashBoardFragment())
-//                    Toast.makeText(requireContext(), "up button - ${parentFragmentManager.backStackEntryCount}", Toast.LENGTH_SHORT).show()
+                    replace(R.id.main_fragment_container, HomePageFragment())
                     parentFragmentManager.popBackStack()
                 }
             }R.id.filter -> {
@@ -91,14 +88,12 @@ class BusResultsFragment : Fragment() {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true){
                 override fun handleOnBackPressed() {
-//                    Toast.makeText(requireContext(), "back presses", Toast.LENGTH_SHORT).show()
                     parentFragmentManager.commit {
                         setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-                        replace(R.id.homePageFragmentContainer, DashBoardFragment())
+                        replace(R.id.main_fragment_container, HomePageFragment())
                         parentFragmentManager.popBackStack()
 
                     }
-//                    requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).selectedItemId = R.id.dashboard
                 }
             }
 
@@ -108,13 +103,12 @@ class BusResultsFragment : Fragment() {
         binding.busResultsRv.layoutManager = LinearLayoutManager(requireContext())
         binding.busResultsRv.adapter = busResultAdapter
 
-//        val busResult = busViewModel.busList.filter {
-//            it.sourceLocation == searchViewModel.sourceLocation && it.destination == searchViewModel.destinationLocation
-//        }
+
         Toast.makeText(requireContext(), "${busViewModel.filteredBusList.size} buses found", Toast.LENGTH_SHORT).show()
 
         busResultAdapter.setBusList(busViewModel.filteredBusList)
         busResultAdapter.setPartnerList(busViewModel.partnerList)
+
         if(busViewModel.filteredBusList.isEmpty()){
             binding.emptyListImage.visibility = View.VISIBLE
         }else{
@@ -123,23 +117,21 @@ class BusResultsFragment : Fragment() {
 
         busResultAdapter.setOnItemClickListener(object : OnItemClickListener{
             override fun onItemClick(position: Int) {
-//                Toast.makeText(
-//                    requireContext(),
-//                    "Bus Selected: ${busViewModel.busList[position].busId}",
-//                    Toast.LENGTH_SHORT
-//                ).show()
-//
-                busViewModel.selectedBus = busViewModel.filteredBusList[position]
 
+                busViewModel.selectedBus = busViewModel.filteredBusList[position]
+                busViewModel.selectedBusPosition = position
 
                 GlobalScope.launch {
                     var seats = listOf<String>()
+                    var amenities = listOf<String>()
                     val job = launch {
                         seats = busDbViewModel.getBookedSeats(busViewModel.selectedBus.busId, bookingViewModel.date)
+                        amenities = busDbViewModel.getBusAmenities(busViewModel.selectedBus.busId)
                     }
                     job.join()
                     withContext(Dispatchers.IO){
                         busViewModel.notAvailableSeats = seats
+                        busViewModel.busAmenities = amenities
                     }
                 }
 

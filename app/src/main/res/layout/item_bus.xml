@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="110dp"
+    android:layout_height="130dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clickable="true"
     android:focusable="true"
@@ -12,12 +12,10 @@
         android:layout_height="wrap_content"
         android:id="@+id/price_text"
         android:text="₹ 750"
-        android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_margin="16dp"
-        android:textColor="@color/black" />
+        style="@style/TitleTextStyle"/>
 
     <androidx.cardview.widget.CardView
         android:layout_width="56dp"
@@ -55,7 +53,6 @@
             android:layout_height="24dp"
             android:id="@+id/people_count_text"
             android:text="88"
-            android:textColor="@color/black"
             android:drawableStart="@drawable/ic_baseline_group_24"
             app:layout_constraintTop_toBottomOf="@id/rating_text"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -76,6 +73,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginTop="16dp"
         android:layout_marginLeft="13dp"
+        style="@style/IconTint"
         />
 
     <TextView
@@ -85,9 +83,10 @@
         android:text="Orange Travels"
         android:textStyle="italic|bold"
         android:textColor="#EE0256"
-        android:textSize="16sp"
+        android:textSize="20sp"
         app:layout_constraintLeft_toRightOf="@id/bus_icon"
         app:layout_constraintTop_toTopOf="@id/bus_icon"
+        app:layout_constraintBottom_toBottomOf="@id/bus_icon"
         android:layout_marginLeft="8dp"
         />
 
@@ -96,67 +95,90 @@
         android:layout_height="wrap_content"
         android:id="@+id/startTime_text"
         android:text="21:15"
-        android:textSize="16sp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="3dp"
         app:layout_constraintStart_toStartOf="@id/bus_icon"
-        app:layout_constraintTop_toBottomOf="@id/bus_icon" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/dash"
-        android:text="-"
-        app:layout_constraintLeft_toRightOf="@id/startTime_text"
-        app:layout_constraintTop_toTopOf="@id/startTime_text"
-        android:layout_marginHorizontal="8dp"
-        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/bus_icon"
+        style="@style/TitleTextStyle"
         />
+
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/dash"-->
+<!--        android:text="-"-->
+<!--        app:layout_constraintLeft_toRightOf="@id/startTime_text"-->
+<!--        app:layout_constraintTop_toTopOf="@id/startTime_text"-->
+<!--        android:layout_marginHorizontal="8dp"-->
+<!--        android:textStyle="bold"-->
+<!--        />-->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/duration_text"
+            android:text="8.15 hrs"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toTopOf="@id/time_divider"
+            app:layout_constraintStart_toStartOf="@id/time_divider"
+            app:layout_constraintEnd_toEndOf="@id/time_divider"
+            />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/time_divider"
+        app:layout_constraintLeft_toRightOf="@id/startTime_text"
+        app:layout_constraintRight_toLeftOf="@id/reachTime_text"
+        app:layout_constraintTop_toTopOf="@id/startTime_text"
+        app:layout_constraintBottom_toBottomOf="@id/startTime_text"
+        android:layout_marginLeft="8dp"
+        style="@style/DividerColor"/>
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/reachTime_text"
         android:text="05:30"
-        android:textSize="16sp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toRightOf="@id/dash"
+        style="@style/TitleTextStyle"
+        app:layout_constraintLeft_toRightOf="@id/time_divider"
         app:layout_constraintTop_toTopOf="@id/startTime_text"
         android:layout_marginLeft="8dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/duration_text"
-        android:text="8.15 hrs"
-        app:layout_constraintStart_toStartOf="@id/startTime_text"
-        app:layout_constraintTop_toBottomOf="@id/startTime_text"
-        android:layout_marginTop="8dp"
-        android:textStyle="bold"
-        />
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/duration_text"-->
+<!--        android:text="8.15 hrs"-->
+<!--        app:layout_constraintStart_toStartOf="@id/startTime_text"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/startTime_text"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:textStyle="bold"-->
+<!--        />-->
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/point1"
-        android:text="•"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toRightOf="@id/duration_text"
-        app:layout_constraintTop_toTopOf="@id/duration_text"
-        android:layout_marginLeft="8dp" />
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/point1"-->
+<!--        android:text="•"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintLeft_toRightOf="@id/duration_text"-->
+<!--        app:layout_constraintTop_toTopOf="@id/duration_text"-->
+<!--        android:layout_marginLeft="8dp" />-->
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/bus_type_text"
         android:text="A/C Sleeper"
+        app:layout_constraintStart_toStartOf="@id/startTime_text"
+        app:layout_constraintTop_toBottomOf="@id/startTime_text"
+        android:layout_marginTop="16dp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="@id/duration_text"
-        app:layout_constraintLeft_toRightOf="@id/point1"
-        android:layout_marginLeft="8dp" />
+        />
 
     <TextView
         android:layout_width="wrap_content"
@@ -165,7 +187,7 @@
         android:text="•"
         android:textStyle="bold"
         app:layout_constraintLeft_toRightOf="@id/bus_type_text"
-        app:layout_constraintTop_toTopOf="@id/duration_text"
+        app:layout_constraintTop_toTopOf="@id/bus_type_text"
         android:layout_marginLeft="8dp" />
 
     <TextView
@@ -174,7 +196,7 @@
         android:id="@+id/seats_text"
         android:text="13 Seats"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="@id/duration_text"
+        app:layout_constraintTop_toTopOf="@id/bus_type_text"
         app:layout_constraintLeft_toRightOf="@id/point2"
         android:layout_marginLeft="8dp" />
 

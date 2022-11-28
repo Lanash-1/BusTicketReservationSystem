@@ -136,8 +136,6 @@ class EditProfileFragment : Fragment() {
 
                 if(dateViewModel.edited.value == true){
                     this.dob = "${dateViewModel.date} - ${dateViewModel.month} - ${dateViewModel.year}"
-                }else{
-                    this.dob = "DD - MM - YYYY"
                 }
 
                 if(binding.maleRadioButton.isChecked){

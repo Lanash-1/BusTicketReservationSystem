@@ -56,9 +56,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/source_text"
                 android:text="Chennai"
-                android:textStyle="bold"
-                android:textColor="@color/black"
                 android:textSize="16sp"
+                style="@style/TitleTextStyle"
                 android:drawableEnd="@drawable/ic_baseline_arrow_forward_24"
                 android:drawablePadding="8dp"
                 app:layout_constraintStart_toStartOf="@id/bus_icon"
@@ -66,14 +65,14 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:id="@+id/destination_text"
                 android:text="Bangalore"
-                android:textStyle="bold"
-                android:textColor="@color/black"
                 android:textSize="16sp"
+                style="@style/TitleTextStyle"
                 app:layout_constraintLeft_toRightOf="@id/source_text"
                 app:layout_constraintTop_toTopOf="@id/source_text"
+                app:layout_constraintBottom_toBottomOf="@id/source_text"
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_marginRight="8dp"
                 android:paddingLeft="8dp"
@@ -84,8 +83,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/date_text"
                 android:text="12, Nov 2022"
-                android:textSize="14sp"
-                android:textColor="@color/black"
+                style="@style/TextDefault"
                 app:layout_constraintTop_toBottomOf="@id/source_text"
                 app:layout_constraintStart_toStartOf="@id/source_text"
                 android:layout_marginTop="8dp"
@@ -101,7 +99,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
-                android:textColor="@color/black" />
+                style="@style/TextColor" />
 
 
 

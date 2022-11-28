@@ -12,7 +12,6 @@ import com.example.busticketreservationsystem.entity.*
             Bookings::class,
             Bus::class,
             BusAmenities::class,
-            BusTimeInfo::class,
             Partners::class,
             PassengerInformation::class,
             RecentlyViewed::class,
@@ -25,7 +24,6 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun bookingsDao(): BookingsDao
     abstract fun busAmenitiesDao(): BusAmenitiesDao
     abstract fun busDao(): BusDao
-    abstract fun busTimeInfoDao(): BusTimeInfoDao
     abstract fun partnersDao(): PartnersDao
     abstract fun passengerInformationDao(): PassengerInformationDao
     abstract fun recentlyViewedDao(): RecentlyViewedDao

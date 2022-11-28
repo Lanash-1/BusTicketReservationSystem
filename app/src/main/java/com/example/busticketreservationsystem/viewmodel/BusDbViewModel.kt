@@ -9,6 +9,8 @@ class BusDbViewModel(application: Application): AndroidViewModel(application) {
 
     private val appDb = AppDatabase.getDatabase(application.applicationContext)
 
+//    bus data
+
     fun insertPartnerData(list: List<Partners>){
         appDb.partnersDao().insertPartnerData(list)
     }
@@ -17,8 +19,16 @@ class BusDbViewModel(application: Application): AndroidViewModel(application) {
         appDb.busDao().insertBusData(list)
     }
 
+    fun getPartnerName(partnerId: Int): String{
+        return appDb.partnersDao().getPartnerName(partnerId)
+    }
+
     fun insertBusAmenitiesData(list: List<BusAmenities>){
         appDb.busAmenitiesDao().insert(list)
+    }
+
+    fun getBusAmenities(busId: Int): List<String> {
+        return appDb.busAmenitiesDao().getBusAmenities(busId)
     }
 
     fun getBusData(): List<Bus>{
@@ -32,6 +42,9 @@ class BusDbViewModel(application: Application): AndroidViewModel(application) {
     fun getPartnerData(): List<Partners>{
         return appDb.partnersDao().getPartnersData()
     }
+
+
+//    reviews data
 
     fun getReviewData(busId: Int): List<Reviews>{
         return appDb.reviewsDao().getReviewsData(busId)
@@ -53,6 +66,16 @@ class BusDbViewModel(application: Application): AndroidViewModel(application) {
         return appDb.reviewsDao().getReviewByUser(busId, userId)
     }
 
+    fun insertReview(reviews: Reviews){
+        appDb.reviewsDao().insert(reviews)
+    }
+
+    fun updateReviewOfAUser(reviewId: Int, rating: Int, feedback: String){
+        appDb.reviewsDao().updateReviews(reviewId, rating, feedback)
+    }
+
+
+//    seats data
 
     fun insertSeatInformation(seatInfo: SeatInformation){
         appDb.seatInformationDao().insert(seatInfo)
@@ -61,6 +84,17 @@ class BusDbViewModel(application: Application): AndroidViewModel(application) {
     fun updateBusSeatAvailableCount(count: Int, busId: Int){
         appDb.busDao().updateAvailableSeats(count, busId)
     }
+
+    fun getBookedSeats(busId: Int, date: String): List<String>{
+        return appDb.seatInformationDao().getBookedSeats(busId, date)
+    }
+
+    fun deleteSeatsOfBus(bookingId: Int){
+        appDb.seatInformationDao().deleteSeatsOfBooking(bookingId)
+    }
+
+
+//    recently viewed data
 
     fun insertRecentlyViewed(recentlyViewed: RecentlyViewed){
         appDb.recentlyViewedDao().insert(recentlyViewed)
@@ -74,24 +108,13 @@ class BusDbViewModel(application: Application): AndroidViewModel(application) {
         return appDb.recentlyViewedDao().isAvailable(userId, busId, date) != 0
     }
 
-    fun getPartnerName(partnerId: Int): String{
-        return appDb.partnersDao().getPartnerName(partnerId)
-    }
-
     fun removeRecentlyViewed(recentlyViewed: RecentlyViewed){
         appDb.recentlyViewedDao().deleteRecentlyViewed(recentlyViewed)
     }
 
-    fun insertReview(reviews: Reviews){
-        appDb.reviewsDao().insert(reviews)
+    fun getPartnerDetails(partnerId: Int): Partners {
+        return appDb.partnersDao().getPartnerDetails(partnerId)
     }
 
-    fun getBookedSeats(busId: Int, date: String): List<String>{
-        return appDb.seatInformationDao().getBookedSeats(busId, date)
-    }
-
-    fun deleteSeatsOfBus(bookingId: Int){
-        appDb.seatInformationDao().deleteSeatsOfBooking(bookingId)
-    }
 
 }
