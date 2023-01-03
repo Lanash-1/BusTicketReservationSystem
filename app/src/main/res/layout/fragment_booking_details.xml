@@ -317,8 +317,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/price_text"
                 android:text="12345"
-                android:textStyle="bold"
                 android:textSize="20sp"
+                style="@style/TitleTextStyle"
                 android:drawableStart="@drawable/ic_baseline_currency_rupee_24"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -347,8 +347,6 @@
             android:focusable="true"
             android:foreground="?android:selectableItemBackground"
             />
-
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

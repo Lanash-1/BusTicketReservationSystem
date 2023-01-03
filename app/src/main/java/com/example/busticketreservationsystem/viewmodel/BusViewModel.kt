@@ -1,6 +1,5 @@
 package com.example.busticketreservationsystem.viewmodel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.busticketreservationsystem.entity.*
@@ -42,16 +41,29 @@ class BusViewModel: ViewModel() {
 //    boarding and dropping
 
     val boardingPoints = listOf(
-        "flower park",
-        "central bus stand",
-        "tech park",
+        "Maple Street Station",
+        "Park Avenue Terminal",
+        "Lakeside Loop",
+        "Downtown Transfer Center",
+        "Sunset Plaza",
+        "Midtown Marketplace",
+        "The Foothills Depot",
+        "Mountain View Mall",
+        "Pine Ridge Platform",
+        "City Centre Station"
     )
 
     val droppingPoints = listOf(
-        "location 1",
-        "location 2",
-        "location 3",
-        "location 4"
+        "Riverfront Road",
+        "The Woodlands Park",
+        "Rockville Corner",
+        "Glenbrook Plaza",
+        "Brookdale Junction",
+        "Meadowlands Avenue",
+        "Hampton Hills",
+        "The Pines Terminal",
+        "Tanglewood Mall",
+        "Maplewood Meadows"
     )
 
 

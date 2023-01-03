@@ -209,7 +209,6 @@ class BookingDetailsFragment : Fragment() {
                 bookingViewModel.passengerInfo[position].gender = gender
             }
         })
-
     }
 
     private fun bookBusTickets() {
@@ -256,23 +255,27 @@ class BookingDetailsFragment : Fragment() {
                     this.currentSearch = ""
                 }
                 Snackbar.make(requireView(), "Booked ticket successfully", Snackbar.LENGTH_SHORT).show()
+                navigationViewModel.fragment = BookingDetailsFragment()
                 parentFragmentManager.commit {
-                    replace(R.id.main_fragment_container, HomePageFragment())
-                    for(i in 0 until parentFragmentManager.backStackEntryCount){
-                        parentFragmentManager.popBackStack()
-                    }
+                    replace(R.id.main_fragment_container, BookedTicketFragment())
                 }
+//                parentFragmentManager.commit {
+//                    replace(R.id.main_fragment_container, HomePageFragment())
+//                    for(i in 0 until parentFragmentManager.backStackEntryCount){
+//                        parentFragmentManager.popBackStack()
+//                    }
+//                }
             }
         }
     }
 
-    private fun emailFocusListener() {
-        binding.emailInput.setOnFocusChangeListener{ _ , focused ->
-            if(!focused){
-                binding.emailLayout.helperText = validEmail()
-            }
-        }
-    }
+//    private fun emailFocusListener() {
+//        binding.emailInput.setOnFocusChangeListener{ _ , focused ->
+//            if(!focused){
+//                binding.emailLayout.helperText = validEmail()
+//            }
+//        }
+//    }
 
     private fun validEmail(): String? {
         val emailText = binding.emailInput.text.toString()

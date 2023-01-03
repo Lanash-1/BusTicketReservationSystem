@@ -18,7 +18,6 @@ import com.example.busticketreservationsystem.entity.Bus
 import com.example.busticketreservationsystem.entity.Partners
 import com.example.busticketreservationsystem.entity.PassengerInformation
 import com.example.busticketreservationsystem.enums.BookedTicketStatus
-import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.viewmodel.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.Dispatchers
@@ -62,11 +61,12 @@ class BookedTicketFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home -> {
-                parentFragmentManager.commit {
-                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-                    replace(R.id.homePageFragmentContainer, BookingHistoryFragment())
-//                    parentFragmentManager.popBackStack()
-                }
+                backPressLogic()
+//                parentFragmentManager.commit {
+//                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+//                    replace(R.id.homePageFragmentContainer, BookingHistoryFragment())
+////                    parentFragmentManager.popBackStack()
+//                }
             }
         }
         return super.onOptionsItemSelected(item)
@@ -77,23 +77,33 @@ class BookedTicketFragment : Fragment() {
 
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.visibility = View.GONE
 
-
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true){
                 override fun handleOnBackPressed() {
-                    parentFragmentManager.commit {
-                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-                        replace(R.id.homePageFragmentContainer, BookingHistoryFragment())
-//                        parentFragmentManager.popBackStack()
-                    }
+                    backPressLogic()
+//                    parentFragmentManager.commit {
+//                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+//                        replace(R.id.homePageFragmentContainer, BookingHistoryFragment())
+////                        parentFragmentManager.popBackStack()
+//                    }
                 }
             }
+
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
-        if(bookingViewModel.filteredBookingHistory[bookingViewModel.selectedTicket].bookedTicketStatus == BookedTicketStatus.UPCOMING.name){
-            binding.cancelTicketButton.visibility = View.VISIBLE
+        if(navigationViewModel.fragment is BookingDetailsFragment){
+            println("Booking success")
+            binding.ticketLayout.visibility = View.GONE
         }else{
-            binding.cancelTicketButton.visibility = View.GONE
+            if(bookingViewModel.filteredBookingHistory[bookingViewModel.selectedTicket].bookedTicketStatus == BookedTicketStatus.UPCOMING.name){
+                binding.cancelTicketButton.visibility = View.VISIBLE
+            }else{
+                binding.cancelTicketButton.visibility = View.GONE
+            }
+
+            setDataToView()
+
+            getBusAmenities(bookingViewModel.filteredBookedBusesList[bookingViewModel.selectedTicket].busId)
         }
 
         binding.cancelTicketButton.setOnClickListener {
@@ -108,15 +118,24 @@ class BookedTicketFragment : Fragment() {
             }
         }
 
+    }
 
-
-
-        setDataToView()
-
-        getBusAmenities(bookingViewModel.filteredBookedBusesList[bookingViewModel.selectedTicket].busId)
-
-
-
+    private fun backPressLogic() {
+        when(navigationViewModel.fragment){
+            is BookingDetailsFragment -> {
+                navigationViewModel.fragment = null
+                parentFragmentManager.commit {
+//                    replace(R.id)
+                }
+            }
+            else -> {
+                parentFragmentManager.commit {
+                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                    replace(R.id.homePageFragmentContainer, BookingHistoryFragment())
+//                        parentFragmentManager.popBackStack()
+                }
+            }
+        }
     }
 
     private fun getBusAmenities(busId: Int) {

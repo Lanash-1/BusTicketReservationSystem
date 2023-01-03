@@ -28,7 +28,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -206,7 +205,6 @@ class DashBoardFragment : Fragment() {
         binding.dateLayout.setOnClickListener {
             val datePickerFragment = TravelDatePickerFragment()
             datePickerFragment.show(parentFragmentManager, "datePicker")
-
         }
 
         dateViewModel.travelEdited.observe(viewLifecycleOwner, Observer {
@@ -217,7 +215,7 @@ class DashBoardFragment : Fragment() {
                     month = dateViewModel.month
                     date = dateViewModel.date
                 }
-                binding.dateText.setTextColor(Color.parseColor("#000000"))
+//                binding.dateText.setTextColor(Color.parseColor("#ffffff"))
             }else{
                 binding.dateText.text = "DD - MM - YYYY"
                 searchViewModel.apply {
@@ -225,7 +223,7 @@ class DashBoardFragment : Fragment() {
                     month = 0
                     date = 0
                 }
-                binding.dateText.setTextColor(Color.parseColor("#808080"))
+//                binding.dateText.setTextColor(Color.parseColor("#ffffff"))
             }
         })
 
