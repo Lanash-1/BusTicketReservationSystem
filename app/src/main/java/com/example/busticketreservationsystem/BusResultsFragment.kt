@@ -92,7 +92,6 @@ class BusResultsFragment : Fragment() {
                         setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                         replace(R.id.main_fragment_container, HomePageFragment())
                         parentFragmentManager.popBackStack()
-
                     }
                 }
             }
@@ -111,8 +110,10 @@ class BusResultsFragment : Fragment() {
 
         if(busViewModel.filteredBusList.isEmpty()){
             binding.emptyListImage.visibility = View.VISIBLE
+            binding.noResultsText.visibility = View.VISIBLE
         }else{
             binding.emptyListImage.visibility = View.GONE
+            binding.noResultsText.visibility = View.GONE
         }
 
         busResultAdapter.setOnItemClickListener(object : OnItemClickListener{

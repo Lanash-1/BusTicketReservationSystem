@@ -257,7 +257,7 @@ class BookingDetailsFragment : Fragment() {
                 Snackbar.make(requireView(), "Booked ticket successfully", Snackbar.LENGTH_SHORT).show()
                 navigationViewModel.fragment = BookingDetailsFragment()
                 parentFragmentManager.commit {
-                    replace(R.id.main_fragment_container, BookedTicketFragment())
+                    replace(R.id.homePageFragmentContainer, BookedTicketFragment())
                 }
 //                parentFragmentManager.commit {
 //                    replace(R.id.main_fragment_container, HomePageFragment())

@@ -47,6 +47,11 @@ class BookingViewModel: ViewModel() {
     var tabPosition = MutableLiveData<Int>()
 
 
+//    booked ticket details
+
+
+
+
 
 
 }

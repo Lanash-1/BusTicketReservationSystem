@@ -52,7 +52,11 @@ class BookedTicketFragment : Fragment() {
 //        return inflater.inflate(R.layout.fragment_booked_ticket, container, false)
         (activity as AppCompatActivity).supportActionBar?.apply {
             title = "Ticket Details"
-            setDisplayHomeAsUpEnabled(true)
+//            if(navigationViewModel.fragment == null){
+                setDisplayHomeAsUpEnabled(true)
+//            }else{
+//                setDisplayHomeAsUpEnabled(false)
+//            }
         }
         binding = FragmentBookedTicketBinding.inflate(inflater, container, false)
         return binding.root
@@ -94,6 +98,7 @@ class BookedTicketFragment : Fragment() {
         if(navigationViewModel.fragment is BookingDetailsFragment){
             println("Booking success")
             binding.ticketLayout.visibility = View.GONE
+            binding.cancelTicketButton.visibility = View.GONE
         }else{
             if(bookingViewModel.filteredBookingHistory[bookingViewModel.selectedTicket].bookedTicketStatus == BookedTicketStatus.UPCOMING.name){
                 binding.cancelTicketButton.visibility = View.VISIBLE
@@ -125,7 +130,10 @@ class BookedTicketFragment : Fragment() {
             is BookingDetailsFragment -> {
                 navigationViewModel.fragment = null
                 parentFragmentManager.commit {
-//                    replace(R.id)
+                    replace(R.id.main_fragment_container, HomePageFragment())
+                    for(i in 0 until parentFragmentManager.backStackEntryCount){
+                        parentFragmentManager.popBackStack()
+                    }
                 }
             }
             else -> {

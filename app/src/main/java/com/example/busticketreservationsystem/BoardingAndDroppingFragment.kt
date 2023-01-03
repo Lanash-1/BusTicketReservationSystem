@@ -59,7 +59,6 @@ class BoardingAndDroppingFragment : Fragment() {
                     setTransition(TRANSIT_FRAGMENT_CLOSE)
                     replace(R.id.homePageFragmentContainer, SelectedBusFragment())
                     parentFragmentManager.popBackStack()
-
                 }
 
             }

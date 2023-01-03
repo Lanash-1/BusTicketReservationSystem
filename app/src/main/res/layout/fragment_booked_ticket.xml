@@ -100,7 +100,6 @@
                         app:layout_constraintTop_toTopOf="@id/swap_icon"
                         app:layout_constraintBottom_toBottomOf="@id/swap_icon"
                         app:layout_constraintRight_toRightOf="parent"
-                        android:layout_marginRight="16dp"
                         >
 
                         <TextView
