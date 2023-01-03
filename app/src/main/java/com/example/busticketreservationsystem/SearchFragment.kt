@@ -32,9 +32,6 @@ class SearchFragment : Fragment() {
 
     private lateinit var newList: List<String>
 
-//    private lateinit var callback: OnBackPressedCallback
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)

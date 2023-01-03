@@ -110,6 +110,7 @@ class BusResultsFragment : Fragment() {
 
         if(busViewModel.filteredBusList.isEmpty()){
             binding.emptyListImage.visibility = View.VISIBLE
+//            binding.emptyListImage.alpha = 0.1F
             binding.noResultsText.visibility = View.VISIBLE
         }else{
             binding.emptyListImage.visibility = View.GONE

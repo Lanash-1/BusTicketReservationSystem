@@ -92,8 +92,6 @@ class BookingHistoryFragment : Fragment() {
                             requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.selectedItemId = R.id.dashboard
                         }
                     }
-
-
                 }
             }
 

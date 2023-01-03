@@ -63,7 +63,6 @@ class BookingHistoryListFragment : Fragment() {
             }
         })
 
-        println("CREATED")
 
         bookingViewModel.tabPosition.observe(viewLifecycleOwner, Observer {
             filterBooking(bookingViewModel.tabPosition.value!!)
@@ -85,7 +84,6 @@ class BookingHistoryListFragment : Fragment() {
     }
 
     private fun filterBooking(tabPosition: Int) {
-        println("NEW FILTER")
         when (tabPosition) {
             0 -> {
                 filterBookingList(BookedTicketStatus.UPCOMING.name)
@@ -100,7 +98,6 @@ class BookingHistoryListFragment : Fragment() {
     }
 
         private fun filterBookingList(status: String) {
-            println("FILTERING - $status")
             val bookingList = mutableListOf<Bookings>()
             val busList = mutableListOf<Bus>()
             val partnerList = mutableListOf<String>()

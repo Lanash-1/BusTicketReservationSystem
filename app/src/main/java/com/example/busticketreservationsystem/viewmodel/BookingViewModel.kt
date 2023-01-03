@@ -49,7 +49,9 @@ class BookingViewModel: ViewModel() {
 
 //    booked ticket details
 
-
+    lateinit var bookedBus: Bus
+    lateinit var bookedPartner: Partners
+    var bookedPassengers = listOf<PassengerInformation>()
 
 
 

@@ -237,23 +237,28 @@ class BookingDetailsFragment : Fragment() {
             }
             otherJob.join()
             withContext(Dispatchers.Main){
-                busViewModel.apply {
-                    selectedSeats.clear()
-                }
+//                busViewModel.apply {
+//                    selectedSeats.clear()
+//                }
                 bookingViewModel.apply {
-                    selectedSeats.clear()
-                    passengerInfo.clear()
-                    contactEmail = ""
-                    contactNumber = ""
-                    bookingEmail = null
-                    bookingMobile = null
+//                    selectedSeats.clear()
+//                    passengerInfo.clear()
+//                    contactEmail = ""
+//                    contactNumber = ""
+//                    bookingEmail = null
+//                    bookingMobile = null
+
+
+                    bookedBus = busViewModel.selectedBus
+//                    bookedPartner = busViewModel.selectedPartner
+
                 }
-                searchViewModel.apply {
-                    this.sourceLocation = ""
-                    this.destinationLocation = ""
-                    this.year = 0
-                    this.currentSearch = ""
-                }
+//                searchViewModel.apply {
+//                    this.sourceLocation = ""
+//                    this.destinationLocation = ""
+//                    this.year = 0
+//                    this.currentSearch = ""
+//                }
                 Snackbar.make(requireView(), "Booked ticket successfully", Snackbar.LENGTH_SHORT).show()
                 navigationViewModel.fragment = BookingDetailsFragment()
                 parentFragmentManager.commit {

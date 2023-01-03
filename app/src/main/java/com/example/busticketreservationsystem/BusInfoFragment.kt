@@ -39,6 +39,7 @@ class BusInfoFragment : Fragment() {
     private val userViewModel: UserViewModel by activityViewModels()
     private val dateViewModel: DateViewModel by activityViewModels()
     private val navigationViewModel: NavigationViewModel by activityViewModels()
+    private val bookingViewModel: BookingViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -113,6 +114,14 @@ class BusInfoFragment : Fragment() {
                 addToBackStack(null)
             }
         }
+
+//        if(bookingViewModel.bookedBusesList.filter {
+//                it.busId == busViewModel.selectedBus.busId
+//            }.isEmpty()){
+//            binding.rateBusButton.visibility = View.GONE
+//        }else{
+//            binding.rateBusButton.visibility = View.VISIBLE
+//        }
 
         binding.rateBusButton.setOnClickListener {
 
@@ -217,7 +226,15 @@ class BusInfoFragment : Fragment() {
         }
 
         if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
-            binding.rateBusButton.visibility = View.VISIBLE
+            if(bookingViewModel.bookedBusesList.filter {
+                    it.busId == busViewModel.selectedBus.busId
+                }.isEmpty()){
+                binding.rateBusButton.visibility = View.GONE
+            }else{
+                binding.rateBusButton.visibility = View.VISIBLE
+            }
+
+//            binding.rateBusButton.visibility = View.VISIBLE
             if(busViewModel.userReview.size == 1){
                 binding.rateBusButton.text = "Update Rating"
             }

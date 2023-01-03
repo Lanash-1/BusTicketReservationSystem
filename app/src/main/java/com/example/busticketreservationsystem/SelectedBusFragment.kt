@@ -212,6 +212,8 @@ class SelectedBusFragment : Fragment() {
         busSeatsAdapter.setOnItemClickListener(object: OnItemClickListener{
             override fun onItemClick(position: Int) {
 
+                println(seatsList)
+
                 if(seatsList[position] == 0){
                     if(busViewModel.selectedSeats.size == 6){
                         Toast.makeText(requireContext(), "Maximum 6 seats only allowed", Toast.LENGTH_SHORT).show()
