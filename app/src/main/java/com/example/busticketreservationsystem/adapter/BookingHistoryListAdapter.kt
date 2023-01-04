@@ -8,9 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.busticketreservationsystem.entity.Bookings
 import com.example.busticketreservationsystem.databinding.ItemBookedTicketBinding
 import com.example.busticketreservationsystem.diffutils.BookingHistoryDiffUtils
-import com.example.busticketreservationsystem.diffutils.LocationDiffUtils
 import com.example.busticketreservationsystem.entity.Bus
-import com.example.busticketreservationsystem.entity.Partners
 import com.example.busticketreservationsystem.interfaces.OnItemClickListener
 
 class BookingHistoryListAdapter: RecyclerView.Adapter<BookingHistoryListAdapter.BookingHistoryListViewHolder>() {

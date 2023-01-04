@@ -1,6 +1,5 @@
 package com.example.busticketreservationsystem.entity
 
-import android.view.inspector.IntFlagMapping
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey

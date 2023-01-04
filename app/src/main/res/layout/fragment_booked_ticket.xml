@@ -189,7 +189,6 @@
                         />
                     
                     <TableLayout
-                        android:visibility="gone"
                         android:id="@+id/tableLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -231,20 +230,24 @@
 
                         </TableRow>
 
-                        <TableRow android:background="@color/white" android:padding="10dp">
+                        <TableRow android:id="@+id/row1"
+                            android:background="@color/white" android:padding="10dp">
                             <TextView
+                                android:id="@+id/row1no"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="1."
                                 />
                             <TextView
+                                android:id="@+id/row1name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="Lanash"
                                 />
                             <TextView
+                                android:id="@+id/row1seat"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -252,20 +255,26 @@
 
                         </TableRow>
 
-                        <TableRow android:background="@color/white" android:padding="10dp">
+                        <TableRow
+                            android:id="@+id/row2"
+                            android:visibility="gone"
+                            android:background="@color/white" android:padding="10dp">
                             <TextView
+                                android:id="@+id/row2no"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="1."
                                 />
                             <TextView
+                                android:id="@+id/row2name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="Lanash"
                                 />
                             <TextView
+                                android:id="@+id/row2seat"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -273,20 +282,25 @@
 
                         </TableRow>
 
-                        <TableRow android:background="@color/white" android:padding="10dp">
+                        <TableRow
+                            android:visibility="gone"
+                            android:id="@+id/row3" android:background="@color/white" android:padding="10dp">
                             <TextView
+                                android:id="@+id/row3no"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="1."
                                 />
                             <TextView
+                                android:id="@+id/row3name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="Lanash"
                                 />
                             <TextView
+                                android:id="@+id/row3seat"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -294,20 +308,25 @@
 
                         </TableRow>
 
-                        <TableRow android:background="@color/white" android:padding="10dp">
+                        <TableRow
+                            android:visibility="gone"
+                            android:id="@+id/row4" android:background="@color/white" android:padding="10dp">
                             <TextView
+                                android:id="@+id/row4no"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="1."
                                 />
                             <TextView
+                                android:id="@+id/row4name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="Lanash"
                                 />
                             <TextView
+                                android:id="@+id/row4seat"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -315,20 +334,25 @@
 
                         </TableRow>
 
-                        <TableRow android:background="@color/white" android:padding="10dp">
+                        <TableRow
+                            android:visibility="gone"
+                            android:id="@+id/row5" android:background="@color/white" android:padding="10dp">
                             <TextView
+                                android:id="@+id/row5no"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="1."
                                 />
                             <TextView
+                                android:id="@+id/row5name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="Lanash"
                                 />
                             <TextView
+                                android:id="@+id/row5seat"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -336,20 +360,25 @@
 
                         </TableRow>
 
-                        <TableRow android:background="@color/white" android:padding="10dp">
+                        <TableRow
+                            android:visibility="gone"
+                            android:id="@+id/row6" android:background="@color/white" android:padding="10dp">
                             <TextView
+                                android:id="@+id/row6no"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="1."
                                 />
                             <TextView
+                                android:id="@+id/row6name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="Lanash"
                                 />
                             <TextView
+                                android:id="@+id/row6seat"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -369,6 +398,7 @@
                         android:layout_marginLeft="8dp"
                         android:layout_marginTop="8dp"
                         android:id="@+id/passenger_name_layout"
+                        android:visibility="gone"
                         >
 
                         <TextView

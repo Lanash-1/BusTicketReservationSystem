@@ -31,9 +31,6 @@ class BookingDbViewModel(
         return list[list.size-1]
     }
 
-    fun getAParticularBooking(bookingId: Int): Bookings{
-        return appDb.bookingsDao().getSingleBooking(bookingId)
-    }
 
     fun getUserBookings(userId: Int): List<Bookings>{
         return appDb.bookingsDao().getUserBookings(userId)
@@ -41,10 +38,6 @@ class BookingDbViewModel(
 
     fun updateTicketStatus(status: String, bookingId: Int){
         appDb.bookingsDao().updateTicketStatus(status, bookingId)
-    }
-
-    fun deleteBooking(bookings: Bookings) {
-        appDb.bookingsDao().deleteBooking(bookings)
     }
 
     fun getPassengerInfo(): List<PassengerInformation> {

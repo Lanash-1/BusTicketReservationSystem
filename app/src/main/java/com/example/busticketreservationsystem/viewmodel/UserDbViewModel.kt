@@ -20,9 +20,7 @@ class UserDbViewModel(
     }
 
     fun getAccountCount(mobileNumber: String): Boolean{
-//        return withContext(Dispatchers.IO){
-            return appDb.userDao().getAccountCount(mobileNumber) == 0
-//        }
+        return appDb.userDao().getAccountCount(mobileNumber) == 0
     }
 
     fun isEmailExists(email: String): Boolean{

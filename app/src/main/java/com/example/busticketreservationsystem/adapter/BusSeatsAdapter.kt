@@ -1,13 +1,11 @@
 package com.example.busticketreservationsystem.adapter
 
-import android.opengl.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.busticketreservationsystem.databinding.ItemSeatBinding
 import com.example.busticketreservationsystem.interfaces.OnItemClickListener
-import kotlin.math.abs
 
 class BusSeatsAdapter: RecyclerView.Adapter<BusSeatsAdapter.BusSeatsViewHolder>() {
 
@@ -44,18 +42,11 @@ class BusSeatsAdapter: RecyclerView.Adapter<BusSeatsAdapter.BusSeatsViewHolder>(
                 availableSeatIcon.visibility = View.INVISIBLE
             }else if(seatsList[position] == 0){
                 availableSeatIcon.visibility = View.VISIBLE
-//                println("$position - available")
             }else if(seatsList[position] == 1){
                 selectedSeatIcon.visibility = View.VISIBLE
-//                println("$position - selected")
             }else if(seatsList[position] == -1){
                 notAvailableSeatIcon.visibility = View.VISIBLE
-//                println("$position -notAvailable")
-
             }
-            //            else{
-//                emptySpaceView.visibility = View.GONE
-//            }
         }
     }
 

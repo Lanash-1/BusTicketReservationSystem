@@ -12,7 +12,6 @@ interface BookingsDao {
     @Query("SELECT bookingId FROM bookings_table WHERE userId LIKE :userId")
     fun  getBookingId(userId: Int): List<Int>
 
-
     @Query("SELECT * from bookings_table where userId like :userId")
     fun getUserBookings(userId: Int): List<Bookings>
 

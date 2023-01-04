@@ -4,7 +4,6 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.databinding.ItemBusBinding
 import com.example.busticketreservationsystem.entity.Bus
 import com.example.busticketreservationsystem.entity.Partners
@@ -50,8 +49,7 @@ class BusResultAdapter: RecyclerView.Adapter<BusResultAdapter.BusResultViewHolde
         holder.binding.apply {
             travelsText.text = partnerList[busList[position].partnerId].partnerName
             priceText.text = "₹ ${busList[position].perTicketCost}"
-//            startTimeText.text = busList[position].startTime
-//            reachTimeText.text = busList[position].reachTime
+
             seatsText.text = busList[position].availableSeats.toString() + " Seats"
 
             startTimeText.text = busList[position].startTime
@@ -60,16 +58,6 @@ class BusResultAdapter: RecyclerView.Adapter<BusResultAdapter.BusResultViewHolde
 
 
 
-//            if(position%4 == 0){
-//                ratingText.text = "2.3"
-//                ratingText.setBackgroundColor(Color.parseColor("#D13140"))
-//            }else if(position%3 == 0){
-//                ratingText.text = "3.6"
-//                ratingText.setBackgroundColor(Color.parseColor("#F8C31F"))
-//            }else{
-//                ratingText.text = "4.5"
-//                ratingText.setBackgroundColor(Color.parseColor("#37B87C"))
-//            }
 
             val rating = busList[position].ratingOverall
 

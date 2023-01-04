@@ -15,7 +15,6 @@ class BoardingDroppingLocationAdapter: RecyclerView.Adapter<BoardingDroppingLoca
     fun setSelectedPosition(position: Int) {
         currPos = position
         notifyDataSetChanged()
-        println("CAlled")
     }
 
     fun setLocationsList(locationList: List<String>){
@@ -55,7 +54,6 @@ class BoardingDroppingLocationAdapter: RecyclerView.Adapter<BoardingDroppingLoca
     override fun getItemCount(): Int {
         return locationsList.size
     }
-
 
 
 //    override fun onViewRecycled(holder: BoardingDroppingLocationViewHolder) {

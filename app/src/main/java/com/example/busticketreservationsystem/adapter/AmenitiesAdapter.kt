@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.databinding.ItemAmenityBinding
-import com.example.busticketreservationsystem.enums.BusAmenities
 import com.example.busticketreservationsystem.enums.BusAmenities.*
 
 class AmenitiesAdapter: RecyclerView.Adapter<AmenitiesAdapter.AmenitiesViewHolder>() {
@@ -16,11 +15,7 @@ class AmenitiesAdapter: RecyclerView.Adapter<AmenitiesAdapter.AmenitiesViewHolde
         this.amenitiesList = amenitiesList
     }
 
-    class AmenitiesViewHolder(val binding: ItemAmenityBinding): RecyclerView.ViewHolder(binding.root) {
-        init {
-
-        }
-    }
+    class AmenitiesViewHolder(val binding: ItemAmenityBinding): RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AmenitiesViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)

@@ -221,7 +221,6 @@ class BusInfoFragment : Fragment() {
                     binding.percentageText5.text = "${count}%"
                     binding.progressBar5.progress = count
                 }
-
             }
         }
 

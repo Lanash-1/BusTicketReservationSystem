@@ -12,12 +12,14 @@ interface SeatInformationDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(seatInformation: SeatInformation)
 
-
     @Query("select seatName from seat_information_table where busId like :busId and date=:date")
     fun getBookedSeats(busId: Int, date: String): List<String>
 
     @Query("delete from seat_information_table where bookingId like :bookingId")
     fun deleteSeatsOfBooking(bookingId: Int)
+
+    @Query("select seatName from seat_information_table where bookingId like :bookingId")
+    fun getSeatsOfParticularBooking(bookingId: Int): List<String>
 
 
 }

@@ -7,7 +7,6 @@ import com.example.busticketreservationsystem.entity.*
 
 class BookingViewModel: ViewModel() {
 
-
     var totalTicketCost: Double = 0.0
 
     var selectedSeats: MutableList<String> = mutableListOf()
@@ -36,6 +35,9 @@ class BookingViewModel: ViewModel() {
     var bookedPassengerInfo = listOf<PassengerInformation>()
     var bookedPartnerDetail = listOf<Partners>()
 
+    var seatInformation = listOf<SeatInformation>()
+    var seatInformationList = listOf<List<SeatInformation>>()
+
     lateinit var filteredBookedPartnerDetailList: MutableList<Partners>
 
     var filteredBookingHistory = listOf<Bookings>()
@@ -46,14 +48,10 @@ class BookingViewModel: ViewModel() {
 
     var tabPosition = MutableLiveData<Int>()
 
-
 //    booked ticket details
 
     lateinit var bookedBus: Bus
     lateinit var bookedPartner: Partners
     var bookedPassengers = listOf<PassengerInformation>()
-
-
-
 
 }

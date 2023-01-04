@@ -50,10 +50,6 @@ class BusDbViewModel(application: Application): AndroidViewModel(application) {
         return appDb.reviewsDao().getReviewsData(busId)
     }
 
-    fun getRatingPeopleCount(busId: Int): Int{
-        return appDb.reviewsDao().getReviewCount(busId)
-    }
-
     fun updateBusRating(busId: Int, count: Int, average: Double){
         appDb.busDao().updateRating(busId, count, average)
     }
@@ -77,20 +73,16 @@ class BusDbViewModel(application: Application): AndroidViewModel(application) {
 
 //    seats data
 
-    fun insertSeatInformation(seatInfo: SeatInformation){
-        appDb.seatInformationDao().insert(seatInfo)
-    }
-
-    fun updateBusSeatAvailableCount(count: Int, busId: Int){
-        appDb.busDao().updateAvailableSeats(count, busId)
-    }
-
     fun getBookedSeats(busId: Int, date: String): List<String>{
         return appDb.seatInformationDao().getBookedSeats(busId, date)
     }
 
     fun deleteSeatsOfBus(bookingId: Int){
         appDb.seatInformationDao().deleteSeatsOfBooking(bookingId)
+    }
+
+    fun getSeatsOfParticularBooking(bookingId: Int): List<String>{
+        return appDb.seatInformationDao().getSeatsOfParticularBooking(bookingId)
     }
 
 

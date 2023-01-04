@@ -1,24 +1,21 @@
 package com.example.busticketreservationsystem.adapter
 
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.busticketreservationsystem.databinding.ItemRecentlyViewedBinding
-import com.example.busticketreservationsystem.diffutils.LocationDiffUtils
 import com.example.busticketreservationsystem.diffutils.RecentlyViewedDiffUtils
 import com.example.busticketreservationsystem.entity.Bus
-import com.example.busticketreservationsystem.entity.Partners
 import com.example.busticketreservationsystem.entity.RecentlyViewed
 import com.example.busticketreservationsystem.interfaces.OnItemClickListener
 import com.example.busticketreservationsystem.interfaces.OnRemoveClickListener
 
 class RecentlyViewedAdapter: RecyclerView.Adapter<RecentlyViewedAdapter.RecentlyViewedViewHolder>() {
 
-    private var recentlyViewedBusList: List<Bus> = listOf<Bus>()
-    private var recentlyViewedList: List<RecentlyViewed> = listOf<RecentlyViewed>()
-    private var partnerList: List<String> = listOf<String>()
+    private var recentlyViewedBusList: List<Bus> = listOf()
+    private var recentlyViewedList: List<RecentlyViewed> = listOf()
+    private var partnerList: List<String> = listOf()
 
     fun setRecentlyViewedList(recentlyViewedBusList: List<Bus>, recentlyViewedList: List<RecentlyViewed>, partnerList: List<String>){
 //        this.recentlyViewedBusList = recentlyViewedBusList

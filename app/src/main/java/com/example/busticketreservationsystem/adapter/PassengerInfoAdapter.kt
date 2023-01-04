@@ -78,7 +78,6 @@ class PassengerInfoAdapter: RecyclerView.Adapter<PassengerInfoAdapter.PassengerI
                     maleRadioButton.isChecked = false
                 }
             }
-
         }
     }
 

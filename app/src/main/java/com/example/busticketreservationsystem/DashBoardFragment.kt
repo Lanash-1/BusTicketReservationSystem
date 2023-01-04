@@ -266,7 +266,6 @@ class DashBoardFragment : Fragment() {
             for(bus in busList){
                 partnerList.add(busDbViewModel.getPartnerName(bus.partnerId))
                 partnerDetailList.add(busDbViewModel.getPartnerDetails(bus.partnerId))
-
             }
             for(i in bookingList.indices){
                 if(bookingList[i].bookedTicketStatus == BookedTicketStatus.UPCOMING.name){
@@ -290,7 +289,6 @@ class DashBoardFragment : Fragment() {
             bookingViewModel.bookedPartnerList = partnerList
             bookingViewModel.bookedPassengerInfo = passengerList
             bookingViewModel.bookedPartnerDetail = partnerDetailList
-
         }
     }
 }

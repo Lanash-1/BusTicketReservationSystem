@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.busticketreservationsystem.databinding.FragmentSearchBinding
 import com.example.busticketreservationsystem.databinding.ItemLocationBinding
 import com.example.busticketreservationsystem.diffutils.LocationDiffUtils
 import com.example.busticketreservationsystem.interfaces.OnItemClickListener

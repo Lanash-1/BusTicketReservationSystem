@@ -56,6 +56,7 @@ class BookingHistoryListFragment : Fragment() {
         bookingHistoryListAdapter.setOnItemClickListener(object : OnItemClickListener{
             override fun onItemClick(position: Int) {
                bookingViewModel.selectedTicket = position
+
                 parentFragmentManager.commit {
                     replace(R.id.homePageFragmentContainer, BookedTicketFragment())
 //                    addToBackStack(null)

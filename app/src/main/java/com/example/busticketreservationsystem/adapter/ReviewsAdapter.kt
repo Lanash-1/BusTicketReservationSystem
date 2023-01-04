@@ -1,6 +1,5 @@
 package com.example.busticketreservationsystem.adapter
 
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -15,11 +14,7 @@ class ReviewsAdapter: RecyclerView.Adapter<ReviewsAdapter.ReviewsViewHolder>() {
         this.reviewsList = reviewsList
     }
 
-    inner class ReviewsViewHolder(val binding: ItemReviewBinding): RecyclerView.ViewHolder(binding.root) {
-        init {
-
-        }
-    }
+    class ReviewsViewHolder(val binding: ItemReviewBinding): RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewsViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)

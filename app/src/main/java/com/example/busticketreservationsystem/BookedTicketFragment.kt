@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
+import androidx.lifecycle.lifecycleScope
 import com.example.busticketreservationsystem.databinding.FragmentBookedTicketBinding
 import com.example.busticketreservationsystem.entity.Bookings
 import com.example.busticketreservationsystem.entity.Bus
@@ -109,7 +110,19 @@ class BookedTicketFragment : Fragment() {
                 binding.cancelTicketButton.visibility = View.GONE
             }
 
-            setDataToView()
+            GlobalScope.launch{
+                var seats = listOf<String>()
+                val job = launch {
+                    seats = busDbViewModel.getSeatsOfParticularBooking(bookingViewModel.filteredBookingHistory[bookingViewModel.selectedTicket].bookingId)
+                }
+                job.join()
+                withContext(Dispatchers.Main){
+                    bookingViewModel.selectedSeats = seats as MutableList<String>
+                    setDataToView()
+                }
+            }
+
+//            setDataToView()
 
             getBusAmenities(bookingViewModel.filteredBookedBusesList[bookingViewModel.selectedTicket].busId)
         }
@@ -159,40 +172,72 @@ class BookedTicketFragment : Fragment() {
         binding.busMobileText.text = partner[0].partnerMobile
 
 
-        val tableRow = TableRow(requireContext())
-        val textView = TextView(requireContext())
-        textView.text = "New row"
-        tableRow.addView(textView)
+//        val tableRow = TableRow(requireContext())
+//        val textView = TextView(requireContext())
+//        textView.text = "New row"
 //        tableRow.addView(textView)
-//        tableRow.addView(textView)
-        binding.tableLayout.addView(tableRow)
+////        tableRow.addView(textView)
+////        tableRow.addView(textView)
+//        binding.tableLayout.addView(tableRow)
 
 
         for(i in 0 until bookingViewModel.passengerInfo.size){
             when(i+1){
                 1 -> {
                     binding.passenger1.visibility = View.VISIBLE
-                    binding.passenger1.text = "1. ${bookingViewModel.passengerInfo[0].name} - "
+                    binding.passenger1.text = "1. ${bookingViewModel.passengerInfo[0].name} - ${bookingViewModel.selectedSeats[0]}"
+
+                    binding.row1no.text = "1."
+                    binding.row1name.text = bookingViewModel.passengerInfo[0].name
+                    binding.row1seat.text = bookingViewModel.selectedSeats[0]
                 }
                 2 -> {
                     binding.passenger2.visibility = View.VISIBLE
-                    binding.passenger2.text = "2. ${bookingViewModel.passengerInfo[1].name}"
+                    binding.passenger2.text = "2. ${bookingViewModel.passengerInfo[1].name} - ${bookingViewModel.selectedSeats[1]}"
+
+                    binding.row2.visibility = View.VISIBLE
+                    binding.row2no.text = "2."
+                    binding.row2name.text = bookingViewModel.passengerInfo[1].name
+                    binding.row2seat.text = bookingViewModel.selectedSeats[1]
                 }
                 3 -> {
                     binding.passenger3.visibility = View.VISIBLE
-                    binding.passenger3.text = "3. ${bookingViewModel.passengerInfo[2].name}"
+                    binding.passenger3.text = "3. ${bookingViewModel.passengerInfo[2].name} - ${bookingViewModel.selectedSeats[2]}"
+
+                    binding.row3.visibility = View.VISIBLE
+                    binding.row3no.text = "3."
+                    binding.row3name.text = bookingViewModel.passengerInfo[2].name
+                    binding.row3seat.text = bookingViewModel.selectedSeats[2]
                 }
                 4 -> {
                     binding.passenger4.visibility = View.VISIBLE
-                    binding.passenger4.text = "4. ${bookingViewModel.passengerInfo[3].name}"
+                    binding.passenger4.text = "4. ${bookingViewModel.passengerInfo[3].name} - ${bookingViewModel.selectedSeats[3]}"
+
+
+                    binding.row4.visibility = View.VISIBLE
+                    binding.row4no.text = "4."
+                    binding.row4name.text = bookingViewModel.passengerInfo[3].name
+                    binding.row4seat.text = bookingViewModel.selectedSeats[3]
                 }
                 5 -> {
                     binding.passenger5.visibility = View.VISIBLE
-                    binding.passenger5.text = "5. ${bookingViewModel.passengerInfo[4].name}"
+                    binding.passenger5.text = "5. ${bookingViewModel.passengerInfo[4].name} - ${bookingViewModel.selectedSeats[4]}"
+
+
+                    binding.row5.visibility = View.VISIBLE
+                    binding.row5no.text = "5."
+                    binding.row5name.text = bookingViewModel.passengerInfo[4].name
+                    binding.row5seat.text = bookingViewModel.selectedSeats[4]
                 }
                 6 -> {
                     binding.passenger6.visibility = View.VISIBLE
-                    binding.passenger6.text = "6. ${bookingViewModel.passengerInfo[5].name}"
+                    binding.passenger6.text = "6. ${bookingViewModel.passengerInfo[5].name} - ${bookingViewModel.selectedSeats[5]}"
+
+
+                    binding.row6.visibility = View.VISIBLE
+                    binding.row6no.text = "6."
+                    binding.row6name.text = bookingViewModel.passengerInfo[5].name
+                    binding.row6seat.text = bookingViewModel.selectedSeats[5]
                 }
             }
         }
@@ -295,27 +340,56 @@ class BookedTicketFragment : Fragment() {
             when(i+1){
                 1 -> {
                     binding.passenger1.visibility = View.VISIBLE
-                    binding.passenger1.text = "1. ${passengerList[0].passengerName}"
+                    binding.passenger1.text = "1. ${passengerList[0].passengerName} - ${bookingViewModel.selectedSeats[0]}"
+
+                    binding.row1no.text = "1."
+                    binding.row1name.text = passengerList[0].passengerName
+                    binding.row1seat.text = bookingViewModel.selectedSeats[0]
                 }
                 2 -> {
                     binding.passenger2.visibility = View.VISIBLE
-                    binding.passenger2.text = "2. ${passengerList[1].passengerName}"
+                    binding.passenger2.text = "2. ${passengerList[1].passengerName} - ${bookingViewModel.selectedSeats[1]}"
+
+                    binding.row2.visibility = View.VISIBLE
+                    binding.row2no.text = "2."
+                    binding.row2name.text = passengerList[1].passengerName
+                    binding.row2seat.text = bookingViewModel.selectedSeats[1]
                 }
                 3 -> {
                     binding.passenger3.visibility = View.VISIBLE
-                    binding.passenger3.text = "3. ${passengerList[2].passengerName}"
+                    binding.passenger3.text = "3. ${passengerList[2].passengerName} - ${bookingViewModel.selectedSeats[2]}"
+
+                    binding.row3.visibility = View.VISIBLE
+                    binding.row3no.text = "3."
+                    binding.row3name.text = passengerList[2].passengerName
+                    binding.row3seat.text = bookingViewModel.selectedSeats[2]
                 }
                 4 -> {
                     binding.passenger4.visibility = View.VISIBLE
-                    binding.passenger4.text = "4. ${passengerList[3].passengerName}"
+                    binding.passenger4.text = "4. ${passengerList[3].passengerName} - ${bookingViewModel.selectedSeats[3]}"
+
+                    binding.row4.visibility = View.VISIBLE
+                    binding.row4no.text = "4."
+                    binding.row4name.text = passengerList[3].passengerName
+                    binding.row4seat.text = bookingViewModel.selectedSeats[3]
                 }
                 5 -> {
                     binding.passenger5.visibility = View.VISIBLE
-                    binding.passenger5.text = "5. ${passengerList[4].passengerName}"
+                    binding.passenger5.text = "5. ${passengerList[4].passengerName} - ${bookingViewModel.selectedSeats[4]}"
+
+                    binding.row5.visibility = View.VISIBLE
+                    binding.row5no.text = "5."
+                    binding.row5name.text = passengerList[4].passengerName
+                    binding.row5seat.text = bookingViewModel.selectedSeats[4]
                 }
                 6 -> {
                     binding.passenger6.visibility = View.VISIBLE
-                    binding.passenger6.text = "6. ${passengerList[5].passengerName}"
+                    binding.passenger6.text = "6. ${passengerList[5].passengerName} - ${bookingViewModel.selectedSeats[5]}"
+
+                    binding.row6.visibility = View.VISIBLE
+                    binding.row6no.text = "6."
+                    binding.row6name.text = passengerList[5].passengerName
+                    binding.row6seat.text = bookingViewModel.selectedSeats[5]
                 }
             }
         }
