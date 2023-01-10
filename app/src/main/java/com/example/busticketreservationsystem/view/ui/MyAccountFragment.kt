@@ -46,7 +46,6 @@ class MyAccountFragment : Fragment() {
     private lateinit var editor: SharedPreferences.Editor
 
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
-    private val userViewModel: UserViewModel by activityViewModels()
     private val searchViewModel: SearchViewModel by activityViewModels()
     private val dateViewModel: DateViewModel by activityViewModels()
     private val navigationViewModel: NavigationViewModel by activityViewModels()
@@ -220,7 +219,7 @@ class MyAccountFragment : Fragment() {
                     month = 0
                     date = 0
                 }
-                userViewModel.user = User(0,"","","","","","")
+                userViewModelTest.user = User(0,"","","","","","")
                 editor.putString("status", LoginStatus.LOGGED_OUT.name)
                 loginStatusViewModel.status = LoginStatus.LOGGED_OUT
                 editor.commit()

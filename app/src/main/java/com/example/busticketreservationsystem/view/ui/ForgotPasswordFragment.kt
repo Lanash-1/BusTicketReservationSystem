@@ -10,12 +10,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.model.data.AppDatabase
 import com.example.busticketreservationsystem.model.repository.AppRepositoryImpl
-import com.example.busticketreservationsystem.viewmodel.UserDbViewModel
-import com.example.busticketreservationsystem.viewmodel.UserViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BusViewModelTest
@@ -38,8 +37,6 @@ class ForgotPasswordFragment : Fragment() {
     private lateinit var confirmPasswordLayout: TextInputLayout
     private lateinit var resetPasswordButton: Button
 
-    private val userDbViewModel: UserDbViewModel by activityViewModels()
-    private val userViewModel: UserViewModel by activityViewModels()
 
 
     private lateinit var userViewModelTest: UserViewModelTest
@@ -139,40 +136,49 @@ class ForgotPasswordFragment : Fragment() {
             userViewModelTest.updateNewPassword(password, mobileNumber)
         }
 
-//        userViewModelTest
-
-
-
-        GlobalScope.launch {
-            var isAccountAvailable = false
-            val job = launch {
-                isAccountAvailable = userDbViewModel.getAccountCount(mobileInput.text.toString())
-            }
-            job.join()
-            if(!isAccountAvailable){
-                withContext(Dispatchers.Main){
-                    mobileLayout.isHelperTextEnabled = false
-                    newPasswordLayout.helperText = validPassword()
-                    confirmPasswordLayout.helperText = validConfirmPassword()
-                    val validNewPassword = newPasswordLayout.helperText == null
-                    val validConfirmPassword = confirmPasswordLayout.helperText == null
-                    if(validNewPassword && validConfirmPassword){
-                        GlobalScope.launch {
-                            userDbViewModel.updateUserPassword(password, mobileNumber)
-                        }
-                        parentFragmentManager.commit {
-                            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-                            replace(R.id.main_fragment_container, LoginFragment())
-                            parentFragmentManager.popBackStack()
-                        }
-                    }
-                }
+        userViewModelTest.isAccountAvailable.observe(viewLifecycleOwner, Observer{
+            if(userViewModelTest.isAccountAvailable.value == false){
+                mobileLayout.helperText = "No Account linked with this mobile number"
             }else{
-                withContext(Dispatchers.Main){
-                    mobileLayout.helperText = "No Account linked with this mobile number"
+                parentFragmentManager.commit {
+                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                    replace(R.id.main_fragment_container, LoginFragment())
+                    parentFragmentManager.popBackStack()
                 }
             }
-        }
+        })
+
+
+//        GlobalScope.launch {
+//            var isAccountAvailable = false
+//            val job = launch {
+//                isAccountAvailable = userDbViewModel.getAccountCount(mobileInput.text.toString())
+//            }
+//            job.join()
+//            if(!isAccountAvailable){
+//                withContext(Dispatchers.Main){
+//                    mobileLayout.isHelperTextEnabled = false
+//                    newPasswordLayout.helperText = validPassword()
+//                    confirmPasswordLayout.helperText = validConfirmPassword()
+//                    val validNewPassword = newPasswordLayout.helperText == null
+//                    val validConfirmPassword = confirmPasswordLayout.helperText == null
+//                    if(validNewPassword && validConfirmPassword){
+//                        GlobalScope.launch {
+//                            userDbViewModel.updateUserPassword(password, mobileNumber)
+//                        }
+//                        parentFragmentManager.commit {
+//                            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+//                            replace(R.id.main_fragment_container, LoginFragment())
+//                            parentFragmentManager.popBackStack()
+//                        }
+//                    }
+//                }
+//            }else{
+//                withContext(Dispatchers.Main){
+//                    mobileLayout.helperText = "No Account linked with this mobile number"
+//                }
+//            }
+//        }
     }
 
     private fun newPasswordFocusListener() {

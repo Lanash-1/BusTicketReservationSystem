@@ -47,13 +47,8 @@ class BookingDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentBookingDetailsBinding
 
-    private val bookingViewModel: BookingViewModel by activityViewModels()
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
     private val navigationViewModel: NavigationViewModel by activityViewModels()
-    private val userViewModel: UserViewModel by activityViewModels()
-    private val bookingDbViewModel: BookingDbViewModel by activityViewModels()
-    private val busViewModel: BusViewModel by activityViewModels()
-    private val busDbViewModel: BusDbViewModel by activityViewModels()
     private val searchViewModel: SearchViewModel by activityViewModels()
 
     private var passengerInfoAdapter = PassengerInfoAdapter()

@@ -41,12 +41,7 @@ class BookedTicketFragment : Fragment() {
 
     private lateinit var binding: FragmentBookedTicketBinding
 
-    private val bookingViewModel: BookingViewModel by activityViewModels()
-    private val bookingDbViewModel: BookingDbViewModel by activityViewModels()
-    private val busDbViewModel: BusDbViewModel by activityViewModels()
-    private val busViewModel: BusViewModel by activityViewModels()
     private val navigationViewModel: NavigationViewModel by activityViewModels()
-    private val userViewModel: UserViewModel by activityViewModels()
     private val searchViewModel: SearchViewModel by activityViewModels()
 
 
@@ -186,112 +181,108 @@ class BookedTicketFragment : Fragment() {
 
     }
 
-    private fun setTicketData() {
-        binding.sourceLocationText.text = bookingViewModel.bookedBus.sourceLocation
-        binding.destinationText.text = bookingViewModel.bookedBus.destination
-
-        binding.startTimeText.text = "(${bookingViewModel.bookedBus.startTime})"
-        binding.reachTimeText.text = "(${bookingViewModel.bookedBus.reachTime})"
-
-//        binding.dayText.text = ""
-//        binding.monthText.text = ""
-//        binding.yearText.text = ""
-
-        val list = bookingViewModel.date.split("/")
-        binding.dayText.text = list[0]
-        binding.monthText.text = Month.values()[list[1].toInt()-1].toString()
-        binding.yearText.text = list[2]
-
-        binding.priceText.text = "₹${(bookingViewModel.selectedSeats.size * bookingViewModel.selectedBus.perTicketCost)}"
-
-        binding.ticketCountText.text = "Tickets: ${bookingViewModel.selectedSeats.size.toString()}"
-
-        binding.email.text = bookingViewModel.contactEmail
-        binding.mobile.text = bookingViewModel.contactNumber
-
-        val partner = busViewModel.partnerList.filter {
-            it.partnerId == bookingViewModel.selectedBus.partnerId
-        }
-
-        binding.partnerNameText.text = partner[0].partnerName
-        binding.busEmailText.text = partner[0].partnerEmailId
-        binding.busMobileText.text = partner[0].partnerMobile
-
-
-//        val tableRow = TableRow(requireContext())
-//        val textView = TextView(requireContext())
-//        textView.text = "New row"
-//        tableRow.addView(textView)
+//    private fun setTicketData() {
+//        binding.sourceLocationText.text = bookingViewModel.bookedBus.sourceLocation
+//        binding.destinationText.text = bookingViewModel.bookedBus.destination
+//
+//        binding.startTimeText.text = "(${bookingViewModel.bookedBus.startTime})"
+//        binding.reachTimeText.text = "(${bookingViewModel.bookedBus.reachTime})"
+//
+////        binding.dayText.text = ""
+////        binding.monthText.text = ""
+////        binding.yearText.text = ""
+//
+//        val list = bookingViewModel.date.split("/")
+//        binding.dayText.text = list[0]
+//        binding.monthText.text = Month.values()[list[1].toInt()-1].toString()
+//        binding.yearText.text = list[2]
+//
+//        binding.priceText.text = "₹${(bookingViewModel.selectedSeats.size * bookingViewModel.selectedBus.perTicketCost)}"
+//
+//        binding.ticketCountText.text = "Tickets: ${bookingViewModel.selectedSeats.size.toString()}"
+//
+//        binding.email.text = bookingViewModel.contactEmail
+//        binding.mobile.text = bookingViewModel.contactNumber
+//
+//        val partner = busViewModel.partnerList.filter {
+//            it.partnerId == bookingViewModel.selectedBus.partnerId
+//        }
+//
+//        binding.partnerNameText.text = partner[0].partnerName
+//        binding.busEmailText.text = partner[0].partnerEmailId
+//        binding.busMobileText.text = partner[0].partnerMobile
+//
+//
+////        val tableRow = TableRow(requireContext())
+////        val textView = TextView(requireContext())
+////        textView.text = "New row"
 ////        tableRow.addView(textView)
-////        tableRow.addView(textView)
-//        binding.tableLayout.addView(tableRow)
-
-
-        for(i in 0 until bookingViewModel.passengerInfo.size){
-            when(i+1){
-                1 -> {
-
-                    binding.row1no.text = "1."
-                    binding.row1name.text = bookingViewModel.passengerInfo[0].name
-                    binding.row1seat.text = bookingViewModel.selectedSeats[0]
-                }
-                2 -> {
-
-                    binding.row2.visibility = View.VISIBLE
-                    binding.row2no.text = "2."
-                    binding.row2name.text = bookingViewModel.passengerInfo[1].name
-                    binding.row2seat.text = bookingViewModel.selectedSeats[1]
-                }
-                3 -> {
-
-                    binding.row3.visibility = View.VISIBLE
-                    binding.row3no.text = "3."
-                    binding.row3name.text = bookingViewModel.passengerInfo[2].name
-                    binding.row3seat.text = bookingViewModel.selectedSeats[2]
-                }
-                4 -> {
-
-
-                    binding.row4.visibility = View.VISIBLE
-                    binding.row4no.text = "4."
-                    binding.row4name.text = bookingViewModel.passengerInfo[3].name
-                    binding.row4seat.text = bookingViewModel.selectedSeats[3]
-                }
-                5 -> {
-
-
-                    binding.row5.visibility = View.VISIBLE
-                    binding.row5no.text = "5."
-                    binding.row5name.text = bookingViewModel.passengerInfo[4].name
-                    binding.row5seat.text = bookingViewModel.selectedSeats[4]
-                }
-                6 -> {
-
-
-                    binding.row6.visibility = View.VISIBLE
-                    binding.row6no.text = "6."
-                    binding.row6name.text = bookingViewModel.passengerInfo[5].name
-                    binding.row6seat.text = bookingViewModel.selectedSeats[5]
-                }
-            }
-        }
-    }
+//////        tableRow.addView(textView)
+//////        tableRow.addView(textView)
+////        binding.tableLayout.addView(tableRow)
+//
+//
+//        for(i in 0 until bookingViewModel.passengerInfo.size){
+//            when(i+1){
+//                1 -> {
+//
+//                    binding.row1no.text = "1."
+//                    binding.row1name.text = bookingViewModel.passengerInfo[0].name
+//                    binding.row1seat.text = bookingViewModel.selectedSeats[0]
+//                }
+//                2 -> {
+//
+//                    binding.row2.visibility = View.VISIBLE
+//                    binding.row2no.text = "2."
+//                    binding.row2name.text = bookingViewModel.passengerInfo[1].name
+//                    binding.row2seat.text = bookingViewModel.selectedSeats[1]
+//                }
+//                3 -> {
+//
+//                    binding.row3.visibility = View.VISIBLE
+//                    binding.row3no.text = "3."
+//                    binding.row3name.text = bookingViewModel.passengerInfo[2].name
+//                    binding.row3seat.text = bookingViewModel.selectedSeats[2]
+//                }
+//                4 -> {
+//
+//
+//                    binding.row4.visibility = View.VISIBLE
+//                    binding.row4no.text = "4."
+//                    binding.row4name.text = bookingViewModel.passengerInfo[3].name
+//                    binding.row4seat.text = bookingViewModel.selectedSeats[3]
+//                }
+//                5 -> {
+//
+//
+//                    binding.row5.visibility = View.VISIBLE
+//                    binding.row5no.text = "5."
+//                    binding.row5name.text = bookingViewModel.passengerInfo[4].name
+//                    binding.row5seat.text = bookingViewModel.selectedSeats[4]
+//                }
+//                6 -> {
+//
+//
+//                    binding.row6.visibility = View.VISIBLE
+//                    binding.row6no.text = "6."
+//                    binding.row6name.text = bookingViewModel.passengerInfo[5].name
+//                    binding.row6seat.text = bookingViewModel.selectedSeats[5]
+//                }
+//            }
+//        }
+//    }
 
     private fun backPressLogic() {
         when(navigationViewModel.fragment){
             is BookingDetailsFragment -> {
-                busViewModel.apply {
+                busViewModelTest.apply {
                     selectedSeats.clear()
                 }
-                bookingViewModel.apply {
+                bookingViewModelTest.apply {
                     selectedSeats.clear()
                     passengerInfo.clear()
-                    contactEmail = ""
-                    contactNumber = ""
-                    bookingEmail = null
-                    bookingMobile = null
-
-
+                    contactEmailId = null
+                    contactMobileNumber = null
                 }
                 searchViewModel.apply {
                     this.sourceLocation = ""
@@ -317,18 +308,18 @@ class BookedTicketFragment : Fragment() {
         }
     }
 
-    private fun getBusAmenities(busId: Int) {
-        GlobalScope.launch {
-            var amenities = listOf<String>()
-            val job = launch {
-                amenities = busDbViewModel.getBusAmenities(busId)
-            }
-            job.join()
-            withContext(Dispatchers.IO){
-                busViewModel.busAmenities = amenities
-            }
-        }
-    }
+//    private fun getBusAmenities(busId: Int) {
+//        GlobalScope.launch {
+//            var amenities = listOf<String>()
+//            val job = launch {
+//                amenities = busDbViewModel.getBusAmenities(busId)
+//            }
+//            job.join()
+//            withContext(Dispatchers.IO){
+//                busViewModel.busAmenities = amenities
+//            }
+//        }
+//    }
 
     private fun setTicketDataToView() {
         binding.sourceLocationText.text = bookingViewModelTest.bookedBus.sourceLocation
@@ -405,98 +396,98 @@ class BookedTicketFragment : Fragment() {
 
     }
 
-    private fun setDataToView() {
-        val passengerList = bookingViewModel.bookedPassengerInfo.filter {
-            it.bookingId == bookingViewModel.filteredBookingHistory[bookingViewModel.selectedTicket].bookingId
-        }
-        binding.sourceLocationText.text = bookingViewModel.filteredBookedBusesList[bookingViewModel.selectedTicket].sourceLocation
-        binding.destinationText.text = bookingViewModel.filteredBookedBusesList[bookingViewModel.selectedTicket].destination
-
-        binding.partnerNameText.text = bookingViewModel.filteredBookedPartnerList[bookingViewModel.selectedTicket]
-        binding.busEmailText.text = bookingViewModel.filteredBookedPartnerDetailList[bookingViewModel.selectedTicket].partnerEmailId
-        binding.busMobileText.text = bookingViewModel.filteredBookedPartnerDetailList[bookingViewModel.selectedTicket].partnerMobile
-
-        val list = bookingViewModel.filteredBookingHistory[bookingViewModel.selectedTicket].date.split("/")
-        binding.dayText.text = list[0]
-        binding.monthText.text = Month.values()[list[1].toInt()-1].toString()
-        binding.yearText.text = list[2]
-
-        binding.startTimeText.text = "(${bookingViewModel.filteredBookedBusesList[bookingViewModel.selectedTicket].startTime})"
-        binding.reachTimeText.text = "(${bookingViewModel.filteredBookedBusesList[bookingViewModel.selectedTicket].reachTime})"
-
-        binding.ticketCountText.text = "Tickets: ${bookingViewModel.filteredBookingHistory[bookingViewModel.selectedTicket].noOfTicketsBooked}"
-        binding.priceText.text = "₹ ${bookingViewModel.filteredBookingHistory[bookingViewModel.selectedTicket].totalCost}"
-
-//        val tableRow = TableRow(requireContext())
-//        val textView1 = TextView(requireContext())
-//        textView1.text = "New row"
-//        val textView2 = TextView(requireContext())
-//        textView2.text = "New row"
-//        val textView3 = TextView(requireContext())
-//        textView3.text = "New row"
-//        tableRow.addView(textView1)
-//        tableRow.addView(textView2)
-//        tableRow.addView(textView3)
+//    private fun setDataToView() {
+//        val passengerList = bookingViewModel.bookedPassengerInfo.filter {
+//            it.bookingId == bookingViewModel.filteredBookingHistory[bookingViewModel.selectedTicket].bookingId
+//        }
+//        binding.sourceLocationText.text = bookingViewModel.filteredBookedBusesList[bookingViewModel.selectedTicket].sourceLocation
+//        binding.destinationText.text = bookingViewModel.filteredBookedBusesList[bookingViewModel.selectedTicket].destination
 //
-//        val layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT)
-//        textView1.layoutParams = layoutParams
-//        textView2.layoutParams = layoutParams
-//        textView3.layoutParams = layoutParams
+//        binding.partnerNameText.text = bookingViewModel.filteredBookedPartnerList[bookingViewModel.selectedTicket]
+//        binding.busEmailText.text = bookingViewModel.filteredBookedPartnerDetailList[bookingViewModel.selectedTicket].partnerEmailId
+//        binding.busMobileText.text = bookingViewModel.filteredBookedPartnerDetailList[bookingViewModel.selectedTicket].partnerMobile
 //
-//        binding.tableLayout.addView(tableRow)
-
-        for(i in 0 until bookingViewModel.filteredBookingHistory[bookingViewModel.selectedTicket].noOfTicketsBooked){
-            when(i+1){
-                1 -> {
-
-                    binding.row1no.text = "1."
-                    binding.row1name.text = passengerList[0].passengerName
-                    binding.row1seat.text = bookingViewModel.selectedSeats[0]
-                }
-                2 -> {
-
-                    binding.row2.visibility = View.VISIBLE
-                    binding.row2no.text = "2."
-                    binding.row2name.text = passengerList[1].passengerName
-                    binding.row2seat.text = bookingViewModel.selectedSeats[1]
-                }
-                3 -> {
-
-                    binding.row3.visibility = View.VISIBLE
-                    binding.row3no.text = "3."
-                    binding.row3name.text = passengerList[2].passengerName
-                    binding.row3seat.text = bookingViewModel.selectedSeats[2]
-                }
-                4 -> {
-
-                    binding.row4.visibility = View.VISIBLE
-                    binding.row4no.text = "4."
-                    binding.row4name.text = passengerList[3].passengerName
-                    binding.row4seat.text = bookingViewModel.selectedSeats[3]
-                }
-                5 -> {
-
-                    binding.row5.visibility = View.VISIBLE
-                    binding.row5no.text = "5."
-                    binding.row5name.text = passengerList[4].passengerName
-                    binding.row5seat.text = bookingViewModel.selectedSeats[4]
-                }
-                6 -> {
-
-                    binding.row6.visibility = View.VISIBLE
-                    binding.row6no.text = "6."
-                    binding.row6name.text = passengerList[5].passengerName
-                    binding.row6seat.text = bookingViewModel.selectedSeats[5]
-                }
-            }
-        }
-
-        binding.email.text = bookingViewModel.filteredBookingHistory[bookingViewModel.selectedTicket].contactEmail
-        binding.mobile.text = bookingViewModel.filteredBookingHistory[bookingViewModel.selectedTicket].contactNumber
-
-//        binding.busEmailText = bookingViewModel.filteredBookedPartnerList[bookingViewModel.selectedTicket]
-
-    }
+//        val list = bookingViewModel.filteredBookingHistory[bookingViewModel.selectedTicket].date.split("/")
+//        binding.dayText.text = list[0]
+//        binding.monthText.text = Month.values()[list[1].toInt()-1].toString()
+//        binding.yearText.text = list[2]
+//
+//        binding.startTimeText.text = "(${bookingViewModel.filteredBookedBusesList[bookingViewModel.selectedTicket].startTime})"
+//        binding.reachTimeText.text = "(${bookingViewModel.filteredBookedBusesList[bookingViewModel.selectedTicket].reachTime})"
+//
+//        binding.ticketCountText.text = "Tickets: ${bookingViewModel.filteredBookingHistory[bookingViewModel.selectedTicket].noOfTicketsBooked}"
+//        binding.priceText.text = "₹ ${bookingViewModel.filteredBookingHistory[bookingViewModel.selectedTicket].totalCost}"
+//
+////        val tableRow = TableRow(requireContext())
+////        val textView1 = TextView(requireContext())
+////        textView1.text = "New row"
+////        val textView2 = TextView(requireContext())
+////        textView2.text = "New row"
+////        val textView3 = TextView(requireContext())
+////        textView3.text = "New row"
+////        tableRow.addView(textView1)
+////        tableRow.addView(textView2)
+////        tableRow.addView(textView3)
+////
+////        val layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT)
+////        textView1.layoutParams = layoutParams
+////        textView2.layoutParams = layoutParams
+////        textView3.layoutParams = layoutParams
+////
+////        binding.tableLayout.addView(tableRow)
+//
+//        for(i in 0 until bookingViewModel.filteredBookingHistory[bookingViewModel.selectedTicket].noOfTicketsBooked){
+//            when(i+1){
+//                1 -> {
+//
+//                    binding.row1no.text = "1."
+//                    binding.row1name.text = passengerList[0].passengerName
+//                    binding.row1seat.text = bookingViewModel.selectedSeats[0]
+//                }
+//                2 -> {
+//
+//                    binding.row2.visibility = View.VISIBLE
+//                    binding.row2no.text = "2."
+//                    binding.row2name.text = passengerList[1].passengerName
+//                    binding.row2seat.text = bookingViewModel.selectedSeats[1]
+//                }
+//                3 -> {
+//
+//                    binding.row3.visibility = View.VISIBLE
+//                    binding.row3no.text = "3."
+//                    binding.row3name.text = passengerList[2].passengerName
+//                    binding.row3seat.text = bookingViewModel.selectedSeats[2]
+//                }
+//                4 -> {
+//
+//                    binding.row4.visibility = View.VISIBLE
+//                    binding.row4no.text = "4."
+//                    binding.row4name.text = passengerList[3].passengerName
+//                    binding.row4seat.text = bookingViewModel.selectedSeats[3]
+//                }
+//                5 -> {
+//
+//                    binding.row5.visibility = View.VISIBLE
+//                    binding.row5no.text = "5."
+//                    binding.row5name.text = passengerList[4].passengerName
+//                    binding.row5seat.text = bookingViewModel.selectedSeats[4]
+//                }
+//                6 -> {
+//
+//                    binding.row6.visibility = View.VISIBLE
+//                    binding.row6no.text = "6."
+//                    binding.row6name.text = passengerList[5].passengerName
+//                    binding.row6seat.text = bookingViewModel.selectedSeats[5]
+//                }
+//            }
+//        }
+//
+//        binding.email.text = bookingViewModel.filteredBookingHistory[bookingViewModel.selectedTicket].contactEmail
+//        binding.mobile.text = bookingViewModel.filteredBookingHistory[bookingViewModel.selectedTicket].contactNumber
+//
+////        binding.busEmailText = bookingViewModel.filteredBookedPartnerList[bookingViewModel.selectedTicket]
+//
+//    }
 
     private fun cancelTicketAction(bookingId: Int) {
         val builder = AlertDialog.Builder(requireContext())
@@ -525,49 +516,50 @@ class BookedTicketFragment : Fragment() {
         val alertDialog = builder.create()
         alertDialog.show()
     }
+}
 
-    private fun getBookingHistoryList(userId: Int) {
-        GlobalScope.launch {
-            var bookingList = listOf<Bookings>()
-            val busList = mutableListOf<Bus>()
-            val partnerList = mutableListOf<String>()
-            var passengerList = listOf<PassengerInformation>()
-            val partnerDetailList = mutableListOf<Partners>()
-
-            val job = launch {
-                bookingList = bookingDbViewModel.getUserBookings(userId)
-                passengerList = bookingDbViewModel.getPassengerInfo()
-                for (booking in bookingList){
-                    busList.add(busDbViewModel.getBus(booking.busId))
-                }
-                for(bus in busList){
-                    partnerList.add(busDbViewModel.getPartnerName(bus.partnerId))
-                    partnerDetailList.add(busDbViewModel.getPartnerDetails(bus.partnerId))
-                }
-                for(i in bookingList.indices){
-                    if(bookingList[i].bookedTicketStatus == BookedTicketStatus.UPCOMING.name){
-                        val sdf = SimpleDateFormat("dd/MM/yyyy")
-                        val strDate: Date = sdf.parse(bookingList[i].date)
-                        val time = Calendar.getInstance().time
-                        val current = sdf.format(time)
-                        val currentDate = sdf.parse(current)
-
-                        if (currentDate > strDate) {
-                            bookingList[i].bookedTicketStatus = BookedTicketStatus.COMPLETED.name
-                            bookingDbViewModel.updateTicketStatus(BookedTicketStatus.COMPLETED.name, bookingList[i].bookingId)
-                        }
-                    }
-                }
-            }
-            job.join()
-            withContext(Dispatchers.IO){
-                bookingViewModel.bookingHistory = bookingList
-                bookingViewModel.bookedBusesList = busList
-                bookingViewModel.bookedPartnerList = partnerList
-                bookingViewModel.bookedPassengerInfo = passengerList
-                bookingViewModel.bookedPartnerDetail = partnerDetailList
-            }
-        }
-
-
-}}
+//    private fun getBookingHistoryList(userId: Int) {
+//        GlobalScope.launch {
+//            var bookingList = listOf<Bookings>()
+//            val busList = mutableListOf<Bus>()
+//            val partnerList = mutableListOf<String>()
+//            var passengerList = listOf<PassengerInformation>()
+//            val partnerDetailList = mutableListOf<Partners>()
+//
+//            val job = launch {
+//                bookingList = bookingDbViewModel.getUserBookings(userId)
+//                passengerList = bookingDbViewModel.getPassengerInfo()
+//                for (booking in bookingList){
+//                    busList.add(busDbViewModel.getBus(booking.busId))
+//                }
+//                for(bus in busList){
+//                    partnerList.add(busDbViewModel.getPartnerName(bus.partnerId))
+//                    partnerDetailList.add(busDbViewModel.getPartnerDetails(bus.partnerId))
+//                }
+//                for(i in bookingList.indices){
+//                    if(bookingList[i].bookedTicketStatus == BookedTicketStatus.UPCOMING.name){
+//                        val sdf = SimpleDateFormat("dd/MM/yyyy")
+//                        val strDate: Date = sdf.parse(bookingList[i].date)
+//                        val time = Calendar.getInstance().time
+//                        val current = sdf.format(time)
+//                        val currentDate = sdf.parse(current)
+//
+//                        if (currentDate > strDate) {
+//                            bookingList[i].bookedTicketStatus = BookedTicketStatus.COMPLETED.name
+//                            bookingDbViewModel.updateTicketStatus(BookedTicketStatus.COMPLETED.name, bookingList[i].bookingId)
+//                        }
+//                    }
+//                }
+//            }
+//            job.join()
+//            withContext(Dispatchers.IO){
+//                bookingViewModel.bookingHistory = bookingList
+//                bookingViewModel.bookedBusesList = busList
+//                bookingViewModel.bookedPartnerList = partnerList
+//                bookingViewModel.bookedPassengerInfo = passengerList
+//                bookingViewModel.bookedPartnerDetail = partnerDetailList
+//            }
+//        }
+//
+//
+//}}

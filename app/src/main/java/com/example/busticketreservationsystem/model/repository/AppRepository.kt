@@ -104,4 +104,6 @@ interface AppRepository {
     fun getBusOfRoute(sourceLocation: String, destinationLocation: String): List<Bus>
 
     fun usersBusReview(userId: Int, busId: Int): Reviews
+
+    fun isUserBooked(busId: Int): Boolean
 }

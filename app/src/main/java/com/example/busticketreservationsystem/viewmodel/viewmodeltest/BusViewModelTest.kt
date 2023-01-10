@@ -28,14 +28,12 @@ class BusViewModelTest(
         }
     }
 
-//    Boarding and Dropping Related
-
-    var boardingPoint = MutableLiveData("")
-
-    var droppingPoint = MutableLiveData("")
 
 
 //    Bus results related data operations
+
+    var checkedList = listOf<Int>()
+    var selectedSort: Int? = null
 
     var busResultDataFetched = MutableLiveData<Boolean>()
 
@@ -56,6 +54,9 @@ class BusViewModelTest(
                     val notAvailableSeat = repository.getBookedSeats(busList[i].busId, selectedDate)
                     busList[i].availableSeats = busList[i].totalSeats - notAvailableSeat.size
                 }
+                if(checkedList.isNotEmpty() || selectedSort != null){
+                    sortAndFilterOperation()
+                }
             }
             fetchJob.join()
             withContext(Dispatchers.Main){
@@ -67,6 +68,9 @@ class BusViewModelTest(
         }
     }
 
+    private fun sortAndFilterOperation() {
+
+    }
 
 
 //    Selected bus and seats related operations
@@ -88,7 +92,7 @@ class BusViewModelTest(
         viewModelScope.launch(Dispatchers.IO) {
             var seatsList = listOf<String>()
             val fetchJob = launch {
-                seatsList = repository.getBookedSeats(selectedBusId, selectedDate)
+                seatsList = repository.getBookedSeats(selectedBus.busId, selectedDate)
             }
             fetchJob.join()
             withContext(Dispatchers.Main){
@@ -142,8 +146,16 @@ class BusViewModelTest(
 
     fun insertUserReview(rating: Int, feedback: String, date: String, userId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
+            var peopleCount: Int = 0
+            var overallRating: Double = 0.0
             val job = launch {
                 repository.insertReview(Reviews(0, userId, selectedBus.busId, rating, feedback, date))
+                val reviewList = repository.getReviewData(selectedBus.busId)
+                peopleCount = reviewList.size
+                overallRating = (reviewList.sumOf {
+                    it.rating
+                }/peopleCount).toDouble()
+                repository.updateBusRating(selectedBus.busId, peopleCount, overallRating)
             }
             job.join()
             withContext(Dispatchers.Main){
@@ -160,6 +172,20 @@ class BusViewModelTest(
             updateJob.join()
             withContext(Dispatchers.Main){
                 isBusReviewUpdated.value = true
+            }
+        }
+    }
+
+    var isUserBooked = MutableLiveData<Boolean>()
+    fun checkUserBookedBus(busId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            var result: Boolean = false
+            val job = launch {
+                result = repository.isUserBooked(busId)
+            }
+            job.join()
+            withContext(Dispatchers.Main){
+                isUserBooked.value = result
             }
         }
     }
@@ -192,6 +218,18 @@ class BusViewModelTest(
         "Tanglewood Mall",
         "Maplewood Meadows"
     )
+
+
+    var boardingPoint = MutableLiveData("")
+
+    var droppingPoint = MutableLiveData("")
+
+
+//    Sort and filter related operations
+
+
+
+
 
 
 }

@@ -12,11 +12,18 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
+import androidx.lifecycle.ViewModelProvider
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.databinding.FragmentSettingsBinding
 import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.enums.Themes
+import com.example.busticketreservationsystem.model.data.AppDatabase
+import com.example.busticketreservationsystem.model.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.viewmodel.*
+import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
+import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
+import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BusViewModelTest
+import com.example.busticketreservationsystem.viewmodel.viewmodeltest.UserViewModelTest
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -27,15 +34,20 @@ class SettingsFragment : Fragment() {
 
     private lateinit var editor: SharedPreferences.Editor
 
-    private val userDbViewModel: UserDbViewModel by activityViewModels()
-    private val userViewModel: UserViewModel by activityViewModels()
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
     private val searchViewModel: SearchViewModel by activityViewModels()
-    private val busViewModel: BusViewModel by activityViewModels()
+
+    private lateinit var userViewModelTest: UserViewModelTest
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
+        val database = AppDatabase.getDatabase(requireActivity().applicationContext)
+        val repository = AppRepositoryImpl(database)
+
+        val userViewModelFactory = UserViewModelFactory(repository)
+        userViewModelTest = ViewModelProvider(requireActivity(), userViewModelFactory)[UserViewModelTest::class.java]
     }
 
     override fun onCreateView(
@@ -162,9 +174,10 @@ class SettingsFragment : Fragment() {
         builder.setPositiveButton("Yes"){
                 _, _ ->
             run {
-                GlobalScope.launch {
-                    userDbViewModel.deleteUserAccount(userViewModel.user)
-                }
+
+                userViewModelTest.deleteUserAccount()
+
+
                 editor.putString("status", LoginStatus.NEW.name)
                 loginStatusViewModel.status = LoginStatus.LOGGED_OUT
                 editor.commit()

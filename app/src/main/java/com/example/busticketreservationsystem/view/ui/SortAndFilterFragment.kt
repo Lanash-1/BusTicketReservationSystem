@@ -8,11 +8,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
+import androidx.lifecycle.ViewModelProvider
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.databinding.FragmentSortAndFilterBinding
 import com.example.busticketreservationsystem.model.entity.Bus
-import com.example.busticketreservationsystem.enums.BusTypes
+import com.example.busticketreservationsystem.model.data.AppDatabase
+import com.example.busticketreservationsystem.model.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.viewmodel.*
+import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
+import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BusViewModelTest
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -24,17 +28,21 @@ class SortAndFilterFragment : Fragment() {
 
     private lateinit var binding: FragmentSortAndFilterBinding
 
-    private val busViewModel: BusViewModel by activityViewModels()
     private val searchViewModel: SearchViewModel by activityViewModels()
-    private val sortAndFilterViewModel: SortAndFilterViewModel by activityViewModels()
-    private val bookingViewModel: BookingViewModel by activityViewModels()
-    private val busDbViewModel: BusDbViewModel by activityViewModels()
 
-    private var selectedGenderRadioButton: RadioButton? = null
+    private var selectedSortRadioButton: RadioButton? = null
+
+    private lateinit var busViewModelTest: BusViewModelTest
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
+        val database = AppDatabase.getDatabase(requireActivity().applicationContext)
+        val repository = AppRepositoryImpl(database)
+
+        val busViewModelFactory = BusViewModelFactory(repository)
+        busViewModelTest = ViewModelProvider(requireActivity(), busViewModelFactory)[BusViewModelTest::class.java]
     }
 
     override fun onCreateView(
@@ -68,17 +76,41 @@ class SortAndFilterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 //        Toast.makeText(requireContext(), "on create - ${parentFragmentManager.backStackEntryCount}", Toast.LENGTH_SHORT).show()
 
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.visibility =
-            View.GONE
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.visibility = View.GONE
 
+//check
+//        if(sortAndFilterViewModel.selectedSort != null){
+//            binding.sortByRadioGroup.check(sortAndFilterViewModel.selectedSort!!)
+//            selectedGenderRadioButton = view.findViewById(sortAndFilterViewModel.selectedSort!!)
+//        }
 
-        if(sortAndFilterViewModel.selectedSort != null){
-            binding.sortByRadioGroup.check(sortAndFilterViewModel.selectedSort!!)
-            selectedGenderRadioButton = view.findViewById(sortAndFilterViewModel.selectedSort!!)
+        if(busViewModelTest.selectedSort != null){
+            binding.sortByRadioGroup.check(busViewModelTest.selectedSort!!)
+            selectedSortRadioButton = view.findViewById(busViewModelTest.selectedSort!!)
         }
 
-        if(sortAndFilterViewModel.checkedList.isNotEmpty()){
-            for(i in sortAndFilterViewModel.checkedList){
+//        check
+//        if(sortAndFilterViewModel.checkedList.isNotEmpty()){
+//            for(i in sortAndFilterViewModel.checkedList){
+//                when(i){
+//                    R.id.ac_checkbox -> {
+//                        binding.acCheckbox.isChecked = true
+//                    }
+//                    R.id.non_ac_checkbox -> {
+//                        binding.nonAcCheckbox.isChecked = true
+//                    }
+//                    R.id.seater_checkbox -> {
+//                        binding.seaterCheckbox.isChecked = true
+//                    }
+//                    R.id.sleeper_checkbox -> {
+//                        binding.sleeperCheckbox.isChecked = true
+//                    }
+//                }
+//            }
+//        }
+
+        if(busViewModelTest.checkedList.isNotEmpty()){
+            for(i in busViewModelTest.checkedList){
                 when(i){
                     R.id.ac_checkbox -> {
                         binding.acCheckbox.isChecked = true
@@ -98,7 +130,7 @@ class SortAndFilterFragment : Fragment() {
 
 
         binding.sortByRadioGroup.setOnCheckedChangeListener { _, id ->
-            selectedGenderRadioButton = view.findViewById(id)
+            selectedSortRadioButton = view.findViewById(id)
         }
 
         binding.applyText.setOnClickListener {
@@ -123,21 +155,25 @@ class SortAndFilterFragment : Fragment() {
     }
 
     private fun clearFilters() {
-        sortAndFilterViewModel.selectedSort = null
-        sortAndFilterViewModel.checkedList = listOf()
-        busViewModel.filteredBusList = busViewModel.busList.filter {
-            it.sourceLocation == searchViewModel.sourceLocation && it.destination == searchViewModel.destinationLocation
-        }
+
+        busViewModelTest.selectedSort = null
+        busViewModelTest.checkedList = listOf()
+
+//        sortAndFilterViewModel.selectedSort = null
+//        sortAndFilterViewModel.checkedList = listOf()
+//        busViewModel.filteredBusList = busViewModel.busList.filter {
+//            it.sourceLocation == searchViewModel.sourceLocation && it.destination == searchViewModel.destinationLocation
+//        }
     }
 
 
     private fun filterBusList(){
-        busViewModel.filteredBusList = busViewModel.busList.filter {
-            it.sourceLocation == searchViewModel.sourceLocation && it.destination == searchViewModel.destinationLocation
-        }
+//        busViewModel.filteredBusList = busViewModel.busList.filter {
+//            it.sourceLocation == searchViewModel.sourceLocation && it.destination == searchViewModel.destinationLocation
+//        }
 
 
-        val filterList = mutableListOf<Bus>()
+//        val filterList = mutableListOf<Bus>()
 
         val checkedList = mutableListOf<Int>()
 
@@ -146,16 +182,15 @@ class SortAndFilterFragment : Fragment() {
 //        binding.acCheckbox.setOnClickListener{
 //            println("CLICKED")
             if(binding.acCheckbox.isChecked){
-                println("CHECKED")
                 checkedList.add(R.id.ac_checkbox)
-                for(i in 0 until busViewModel.filteredBusList.size){
-                    if(busViewModel.filteredBusList[i].busType == BusTypes.AC_SEATER.name || busViewModel.filteredBusList[i].busType == BusTypes.SLEEPER.name){
-                        println("CONDITION PASS")
-                        if(!filterList.contains(busViewModel.filteredBusList[i])){
-                            filterList.add(busViewModel.filteredBusList[i])
-                        }
-                    }
-                }
+//                for(i in 0 until busViewModel.filteredBusList.size){
+//                    if(busViewModel.filteredBusList[i].busType == BusTypes.AC_SEATER.name || busViewModel.filteredBusList[i].busType == BusTypes.SLEEPER.name){
+//                        println("CONDITION PASS")
+//                        if(!filterList.contains(busViewModel.filteredBusList[i])){
+//                            filterList.add(busViewModel.filteredBusList[i])
+//                        }
+//                    }
+//                }
             }
 //            else{
 //                for(i in 0 until busViewModel.filteredBusList.size){
@@ -170,53 +205,51 @@ class SortAndFilterFragment : Fragment() {
         if(binding.nonAcCheckbox.isChecked){
             checkedList.add(R.id.non_ac_checkbox)
 
-            println("CHECKED")
-            for(i in 0 until busViewModel.filteredBusList.size){
-                if(busViewModel.filteredBusList[i].busType == BusTypes.NON_AC_SEATER.name){
-                    println("CONDITION PASS")
-                    if(!filterList.contains(busViewModel.filteredBusList[i])){
-                        filterList.add(busViewModel.filteredBusList[i])
-                    }
-                }
-            }
+//            for(i in 0 until busViewModel.filteredBusList.size){
+//                if(busViewModel.filteredBusList[i].busType == BusTypes.NON_AC_SEATER.name){
+//                    println("CONDITION PASS")
+//                    if(!filterList.contains(busViewModel.filteredBusList[i])){
+//                        filterList.add(busViewModel.filteredBusList[i])
+//                    }
+//                }
+//            }
         }
 
         if(binding.seaterCheckbox.isChecked){
             checkedList.add(R.id.seater_checkbox)
 
-            println("CHECKED")
-            for(i in 0 until busViewModel.filteredBusList.size){
-                if(busViewModel.filteredBusList[i].busType == BusTypes.AC_SEATER.name || busViewModel.filteredBusList[i].busType == BusTypes.AC_SEATER.name){
-                    println("CONDITION PASS")
-                    if(!filterList.contains(busViewModel.filteredBusList[i])){
-                        filterList.add(busViewModel.filteredBusList[i])
-                    }
-                }
-            }
+//            for(i in 0 until busViewModel.filteredBusList.size){
+//                if(busViewModel.filteredBusList[i].busType == BusTypes.AC_SEATER.name || busViewModel.filteredBusList[i].busType == BusTypes.AC_SEATER.name){
+//                    println("CONDITION PASS")
+//                    if(!filterList.contains(busViewModel.filteredBusList[i])){
+//                        filterList.add(busViewModel.filteredBusList[i])
+//                    }
+//                }
+//            }
         }
 
         if(binding.sleeperCheckbox.isChecked){
             checkedList.add(R.id.sleeper_checkbox)
 
-            println("CHECKED")
-            for(i in 0 until busViewModel.filteredBusList.size){
-                if(busViewModel.filteredBusList[i].busType == BusTypes.SLEEPER.name){
-                    println("CONDITION PASS")
-                    if(!filterList.contains(busViewModel.filteredBusList[i])){
-                        filterList.add(busViewModel.filteredBusList[i])
-                    }
-                }
-            }
+//            for(i in 0 until busViewModel.filteredBusList.size){
+//                if(busViewModel.filteredBusList[i].busType == BusTypes.SLEEPER.name){
+//                    println("CONDITION PASS")
+//                    if(!filterList.contains(busViewModel.filteredBusList[i])){
+//                        filterList.add(busViewModel.filteredBusList[i])
+//                    }
+//                }
+//            }
         }
 
-        sortAndFilterViewModel.checkedList = checkedList
+//        sortAndFilterViewModel.checkedList = checkedList
+        busViewModelTest.checkedList = checkedList
 
-        if(binding.nonAcCheckbox.isChecked || binding.acCheckbox.isChecked || binding.seaterCheckbox.isChecked || binding.sleeperCheckbox.isChecked){
-            busViewModel.filteredBusList = filterList
-        }
+//        if(binding.nonAcCheckbox.isChecked || binding.acCheckbox.isChecked || binding.seaterCheckbox.isChecked || binding.sleeperCheckbox.isChecked){
+//            busViewModel.filteredBusList = filterList
+//        }
 
 
-        var currentBusList = busViewModel.filteredBusList
+//        var currentBusList = busViewModel.filteredBusList
 
 
 //        if(binding.acCheckbox.isChecked){
@@ -232,62 +265,69 @@ class SortAndFilterFragment : Fragment() {
 //
 //        }
 
-        if(selectedGenderRadioButton != null){
+        if(selectedSortRadioButton != null){
 
-            when(selectedGenderRadioButton!!.id){
+            when(selectedSortRadioButton!!.id){
                 R.id.price_high_low -> {
-                    currentBusList = busViewModel.filteredBusList.sortedByDescending {
-                        it.perTicketCost
-                    }
-                    sortAndFilterViewModel.selectedSort = R.id.price_high_low
+//                    currentBusList = busViewModel.filteredBusList.sortedByDescending {
+//                        it.perTicketCost
+//                    }
+//                    sortAndFilterViewModel.selectedSort = R.id.price_high_low
+                    busViewModelTest.selectedSort = R.id.price_high_low
                 }
                 R.id.price_low_high -> {
-                    currentBusList = busViewModel.filteredBusList.sortedBy {
-                        it.perTicketCost
-                    }
-                    sortAndFilterViewModel.selectedSort = R.id.price_low_high
+//                    currentBusList = busViewModel.filteredBusList.sortedBy {
+//                        it.perTicketCost
+//                    }
+//                    sortAndFilterViewModel.selectedSort = R.id.price_low_high
+
+                    busViewModelTest.selectedSort = R.id.price_low_high
 
                 }
                 R.id.top_rated -> {
-                    currentBusList = busViewModel.filteredBusList.sortedByDescending {
-                        it.ratingOverall
-                    }
-                    sortAndFilterViewModel.selectedSort = R.id.top_rated
+//                    currentBusList = busViewModel.filteredBusList.sortedByDescending {
+//                        it.ratingOverall
+//                    }
+//                    sortAndFilterViewModel.selectedSort = R.id.top_rated
+
+                    busViewModelTest.selectedSort = R.id.top_rated
                 }
                 R.id.shortest_duration -> {
-                    currentBusList = busViewModel.filteredBusList.sortedBy {
-                        it.duration.toFloat()
-                    }
-                    sortAndFilterViewModel.selectedSort = R.id.shortest_duration
+//                    currentBusList = busViewModel.filteredBusList.sortedBy {
+//                        it.duration.toFloat()
+//                    }
+//                    sortAndFilterViewModel.selectedSort = R.id.shortest_duration
+
+                    busViewModelTest.selectedSort = R.id.shortest_duration
                 }
             }
         }
 
-        busViewModel.filteredBusList = currentBusList
+//        busViewModel.filteredBusList = currentBusList
 
 
 
-        GlobalScope.launch {
-            val list = busViewModel.filteredBusList
-            var amenities = listOf<String>()
-            var amenitiesList = mutableListOf<List<String>>()
-            val job = launch {
-                for (i in list.indices){
-                    val seats = busDbViewModel.getBookedSeats(list[i].busId, bookingViewModel.date)
-                    amenities = busDbViewModel.getBusAmenities(list[i].busId)
-                    amenitiesList.add(amenities)
-                    if(seats.isNotEmpty()){
-                        list[i].availableSeats = 30 - seats.size
-                    }else{
-                        list[i].availableSeats = 30
-                    }
-                }
-            }
-            job.join()
-            withContext(Dispatchers.Main){
-                busViewModel.filteredBusList = list
-
-            }
-        }
+//        GlobalScope.launch {
+//            val list = busViewModel.filteredBusList
+//            var amenities = listOf<String>()
+//            var amenitiesList = mutableListOf<List<String>>()
+//            val job = launch {
+//                for (i in list.indices){
+//                    val seats = busDbViewModel.getBookedSeats(list[i].busId, bookingViewModel.date)
+//                    amenities = busDbViewModel.getBusAmenities(list[i].busId)
+//                    amenitiesList.add(amenities)
+//                    if(seats.isNotEmpty()){
+//                        list[i].availableSeats = 30 - seats.size
+//                    }else{
+//                        list[i].availableSeats = 30
+//                    }
+//                }
+//            }
+//            job.join()
+//            withContext(Dispatchers.Main){
+//                busViewModel.filteredBusList = list
+//
+//            }
+//        }
     }
 }

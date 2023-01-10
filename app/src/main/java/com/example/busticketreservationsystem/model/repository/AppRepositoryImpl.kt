@@ -116,6 +116,10 @@ class AppRepositoryImpl(
         return appDb.reviewsDao().getUsersBusReview(userId, busId)
     }
 
+    override fun isUserBooked(busId: Int): Boolean {
+        return appDb.bookingsDao().getParticularBusBooking(busId) > 0
+    }
+
 
 //    Seats related data
 

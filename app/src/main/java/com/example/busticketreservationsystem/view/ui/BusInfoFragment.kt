@@ -42,12 +42,8 @@ class BusInfoFragment : Fragment() {
     private var amenitiesAdapter = AmenitiesAdapter()
 
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
-    private val busViewModel: BusViewModel by activityViewModels()
-    private val busDbViewModel: BusDbViewModel by activityViewModels()
-    private val userViewModel: UserViewModel by activityViewModels()
     private val dateViewModel: DateViewModel by activityViewModels()
     private val navigationViewModel: NavigationViewModel by activityViewModels()
-    private val bookingViewModel: BookingViewModel by activityViewModels()
 
 
     private lateinit var busViewModelTest: BusViewModelTest
@@ -149,9 +145,7 @@ class BusInfoFragment : Fragment() {
             ratingBarOperation()
         })
 
-        busViewModelTest.isBusReviewUpdated.observe(viewLifecycleOwner, Observer{
-            busViewModelTest.fetchBusReviewData()
-        })
+
 
 
 
@@ -177,6 +171,16 @@ class BusInfoFragment : Fragment() {
 //        }else{
 //            binding.rateBusButton.visibility = View.VISIBLE
 //        }
+
+        busViewModelTest.checkUserBookedBus(busViewModelTest.selectedBus.busId)
+
+        busViewModelTest.isUserBooked.observe(viewLifecycleOwner, Observer{
+            if(busViewModelTest.isUserBooked.value == true){
+                binding.rateBusButton.visibility = View.VISIBLE
+            }else{
+                binding.rateBusButton.visibility = View.GONE
+            }
+        })
 
         binding.rateBusButton.setOnClickListener {
 
@@ -234,10 +238,18 @@ class BusInfoFragment : Fragment() {
 
     private fun updateUserRating(rating: Int, feedback: String, date: String) {
         busViewModelTest.updateUserRating(rating, feedback, date)
+
+        busViewModelTest.isBusReviewUpdated.observe(viewLifecycleOwner, Observer{
+            busViewModelTest.fetchBusReviewData()
+        })
     }
 
     private fun insertUserRating(rating: Int, feedback: String, date: String) {
         busViewModelTest.insertUserReview(rating, feedback, date, userViewModelTest.user.userId)
+
+        busViewModelTest.isBusReviewUpdated.observe(viewLifecycleOwner, Observer{
+            busViewModelTest.fetchBusReviewData()
+        })
     }
 
 
@@ -284,162 +296,163 @@ class BusInfoFragment : Fragment() {
         }
     }
 
-    private fun updateRating(reviewId: Int, rating: Int, feedback: String) {
-        GlobalScope.launch {
-            val updateJob = launch {
-                busDbViewModel.updateReviewOfAUser(reviewId, rating, feedback)
-            }
-            updateJob.join()
-            withContext(Dispatchers.Main){
-                updateBusRating(busViewModel.selectedBus.busId)
-//                ratingAndReviewOperations(busViewModel.selectedBus.busId)
-            }
-        }
-    }
+//    private fun updateRating(reviewId: Int, rating: Int, feedback: String) {
+//        GlobalScope.launch {
+//            val updateJob = launch {
+//                busDbViewModel.updateReviewOfAUser(reviewId, rating, feedback)
+//            }
+//            updateJob.join()
+//            withContext(Dispatchers.Main){
+//                updateBusRating(busViewModel.selectedBus.busId)
+////                ratingAndReviewOperations(busViewModel.selectedBus.busId)
+//            }
+//        }
+//    }
 
-    private fun ratingFunction(){
+//    private fun ratingFunction(){
+//
+////        binding.readReviewsButton.isEnabled = busViewModel.ratingsList.isNotEmpty()
+//
+//        if(busViewModel.averageRating.isNaN()){
+//            binding.ratingText.text = "0.0"
+//        }else{
+//            binding.ratingText.text = "${String.format("%.2f", busViewModel.averageRating).toDouble()}"
+//        }
+//        binding.ratingCountText.text = "(${busViewModel.ratingCount} reviews)"
+//
+//
+//        for(i in 1 until 6){
+//            var count = busViewModel.ratings.filter {
+//                it == i
+//            }.size
+//            var pCount = count/busViewModel.ratingCount.toDouble()
+//            pCount *= 100
+//            count = pCount.toInt()
+//            when(i){
+//                1 -> {
+//                    binding.percentageText1.text = "${count}%"
+//                    binding.progressBar1.progress = count
+//                }
+//                2 -> {
+//                    binding.percentageText2.text = "${count}%"
+//                    binding.progressBar2.progress = count
+//                }
+//                3 -> {
+//                    binding.percentageText3.text = "${count}%"
+//                    binding.progressBar3.progress = count
+//                }
+//                4 -> {
+//                    binding.percentageText4.text = "${count}%"
+//                    binding.progressBar4.progress = count
+//                }
+//                5 -> {
+//                    binding.percentageText5.text = "${count}%"
+//                    binding.progressBar5.progress = count
+//                }
+//            }
+//        }
+//
+//        if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
+//            if(bookingViewModel.bookedBusesList.filter {
+//                    it.busId == busViewModel.selectedBus.busId
+//                }.isEmpty()){
+//                binding.rateBusButton.visibility = View.GONE
+//            }else{
+//                binding.rateBusButton.visibility = View.VISIBLE
+//            }
+//
+////            binding.rateBusButton.visibility = View.VISIBLE
+//            if(busViewModel.userReview.size == 1){
+//                binding.rateBusButton.text = "Update Rating"
+//            }
+//        }
+//    }
 
-//        binding.readReviewsButton.isEnabled = busViewModel.ratingsList.isNotEmpty()
+//    private fun postRating(userId: Int, busId: Int, rating: Int, feedback: String, date: String) {
+//
+//        GlobalScope.launch {
+//            val job = launch {
+//                busDbViewModel.insertReview(Reviews(0, userId, busId, rating, feedback, date))
+//            }
+//            job.join()
+//            withContext(Dispatchers.IO){
+//                var averageRating = 0.0
+//                for(i in busViewModel.ratings){
+//                        averageRating += i
+//                    }
+//                averageRating += rating
+//                averageRating /= (busViewModel.ratingCount+1)
+//                val updateJob = launch {
+//                    busDbViewModel.updateBusRating(busId, busViewModel.ratingCount+1, averageRating)
+//                }
+//                updateJob.join()
+//                val fetchJob = launch {
+//                    ratingAndReviewOperations(busId)
+//                }
+////                fetchJob.join()
+////                withContext(Dispatchers.Main){
+////                    ratingFunction()
+////                }
+//            }
+//        }
+//        }
 
-        if(busViewModel.averageRating.isNaN()){
-            binding.ratingText.text = "0.0"
-        }else{
-            binding.ratingText.text = "${String.format("%.2f", busViewModel.averageRating).toDouble()}"
-        }
-        binding.ratingCountText.text = "(${busViewModel.ratingCount} reviews)"
-
-
-        for(i in 1 until 6){
-            var count = busViewModel.ratings.filter {
-                it == i
-            }.size
-            var pCount = count/busViewModel.ratingCount.toDouble()
-            pCount *= 100
-            count = pCount.toInt()
-            when(i){
-                1 -> {
-                    binding.percentageText1.text = "${count}%"
-                    binding.progressBar1.progress = count
-                }
-                2 -> {
-                    binding.percentageText2.text = "${count}%"
-                    binding.progressBar2.progress = count
-                }
-                3 -> {
-                    binding.percentageText3.text = "${count}%"
-                    binding.progressBar3.progress = count
-                }
-                4 -> {
-                    binding.percentageText4.text = "${count}%"
-                    binding.progressBar4.progress = count
-                }
-                5 -> {
-                    binding.percentageText5.text = "${count}%"
-                    binding.progressBar5.progress = count
-                }
-            }
-        }
-
-        if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
-            if(bookingViewModel.bookedBusesList.filter {
-                    it.busId == busViewModel.selectedBus.busId
-                }.isEmpty()){
-                binding.rateBusButton.visibility = View.GONE
-            }else{
-                binding.rateBusButton.visibility = View.VISIBLE
-            }
-
-//            binding.rateBusButton.visibility = View.VISIBLE
-            if(busViewModel.userReview.size == 1){
-                binding.rateBusButton.text = "Update Rating"
-            }
-        }
-    }
-
-    private fun postRating(userId: Int, busId: Int, rating: Int, feedback: String, date: String) {
-
-        GlobalScope.launch {
-            val job = launch {
-                busDbViewModel.insertReview(Reviews(0, userId, busId, rating, feedback, date))
-            }
-            job.join()
-            withContext(Dispatchers.IO){
-                var averageRating = 0.0
-                for(i in busViewModel.ratings){
-                        averageRating += i
-                    }
-                averageRating += rating
-                averageRating /= (busViewModel.ratingCount+1)
-                val updateJob = launch {
-                    busDbViewModel.updateBusRating(busId, busViewModel.ratingCount+1, averageRating)
-                }
-                updateJob.join()
-                val fetchJob = launch {
-                    ratingAndReviewOperations(busId)
-                }
+    // update the average rating to bus table
+//    private fun updateBusRating(busId: Int){
+//        GlobalScope.launch {
+//                var averageRating = 0.0
+//                for(i in busViewModel.ratings){
+//                    averageRating += i
+//                }
+//                averageRating /= (busViewModel.ratingCount)
+//                val updateJob = launch {
+//                    busDbViewModel.updateBusRating(busId, busViewModel.ratingCount, averageRating)
+//                }
+//                updateJob.join()
+//                val fetchJob = launch {
+//                    ratingAndReviewOperations(busId)
+//                }
 //                fetchJob.join()
 //                withContext(Dispatchers.Main){
 //                    ratingFunction()
 //                }
-            }
-        }
-        }
+//        }
+//    }
 
-    // update the average rating to bus table
-    private fun updateBusRating(busId: Int){
-        GlobalScope.launch {
-                var averageRating = 0.0
-                for(i in busViewModel.ratings){
-                    averageRating += i
-                }
-                averageRating /= (busViewModel.ratingCount)
-                val updateJob = launch {
-                    busDbViewModel.updateBusRating(busId, busViewModel.ratingCount, averageRating)
-                }
-                updateJob.join()
-                val fetchJob = launch {
-                    ratingAndReviewOperations(busId)
-                }
-                fetchJob.join()
-                withContext(Dispatchers.Main){
-                    ratingFunction()
-                }
-        }
-    }
 
     // calculate ratings and store all data to viewModel
-    private fun ratingAndReviewOperations(busId: Int) {
-        GlobalScope.launch {
-            var ratingsList = listOf<Reviews>()
-            var ratingCount: Int = 0
-            var ratings = listOf<Int>()
-            var averageRating: Double = 0.0
-            var userReview = listOf<Reviews>()
-
-            val job = launch {
-                ratingsList = busDbViewModel.getReviewData(busId)
-                ratingCount = ratingsList.size
-                ratings = busDbViewModel.getBusRatings(busId)
-                for(i in ratings){
-                    averageRating += i
-                }
-                averageRating /= ratingCount
-                if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
-                    userReview = busDbViewModel.getReviewOfUser(userViewModel.user.userId, busId)
-                }
-            }
-            job.join()
-            withContext(Dispatchers.Main){
-                busViewModel.ratingsList = ratingsList
-                busViewModel.ratingCount = ratingCount
-                busViewModel.ratings = ratings
-                busViewModel.averageRating = averageRating
+//    private fun ratingAndReviewOperations(busId: Int) {
+//        GlobalScope.launch {
+//            var ratingsList = listOf<Reviews>()
+//            var ratingCount: Int = 0
+//            var ratings = listOf<Int>()
+//            var averageRating: Double = 0.0
+//            var userReview = listOf<Reviews>()
+//
+//            val job = launch {
+//                ratingsList = busDbViewModel.getReviewData(busId)
+//                ratingCount = ratingsList.size
+//                ratings = busDbViewModel.getBusRatings(busId)
+//                for(i in ratings){
+//                    averageRating += i
+//                }
+//                averageRating /= ratingCount
+//                if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
+//                    userReview = busDbViewModel.getReviewOfUser(userViewModel.user.userId, busId)
+//                }
+//            }
+//            job.join()
+//            withContext(Dispatchers.Main){
+//                busViewModel.ratingsList = ratingsList
+//                busViewModel.ratingCount = ratingCount
+//                busViewModel.ratings = ratings
+//                busViewModel.averageRating = averageRating
+////                busViewModel.userReview = userReview
 //                busViewModel.userReview = userReview
-                busViewModel.userReview = userReview
-                ratingFunction()
-            }
-        }
-    }
+//                ratingFunction()
+//            }
+//        }
+//    }
 
 
 

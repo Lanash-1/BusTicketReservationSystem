@@ -20,8 +20,6 @@ import com.example.busticketreservationsystem.model.data.AppDatabase
 import com.example.busticketreservationsystem.model.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
 import com.example.busticketreservationsystem.viewmodel.NavigationViewModel
-import com.example.busticketreservationsystem.viewmodel.UserDbViewModel
-import com.example.busticketreservationsystem.viewmodel.UserViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodeltest.UserViewModelTest
 import com.google.android.material.textfield.TextInputEditText
@@ -41,8 +39,6 @@ class LoginFragment : Fragment() {
     private lateinit var passwordLayout: TextInputLayout
     private lateinit var loginButton: Button
 
-    private val userDbViewModel: UserDbViewModel by activityViewModels()
-    private val userViewModel: UserViewModel by activityViewModels()
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
     private val navigationViewModel: NavigationViewModel by activityViewModels()
 

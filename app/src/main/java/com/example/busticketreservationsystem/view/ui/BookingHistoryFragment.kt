@@ -10,15 +10,22 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.view.adapters.BookingHistoryViewPagerAdapter
 import com.example.busticketreservationsystem.databinding.FragmentBookingHistoryBinding
 import com.example.busticketreservationsystem.enums.LoginStatus
-import com.example.busticketreservationsystem.viewmodel.BookingViewModel
+import com.example.busticketreservationsystem.model.data.AppDatabase
+import com.example.busticketreservationsystem.model.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
 import com.example.busticketreservationsystem.viewmodel.NavigationViewModel
+import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BookingViewModelFactory
+import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
+import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BookingViewModelTest
+import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BusViewModelTest
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 class BookingHistoryFragment : Fragment() {
@@ -26,13 +33,21 @@ class BookingHistoryFragment : Fragment() {
     private lateinit var binding: FragmentBookingHistoryBinding
 
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
-    private val bookingViewModel: BookingViewModel by activityViewModels()
     private val navigationViewModel: NavigationViewModel by activityViewModels()
 
+
+    private lateinit var bookingViewModelTest: BookingViewModelTest
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
+        val database = AppDatabase.getDatabase(requireActivity().applicationContext)
+        val repository = AppRepositoryImpl(database)
+
+        val bookingViewModelFactory = BookingViewModelFactory(repository)
+        bookingViewModelTest = ViewModelProvider(requireActivity(), bookingViewModelFactory)[BookingViewModelTest::class.java]
+
     }
 
     override fun onCreateView(
@@ -104,7 +119,7 @@ class BookingHistoryFragment : Fragment() {
         viewPager.registerOnPageChangeCallback(
             object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
-                    bookingViewModel.tabPosition.value = position
+                    bookingViewModelTest.tabPosition.value = position
                     super.onPageSelected(position)
                 }
 

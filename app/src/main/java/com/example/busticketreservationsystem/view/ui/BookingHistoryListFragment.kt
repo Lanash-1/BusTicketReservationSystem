@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -13,16 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.view.adapters.BookingHistoryListAdapter
 import com.example.busticketreservationsystem.databinding.FragmentBookingHistoryListBinding
-import com.example.busticketreservationsystem.model.entity.Bookings
-import com.example.busticketreservationsystem.model.entity.Bus
-import com.example.busticketreservationsystem.model.entity.Partners
-import com.example.busticketreservationsystem.model.entity.PassengerInformation
 import com.example.busticketreservationsystem.enums.BookedTicketStatus
 import com.example.busticketreservationsystem.listeners.OnItemClickListener
 import com.example.busticketreservationsystem.model.data.AppDatabase
 import com.example.busticketreservationsystem.model.repository.AppRepositoryImpl
-import com.example.busticketreservationsystem.viewmodel.BookingViewModel
-import com.example.busticketreservationsystem.viewmodel.UserViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BookingViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BookingViewModelTest
@@ -37,8 +30,6 @@ class BookingHistoryListFragment : Fragment() {
 
     private var bookingHistoryListAdapter = BookingHistoryListAdapter()
 
-    private val bookingViewModel: BookingViewModel by activityViewModels()
-    private val userViewModel: UserViewModel by activityViewModels()
 
     private lateinit var bookingViewModelTest: BookingViewModelTest
     private lateinit var userViewModelTest: UserViewModelTest
@@ -97,8 +88,8 @@ class BookingHistoryListFragment : Fragment() {
 
 
 
-        bookingViewModel.tabPosition.observe(viewLifecycleOwner, Observer {
-            filterBooking(bookingViewModel.tabPosition.value!!)
+        bookingViewModelTest.tabPosition.observe(viewLifecycleOwner, Observer {
+            filterBooking(bookingViewModelTest.tabPosition.value!!)
         })
 
         filterBooking(currentPosition)
@@ -143,35 +134,35 @@ class BookingHistoryListFragment : Fragment() {
     }
 
 
-        private fun filterBookingList(status: String) {
-            val bookingList = mutableListOf<Bookings>()
-            val busList = mutableListOf<Bus>()
-            val partnerList = mutableListOf<String>()
-            val passengerInfo = mutableListOf<PassengerInformation>()
-            val partnerDetailList = mutableListOf<Partners>()
-
-            for (i in 0 until bookingViewModel.bookingHistory.size) {
-                if (bookingViewModel.bookingHistory[i].bookedTicketStatus == status) {
-                    bookingList.add(bookingViewModel.bookingHistory[i])
-                    busList.add(bookingViewModel.bookedBusesList[i])
-                    partnerList.add(bookingViewModel.bookedPartnerList[i])
-                    partnerDetailList.add(bookingViewModel.bookedPartnerDetail[i])
-//                    passengerInfo.add(bookingViewModel.passengerInfo[i])
-                }
-            }
-            bookingViewModel.apply {
-                this.filteredBookedBusesList = busList
-                this.filteredBookedPartnerList = partnerList
-                this.filteredBookingHistory = bookingList
-                this.filteredBookedPartnerDetailList = partnerDetailList
-//                this.filteredPassengerInfo = passengerInfo
-            }
-            bookingHistoryListAdapter.setBookedTicketList(bookingList, busList, partnerList)
-            if(bookingList.isEmpty()){
-                binding.emptyListImage.visibility = View.VISIBLE
-            }
-            else{
-                binding.emptyListImage.visibility = View.GONE
-            }
-        }
+//        private fun filterBookingList(status: String) {
+//            val bookingList = mutableListOf<Bookings>()
+//            val busList = mutableListOf<Bus>()
+//            val partnerList = mutableListOf<String>()
+//            val passengerInfo = mutableListOf<PassengerInformation>()
+//            val partnerDetailList = mutableListOf<Partners>()
+//
+//            for (i in 0 until bookingViewModel.bookingHistory.size) {
+//                if (bookingViewModel.bookingHistory[i].bookedTicketStatus == status) {
+//                    bookingList.add(bookingViewModel.bookingHistory[i])
+//                    busList.add(bookingViewModel.bookedBusesList[i])
+//                    partnerList.add(bookingViewModel.bookedPartnerList[i])
+//                    partnerDetailList.add(bookingViewModel.bookedPartnerDetail[i])
+////                    passengerInfo.add(bookingViewModel.passengerInfo[i])
+//                }
+//            }
+//            bookingViewModel.apply {
+//                this.filteredBookedBusesList = busList
+//                this.filteredBookedPartnerList = partnerList
+//                this.filteredBookingHistory = bookingList
+//                this.filteredBookedPartnerDetailList = partnerDetailList
+////                this.filteredPassengerInfo = passengerInfo
+//            }
+//            bookingHistoryListAdapter.setBookedTicketList(bookingList, busList, partnerList)
+//            if(bookingList.isEmpty()){
+//                binding.emptyListImage.visibility = View.VISIBLE
+//            }
+//            else{
+//                binding.emptyListImage.visibility = View.GONE
+//            }
+//        }
     }

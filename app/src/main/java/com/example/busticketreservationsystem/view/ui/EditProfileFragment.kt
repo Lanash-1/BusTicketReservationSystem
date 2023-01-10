@@ -18,8 +18,6 @@ import com.example.busticketreservationsystem.enums.Gender
 import com.example.busticketreservationsystem.model.data.AppDatabase
 import com.example.busticketreservationsystem.model.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.viewmodel.DateViewModel
-import com.example.busticketreservationsystem.viewmodel.UserDbViewModel
-import com.example.busticketreservationsystem.viewmodel.UserViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodeltest.UserViewModelTest
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -32,9 +30,7 @@ import kotlinx.coroutines.withContext
 
 class EditProfileFragment : Fragment() {
 
-    private val userViewModel: UserViewModel by activityViewModels()
     private val dateViewModel: DateViewModel by activityViewModels()
-    private val userDbViewModel: UserDbViewModel by activityViewModels()
 
     private lateinit var binding: FragmentEditProfileBinding
 

@@ -28,4 +28,7 @@ interface BookingsDao {
     @Delete
     fun deleteBooking(bookings: Bookings)
 
+    @Query("select count(*) from bookings_table where busId like :busId")
+    fun getParticularBusBooking(busId: Int): Int
+
 }

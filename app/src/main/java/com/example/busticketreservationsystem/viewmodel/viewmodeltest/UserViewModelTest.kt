@@ -188,15 +188,30 @@ class UserViewModelTest(
         }
     }
 
+
+    var isAccountAvailable = MutableLiveData<Boolean>()
+
     fun updateNewPassword(password: String, mobileNumber: String) {
         viewModelScope.launch(Dispatchers.IO) {
+            var result: Boolean = false
             val job = launch {
-
+                result = repository.getAccountCount(mobileNumber)
+                if(result){
+                    repository.updateUserPassword(password, mobileNumber)
+                }else{
+                    result = false
+                }
             }
             job.join()
             withContext(Dispatchers.Main){
-
+                isAccountAvailable.value = result
             }
+        }
+    }
+
+    fun deleteUserAccount() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteUserAccount(user)
         }
     }
 

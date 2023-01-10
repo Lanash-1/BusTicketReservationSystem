@@ -37,10 +37,6 @@ class SelectedBusFragment : Fragment() {
 
     private val busSeatsAdapter = BusSeatsAdapter()
 
-    private val busViewModel: BusViewModel by activityViewModels()
-    private val bookingViewModel: BookingViewModel by activityViewModels()
-    private val busDbViewModel: BusDbViewModel by activityViewModels()
-    private val userViewModel: UserViewModel by activityViewModels()
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
     private val navigationViewModel: NavigationViewModel by activityViewModels()
 
@@ -72,8 +68,8 @@ class SelectedBusFragment : Fragment() {
             setDisplayHomeAsUpEnabled(true)
             title = "${busViewModelTest.selectedBus.sourceLocation} - ${busViewModelTest.selectedBus.destination}"
         }
-        busViewModel.boardingPoint.value = ""
-        busViewModel.droppingPoint.value = ""
+        busViewModelTest.boardingPoint.value = ""
+        busViewModelTest.droppingPoint.value = ""
         binding = FragmentSelectedBusBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -104,7 +100,7 @@ class SelectedBusFragment : Fragment() {
     }
 
     private fun backPressLogic() {
-        busViewModel.selectedSeats.clear()
+        busViewModelTest.selectedSeats.clear()
         busViewModelTest.selectedSeats.clear()
         when(navigationViewModel.fragment){
             is DashBoardFragment -> {
@@ -166,10 +162,34 @@ class SelectedBusFragment : Fragment() {
         busSeatsRecyclerView.layoutManager = GridLayoutManager(requireContext(), 4)
         busSeatsRecyclerView.adapter = busSeatsAdapter
 
+//        busViewModelTest.seatDataFetched.observe(viewLifecycleOwner, Observer{
+//            createBusSeatsList()
+//        })
+//
+//        when(navigationViewModel.fragment){
+//            is DashBoardFragment -> {
+//                createBusSeatsList()
+//                busViewModelTest.fetchBusSeatsData()
+//            }
+//            else -> {
+//                if(busViewModelTest.selectedSeats.size > 0){
+//                    println("SELECTED NOT ZERO")
+//                    busSeatsAdapter.setBusSeatsList(busViewModelTest.selectedBusSeatDimensions)
+//                    busSeatsAdapter.notifyDataSetChanged()
+//                }else{
+//                    println("SELECTED ZERO")
+//                    createBusSeatsList()
+//                    busViewModelTest.fetchBusSeatsData()
+//                }
+//            }
+//        }
+
+
 
         if(busViewModelTest.selectedSeats.size > 0){
             println("SELECTED NOT ZERO")
             busSeatsAdapter.setBusSeatsList(busViewModelTest.selectedBusSeatDimensions)
+            busSeatsAdapter.notifyDataSetChanged()
         }else{
             println("SELECTED ZERO")
             createBusSeatsList()
@@ -392,7 +412,7 @@ class SelectedBusFragment : Fragment() {
                     if(busViewModelTest.bookedSeatsList.contains("LW$row")){
                         seatsList.add(-1)
                     }
-                    else if(busViewModel.selectedSeats.contains("LW$row")){
+                    else if(busViewModelTest.selectedSeats.contains("LW$row")){
                         seatsList.add(1)
                     }else{
                         seatsList.add(0)
@@ -402,7 +422,7 @@ class SelectedBusFragment : Fragment() {
                     if(busViewModelTest.bookedSeatsList.contains("RA$row")){
                         seatsList.add(-1)
                     }
-                    else if(busViewModel.selectedSeats.contains("RA$row")){
+                    else if(busViewModelTest.selectedSeats.contains("RA$row")){
                         seatsList.add(1)
                     }else{
                         seatsList.add(0)
@@ -412,7 +432,7 @@ class SelectedBusFragment : Fragment() {
                     if(busViewModelTest.bookedSeatsList.contains("RW$row")){
                         seatsList.add(-1)
                     }
-                    else if(busViewModel.selectedSeats.contains("RW$row")){
+                    else if(busViewModelTest.selectedSeats.contains("RW$row")){
                         seatsList.add(1)
                     }else{
                         seatsList.add(0)
@@ -429,35 +449,35 @@ class SelectedBusFragment : Fragment() {
         busSeatsAdapter.notifyDataSetChanged()
     }
 
-    private fun ratingAndReviewOperations(busId: Int) {
-        GlobalScope.launch {
-            var ratingsList = listOf<Reviews>()
-            var ratingCount: Int = 0
-            var ratings = listOf<Int>()
-            var averageRating: Double = 0.0
-            var userReview = listOf<Reviews>()
-
-            val job = launch {
-                ratingsList = busDbViewModel.getReviewData(busId)
-                ratingCount = ratingsList.size
-                ratings = busDbViewModel.getBusRatings(busId)
-                for(i in ratings){
-                    averageRating += i
-                }
-                averageRating /= ratingCount
-                if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
-                    userReview = busDbViewModel.getReviewOfUser(userViewModel.user.userId, busId)
-                }
-            }
-            job.join()
-            withContext(Dispatchers.IO){
-                busViewModel.ratingsList = ratingsList
-                busViewModel.ratingCount = ratingCount
-                busViewModel.ratings = ratings
-                busViewModel.averageRating = averageRating
+//    private fun ratingAndReviewOperations(busId: Int) {
+//        GlobalScope.launch {
+//            var ratingsList = listOf<Reviews>()
+//            var ratingCount: Int = 0
+//            var ratings = listOf<Int>()
+//            var averageRating: Double = 0.0
+//            var userReview = listOf<Reviews>()
+//
+//            val job = launch {
+//                ratingsList = busDbViewModel.getReviewData(busId)
+//                ratingCount = ratingsList.size
+//                ratings = busDbViewModel.getBusRatings(busId)
+//                for(i in ratings){
+//                    averageRating += i
+//                }
+//                averageRating /= ratingCount
+//                if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
+//                    userReview = busDbViewModel.getReviewOfUser(userViewModel.user.userId, busId)
+//                }
+//            }
+//            job.join()
+//            withContext(Dispatchers.IO){
+//                busViewModel.ratingsList = ratingsList
+//                busViewModel.ratingCount = ratingCount
+//                busViewModel.ratings = ratings
+//                busViewModel.averageRating = averageRating
+////                busViewModel.userReview = userReview
 //                busViewModel.userReview = userReview
-                busViewModel.userReview = userReview
-            }
-        }
-    }
+//            }
+//        }
+//    }
 }

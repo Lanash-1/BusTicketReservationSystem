@@ -7,12 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.view.adapters.BoardingDroppingLocationAdapter
 import com.example.busticketreservationsystem.databinding.FragmentBoardingAndDroppingLocationBinding
 import com.example.busticketreservationsystem.listeners.OnItemClickListener
-import com.example.busticketreservationsystem.viewmodel.BusViewModel
+import com.example.busticketreservationsystem.model.data.AppDatabase
+import com.example.busticketreservationsystem.model.repository.AppRepositoryImpl
+import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
+import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BusViewModelTest
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
@@ -22,14 +26,21 @@ class BoardingAndDroppingLocationFragment : Fragment() {
 
     private var boardingDroppingLocationsAdapter = BoardingDroppingLocationAdapter()
 
-    private val busViewModel: BusViewModel by activityViewModels()
-
     private var currentPosition = -1
+
+    private lateinit var busViewModelTest: BusViewModelTest
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         currentPosition = requireArguments().getInt("object", -1)
         setHasOptionsMenu(true)
+
+        val database = AppDatabase.getDatabase(requireActivity().applicationContext)
+        val repository = AppRepositoryImpl(database)
+
+
+        val busViewModelFactory = BusViewModelFactory(repository)
+        busViewModelTest = ViewModelProvider(requireActivity(), busViewModelFactory)[BusViewModelTest::class.java]
     }
 
     override fun onCreateView(
@@ -57,14 +68,14 @@ class BoardingAndDroppingLocationFragment : Fragment() {
 
 
         if(currentPosition == 0){
-            boardingDroppingLocationsAdapter.setLocationsList(busViewModel.boardingPoints)
-            if(busViewModel.boardingPoint.value!!.isNotEmpty()){
-                boardingDroppingLocationsAdapter.setSelectedPosition(busViewModel.boardingPoints.indexOf(busViewModel.boardingPoint.value))
+            boardingDroppingLocationsAdapter.setLocationsList(busViewModelTest.boardingPoints)
+            if(busViewModelTest.boardingPoint.value!!.isNotEmpty()){
+                boardingDroppingLocationsAdapter.setSelectedPosition(busViewModelTest.boardingPoints.indexOf(busViewModelTest.boardingPoint.value))
             }
         }else if(currentPosition == 1){
-            boardingDroppingLocationsAdapter.setLocationsList(busViewModel.droppingPoints)
-            if(busViewModel.droppingPoint.value!!.isNotEmpty()){
-                boardingDroppingLocationsAdapter.setSelectedPosition(busViewModel.droppingPoints.indexOf(busViewModel.droppingPoint.value))
+            boardingDroppingLocationsAdapter.setLocationsList(busViewModelTest.droppingPoints)
+            if(busViewModelTest.droppingPoint.value!!.isNotEmpty()){
+                boardingDroppingLocationsAdapter.setSelectedPosition(busViewModelTest.droppingPoints.indexOf(busViewModelTest.droppingPoint.value))
             }
         }
 
@@ -72,9 +83,9 @@ class BoardingAndDroppingLocationFragment : Fragment() {
             override fun onItemClick(position: Int) {
                 boardingDroppingLocationsAdapter.setSelectedPosition(position)
                 if(currentPosition == 0){
-                    busViewModel.boardingPoint.value = busViewModel.boardingPoints[position]
+                    busViewModelTest.boardingPoint.value = busViewModelTest.boardingPoints[position]
                 }else if(currentPosition == 1){
-                    busViewModel.droppingPoint.value = busViewModel.droppingPoints[position]
+                    busViewModelTest.droppingPoint.value = busViewModelTest.droppingPoints[position]
                 }
 
 //                boardingDroppingLocationsAdapter.notifyDataSetChanged()

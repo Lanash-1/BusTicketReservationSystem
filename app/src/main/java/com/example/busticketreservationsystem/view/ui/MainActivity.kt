@@ -31,13 +31,7 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val busDbViewModel: BusDbViewModel by viewModels()
-    private val busViewModel: BusViewModel by viewModels()
     private val loginStatusViewModel: LoginStatusViewModel by viewModels()
-    private val bookingDbViewModel: BookingDbViewModel by viewModels()
-    private val bookingViewModel: BookingViewModel by viewModels()
-    private val userViewModel: UserViewModel by viewModels()
-    private val userDbViewModel: UserDbViewModel by viewModels()
 
     private lateinit var busViewModelTest: BusViewModelTest
     private lateinit var userViewModelTest: UserViewModelTest
@@ -258,45 +252,45 @@ class MainActivity : AppCompatActivity() {
 //        getBookingHistoryList(userId)
     }
 
-    private fun getBookingHistoryList(userId: Int) {
-        GlobalScope.launch {
-            var bookingList = listOf<Bookings>()
-            val busList = mutableListOf<Bus>()
-            val partnerList = mutableListOf<String>()
-            var passengerList = listOf<PassengerInformation>()
-            val job = launch {
-                bookingList = bookingDbViewModel.getUserBookings(userId)
-                passengerList = bookingDbViewModel.getPassengerInfo()
-                for (booking in bookingList){
-                    busList.add(busDbViewModel.getBus(booking.busId))
-                }
-                for(bus in busList){
-                    partnerList.add(busDbViewModel.getPartnerName(bus.partnerId))
-                }
-                for(i in bookingList.indices){
-                    if(bookingList[i].bookedTicketStatus == BookedTicketStatus.UPCOMING.name){
-                        val sdf = SimpleDateFormat("dd/MM/yyyy")
-                        val strDate: Date = sdf.parse(bookingList[i].date)
-                        val time = Calendar.getInstance().time
-                        val current = sdf.format(time)
-                        val currentDate = sdf.parse(current)
-
-                        if (currentDate.compareTo(strDate) > 0) {
-                            bookingList[i].bookedTicketStatus = BookedTicketStatus.COMPLETED.name
-                            bookingDbViewModel.updateTicketStatus(BookedTicketStatus.COMPLETED.name, bookingList[i].bookingId)
-                        }
-                    }
-                }
-            }
-            job.join()
-            withContext(Dispatchers.IO){
-                bookingViewModel.bookingHistory = bookingList
-                bookingViewModel.bookedBusesList = busList
-                bookingViewModel.bookedPartnerList = partnerList
-                bookingViewModel.bookedPassengerInfo = passengerList
-            }
-        }
-    }
+//    private fun getBookingHistoryList(userId: Int) {
+//        GlobalScope.launch {
+//            var bookingList = listOf<Bookings>()
+//            val busList = mutableListOf<Bus>()
+//            val partnerList = mutableListOf<String>()
+//            var passengerList = listOf<PassengerInformation>()
+//            val job = launch {
+//                bookingList = bookingDbViewModel.getUserBookings(userId)
+//                passengerList = bookingDbViewModel.getPassengerInfo()
+//                for (booking in bookingList){
+//                    busList.add(busDbViewModel.getBus(booking.busId))
+//                }
+//                for(bus in busList){
+//                    partnerList.add(busDbViewModel.getPartnerName(bus.partnerId))
+//                }
+//                for(i in bookingList.indices){
+//                    if(bookingList[i].bookedTicketStatus == BookedTicketStatus.UPCOMING.name){
+//                        val sdf = SimpleDateFormat("dd/MM/yyyy")
+//                        val strDate: Date = sdf.parse(bookingList[i].date)
+//                        val time = Calendar.getInstance().time
+//                        val current = sdf.format(time)
+//                        val currentDate = sdf.parse(current)
+//
+//                        if (currentDate.compareTo(strDate) > 0) {
+//                            bookingList[i].bookedTicketStatus = BookedTicketStatus.COMPLETED.name
+//                            bookingDbViewModel.updateTicketStatus(BookedTicketStatus.COMPLETED.name, bookingList[i].bookingId)
+//                        }
+//                    }
+//                }
+//            }
+//            job.join()
+//            withContext(Dispatchers.IO){
+//                bookingViewModel.bookingHistory = bookingList
+//                bookingViewModel.bookedBusesList = busList
+//                bookingViewModel.bookedPartnerList = partnerList
+//                bookingViewModel.bookedPassengerInfo = passengerList
+//            }
+//        }
+//    }
 
     private fun getBusData() {
 

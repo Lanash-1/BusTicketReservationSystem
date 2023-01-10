@@ -20,10 +20,6 @@ class HomePageFragment : Fragment() {
 
     private lateinit var binding: FragmentHomePageBinding
 
-    private val userViewModel: UserViewModel by activityViewModels()
-    private val userDbViewModel: UserDbViewModel by activityViewModels()
-    private val busDbViewModel: BusDbViewModel by activityViewModels()
-    private val busViewModel: BusViewModel by activityViewModels()
     private val navigationViewModel: NavigationViewModel by activityViewModels()
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
 

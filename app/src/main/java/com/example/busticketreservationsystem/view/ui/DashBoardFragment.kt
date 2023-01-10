@@ -42,11 +42,6 @@ class DashBoardFragment : Fragment() {
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
     private val searchViewModel: SearchViewModel by activityViewModels()
     private val dateViewModel: DateViewModel by activityViewModels()
-    private val busViewModel: BusViewModel by activityViewModels()
-    private val bookingViewModel: BookingViewModel by activityViewModels()
-    private val bookingDbViewModel: BookingDbViewModel by activityViewModels()
-    private val busDbViewModel: BusDbViewModel by activityViewModels()
-    private val userViewModel: UserViewModel by activityViewModels()
     private val navigationViewModel: NavigationViewModel by activityViewModels()
 
     private lateinit var binding: FragmentDashBoardBinding
@@ -90,6 +85,7 @@ class DashBoardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        clearAllValues()
 
         for(i in 0 until parentFragmentManager.backStackEntryCount){
             parentFragmentManager.popBackStack()
@@ -280,114 +276,120 @@ class DashBoardFragment : Fragment() {
         }
     }
 
-    private fun getBusList() {
-        var buses = listOf<Bus>()
-        GlobalScope.launch {
-            val job = launch {
-                buses = busDbViewModel.getBusData()
-            }
-            job.join()
-            withContext(Dispatchers.IO){
-                busViewModel.busList = buses
-            }
-        }
-}
-
-    private fun getBookingHistoryList(userId: Int) {
-    GlobalScope.launch {
-        var bookingList = listOf<Bookings>()
-        val busList = mutableListOf<Bus>()
-        val partnerList = mutableListOf<String>()
-        var passengerList = listOf<PassengerInformation>()
-        val partnerDetailList = mutableListOf<Partners>()
-
-
-        val job = launch {
-            bookingList = bookingDbViewModel.getUserBookings(userId)
-            passengerList = bookingDbViewModel.getPassengerInfo()
-            for (booking in bookingList){
-                busList.add(busDbViewModel.getBus(booking.busId))
-            }
-            for(bus in busList){
-                partnerList.add(busDbViewModel.getPartnerName(bus.partnerId))
-                partnerDetailList.add(busDbViewModel.getPartnerDetails(bus.partnerId))
-            }
-            for(i in bookingList.indices){
-                if(bookingList[i].bookedTicketStatus == BookedTicketStatus.UPCOMING.name){
-                    val sdf = SimpleDateFormat("dd/MM/yyyy")
-                    val strDate: Date = sdf.parse(bookingList[i].date)
-                    val time = Calendar.getInstance().time
-                    val current = sdf.format(time)
-                    val currentDate = sdf.parse(current)
-
-                    if (currentDate > strDate) {
-                        bookingList[i].bookedTicketStatus = BookedTicketStatus.COMPLETED.name
-                        bookingDbViewModel.updateTicketStatus(BookedTicketStatus.COMPLETED.name, bookingList[i].bookingId)
-                    }
-                }
-            }
-        }
-        job.join()
-        withContext(Dispatchers.IO){
-            bookingViewModel.bookingHistory = bookingList
-            bookingViewModel.bookedBusesList = busList
-            bookingViewModel.bookedPartnerList = partnerList
-            bookingViewModel.bookedPassengerInfo = passengerList
-            bookingViewModel.bookedPartnerDetail = partnerDetailList
+    private fun clearAllValues() {
+        busViewModelTest.apply {
+            selectedSeats.clear()
         }
     }
-}
+
+//    private fun getBusList() {
+//        var buses = listOf<Bus>()
+//        GlobalScope.launch {
+//            val job = launch {
+//                buses = busDbViewModel.getBusData()
+//            }
+//            job.join()
+//            withContext(Dispatchers.IO){
+//                busViewModel.busList = buses
+//            }
+//        }
+//}
+
+//    private fun getBookingHistoryList(userId: Int) {
+//    GlobalScope.launch {
+//        var bookingList = listOf<Bookings>()
+//        val busList = mutableListOf<Bus>()
+//        val partnerList = mutableListOf<String>()
+//        var passengerList = listOf<PassengerInformation>()
+//        val partnerDetailList = mutableListOf<Partners>()
+//
+//
+//        val job = launch {
+//            bookingList = bookingDbViewModel.getUserBookings(userId)
+//            passengerList = bookingDbViewModel.getPassengerInfo()
+//            for (booking in bookingList){
+//                busList.add(busDbViewModel.getBus(booking.busId))
+//            }
+//            for(bus in busList){
+//                partnerList.add(busDbViewModel.getPartnerName(bus.partnerId))
+//                partnerDetailList.add(busDbViewModel.getPartnerDetails(bus.partnerId))
+//            }
+//            for(i in bookingList.indices){
+//                if(bookingList[i].bookedTicketStatus == BookedTicketStatus.UPCOMING.name){
+//                    val sdf = SimpleDateFormat("dd/MM/yyyy")
+//                    val strDate: Date = sdf.parse(bookingList[i].date)
+//                    val time = Calendar.getInstance().time
+//                    val current = sdf.format(time)
+//                    val currentDate = sdf.parse(current)
+//
+//                    if (currentDate > strDate) {
+//                        bookingList[i].bookedTicketStatus = BookedTicketStatus.COMPLETED.name
+//                        bookingDbViewModel.updateTicketStatus(BookedTicketStatus.COMPLETED.name, bookingList[i].bookingId)
+//                    }
+//                }
+//            }
+//        }
+//        job.join()
+//        withContext(Dispatchers.IO){
+//            bookingViewModel.bookingHistory = bookingList
+//            bookingViewModel.bookedBusesList = busList
+//            bookingViewModel.bookedPartnerList = partnerList
+//            bookingViewModel.bookedPassengerInfo = passengerList
+//            bookingViewModel.bookedPartnerDetail = partnerDetailList
+//        }
+//    }
+//}
 
 //    check
-    private fun removeRecentlyViewed(recentlyViewed: RecentlyViewed) {
-        GlobalScope.launch {
-            val job = launch {
-                busDbViewModel.removeRecentlyViewed(recentlyViewed)
-            }
-            job.join()
-//            getRecentlyViewedDetails()
-        }
-    }
+//    private fun removeRecentlyViewed(recentlyViewed: RecentlyViewed) {
+//        GlobalScope.launch {
+//            val job = launch {
+//                busDbViewModel.removeRecentlyViewed(recentlyViewed)
+//            }
+//            job.join()
+////            getRecentlyViewedDetails()
+//        }
+//    }
 
-    private fun getRecentlyViewedDetails() {
-        GlobalScope.launch {
-            val busList: MutableList<Bus> = mutableListOf()
-            var recentlyViewList: MutableList<RecentlyViewed> = mutableListOf()
-            var list = listOf<RecentlyViewed>()
-            val recentlyViewedPartnersList = mutableListOf<String>()
-            val job = launch {
-                list = busDbViewModel.getRecentlyViewed(userViewModel.user.userId)
-                for(i in list){
-                    val sdf = SimpleDateFormat("dd/MM/yyyy")
-                    val strDate: Date = sdf.parse(i.date)
-                    val time = Calendar.getInstance().time
-                    val current = sdf.format(time)
-                    val currentDate = sdf.parse(current)
-                    if (currentDate.compareTo(strDate) > 0) {
-                        println("Past")
-                    }else{
-                        recentlyViewList.add(i)
-                    }
-                }
-
-                for(i in recentlyViewList){
-                    busList.add(busDbViewModel.getBus(i.busId))
-                }
-            }
-            job.join()
-            val anotherJob = launch {
-                for(bus in busList){
-                    recentlyViewedPartnersList.add(busDbViewModel.getPartnerName(bus.partnerId))
-                }
-            }
-            anotherJob.join()
-            withContext(Dispatchers.Main){
-                busViewModel.recentlyViewedBusList = busList.reversed()
-                busViewModel.recentlyViewedPartnerList = recentlyViewedPartnersList.reversed()
-                busViewModel.recentlyViewedList.value = recentlyViewList.reversed()
-            }
-        }
-    }
+//    private fun getRecentlyViewedDetails() {
+//        GlobalScope.launch {
+//            val busList: MutableList<Bus> = mutableListOf()
+//            var recentlyViewList: MutableList<RecentlyViewed> = mutableListOf()
+//            var list = listOf<RecentlyViewed>()
+//            val recentlyViewedPartnersList = mutableListOf<String>()
+//            val job = launch {
+//                list = busDbViewModel.getRecentlyViewed(userViewModel.user.userId)
+//                for(i in list){
+//                    val sdf = SimpleDateFormat("dd/MM/yyyy")
+//                    val strDate: Date = sdf.parse(i.date)
+//                    val time = Calendar.getInstance().time
+//                    val current = sdf.format(time)
+//                    val currentDate = sdf.parse(current)
+//                    if (currentDate.compareTo(strDate) > 0) {
+//                        println("Past")
+//                    }else{
+//                        recentlyViewList.add(i)
+//                    }
+//                }
+//
+//                for(i in recentlyViewList){
+//                    busList.add(busDbViewModel.getBus(i.busId))
+//                }
+//            }
+//            job.join()
+//            val anotherJob = launch {
+//                for(bus in busList){
+//                    recentlyViewedPartnersList.add(busDbViewModel.getPartnerName(bus.partnerId))
+//                }
+//            }
+//            anotherJob.join()
+//            withContext(Dispatchers.Main){
+//                busViewModel.recentlyViewedBusList = busList.reversed()
+//                busViewModel.recentlyViewedPartnerList = recentlyViewedPartnersList.reversed()
+//                busViewModel.recentlyViewedList.value = recentlyViewList.reversed()
+//            }
+//        }
+//    }
 
     private fun setLocation(){
         val source = searchViewModel.sourceLocation

@@ -37,11 +37,7 @@ class BusResultsFragment : Fragment() {
 
     private lateinit var binding: FragmentBusResultsBinding
 
-    private val busDbViewModel: BusDbViewModel by activityViewModels()
     private val searchViewModel: SearchViewModel by activityViewModels()
-    private val busViewModel: BusViewModel by activityViewModels()
-    private val userViewModel: UserViewModel by activityViewModels()
-    private val bookingViewModel: BookingViewModel by activityViewModels()
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
 
 

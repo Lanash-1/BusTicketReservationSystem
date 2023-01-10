@@ -20,8 +20,6 @@ import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.model.data.AppDatabase
 import com.example.busticketreservationsystem.model.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
-import com.example.busticketreservationsystem.viewmodel.UserDbViewModel
-import com.example.busticketreservationsystem.viewmodel.UserViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BusViewModelTest
@@ -47,8 +45,6 @@ class RegisterFragment : Fragment() {
 
     private lateinit var editor: SharedPreferences.Editor
 
-    private val userDbViewModel: UserDbViewModel by activityViewModels()
-    private val userViewModel: UserViewModel by activityViewModels()
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
 
 

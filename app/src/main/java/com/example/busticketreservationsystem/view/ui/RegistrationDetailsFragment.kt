@@ -19,8 +19,6 @@ import com.example.busticketreservationsystem.enums.Gender
 import com.example.busticketreservationsystem.model.data.AppDatabase
 import com.example.busticketreservationsystem.model.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.viewmodel.DateViewModel
-import com.example.busticketreservationsystem.viewmodel.UserDbViewModel
-import com.example.busticketreservationsystem.viewmodel.UserViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodeltest.UserViewModelTest
 import com.google.android.material.textfield.TextInputEditText
@@ -44,8 +42,6 @@ class RegistrationDetailsFragment : Fragment() {
     private lateinit var usernameLayout: TextInputLayout
     private lateinit var usernameInput: TextInputEditText
 
-    private val userDbViewModel: UserDbViewModel by activityViewModels()
-    private val userViewModel: UserViewModel by activityViewModels()
     private val dateViewModel: DateViewModel by activityViewModels()
 
     private lateinit var userViewModelTest: UserViewModelTest
@@ -229,18 +225,13 @@ class RegistrationDetailsFragment : Fragment() {
             return null
         }
         if(emailText.isNotEmpty()) {
-            GlobalScope.launch {
-                var result: Boolean = false
-                val job = launch {
-                    result = userDbViewModel.isEmailExists(emailText)
+            userViewModelTest.isEmailExists(emailText)
+
+            userViewModelTest.isEmailExists.observe(viewLifecycleOwner, Observer{
+                if(userViewModelTest.isEmailExists.value == true){
+                    binding.emailInputLayout.helperText = "Email Already Exists"
                 }
-                job.join()
-                withContext(Dispatchers.Main) {
-                    if (!result) {
-                        emailLayout.helperText = "Email Already Exists"
-                    }
-                }
-            }
+            })
             if(Patterns.EMAIL_ADDRESS.matcher(emailText).matches()) {
                 return null
             }

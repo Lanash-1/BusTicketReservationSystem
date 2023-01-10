@@ -103,7 +103,7 @@ class BookingViewModelTest(
 //    Ticket booking process related information and operations
 
     var totalTicketCost = 0.0
-    var selectedSeats = listOf<String>()
+    var selectedSeats = mutableListOf<String>()
 
     lateinit var selectedBus: Bus
 
@@ -146,6 +146,10 @@ class BookingViewModelTest(
         }
     }
 
+
+//    Tab Layout tab position related
+
+    var tabPosition = MutableLiveData<Int>()
 
 
 

@@ -18,7 +18,6 @@ import com.example.busticketreservationsystem.view.adapters.ReviewsAdapter
 import com.example.busticketreservationsystem.databinding.FragmentReviewsBinding
 import com.example.busticketreservationsystem.model.data.AppDatabase
 import com.example.busticketreservationsystem.model.repository.AppRepositoryImpl
-import com.example.busticketreservationsystem.viewmodel.BusViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BusViewModelTest
 
@@ -29,7 +28,6 @@ class ReviewsFragment : Fragment() {
 
     private var reviewsAdapter = ReviewsAdapter()
 
-    private val busViewModel: BusViewModel by activityViewModels()
 
 
     private lateinit var busViewModelTest: BusViewModelTest

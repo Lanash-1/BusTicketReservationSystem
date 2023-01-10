@@ -13,12 +13,18 @@ import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_OPEN
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.view.adapters.BoardingAndDroppingViewPagerAdapter
 import com.example.busticketreservationsystem.databinding.FragmentBoardingAndDroppingBinding
-import com.example.busticketreservationsystem.viewmodel.BusViewModel
+import com.example.busticketreservationsystem.model.data.AppDatabase
+import com.example.busticketreservationsystem.model.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
+import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
+import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
+import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BusViewModelTest
+import com.example.busticketreservationsystem.viewmodel.viewmodeltest.UserViewModelTest
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -27,13 +33,20 @@ class BoardingAndDroppingFragment : Fragment() {
 
     private lateinit var binding: FragmentBoardingAndDroppingBinding
 
-    private val busViewModel: BusViewModel by activityViewModels()
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
 
+    private lateinit var busViewModelTest: BusViewModelTest
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
+        val database = AppDatabase.getDatabase(requireActivity().applicationContext)
+        val repository = AppRepositoryImpl(database)
+
+
+        val busViewModelFactory = BusViewModelFactory(repository)
+        busViewModelTest = ViewModelProvider(requireActivity(), busViewModelFactory)[BusViewModelTest::class.java]
     }
 
     override fun onCreateView(
@@ -84,12 +97,12 @@ class BoardingAndDroppingFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
 
-        busViewModel.boardingPoint.observe(viewLifecycleOwner, Observer {
-            binding.nextButton.isEnabled = busViewModel.boardingPoint.value?.isNotEmpty()!! && busViewModel.droppingPoint.value?.isNotEmpty()!!
+        busViewModelTest.boardingPoint.observe(viewLifecycleOwner, Observer {
+            binding.nextButton.isEnabled = busViewModelTest.boardingPoint.value?.isNotEmpty()!! && busViewModelTest.droppingPoint.value?.isNotEmpty()!!
         })
 
-        busViewModel.droppingPoint.observe(viewLifecycleOwner, Observer {
-            binding.nextButton.isEnabled = busViewModel.boardingPoint.value?.isNotEmpty()!! && busViewModel.droppingPoint.value?.isNotEmpty()!!
+        busViewModelTest.droppingPoint.observe(viewLifecycleOwner, Observer {
+            binding.nextButton.isEnabled = busViewModelTest.boardingPoint.value?.isNotEmpty()!! && busViewModelTest.droppingPoint.value?.isNotEmpty()!!
         })
 
         val tabLayout = binding.boardingDroppingTabLayout
