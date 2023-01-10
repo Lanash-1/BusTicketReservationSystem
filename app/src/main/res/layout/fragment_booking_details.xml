@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".BookingDetailsFragment"
-    android:background="#f0f0f0">
+    tools:context=".view.ui.BookingDetailsFragment"
+    >
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -29,9 +29,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_margin="16dp"
-            android:textSize="16sp"
-            android:textColor="@color/black"
-            android:textStyle="bold" />
+            style="@style/TitleTextStyle"/>
 
 
         <androidx.cardview.widget.CardView
@@ -84,7 +82,7 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    style="@style/DetailsEditText"
+                    style="@style/TextInputEditLayoutAppearance"
                     >
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -92,7 +90,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textEmailAddress"
-                        android:layout_marginBottom="8dp"/>
+                        android:layout_marginBottom="8dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -110,7 +111,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:counterEnabled="true"
                     app:counterMaxLength="10"
-                    style="@style/DetailsEditText"
+                    style="@style/TextInputEditLayoutAppearance"
                     >
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -139,9 +140,7 @@
             app:layout_constraintStart_toStartOf="@id/contact_information_card_view"
             app:layout_constraintTop_toBottomOf="@id/contact_information_card_view"
             android:layout_marginTop="16dp"
-            android:textSize="16sp"
-            android:textColor="@color/black"
-            android:textStyle="bold"/>
+            style="@style/TitleTextStyle"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"

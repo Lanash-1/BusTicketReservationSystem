@@ -2,8 +2,8 @@ package com.example.busticketreservationsystem.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import com.example.busticketreservationsystem.data.AppDatabase
-import com.example.busticketreservationsystem.entity.User
+import com.example.busticketreservationsystem.model.data.AppDatabase
+import com.example.busticketreservationsystem.model.entity.User
 
 class UserDbViewModel(
     application: Application
@@ -27,11 +27,11 @@ class UserDbViewModel(
         return appDb.userDao().getEmailCount(email) == 0
     }
 
-    fun getUserAccount(mobileNumber: String): User{
+    fun getUserAccount(mobileNumber: String): User {
         return appDb.userDao().getUserAccount(mobileNumber)
     }
 
-    fun getUserAccount(userId: Int): User{
+    fun getUserAccount(userId: Int): User {
         return appDb.userDao().getUserAccountByUserID(userId)
     }
 

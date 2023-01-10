@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".SelectedBusFragment">
+    tools:context=".view.ui.SelectedBusFragment">
 
     <TextView
         android:id="@+id/available_text"
@@ -127,27 +127,41 @@
                 />
 
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/select_and_continue_text"
-            android:text="Select Boarding and Dropping points"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/seat_name_text"
-            android:drawableEnd="@drawable/ic_baseline_keyboard_double_arrow_right_24"
-            android:drawableTint="@color/white"
-            android:textAlignment="center"
-            android:padding="8dp"
-            android:background="@color/customRed"
-            android:focusable="true"
-            android:clickable="true"
-            android:foreground="?android:selectableItemBackground"
-            />
+<!--        <TextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:id="@+id/select_and_continue_text"-->
+<!--            android:text="Select Boarding and Dropping points"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="16sp"-->
+<!--            android:textStyle="bold"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/seat_name_text"-->
+<!--            android:drawableEnd="@drawable/ic_baseline_keyboard_double_arrow_right_24"-->
+<!--            android:drawableTint="@color/white"-->
+<!--            android:textAlignment="center"-->
+<!--            android:padding="8dp"-->
+<!--            android:background="@color/customRed"-->
+<!--            android:focusable="true"-->
+<!--            android:clickable="true"-->
+<!--            android:foreground="?android:selectableItemBackground"-->
+<!--            />-->
+
+            <Button
+                android:id="@+id/select_and_continue_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/seat_name_text"
+                android:text="Select Boarding and Dropping Point"
+                android:drawableEnd="@drawable/ic_baseline_keyboard_double_arrow_right_24"
+                android:background="@color/customRed"
+                style="@style/ButtonIconColor"
+                android:textColor="@color/white"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -160,7 +174,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:visibility="visible"
+        android:visibility="gone"
         android:id="@+id/about_bus_card_layout"
         >
 

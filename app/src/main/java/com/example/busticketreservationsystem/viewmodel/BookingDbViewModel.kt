@@ -2,10 +2,10 @@ package com.example.busticketreservationsystem.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import com.example.busticketreservationsystem.data.AppDatabase
-import com.example.busticketreservationsystem.entity.Bookings
-import com.example.busticketreservationsystem.entity.PassengerInformation
-import com.example.busticketreservationsystem.entity.SeatInformation
+import com.example.busticketreservationsystem.model.data.AppDatabase
+import com.example.busticketreservationsystem.model.entity.Bookings
+import com.example.busticketreservationsystem.model.entity.PassengerInformation
+import com.example.busticketreservationsystem.model.entity.SeatInformation
 
 class BookingDbViewModel(
     application: Application

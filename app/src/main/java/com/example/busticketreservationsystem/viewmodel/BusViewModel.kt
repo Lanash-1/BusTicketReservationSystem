@@ -2,7 +2,10 @@ package com.example.busticketreservationsystem.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.busticketreservationsystem.entity.*
+import com.example.busticketreservationsystem.model.entity.Bus
+import com.example.busticketreservationsystem.model.entity.Partners
+import com.example.busticketreservationsystem.model.entity.RecentlyViewed
+import com.example.busticketreservationsystem.model.entity.Reviews
 
 class BusViewModel: ViewModel() {
 
@@ -80,8 +83,6 @@ class BusViewModel: ViewModel() {
     var recentlyViewedList = MutableLiveData<List<RecentlyViewed>>()
     var recentlyViewedBusList = listOf<Bus>()
     var recentlyViewedPartnerList = listOf<String>()
-
-
 
 
 

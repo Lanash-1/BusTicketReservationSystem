@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BoardingAndDroppingFragment"
+    tools:context=".view.ui.BoardingAndDroppingFragment"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.tabs.TabLayout
@@ -30,26 +30,16 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="0dp"
-        android:minWidth="0dp"
         android:id="@+id/next_Button"
-        android:enabled="false"
         android:text="Continue"
         android:textColor="@color/white"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        android:textAlignment="center"
-        android:drawableEnd="@drawable/ic_baseline_keyboard_double_arrow_right_24"
-        android:drawableTint="@color/white"
-        android:padding="8dp"
-        android:clickable="true"
-        android:focusable="true"
         android:background="@color/customRed"
-        android:foreground="?android:selectableItemBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/boarding_dropping_viewPager"
-        />
+        android:enabled="false"
+        android:drawableEnd="@drawable/ic_baseline_keyboard_double_arrow_right_24"
+        android:drawableTint="@color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

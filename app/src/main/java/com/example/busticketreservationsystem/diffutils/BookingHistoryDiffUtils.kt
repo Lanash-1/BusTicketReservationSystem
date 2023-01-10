@@ -1,7 +1,7 @@
 package com.example.busticketreservationsystem.diffutils
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.busticketreservationsystem.entity.Bookings
+import com.example.busticketreservationsystem.model.entity.Bookings
 
 class BookingHistoryDiffUtils(
     private val oldList: List<Bookings>,

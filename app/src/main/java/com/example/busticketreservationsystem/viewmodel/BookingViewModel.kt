@@ -2,8 +2,8 @@ package com.example.busticketreservationsystem.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.busticketreservationsystem.PassengerInfoModel
-import com.example.busticketreservationsystem.entity.*
+import com.example.busticketreservationsystem.view.ui.PassengerInfoModel
+import com.example.busticketreservationsystem.model.entity.*
 
 class BookingViewModel: ViewModel() {
 

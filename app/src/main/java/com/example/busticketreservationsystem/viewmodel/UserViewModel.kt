@@ -1,7 +1,7 @@
 package com.example.busticketreservationsystem.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.example.busticketreservationsystem.entity.User
+import com.example.busticketreservationsystem.model.entity.User
 
 class UserViewModel: ViewModel() {
 

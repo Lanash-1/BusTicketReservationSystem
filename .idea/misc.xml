@@ -19,10 +19,10 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3880208333333333" />
         <entry key="app/src/main/res/layout/fragment_boarding_and_dropping.xml" value="0.21893866184294092" />
         <entry key="app/src/main/res/layout/fragment_boarding_and_dropping_location.xml" value="0.35885416666666664" />
-        <entry key="app/src/main/res/layout/fragment_booked_ticket.xml" value="0.28409932454427084" />
+        <entry key="app/src/main/res/layout/fragment_booked_ticket.xml" value="0.26346588134765625" />
         <entry key="app/src/main/res/layout/fragment_booking_details.xml" value="0.3225225225225225" />
         <entry key="app/src/main/res/layout/fragment_booking_details_guest.xml" value="0.17864583333333334" />
-        <entry key="app/src/main/res/layout/fragment_booking_history.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_booking_history.xml" value="0.16581268310546876" />
         <entry key="app/src/main/res/layout/fragment_booking_history_guest.xml" value="0.17864583333333334" />
         <entry key="app/src/main/res/layout/fragment_booking_history_list.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_bus_info.xml" value="0.2686197916666666" />
@@ -34,16 +34,16 @@
         <entry key="app/src/main/res/layout/fragment_feedback.xml" value="0.17760416666666667" />
         <entry key="app/src/main/res/layout/fragment_forgot_password.xml" value="0.18086853027343752" />
         <entry key="app/src/main/res/layout/fragment_home_page.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.2512969970703125" />
         <entry key="app/src/main/res/layout/fragment_my_account.xml" value="0.38340911865234373" />
         <entry key="app/src/main/res/layout/fragment_my_account_guest.xml" value="0.3729166666666667" />
         <entry key="app/src/main/res/layout/fragment_payment_options.xml" value="0.21979166666666666" />
         <entry key="app/src/main/res/layout/fragment_recently_viewed.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_register.xml" value="0.230181884765625" />
-        <entry key="app/src/main/res/layout/fragment_registration_details.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_registration_details.xml" value="0.22375335693359377" />
         <entry key="app/src/main/res/layout/fragment_reviews.xml" value="0.22760416666666666" />
         <entry key="app/src/main/res/layout/fragment_search.xml" value="0.35323383084577115" />
-        <entry key="app/src/main/res/layout/fragment_selected_bus.xml" value="0.3671783447265625" />
+        <entry key="app/src/main/res/layout/fragment_selected_bus.xml" value="0.2870819091796875" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.35829925537109375" />
         <entry key="app/src/main/res/layout/fragment_sort_and_filter.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_upcoming_booking.xml" value="0.17864583333333334" />

@@ -2,8 +2,8 @@ package com.example.busticketreservationsystem.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import com.example.busticketreservationsystem.data.AppDatabase
-import com.example.busticketreservationsystem.entity.*
+import com.example.busticketreservationsystem.model.data.AppDatabase
+import com.example.busticketreservationsystem.model.entity.*
 
 class BusDbViewModel(application: Application): AndroidViewModel(application) {
 
@@ -35,7 +35,7 @@ class BusDbViewModel(application: Application): AndroidViewModel(application) {
         return appDb.busDao().getBusData()
     }
 
-    fun getBus(busId: Int): Bus{
+    fun getBus(busId: Int): Bus {
         return appDb.busDao().getBus(busId)
     }
 
