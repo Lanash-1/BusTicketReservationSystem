@@ -3,6 +3,8 @@ package com.example.busticketreservationsystem.viewmodel.viewmodeltest
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.busticketreservationsystem.R
+import com.example.busticketreservationsystem.enums.BusTypes
 import com.example.busticketreservationsystem.model.entity.*
 import com.example.busticketreservationsystem.model.repository.AppRepositoryImpl
 import kotlinx.coroutines.Dispatchers
@@ -49,13 +51,13 @@ class BusViewModelTest(
             val partnerList = mutableListOf<Partners>()
             val fetchJob = launch {
                 busList = repository.getBusOfRoute(sourceLocation, destinationLocation)
+                if(checkedList.isNotEmpty() || selectedSort != null){
+                    busList = sortAndFilterOperation(busList)
+                }
                 for(i in busList.indices){
                     partnerList.add(repository.getPartnerDetails(busList[i].partnerId))
                     val notAvailableSeat = repository.getBookedSeats(busList[i].busId, selectedDate)
                     busList[i].availableSeats = busList[i].totalSeats - notAvailableSeat.size
-                }
-                if(checkedList.isNotEmpty() || selectedSort != null){
-                    sortAndFilterOperation()
                 }
             }
             fetchJob.join()
@@ -68,8 +70,81 @@ class BusViewModelTest(
         }
     }
 
-    private fun sortAndFilterOperation() {
+    private fun sortAndFilterOperation(list: List<Bus>): List<Bus> {
+        var newList = mutableListOf<Bus>()
+        if(checkedList.isNotEmpty()) {
 
+            for (filterOption in checkedList) {
+                when (filterOption) {
+                    R.id.ac_checkbox -> {
+                        for (bus in list) {
+                            if (!newList.contains(bus)) {
+                                if (bus.busType == BusTypes.AC_SEATER.name) {
+                                    newList.add(bus)
+                                }
+                            }
+                        }
+                    }
+                    R.id.non_ac_checkbox -> {
+                        for (bus in list) {
+                            if (!newList.contains(bus)) {
+                                if (bus.busType == BusTypes.NON_AC_SEATER.name) {
+                                    newList.add(bus)
+                                }
+                            }
+                        }
+                    }
+                    R.id.seater_checkbox -> {
+                        for (bus in list) {
+                            if (!newList.contains(bus)) {
+                                if (bus.busType == BusTypes.AC_SEATER.name || bus.busType == BusTypes.NON_AC_SEATER.name) {
+                                    newList.add(bus)
+                                }
+                            }
+                        }
+                    }
+                    R.id.sleeper_checkbox -> {
+                        for (bus in list) {
+                            if (!newList.contains(bus)) {
+                                if (bus.busType == BusTypes.SLEEPER.name) {
+                                    newList.add(bus)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if(checkedList.isEmpty()){
+            newList = list as MutableList<Bus>
+        }
+        var sortedList = listOf<Bus>()
+        if(selectedSort != null){
+            when(selectedSort){
+                R.id.price_high_low -> {
+                    sortedList = newList.sortedByDescending {
+                        it.perTicketCost
+                    }
+                }
+                R.id.price_low_high -> {
+                    sortedList = newList.sortedBy {
+                        it.perTicketCost
+                    }
+                }
+                R.id.top_rated -> {
+                    sortedList = newList.sortedByDescending {
+                        it.ratingOverall
+                    }
+                }
+                R.id.shortest_duration -> {
+                    sortedList = newList.sortedBy {
+                        it.duration.toFloat()
+                    }
+                }
+            }
+            newList = sortedList as MutableList<Bus>
+        }
+        return newList
     }
 
 
