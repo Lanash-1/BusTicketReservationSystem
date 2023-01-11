@@ -52,7 +52,7 @@ class BookingHistoryListAdapter: RecyclerView.Adapter<BookingHistoryListAdapter.
             sourceLocationText.text = bookedBusList[position].sourceLocation
             destinationLocationText.text = bookedBusList[position].destination
             dateDateText.text = bookedTicketList[position].date
-            travelsText.text = bookedBusList[position].busName
+            travelsText.text = bookedPartnersList[position]
             startTimeText.text = bookedBusList[position].startTime
             reachTimeText.text = bookedBusList[position].reachTime
             yearText.visibility = View.GONE

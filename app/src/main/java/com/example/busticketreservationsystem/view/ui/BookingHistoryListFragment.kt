@@ -129,7 +129,7 @@ class BookingHistoryListFragment : Fragment() {
         bookingViewModelTest.fetchBookingHistory(userId, ticketStatus)
         bookingViewModelTest.bookingDataFetched.observe(viewLifecycleOwner, Observer{
 //            println("SIZE: ${bookingViewModelTest.bookingHistoryBookingList.size}")
-            bookingHistoryListAdapter.setBookedTicketList(bookingViewModelTest.bookingHistoryBookingList, bookingViewModelTest.bookingHistoryBusList, listOf())
+            bookingHistoryListAdapter.setBookedTicketList(bookingViewModelTest.bookingHistoryBookingList, bookingViewModelTest.bookingHistoryBusList, bookingViewModelTest.bookingHistoryPartnerList)
         })
     }
 
