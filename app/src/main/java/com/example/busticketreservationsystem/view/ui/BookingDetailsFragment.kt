@@ -21,8 +21,6 @@ import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.view.adapters.PassengerInfoAdapter
 import com.example.busticketreservationsystem.databinding.FragmentBookingDetailsBinding
 import com.example.busticketreservationsystem.model.entity.Bookings
-import com.example.busticketreservationsystem.model.entity.PassengerInformation
-import com.example.busticketreservationsystem.model.entity.SeatInformation
 import com.example.busticketreservationsystem.enums.BookedTicketStatus
 import com.example.busticketreservationsystem.enums.Gender
 import com.example.busticketreservationsystem.enums.LoginStatus
@@ -33,15 +31,11 @@ import com.example.busticketreservationsystem.viewmodel.*
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BookingViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
-import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BookingViewModelTest
-import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BusViewModelTest
-import com.example.busticketreservationsystem.viewmodel.viewmodeltest.UserViewModelTest
+import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BookingViewModel
+import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BusViewModel
+import com.example.busticketreservationsystem.viewmodel.viewmodeltest.UserViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class BookingDetailsFragment : Fragment() {
 
@@ -54,9 +48,9 @@ class BookingDetailsFragment : Fragment() {
     private var passengerInfoAdapter = PassengerInfoAdapter()
 
 
-    private lateinit var bookingViewModelTest: BookingViewModelTest
-    private lateinit var busViewModelTest: BusViewModelTest
-    private lateinit var userViewModelTest: UserViewModelTest
+    private lateinit var bookingViewModel: BookingViewModel
+    private lateinit var busViewModel: BusViewModel
+    private lateinit var userViewModel: UserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,13 +60,13 @@ class BookingDetailsFragment : Fragment() {
         val repository = AppRepositoryImpl(database)
 
         val busViewModelFactory = BusViewModelFactory(repository)
-        busViewModelTest = ViewModelProvider(requireActivity(), busViewModelFactory)[BusViewModelTest::class.java]
+        busViewModel = ViewModelProvider(requireActivity(), busViewModelFactory)[BusViewModel::class.java]
 
         val bookingViewModelFactory = BookingViewModelFactory(repository)
-        bookingViewModelTest = ViewModelProvider(requireActivity(), bookingViewModelFactory)[BookingViewModelTest::class.java]
+        bookingViewModel = ViewModelProvider(requireActivity(), bookingViewModelFactory)[BookingViewModel::class.java]
 
         val userViewModelFactory = UserViewModelFactory(repository)
-        userViewModelTest = ViewModelProvider(requireActivity(), userViewModelFactory)[UserViewModelTest::class.java]
+        userViewModel = ViewModelProvider(requireActivity(), userViewModelFactory)[UserViewModel::class.java]
 
     }
 
@@ -137,14 +131,14 @@ class BookingDetailsFragment : Fragment() {
             }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
-        binding.priceText.text = bookingViewModelTest.totalTicketCost.toString()
+        binding.priceText.text = bookingViewModel.totalTicketCost.toString()
 
         binding.mobileInput.addTextChangedListener {
-            bookingViewModelTest.contactMobileNumber = it.toString()
+            bookingViewModel.contactMobileNumber = it.toString()
         }
 
         binding.emailInput.addTextChangedListener {
-            bookingViewModelTest.contactEmailId = it.toString()
+            bookingViewModel.contactEmailId = it.toString()
         }
 
         binding.proceedText.setOnClickListener {
@@ -153,9 +147,9 @@ class BookingDetailsFragment : Fragment() {
             val validEmail = binding.emailLayout.error == null
             if(validEmail && binding.mobileInput.text?.isNotEmpty() == true){
                 var result = true
-                for(i in 0 until bookingViewModelTest.passengerInfo.size){
-                    if(bookingViewModelTest.passengerInfo[i].name != null && bookingViewModelTest.passengerInfo[i].age != null && bookingViewModelTest.passengerInfo[i].gender != null){
-                        if(bookingViewModelTest.passengerInfo[i].name!!.isEmpty() || bookingViewModelTest.passengerInfo[i].age.toString().isEmpty()){
+                for(i in 0 until bookingViewModel.passengerInfo.size){
+                    if(bookingViewModel.passengerInfo[i].name != null && bookingViewModel.passengerInfo[i].age != null && bookingViewModel.passengerInfo[i].gender != null){
+                        if(bookingViewModel.passengerInfo[i].name!!.isEmpty() || bookingViewModel.passengerInfo[i].age.toString().isEmpty()){
                             Toast.makeText(requireContext(), "Fields cannot be empty", Toast.LENGTH_SHORT).show()
                             result = false
                             break
@@ -167,8 +161,8 @@ class BookingDetailsFragment : Fragment() {
                     }
                 }
                 if(result){
-                    bookingViewModelTest.contactEmailId = binding.emailInput.text.toString()
-                    bookingViewModelTest.contactMobileNumber = binding.mobileInput.text.toString()
+                    bookingViewModel.contactEmailId = binding.emailInput.text.toString()
+                    bookingViewModel.contactMobileNumber = binding.mobileInput.text.toString()
 //                    parentFragmentManager.commit {
 //                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
 //                        replace(R.id.homePageFragmentContainer, PaymentOptionsFragment())
@@ -188,63 +182,63 @@ class BookingDetailsFragment : Fragment() {
 //                binding.emailLayout.error = "Enter a valid Email to proceed"
             }
         }
-        if(bookingViewModelTest.passengerInfo.isEmpty() || bookingViewModelTest.passengerInfo.size != bookingViewModelTest.selectedSeats.size){
+        if(bookingViewModel.passengerInfo.isEmpty() || bookingViewModel.passengerInfo.size != bookingViewModel.selectedSeats.size){
 //            if(bookingViewModel.passengerInfo.size != bookingViewModel.selectedSeats.size){
 //                bookingViewModel.passengerInfo.clear()
 //            }
-            bookingViewModelTest.passengerInfo.clear()
-            for(i in 0 until bookingViewModelTest.selectedSeats.size){
-                bookingViewModelTest.passengerInfo.add(PassengerInfoModel(null, null, null))
+            bookingViewModel.passengerInfo.clear()
+            for(i in 0 until bookingViewModel.selectedSeats.size){
+                bookingViewModel.passengerInfo.add(PassengerInfoModel(null, null, null))
             }
         }
 
 
-        if(bookingViewModelTest.contactEmailId != null){
-            if(bookingViewModelTest.contactEmailId!!.isNotEmpty()){
-                binding.emailInput.setText(bookingViewModelTest.contactEmailId)
+        if(bookingViewModel.contactEmailId != null){
+            if(bookingViewModel.contactEmailId!!.isNotEmpty()){
+                binding.emailInput.setText(bookingViewModel.contactEmailId)
             }
         }
 
-        if(bookingViewModelTest.contactMobileNumber != null){
-            if(bookingViewModelTest.contactMobileNumber!!.isNotEmpty()){
-                binding.mobileInput.setText(bookingViewModelTest.contactMobileNumber)
+        if(bookingViewModel.contactMobileNumber != null){
+            if(bookingViewModel.contactMobileNumber!!.isNotEmpty()){
+                binding.mobileInput.setText(bookingViewModel.contactMobileNumber)
             }
         }
 
 
-        passengerInfoAdapter.setPassengerInfoList(bookingViewModelTest.passengerInfo)
+        passengerInfoAdapter.setPassengerInfoList(bookingViewModel.passengerInfo)
 
         binding.passengerInfoRecyclerView.adapter = passengerInfoAdapter
-        passengerInfoAdapter.setSelectedSeats(bookingViewModelTest.selectedSeats)
+        passengerInfoAdapter.setSelectedSeats(bookingViewModel.selectedSeats)
         binding.passengerInfoRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         passengerInfoAdapter.setPassengerInfoChangeListener(object: PassengerInfoChangeListener{
 
             override fun onPassengerNameChanged(position: Int, name: String) {
 //                println("POSITION - $position \n Name: $name")
-                bookingViewModelTest.passengerInfo[position].name = name
+                bookingViewModel.passengerInfo[position].name = name
 
             }
 
             override fun onPassengerAgeChanged(position: Int, age: Int) {
 //                println("POSITION - $position \n Age: $age")
-                bookingViewModelTest.passengerInfo[position].age = age
+                bookingViewModel.passengerInfo[position].age = age
             }
 
             override fun onPassengerGenderSelected(position: Int, gender: Gender) {
 //                println("POSITION - $position \n GENDER: ${gender.name}")
-                bookingViewModelTest.passengerInfo[position].gender = gender
+                bookingViewModel.passengerInfo[position].gender = gender
             }
         })
     }
 
     private fun bookBusTickets(){
-        bookingViewModelTest.selectedBus = busViewModelTest.selectedBus
-        val booking = Bookings(0, userViewModelTest.user.userId, bookingViewModelTest.selectedBus.busId, bookingViewModelTest.contactEmailId!!, bookingViewModelTest.contactMobileNumber!!, bookingViewModelTest.boardingLocation, bookingViewModelTest.droppingLocation, bookingViewModelTest.totalTicketCost, BookedTicketStatus.UPCOMING.name, bookingViewModelTest.selectedSeats.size, busViewModelTest.selectedDate)
+        bookingViewModel.selectedBus = busViewModel.selectedBus
+        val booking = Bookings(0, userViewModel.user.userId, bookingViewModel.selectedBus.busId, bookingViewModel.contactEmailId!!, bookingViewModel.contactMobileNumber!!, bookingViewModel.boardingLocation, bookingViewModel.droppingLocation, bookingViewModel.totalTicketCost, BookedTicketStatus.UPCOMING.name, bookingViewModel.selectedSeats.size, busViewModel.selectedDate)
 
-        bookingViewModelTest.insertBookingOperation(booking, busViewModelTest.selectedDate, userViewModelTest.user.userId)
+        bookingViewModel.insertBookingOperation(booking, busViewModel.selectedDate, userViewModel.user.userId)
 
-        bookingViewModelTest.isTicketBooked.observe(viewLifecycleOwner, Observer{
+        bookingViewModel.isTicketBooked.observe(viewLifecycleOwner, Observer{
             Snackbar.make(requireView(), "Booked ticket successfully", Snackbar.LENGTH_SHORT).show()
             navigationViewModel.fragment = BookingDetailsFragment()
             parentFragmentManager.commit {

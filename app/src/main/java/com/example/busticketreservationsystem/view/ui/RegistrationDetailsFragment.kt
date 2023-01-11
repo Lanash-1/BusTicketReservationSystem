@@ -20,13 +20,9 @@ import com.example.busticketreservationsystem.model.data.AppDatabase
 import com.example.busticketreservationsystem.model.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.viewmodel.DateViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
-import com.example.busticketreservationsystem.viewmodel.viewmodeltest.UserViewModelTest
+import com.example.busticketreservationsystem.viewmodel.viewmodeltest.UserViewModel
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class RegistrationDetailsFragment : Fragment() {
@@ -44,7 +40,7 @@ class RegistrationDetailsFragment : Fragment() {
 
     private val dateViewModel: DateViewModel by activityViewModels()
 
-    private lateinit var userViewModelTest: UserViewModelTest
+    private lateinit var userViewModel: UserViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,7 +50,7 @@ class RegistrationDetailsFragment : Fragment() {
         val repository = AppRepositoryImpl(database)
 
         val userViewModelFactory = UserViewModelFactory(repository)
-        userViewModelTest = ViewModelProvider(requireActivity(), userViewModelFactory)[UserViewModelTest::class.java]
+        userViewModel = ViewModelProvider(requireActivity(), userViewModelFactory)[UserViewModel::class.java]
 
     }
 
@@ -128,7 +124,7 @@ class RegistrationDetailsFragment : Fragment() {
         val validEmail = emailLayout.helperText == null
 
         if(validEmail){
-            userViewModelTest.user.apply {
+            userViewModel.user.apply {
                 this.emailId = emailInput.text.toString()
 
                 if(dateViewModel.year != 0){
@@ -151,7 +147,7 @@ class RegistrationDetailsFragment : Fragment() {
 
             }
 
-            userViewModelTest.updateUserDetails()
+            userViewModel.updateUserDetails()
 //            userViewModel.user.apply {
 //                this.emailId = emailInput.text.toString()
 ////                if(ageInput.text.toString().isEmpty()){
@@ -225,10 +221,10 @@ class RegistrationDetailsFragment : Fragment() {
             return null
         }
         if(emailText.isNotEmpty()) {
-            userViewModelTest.isEmailExists(emailText)
+            userViewModel.isEmailExists(emailText)
 
-            userViewModelTest.isEmailExists.observe(viewLifecycleOwner, Observer{
-                if(userViewModelTest.isEmailExists.value == true){
+            userViewModel.isEmailExists.observe(viewLifecycleOwner, Observer{
+                if(userViewModel.isEmailExists.value == true){
                     binding.emailInputLayout.helperText = "Email Already Exists"
                 }
             })

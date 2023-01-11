@@ -21,13 +21,9 @@ import com.example.busticketreservationsystem.model.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
 import com.example.busticketreservationsystem.viewmodel.NavigationViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
-import com.example.busticketreservationsystem.viewmodel.viewmodeltest.UserViewModelTest
+import com.example.busticketreservationsystem.viewmodel.viewmodeltest.UserViewModel
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class LoginFragment : Fragment() {
 
@@ -45,7 +41,7 @@ class LoginFragment : Fragment() {
     private lateinit var editor: SharedPreferences.Editor
 
 
-    private lateinit var userViewModelTest: UserViewModelTest
+    private lateinit var userViewModel: UserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +51,7 @@ class LoginFragment : Fragment() {
         val repository = AppRepositoryImpl(database)
 
         val userViewModelFactory = UserViewModelFactory(repository)
-        userViewModelTest = ViewModelProvider(requireActivity(), userViewModelFactory)[UserViewModelTest::class.java]
+        userViewModel = ViewModelProvider(requireActivity(), userViewModelFactory)[UserViewModel::class.java]
 
     }
 
@@ -139,11 +135,11 @@ class LoginFragment : Fragment() {
     }
 
     private fun checkLogin(){
-        userViewModelTest.isNumberAlreadyExists(mobileInput.text.toString())
+        userViewModel.isNumberAlreadyExists(mobileInput.text.toString())
 
-        userViewModelTest.isLoggedIn.observe(viewLifecycleOwner, Observer{
-            if(userViewModelTest.isLoggedIn.value == true){
-                editor.putInt("userId", userViewModelTest.user.userId)
+        userViewModel.isLoggedIn.observe(viewLifecycleOwner, Observer{
+            if(userViewModel.isLoggedIn.value == true){
+                editor.putInt("userId", userViewModel.user.userId)
                 editor.commit()
                 parentFragmentManager.commit {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
@@ -152,20 +148,20 @@ class LoginFragment : Fragment() {
             }
         })
 
-        userViewModelTest.isPasswordMatching.observe(viewLifecycleOwner, Observer{
-            if(userViewModelTest.isPasswordMatching.value == true){
+        userViewModel.isPasswordMatching.observe(viewLifecycleOwner, Observer{
+            if(userViewModel.isPasswordMatching.value == true){
                 editor.putString("status", LoginStatus.LOGGED_IN.name)
                 loginStatusViewModel.status = LoginStatus.LOGGED_IN
                 editor.commit()
-                userViewModelTest.fetchUserData(mobileInput.text.toString())
+                userViewModel.fetchUserData(mobileInput.text.toString())
             }else{
                 passwordLayout.helperText = "Invalid password"
             }
         })
 
-        userViewModelTest.isMobileExists.observe(viewLifecycleOwner, Observer{
-            if (userViewModelTest.isMobileExists.value == true){
-                userViewModelTest.isPasswordMatching(mobileInput.text.toString(), passwordInput.text.toString())
+        userViewModel.isMobileExists.observe(viewLifecycleOwner, Observer{
+            if (userViewModel.isMobileExists.value == true){
+                userViewModel.isPasswordMatching(mobileInput.text.toString(), passwordInput.text.toString())
                 mobileLayout.helperText = null
             }else{
                 mobileLayout.helperText = "No account linked with this mobile number"

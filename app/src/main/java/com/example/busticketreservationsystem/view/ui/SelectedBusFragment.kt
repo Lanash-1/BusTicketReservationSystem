@@ -15,21 +15,15 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.view.adapters.BusSeatsAdapter
 import com.example.busticketreservationsystem.databinding.FragmentSelectedBusBinding
-import com.example.busticketreservationsystem.model.entity.Reviews
-import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.listeners.OnItemClickListener
 import com.example.busticketreservationsystem.model.data.AppDatabase
 import com.example.busticketreservationsystem.model.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.viewmodel.*
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BookingViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
-import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BookingViewModelTest
-import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BusViewModelTest
+import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BookingViewModel
+import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BusViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class SelectedBusFragment : Fragment() {
 
@@ -41,8 +35,8 @@ class SelectedBusFragment : Fragment() {
     private val navigationViewModel: NavigationViewModel by activityViewModels()
 
 
-    private lateinit var busViewModelTest: BusViewModelTest
-    private lateinit var bookingViewModelTest: BookingViewModelTest
+    private lateinit var busViewModel: BusViewModel
+    private lateinit var bookingViewModel: BookingViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,10 +46,10 @@ class SelectedBusFragment : Fragment() {
         val repository = AppRepositoryImpl(database)
 
         val busViewModelFactory = BusViewModelFactory(repository)
-        busViewModelTest = ViewModelProvider(requireActivity(), busViewModelFactory)[BusViewModelTest::class.java]
+        busViewModel = ViewModelProvider(requireActivity(), busViewModelFactory)[BusViewModel::class.java]
 
         val bookingViewModelFactory = BookingViewModelFactory(repository)
-        bookingViewModelTest = ViewModelProvider(requireActivity(), bookingViewModelFactory)[BookingViewModelTest::class.java]
+        bookingViewModel = ViewModelProvider(requireActivity(), bookingViewModelFactory)[BookingViewModel::class.java]
 
     }
 
@@ -66,10 +60,10 @@ class SelectedBusFragment : Fragment() {
         // Inflate the layout for this fragment
         (activity as AppCompatActivity).supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
-            title = "${busViewModelTest.selectedBus.sourceLocation} - ${busViewModelTest.selectedBus.destination}"
+            title = "${busViewModel.selectedBus.sourceLocation} - ${busViewModel.selectedBus.destination}"
         }
-        busViewModelTest.boardingPoint.value = ""
-        busViewModelTest.droppingPoint.value = ""
+        busViewModel.boardingPoint.value = ""
+        busViewModel.droppingPoint.value = ""
         binding = FragmentSelectedBusBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -100,8 +94,8 @@ class SelectedBusFragment : Fragment() {
     }
 
     private fun backPressLogic() {
-        busViewModelTest.selectedSeats.clear()
-        busViewModelTest.selectedSeats.clear()
+        busViewModel.selectedSeats.clear()
+        busViewModel.selectedSeats.clear()
         when(navigationViewModel.fragment){
             is DashBoardFragment -> {
                 navigationViewModel.fragment = null
@@ -141,7 +135,7 @@ class SelectedBusFragment : Fragment() {
 //        ratingAndReviewOperations(busViewModel.selectedBus.busId)
 
         binding.selectAndContinueText.setOnClickListener {
-            bookingViewModelTest.selectedSeats = busViewModelTest.selectedSeats
+            bookingViewModel.selectedSeats = busViewModel.selectedSeats
             parentFragmentManager.commit {
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 replace(R.id.homePageFragmentContainer, BoardingAndDroppingFragment())
@@ -186,15 +180,15 @@ class SelectedBusFragment : Fragment() {
 
 
 
-        if(busViewModelTest.selectedSeats.size > 0){
+        if(busViewModel.selectedSeats.size > 0){
             println("SELECTED NOT ZERO")
-            busSeatsAdapter.setBusSeatsList(busViewModelTest.selectedBusSeatDimensions)
+            busSeatsAdapter.setBusSeatsList(busViewModel.selectedBusSeatDimensions)
             busSeatsAdapter.notifyDataSetChanged()
         }else{
             println("SELECTED ZERO")
             createBusSeatsList()
-            busViewModelTest.fetchBusSeatsData()
-            busViewModelTest.seatDataFetched.observe(viewLifecycleOwner, Observer{
+            busViewModel.fetchBusSeatsData()
+            busViewModel.seatDataFetched.observe(viewLifecycleOwner, Observer{
                 createBusSeatsList()
             })
         }
@@ -336,64 +330,64 @@ class SelectedBusFragment : Fragment() {
     }
 
     private fun busSeatSelectionOperation(position: Int) {
-        if(busViewModelTest.selectedBusSeatDimensions[position] == 0){
-            if(busViewModelTest.selectedSeats.size == 6){
+        if(busViewModel.selectedBusSeatDimensions[position] == 0){
+            if(busViewModel.selectedSeats.size == 6){
                 Toast.makeText(requireContext(), "Maximum 6 seats only allowed", Toast.LENGTH_SHORT).show()
             }else {
-                busViewModelTest.selectedBusSeatDimensions[position] = 1
+                busViewModel.selectedBusSeatDimensions[position] = 1
                 val row = position / 4 + 1
                 when (position % 4) {
                     0 -> {
-                        busViewModelTest.selectedSeats.add("LW$row")
+                        busViewModel.selectedSeats.add("LW$row")
                     }
                     2 -> {
-                        busViewModelTest.selectedSeats.add("RA$row")
+                        busViewModel.selectedSeats.add("RA$row")
                     }
                     3 -> {
-                        busViewModelTest.selectedSeats.add("RW$row")
+                        busViewModel.selectedSeats.add("RW$row")
                     }
                 }
             }
-        }else if(busViewModelTest.selectedBusSeatDimensions[position] == 1){
-            busViewModelTest.selectedBusSeatDimensions[position] = 0
+        }else if(busViewModel.selectedBusSeatDimensions[position] == 1){
+            busViewModel.selectedBusSeatDimensions[position] = 0
             val row = position/4 + 1
 
             when(position%4){
                 0 -> {
-                    busViewModelTest.selectedSeats.remove("LW$row")
+                    busViewModel.selectedSeats.remove("LW$row")
                 }
                 2 -> {
-                    busViewModelTest.selectedSeats.remove("RA$row")
+                    busViewModel.selectedSeats.remove("RA$row")
                 }
                 3 -> {
-                    busViewModelTest.selectedSeats.remove("RW$row")
+                    busViewModel.selectedSeats.remove("RW$row")
                 }
             }
         }
 
        updateView()
 
-        bookingViewModelTest.apply {
-            selectedBus = busViewModelTest.selectedBus
-            selectedSeats = busViewModelTest.selectedSeats
-            totalTicketCost = busViewModelTest.selectedSeats.size * busViewModelTest.selectedBus.perTicketCost
+        bookingViewModel.apply {
+            selectedBus = busViewModel.selectedBus
+            selectedSeats = busViewModel.selectedSeats
+            totalTicketCost = busViewModel.selectedSeats.size * busViewModel.selectedBus.perTicketCost
         }
 
-        busSeatsAdapter.setBusSeatsList(busViewModelTest.selectedBusSeatDimensions)
+        busSeatsAdapter.setBusSeatsList(busViewModel.selectedBusSeatDimensions)
         busSeatsAdapter.notifyDataSetChanged()
 
     }
 
     private fun updateView() {
-        if(busViewModelTest.selectedSeats.size > 1){
-            binding.seatNameText.text = "${busViewModelTest.selectedSeats.size} Seats | ${busViewModelTest.selectedSeats}"
+        if(busViewModel.selectedSeats.size > 1){
+            binding.seatNameText.text = "${busViewModel.selectedSeats.size} Seats | ${busViewModel.selectedSeats}"
         }else{
-            binding.seatNameText.text = "${busViewModelTest.selectedSeats.size} Seat | ${busViewModelTest.selectedSeats}"
+            binding.seatNameText.text = "${busViewModel.selectedSeats.size} Seat | ${busViewModel.selectedSeats}"
         }
 
-        binding.priceText.text = "₹ ${busViewModelTest.selectedBus.perTicketCost * busViewModelTest.selectedSeats.size}"
+        binding.priceText.text = "₹ ${busViewModel.selectedBus.perTicketCost * busViewModel.selectedSeats.size}"
 
-        if(busViewModelTest.selectedSeats.isEmpty()){
+        if(busViewModel.selectedSeats.isEmpty()){
             binding.nextCardLayout.visibility = View.GONE
             binding.aboutBusCardLayout.visibility = View.VISIBLE
         }else{
@@ -409,30 +403,30 @@ class SelectedBusFragment : Fragment() {
             val row = i/4 + 1
             when(i%4){
                 0 -> {
-                    if(busViewModelTest.bookedSeatsList.contains("LW$row")){
+                    if(busViewModel.bookedSeatsList.contains("LW$row")){
                         seatsList.add(-1)
                     }
-                    else if(busViewModelTest.selectedSeats.contains("LW$row")){
+                    else if(busViewModel.selectedSeats.contains("LW$row")){
                         seatsList.add(1)
                     }else{
                         seatsList.add(0)
                     }
                 }
                 2 -> {
-                    if(busViewModelTest.bookedSeatsList.contains("RA$row")){
+                    if(busViewModel.bookedSeatsList.contains("RA$row")){
                         seatsList.add(-1)
                     }
-                    else if(busViewModelTest.selectedSeats.contains("RA$row")){
+                    else if(busViewModel.selectedSeats.contains("RA$row")){
                         seatsList.add(1)
                     }else{
                         seatsList.add(0)
                     }
                 }
                 3 -> {
-                    if(busViewModelTest.bookedSeatsList.contains("RW$row")){
+                    if(busViewModel.bookedSeatsList.contains("RW$row")){
                         seatsList.add(-1)
                     }
-                    else if(busViewModelTest.selectedSeats.contains("RW$row")){
+                    else if(busViewModel.selectedSeats.contains("RW$row")){
                         seatsList.add(1)
                     }else{
                         seatsList.add(0)
@@ -443,9 +437,9 @@ class SelectedBusFragment : Fragment() {
                 }
             }
         }
-        busViewModelTest.selectedBusSeatDimensions = seatsList
+        busViewModel.selectedBusSeatDimensions = seatsList
 
-        busSeatsAdapter.setBusSeatsList(busViewModelTest.selectedBusSeatDimensions)
+        busSeatsAdapter.setBusSeatsList(busViewModel.selectedBusSeatDimensions)
         busSeatsAdapter.notifyDataSetChanged()
     }
 

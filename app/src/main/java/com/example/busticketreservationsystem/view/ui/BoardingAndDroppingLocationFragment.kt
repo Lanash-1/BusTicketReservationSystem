@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.busticketreservationsystem.R
@@ -16,7 +15,7 @@ import com.example.busticketreservationsystem.listeners.OnItemClickListener
 import com.example.busticketreservationsystem.model.data.AppDatabase
 import com.example.busticketreservationsystem.model.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
-import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BusViewModelTest
+import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BusViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
@@ -28,7 +27,7 @@ class BoardingAndDroppingLocationFragment : Fragment() {
 
     private var currentPosition = -1
 
-    private lateinit var busViewModelTest: BusViewModelTest
+    private lateinit var busViewModel: BusViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +39,7 @@ class BoardingAndDroppingLocationFragment : Fragment() {
 
 
         val busViewModelFactory = BusViewModelFactory(repository)
-        busViewModelTest = ViewModelProvider(requireActivity(), busViewModelFactory)[BusViewModelTest::class.java]
+        busViewModel = ViewModelProvider(requireActivity(), busViewModelFactory)[BusViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -68,14 +67,14 @@ class BoardingAndDroppingLocationFragment : Fragment() {
 
 
         if(currentPosition == 0){
-            boardingDroppingLocationsAdapter.setLocationsList(busViewModelTest.boardingPoints)
-            if(busViewModelTest.boardingPoint.value!!.isNotEmpty()){
-                boardingDroppingLocationsAdapter.setSelectedPosition(busViewModelTest.boardingPoints.indexOf(busViewModelTest.boardingPoint.value))
+            boardingDroppingLocationsAdapter.setLocationsList(busViewModel.boardingPoints)
+            if(busViewModel.boardingPoint.value!!.isNotEmpty()){
+                boardingDroppingLocationsAdapter.setSelectedPosition(busViewModel.boardingPoints.indexOf(busViewModel.boardingPoint.value))
             }
         }else if(currentPosition == 1){
-            boardingDroppingLocationsAdapter.setLocationsList(busViewModelTest.droppingPoints)
-            if(busViewModelTest.droppingPoint.value!!.isNotEmpty()){
-                boardingDroppingLocationsAdapter.setSelectedPosition(busViewModelTest.droppingPoints.indexOf(busViewModelTest.droppingPoint.value))
+            boardingDroppingLocationsAdapter.setLocationsList(busViewModel.droppingPoints)
+            if(busViewModel.droppingPoint.value!!.isNotEmpty()){
+                boardingDroppingLocationsAdapter.setSelectedPosition(busViewModel.droppingPoints.indexOf(busViewModel.droppingPoint.value))
             }
         }
 
@@ -83,9 +82,9 @@ class BoardingAndDroppingLocationFragment : Fragment() {
             override fun onItemClick(position: Int) {
                 boardingDroppingLocationsAdapter.setSelectedPosition(position)
                 if(currentPosition == 0){
-                    busViewModelTest.boardingPoint.value = busViewModelTest.boardingPoints[position]
+                    busViewModel.boardingPoint.value = busViewModel.boardingPoints[position]
                 }else if(currentPosition == 1){
-                    busViewModelTest.droppingPoint.value = busViewModelTest.droppingPoints[position]
+                    busViewModel.droppingPoint.value = busViewModel.droppingPoints[position]
                 }
 
 //                boardingDroppingLocationsAdapter.notifyDataSetChanged()

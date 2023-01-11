@@ -31,7 +31,7 @@ import com.example.busticketreservationsystem.model.data.AppDatabase
 import com.example.busticketreservationsystem.model.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.viewmodel.*
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
-import com.example.busticketreservationsystem.viewmodel.viewmodeltest.UserViewModelTest
+import com.example.busticketreservationsystem.viewmodel.viewmodeltest.UserViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.chip.Chip
 
@@ -60,7 +60,7 @@ class MyAccountFragment : Fragment() {
 
     private lateinit var myAccountRecyclerView: RecyclerView
 
-    private lateinit var userViewModelTest: UserViewModelTest
+    private lateinit var userViewModel: UserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,7 +69,7 @@ class MyAccountFragment : Fragment() {
         val database = AppDatabase.getDatabase(requireActivity().applicationContext)
         val repository = AppRepositoryImpl(database)
         val userViewModelFactory = UserViewModelFactory(repository)
-        userViewModelTest = ViewModelProvider(requireActivity(), userViewModelFactory)[UserViewModelTest::class.java]
+        userViewModel = ViewModelProvider(requireActivity(), userViewModelFactory)[UserViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -113,11 +113,11 @@ class MyAccountFragment : Fragment() {
 
         }else{
             binding.accountProfileLayout.visibility = View.VISIBLE
-            binding.username.text = userViewModelTest.user.username
-            binding.email.text = userViewModelTest.user.emailId
-            binding.mobile.text = userViewModelTest.user.mobileNumber
-            binding.gender.text = userViewModelTest.user.gender
-            binding.dob.text = userViewModelTest.user.dob
+            binding.username.text = userViewModel.user.username
+            binding.email.text = userViewModel.user.emailId
+            binding.mobile.text = userViewModel.user.mobileNumber
+            binding.gender.text = userViewModel.user.gender
+            binding.dob.text = userViewModel.user.dob
         }
 
         editProfileChip = view.findViewById(R.id.edit_profile_chip)
@@ -219,7 +219,7 @@ class MyAccountFragment : Fragment() {
                     month = 0
                     date = 0
                 }
-                userViewModelTest.user = User(0,"","","","","","")
+                userViewModel.user = User(0,"","","","","","")
                 editor.putString("status", LoginStatus.LOGGED_OUT.name)
                 loginStatusViewModel.status = LoginStatus.LOGGED_OUT
                 editor.commit()

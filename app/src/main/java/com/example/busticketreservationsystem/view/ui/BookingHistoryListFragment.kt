@@ -18,8 +18,8 @@ import com.example.busticketreservationsystem.model.data.AppDatabase
 import com.example.busticketreservationsystem.model.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BookingViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
-import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BookingViewModelTest
-import com.example.busticketreservationsystem.viewmodel.viewmodeltest.UserViewModelTest
+import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BookingViewModel
+import com.example.busticketreservationsystem.viewmodel.viewmodeltest.UserViewModel
 
 
 class BookingHistoryListFragment : Fragment() {
@@ -31,8 +31,8 @@ class BookingHistoryListFragment : Fragment() {
     private var bookingHistoryListAdapter = BookingHistoryListAdapter()
 
 
-    private lateinit var bookingViewModelTest: BookingViewModelTest
-    private lateinit var userViewModelTest: UserViewModelTest
+    private lateinit var bookingViewModel: BookingViewModel
+    private lateinit var userViewModel: UserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,10 +47,10 @@ class BookingHistoryListFragment : Fragment() {
         val repository = AppRepositoryImpl(database)
 
         val bookingViewModelFactory = BookingViewModelFactory(repository)
-        bookingViewModelTest = ViewModelProvider(requireActivity(), bookingViewModelFactory)[BookingViewModelTest::class.java]
+        bookingViewModel = ViewModelProvider(requireActivity(), bookingViewModelFactory)[BookingViewModel::class.java]
 
         val userViewModelFactory =  UserViewModelFactory(repository)
-        userViewModelTest = ViewModelProvider(requireActivity(), userViewModelFactory)[UserViewModelTest::class.java]
+        userViewModel = ViewModelProvider(requireActivity(), userViewModelFactory)[UserViewModel::class.java]
 
     }
 
@@ -75,8 +75,8 @@ class BookingHistoryListFragment : Fragment() {
         bookingHistoryListAdapter.setOnItemClickListener(object : OnItemClickListener{
             override fun onItemClick(position: Int) {
 //               bookingViewModel.selectedTicket = position
-                bookingViewModelTest.selectedTicket = position
-                bookingViewModelTest.selectedBus = bookingViewModelTest.bookingHistoryBusList[position]
+                bookingViewModel.selectedTicket = position
+                bookingViewModel.selectedBus = bookingViewModel.bookingHistoryBusList[position]
 
                 parentFragmentManager.commit {
                     replace(R.id.homePageFragmentContainer, BookedTicketFragment())
@@ -88,8 +88,8 @@ class BookingHistoryListFragment : Fragment() {
 
 
 
-        bookingViewModelTest.tabPosition.observe(viewLifecycleOwner, Observer {
-            filterBooking(bookingViewModelTest.tabPosition.value!!)
+        bookingViewModel.tabPosition.observe(viewLifecycleOwner, Observer {
+            filterBooking(bookingViewModel.tabPosition.value!!)
         })
 
         filterBooking(currentPosition)
@@ -111,25 +111,25 @@ class BookingHistoryListFragment : Fragment() {
         when (tabPosition) {
             0 -> {
 //                filterBookingList(BookedTicketStatus.UPCOMING.name)
-                fetchBookingHistoryData(userViewModelTest.user.userId, BookedTicketStatus.UPCOMING.name)
+                fetchBookingHistoryData(userViewModel.user.userId, BookedTicketStatus.UPCOMING.name)
             }
             1 -> {
 //                filterBookingList(BookedTicketStatus.COMPLETED.name)
-                fetchBookingHistoryData(userViewModelTest.user.userId, BookedTicketStatus.COMPLETED.name)
+                fetchBookingHistoryData(userViewModel.user.userId, BookedTicketStatus.COMPLETED.name)
             }
             2 -> {
 //                filterBookingList(BookedTicketStatus.CANCELLED.name)
-                fetchBookingHistoryData(userViewModelTest.user.userId, BookedTicketStatus.CANCELLED.name)
+                fetchBookingHistoryData(userViewModel.user.userId, BookedTicketStatus.CANCELLED.name)
 
             }
         }
     }
 
     private fun fetchBookingHistoryData(userId: Int, ticketStatus: String) {
-        bookingViewModelTest.fetchBookingHistory(userId, ticketStatus)
-        bookingViewModelTest.bookingDataFetched.observe(viewLifecycleOwner, Observer{
+        bookingViewModel.fetchBookingHistory(userId, ticketStatus)
+        bookingViewModel.bookingDataFetched.observe(viewLifecycleOwner, Observer{
 //            println("SIZE: ${bookingViewModelTest.bookingHistoryBookingList.size}")
-            bookingHistoryListAdapter.setBookedTicketList(bookingViewModelTest.bookingHistoryBookingList, bookingViewModelTest.bookingHistoryBusList, bookingViewModelTest.bookingHistoryPartnerList)
+            bookingHistoryListAdapter.setBookedTicketList(bookingViewModel.bookingHistoryBookingList, bookingViewModel.bookingHistoryBusList, bookingViewModel.bookingHistoryPartnerList)
         })
     }
 

@@ -12,7 +12,7 @@ import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class BusViewModelTest(
+class BusViewModel(
     private val repository: AppRepositoryImpl
 ): ViewModel() {
 

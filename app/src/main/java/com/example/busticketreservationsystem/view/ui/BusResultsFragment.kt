@@ -2,7 +2,6 @@ package com.example.busticketreservationsystem.view.ui
 
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
@@ -15,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.view.adapters.BusResultAdapter
 import com.example.busticketreservationsystem.databinding.FragmentBusResultsBinding
-import com.example.busticketreservationsystem.model.entity.RecentlyViewed
 import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.listeners.OnItemClickListener
 import com.example.busticketreservationsystem.model.data.AppDatabase
@@ -23,13 +21,9 @@ import com.example.busticketreservationsystem.model.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.viewmodel.*
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
-import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BusViewModelTest
-import com.example.busticketreservationsystem.viewmodel.viewmodeltest.UserViewModelTest
+import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BusViewModel
+import com.example.busticketreservationsystem.viewmodel.viewmodeltest.UserViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class BusResultsFragment : Fragment() {
@@ -44,8 +38,8 @@ class BusResultsFragment : Fragment() {
     private var busResultAdapter = BusResultAdapter()
 
 
-    private lateinit var busViewModelTest: BusViewModelTest
-    private lateinit var userViewModelTest: UserViewModelTest
+    private lateinit var busViewModel: BusViewModel
+    private lateinit var userViewModel: UserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,10 +49,10 @@ class BusResultsFragment : Fragment() {
         val repository = AppRepositoryImpl(database)
 
         val busViewModelFactory = BusViewModelFactory(repository)
-        busViewModelTest = ViewModelProvider(requireActivity(), busViewModelFactory)[BusViewModelTest::class.java]
+        busViewModel = ViewModelProvider(requireActivity(), busViewModelFactory)[BusViewModel::class.java]
 
         val userViewModelFactory = UserViewModelFactory(repository)
-        userViewModelTest = ViewModelProvider(requireActivity(), userViewModelFactory)[UserViewModelTest::class.java]
+        userViewModel = ViewModelProvider(requireActivity(), userViewModelFactory)[UserViewModel::class.java]
 
 
 //        val factory = TestViewModelFactory(repository)
@@ -128,14 +122,14 @@ class BusResultsFragment : Fragment() {
         binding.busResultsRv.adapter = busResultAdapter
 
 //mvvm
-        busViewModelTest.busResultDataFetched.observe(viewLifecycleOwner, Observer{
+        busViewModel.busResultDataFetched.observe(viewLifecycleOwner, Observer{
             checkResultIsEmpty()
-            busResultAdapter.setBusList(busViewModelTest.resultBusList)
-            busResultAdapter.setPartnerList(busViewModelTest.resultPartnerList)
+            busResultAdapter.setBusList(busViewModel.resultBusList)
+            busResultAdapter.setPartnerList(busViewModel.resultPartnerList)
             busResultAdapter.notifyDataSetChanged()
         })
 
-        busViewModelTest.fetchBusResultsDetails()
+        busViewModel.fetchBusResultsDetails()
 
 //        mvvm
 
@@ -156,11 +150,11 @@ class BusResultsFragment : Fragment() {
         busResultAdapter.setOnItemClickListener(object : OnItemClickListener{
             override fun onItemClick(position: Int) {
 
-                busViewModelTest.selectedBusId = busViewModelTest.resultBusList[position].busId
-                busViewModelTest.selectedBus = busViewModelTest.resultBusList[position]
+                busViewModel.selectedBusId = busViewModel.resultBusList[position].busId
+                busViewModel.selectedBus = busViewModel.resultBusList[position]
 
                 if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
-                    userViewModelTest.addRecentlyViewed(busViewModelTest.selectedBusId, busViewModelTest.selectedDate)
+                    userViewModel.addRecentlyViewed(busViewModel.selectedBusId, busViewModel.selectedDate)
                 }
 
 
@@ -198,7 +192,7 @@ class BusResultsFragment : Fragment() {
     }
 
     private fun checkResultIsEmpty() {
-        if(busViewModelTest.resultBusList.isEmpty()){
+        if(busViewModel.resultBusList.isEmpty()){
             binding.emptyListImage.visibility = View.VISIBLE
             binding.noResultsText.visibility = View.VISIBLE
         }else{

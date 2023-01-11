@@ -21,11 +21,8 @@ import com.example.busticketreservationsystem.model.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
 import com.example.busticketreservationsystem.viewmodel.NavigationViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BookingViewModelFactory
-import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
-import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BookingViewModelTest
-import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BusViewModelTest
+import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BookingViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 class BookingHistoryFragment : Fragment() {
@@ -36,7 +33,7 @@ class BookingHistoryFragment : Fragment() {
     private val navigationViewModel: NavigationViewModel by activityViewModels()
 
 
-    private lateinit var bookingViewModelTest: BookingViewModelTest
+    private lateinit var bookingViewModel: BookingViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +43,7 @@ class BookingHistoryFragment : Fragment() {
         val repository = AppRepositoryImpl(database)
 
         val bookingViewModelFactory = BookingViewModelFactory(repository)
-        bookingViewModelTest = ViewModelProvider(requireActivity(), bookingViewModelFactory)[BookingViewModelTest::class.java]
+        bookingViewModel = ViewModelProvider(requireActivity(), bookingViewModelFactory)[BookingViewModel::class.java]
 
     }
 
@@ -119,7 +116,7 @@ class BookingHistoryFragment : Fragment() {
         viewPager.registerOnPageChangeCallback(
             object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
-                    bookingViewModelTest.tabPosition.value = position
+                    bookingViewModel.tabPosition.value = position
                     super.onPageSelected(position)
                 }
 

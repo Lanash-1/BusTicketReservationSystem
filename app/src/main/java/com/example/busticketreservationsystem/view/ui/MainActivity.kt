@@ -9,7 +9,6 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
 import com.example.busticketreservationsystem.R
-import com.example.busticketreservationsystem.enums.BookedTicketStatus
 import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.enums.Themes
 import com.example.busticketreservationsystem.model.data.AppDatabase
@@ -18,23 +17,17 @@ import com.example.busticketreservationsystem.model.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.viewmodel.*
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
-import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BusViewModelTest
-import com.example.busticketreservationsystem.viewmodel.viewmodeltest.UserViewModelTest
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BusViewModel
+import com.example.busticketreservationsystem.viewmodel.viewmodeltest.UserViewModel
 import org.json.JSONArray
 import org.json.JSONObject
-import java.text.SimpleDateFormat
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
     private val loginStatusViewModel: LoginStatusViewModel by viewModels()
 
-    private lateinit var busViewModelTest: BusViewModelTest
-    private lateinit var userViewModelTest: UserViewModelTest
+    private lateinit var busViewModel: BusViewModel
+    private lateinit var userViewModel: UserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,10 +37,10 @@ class MainActivity : AppCompatActivity() {
         val repository = AppRepositoryImpl(database)
 
         val busViewModelFactory = BusViewModelFactory(repository)
-        busViewModelTest = ViewModelProvider(this, busViewModelFactory)[BusViewModelTest::class.java]
+        busViewModel = ViewModelProvider(this, busViewModelFactory)[BusViewModel::class.java]
 
         val userViewModelFactory = UserViewModelFactory(repository)
-        userViewModelTest = ViewModelProvider(this, userViewModelFactory)[UserViewModelTest::class.java]
+        userViewModel = ViewModelProvider(this, userViewModelFactory)[UserViewModel::class.java]
 
 
 //      Check
@@ -179,7 +172,7 @@ class MainActivity : AppCompatActivity() {
                     loginStatusViewModel.status = LoginStatus.LOGGED_IN
 
 //                    fetch data of user already logged in
-                    userViewModelTest.fetchUserData(writeSharedPreferences.getInt("userId", 0))
+                    userViewModel.fetchUserData(writeSharedPreferences.getInt("userId", 0))
 
                     supportFragmentManager.commit {
                         setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
@@ -370,7 +363,7 @@ class MainActivity : AppCompatActivity() {
         busList: MutableList<Bus>,
         amenitiesList: MutableList<BusAmenities>
     ) {
-        busViewModelTest.insertInitialData(partnersList, busList, amenitiesList)
+        busViewModel.insertInitialData(partnersList, busList, amenitiesList)
     }
 
 }

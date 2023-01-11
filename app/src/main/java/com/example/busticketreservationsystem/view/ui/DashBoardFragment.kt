@@ -15,26 +15,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.view.adapters.RecentlyViewedAdapter
 import com.example.busticketreservationsystem.databinding.FragmentDashBoardBinding
-import com.example.busticketreservationsystem.enums.BookedTicketStatus
 import com.example.busticketreservationsystem.enums.LocationOptions
 import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.listeners.OnItemClickListener
 import com.example.busticketreservationsystem.listeners.OnRemoveClickListener
 import com.example.busticketreservationsystem.model.data.AppDatabase
-import com.example.busticketreservationsystem.model.entity.*
 import com.example.busticketreservationsystem.model.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.viewmodel.*
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
-import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BusViewModelTest
-import com.example.busticketreservationsystem.viewmodel.viewmodeltest.UserViewModelTest
+import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BusViewModel
+import com.example.busticketreservationsystem.viewmodel.viewmodeltest.UserViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 class DashBoardFragment : Fragment() {
@@ -50,8 +42,8 @@ class DashBoardFragment : Fragment() {
     private var recentlyViewedAdapter = RecentlyViewedAdapter()
 
 
-    private lateinit var userViewModelTest: UserViewModelTest
-    private lateinit var busViewModelTest: BusViewModelTest
+    private lateinit var userViewModel: UserViewModel
+    private lateinit var busViewModel: BusViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,10 +53,10 @@ class DashBoardFragment : Fragment() {
         val repository = AppRepositoryImpl(database)
 
         val userViewModelFactory = UserViewModelFactory(repository)
-        userViewModelTest = ViewModelProvider(requireActivity(), userViewModelFactory)[UserViewModelTest::class.java]
+        userViewModel = ViewModelProvider(requireActivity(), userViewModelFactory)[UserViewModel::class.java]
 
         val busViewModelFactory = BusViewModelFactory(repository)
-        busViewModelTest = ViewModelProvider(requireActivity(), busViewModelFactory)[BusViewModelTest::class.java]
+        busViewModel = ViewModelProvider(requireActivity(), busViewModelFactory)[BusViewModel::class.java]
 
     }
 
@@ -109,8 +101,8 @@ class DashBoardFragment : Fragment() {
             binding.recentlyViewedText.visibility = View.GONE
         }
 
-        userViewModelTest.dataFetched.observe(viewLifecycleOwner, Observer{
-            recentlyViewedAdapter.setRecentlyViewedList(userViewModelTest.recentlyViewedBusList, userViewModelTest.recentlyViewedList, userViewModelTest.recentlyViewedPartnerList)
+        userViewModel.dataFetched.observe(viewLifecycleOwner, Observer{
+            recentlyViewedAdapter.setRecentlyViewedList(userViewModel.recentlyViewedBusList, userViewModel.recentlyViewedList, userViewModel.recentlyViewedPartnerList)
         })
 
         binding.recentlyViewedRecyclerView.adapter = recentlyViewedAdapter
@@ -118,7 +110,7 @@ class DashBoardFragment : Fragment() {
 
         recentlyViewedAdapter.setOnRemoveClickListener(object: OnRemoveClickListener{
             override fun onRemoveClick(position: Int) {
-                userViewModelTest.removeRecentlyViewedData(userViewModelTest.recentlyViewedList[position])
+                userViewModel.removeRecentlyViewedData(userViewModel.recentlyViewedList[position])
 
 
 //                check
@@ -132,8 +124,8 @@ class DashBoardFragment : Fragment() {
 
         recentlyViewedAdapter.setOnItemClickListener(object : OnItemClickListener{
             override fun onItemClick(position: Int) {
-                busViewModelTest.selectedBus  = userViewModelTest.recentlyViewedBusList[position]
-                busViewModelTest.selectedDate = userViewModelTest.recentlyViewedList[position].date
+                busViewModel.selectedBus  = userViewModel.recentlyViewedBusList[position]
+                busViewModel.selectedDate = userViewModel.recentlyViewedList[position].date
 
 
 
@@ -166,10 +158,10 @@ class DashBoardFragment : Fragment() {
             if(searchViewModel.sourceLocation.isNotEmpty() && searchViewModel.destinationLocation.isNotEmpty() && searchViewModel.year != 0){
 
 //                mvvm
-                busViewModelTest.sourceLocation = searchViewModel.sourceLocation
-                busViewModelTest.destinationLocation = searchViewModel.destinationLocation
+                busViewModel.sourceLocation = searchViewModel.sourceLocation
+                busViewModel.destinationLocation = searchViewModel.destinationLocation
 
-                busViewModelTest.selectedDate = "${searchViewModel.date}/${searchViewModel.month}/${searchViewModel.year}"
+                busViewModel.selectedDate = "${searchViewModel.date}/${searchViewModel.month}/${searchViewModel.year}"
 //                mvvm
 
                 parentFragmentManager.commit {
@@ -277,7 +269,7 @@ class DashBoardFragment : Fragment() {
     }
 
     private fun clearAllValues() {
-        busViewModelTest.apply {
+        busViewModel.apply {
             selectedSeats.clear()
         }
     }

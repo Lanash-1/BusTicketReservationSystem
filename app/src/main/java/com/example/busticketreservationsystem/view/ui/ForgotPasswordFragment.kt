@@ -8,23 +8,16 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.model.data.AppDatabase
 import com.example.busticketreservationsystem.model.repository.AppRepositoryImpl
-import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
-import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BusViewModelTest
-import com.example.busticketreservationsystem.viewmodel.viewmodeltest.UserViewModelTest
+import com.example.busticketreservationsystem.viewmodel.viewmodeltest.UserViewModel
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class ForgotPasswordFragment : Fragment() {
 
@@ -39,7 +32,7 @@ class ForgotPasswordFragment : Fragment() {
 
 
 
-    private lateinit var userViewModelTest: UserViewModelTest
+    private lateinit var userViewModel: UserViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +43,7 @@ class ForgotPasswordFragment : Fragment() {
         val repository = AppRepositoryImpl(database)
 
         val userViewModelFactory = UserViewModelFactory(repository)
-        userViewModelTest = ViewModelProvider(requireActivity(), userViewModelFactory)[UserViewModelTest::class.java]
+        userViewModel = ViewModelProvider(requireActivity(), userViewModelFactory)[UserViewModel::class.java]
 
     }
 
@@ -133,11 +126,11 @@ class ForgotPasswordFragment : Fragment() {
         val validNewPassword = newPasswordLayout.helperText == null
         val validConfirmPassword = confirmPasswordLayout.helperText == null
         if(validNewPassword && validConfirmPassword){
-            userViewModelTest.updateNewPassword(password, mobileNumber)
+            userViewModel.updateNewPassword(password, mobileNumber)
         }
 
-        userViewModelTest.isAccountAvailable.observe(viewLifecycleOwner, Observer{
-            if(userViewModelTest.isAccountAvailable.value == false){
+        userViewModel.isAccountAvailable.observe(viewLifecycleOwner, Observer{
+            if(userViewModel.isAccountAvailable.value == false){
                 mobileLayout.helperText = "No Account linked with this mobile number"
             }else{
                 parentFragmentManager.commit {

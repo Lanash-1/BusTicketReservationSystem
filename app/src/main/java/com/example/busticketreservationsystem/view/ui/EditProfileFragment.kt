@@ -19,13 +19,9 @@ import com.example.busticketreservationsystem.model.data.AppDatabase
 import com.example.busticketreservationsystem.model.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.viewmodel.DateViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
-import com.example.busticketreservationsystem.viewmodel.viewmodeltest.UserViewModelTest
+import com.example.busticketreservationsystem.viewmodel.viewmodeltest.UserViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class EditProfileFragment : Fragment() {
@@ -34,7 +30,7 @@ class EditProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentEditProfileBinding
 
-    private lateinit var userViewModelTest: UserViewModelTest
+    private lateinit var userViewModel: UserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +39,7 @@ class EditProfileFragment : Fragment() {
         val database = AppDatabase.getDatabase(requireActivity().applicationContext)
         val repository = AppRepositoryImpl(database)
         val userViewModelFactory = UserViewModelFactory(repository)
-        userViewModelTest = ViewModelProvider(requireActivity(), userViewModelFactory)[UserViewModelTest::class.java]
+        userViewModel = ViewModelProvider(requireActivity(), userViewModelFactory)[UserViewModel::class.java]
 
     }
 
@@ -94,8 +90,8 @@ class EditProfileFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
 
-        binding.emailInputLayout.editText?.setText(userViewModelTest.user.emailId)
-        binding.usernameInputLayout.editText?.setText(userViewModelTest.user.username)
+        binding.emailInputLayout.editText?.setText(userViewModel.user.emailId)
+        binding.usernameInputLayout.editText?.setText(userViewModel.user.username)
 
         binding.calenderIcon.setOnClickListener {
             val datePickerFragment = DatePickerFragment()
@@ -111,7 +107,7 @@ class EditProfileFragment : Fragment() {
             binding.dob.text = "${dateViewModel.date} - ${dateViewModel.month} - ${dateViewModel.year}"
         })
 
-        when(userViewModelTest.user.gender){
+        when(userViewModel.user.gender){
             Gender.MALE.name -> {
                 binding.maleRadioButton.isChecked = true
                 binding.femaleRadioButton.isChecked = false
@@ -122,8 +118,8 @@ class EditProfileFragment : Fragment() {
             }
         }
 
-        if(userViewModelTest.user.dob.isNotEmpty()){
-            binding.dob.text = userViewModelTest.user.dob
+        if(userViewModel.user.dob.isNotEmpty()){
+            binding.dob.text = userViewModel.user.dob
             binding.dob.setTextColor(Color.parseColor("#000000"))
         }
 
@@ -142,7 +138,7 @@ class EditProfileFragment : Fragment() {
 
         if(validEmail){
             println("VALID EMAIL")
-            userViewModelTest.user.apply {
+            userViewModel.user.apply {
                 emailId = binding.emailInput.text.toString()
 
                 if(dateViewModel.edited.value == true){
@@ -156,7 +152,7 @@ class EditProfileFragment : Fragment() {
                 }
                 username = binding.usernameInput.text.toString()
             }
-            userViewModelTest.updateUserDetails()
+            userViewModel.updateUserDetails()
 //            GlobalScope.launch {
 //                userDbViewModel.updateUserData(userViewModel.user)
 //                userViewModel.user = userDbViewModel.getUserAccount(userViewModel.user.userId)
@@ -178,14 +174,14 @@ class EditProfileFragment : Fragment() {
 //            return emailInput.error as String
 //        }
 
-        if(emailText.isEmpty() || emailText == userViewModelTest.user.emailId){
+        if(emailText.isEmpty() || emailText == userViewModel.user.emailId){
             return null
         }
         if(emailText.isNotEmpty()) {
-            userViewModelTest.isEmailExists(emailText)
+            userViewModel.isEmailExists(emailText)
 
-            userViewModelTest.isEmailExists.observe(viewLifecycleOwner, Observer{
-                if(userViewModelTest.isEmailExists.value == true){
+            userViewModel.isEmailExists.observe(viewLifecycleOwner, Observer{
+                if(userViewModel.isEmailExists.value == true){
                     binding.emailInputLayout.helperText = "Email Already Exists"
                 }
             })

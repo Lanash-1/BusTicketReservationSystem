@@ -22,9 +22,7 @@ import com.example.busticketreservationsystem.model.data.AppDatabase
 import com.example.busticketreservationsystem.model.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
-import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
-import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BusViewModelTest
-import com.example.busticketreservationsystem.viewmodel.viewmodeltest.UserViewModelTest
+import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BusViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -35,7 +33,7 @@ class BoardingAndDroppingFragment : Fragment() {
 
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
 
-    private lateinit var busViewModelTest: BusViewModelTest
+    private lateinit var busViewModel: BusViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +44,7 @@ class BoardingAndDroppingFragment : Fragment() {
 
 
         val busViewModelFactory = BusViewModelFactory(repository)
-        busViewModelTest = ViewModelProvider(requireActivity(), busViewModelFactory)[BusViewModelTest::class.java]
+        busViewModel = ViewModelProvider(requireActivity(), busViewModelFactory)[BusViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -97,12 +95,12 @@ class BoardingAndDroppingFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
 
-        busViewModelTest.boardingPoint.observe(viewLifecycleOwner, Observer {
-            binding.nextButton.isEnabled = busViewModelTest.boardingPoint.value?.isNotEmpty()!! && busViewModelTest.droppingPoint.value?.isNotEmpty()!!
+        busViewModel.boardingPoint.observe(viewLifecycleOwner, Observer {
+            binding.nextButton.isEnabled = busViewModel.boardingPoint.value?.isNotEmpty()!! && busViewModel.droppingPoint.value?.isNotEmpty()!!
         })
 
-        busViewModelTest.droppingPoint.observe(viewLifecycleOwner, Observer {
-            binding.nextButton.isEnabled = busViewModelTest.boardingPoint.value?.isNotEmpty()!! && busViewModelTest.droppingPoint.value?.isNotEmpty()!!
+        busViewModel.droppingPoint.observe(viewLifecycleOwner, Observer {
+            binding.nextButton.isEnabled = busViewModel.boardingPoint.value?.isNotEmpty()!! && busViewModel.droppingPoint.value?.isNotEmpty()!!
         })
 
         val tabLayout = binding.boardingDroppingTabLayout

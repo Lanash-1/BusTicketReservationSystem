@@ -27,11 +27,10 @@ import com.example.busticketreservationsystem.model.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.viewmodel.*
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
-import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BusViewModelTest
-import com.example.busticketreservationsystem.viewmodel.viewmodeltest.UserViewModelTest
+import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BusViewModel
+import com.example.busticketreservationsystem.viewmodel.viewmodeltest.UserViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputEditText
-import kotlinx.coroutines.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -46,8 +45,8 @@ class BusInfoFragment : Fragment() {
     private val navigationViewModel: NavigationViewModel by activityViewModels()
 
 
-    private lateinit var busViewModelTest: BusViewModelTest
-    private lateinit var userViewModelTest: UserViewModelTest
+    private lateinit var busViewModel: BusViewModel
+    private lateinit var userViewModel: UserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,10 +56,10 @@ class BusInfoFragment : Fragment() {
         val repository = AppRepositoryImpl(database)
 
         val busViewModelFactory = BusViewModelFactory(repository)
-        busViewModelTest = ViewModelProvider(requireActivity(), busViewModelFactory)[BusViewModelTest::class.java]
+        busViewModel = ViewModelProvider(requireActivity(), busViewModelFactory)[BusViewModel::class.java]
 
         val userViewModelFactory = UserViewModelFactory(repository)
-        userViewModelTest = ViewModelProvider(requireActivity(), userViewModelFactory)[UserViewModelTest::class.java]
+        userViewModel = ViewModelProvider(requireActivity(), userViewModelFactory)[UserViewModel::class.java]
 
 
     }
@@ -120,14 +119,14 @@ class BusInfoFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
 
-        busViewModelTest.fetchBusReviewData()
+        busViewModel.fetchBusReviewData()
 
         if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
-            busViewModelTest.fetchUserReview(userViewModelTest.user.userId)
+            busViewModel.fetchUserReview(userViewModel.user.userId)
         }
 
-        busViewModelTest.isUserReviewFetched.observe(viewLifecycleOwner, Observer{
-            if(busViewModelTest.userReview != null){
+        busViewModel.isUserReviewFetched.observe(viewLifecycleOwner, Observer{
+            if(busViewModel.userReview != null){
                 binding.rateBusButton.text = "Update Rating"
             }
 //            else{
@@ -136,12 +135,12 @@ class BusInfoFragment : Fragment() {
         })
 
 
-        busViewModelTest.busAmenities.observe(viewLifecycleOwner, Observer{
-            amenitiesAdapter.setAmenitiesList(busViewModelTest.busAmenities.value!!)
+        busViewModel.busAmenities.observe(viewLifecycleOwner, Observer{
+            amenitiesAdapter.setAmenitiesList(busViewModel.busAmenities.value!!)
             amenitiesAdapter.notifyDataSetChanged()
         })
 
-        busViewModelTest.busReviewsList.observe(viewLifecycleOwner, Observer {
+        busViewModel.busReviewsList.observe(viewLifecycleOwner, Observer {
             ratingBarOperation()
         })
 
@@ -172,10 +171,10 @@ class BusInfoFragment : Fragment() {
 //            binding.rateBusButton.visibility = View.VISIBLE
 //        }
 
-        busViewModelTest.checkUserBookedBus(busViewModelTest.selectedBus.busId)
+        busViewModel.checkUserBookedBus(busViewModel.selectedBus.busId)
 
-        busViewModelTest.isUserBooked.observe(viewLifecycleOwner, Observer{
-            if(busViewModelTest.isUserBooked.value == true){
+        busViewModel.isUserBooked.observe(viewLifecycleOwner, Observer{
+            if(busViewModel.isUserBooked.value == true){
                 binding.rateBusButton.visibility = View.VISIBLE
             }else{
                 binding.rateBusButton.visibility = View.GONE
@@ -229,7 +228,7 @@ class BusInfoFragment : Fragment() {
     }
 
     private fun rateBusOperation(rating: Int, feedback: String, date: String) {
-        if(busViewModelTest.userReview != null){
+        if(busViewModel.userReview != null){
             updateUserRating(rating, feedback, date)
         }else{
             insertUserRating(rating, feedback, date)
@@ -237,26 +236,26 @@ class BusInfoFragment : Fragment() {
     }
 
     private fun updateUserRating(rating: Int, feedback: String, date: String) {
-        busViewModelTest.updateUserRating(rating, feedback, date)
+        busViewModel.updateUserRating(rating, feedback, date)
 
-        busViewModelTest.isBusReviewUpdated.observe(viewLifecycleOwner, Observer{
-            busViewModelTest.fetchBusReviewData()
+        busViewModel.isBusReviewUpdated.observe(viewLifecycleOwner, Observer{
+            busViewModel.fetchBusReviewData()
         })
     }
 
     private fun insertUserRating(rating: Int, feedback: String, date: String) {
-        busViewModelTest.insertUserReview(rating, feedback, date, userViewModelTest.user.userId)
+        busViewModel.insertUserReview(rating, feedback, date, userViewModel.user.userId)
 
-        busViewModelTest.isBusReviewUpdated.observe(viewLifecycleOwner, Observer{
-            busViewModelTest.fetchBusReviewData()
+        busViewModel.isBusReviewUpdated.observe(viewLifecycleOwner, Observer{
+            busViewModel.fetchBusReviewData()
         })
     }
 
 
     private fun ratingBarOperation() {
-        binding.ratingText.text = "${String.format("%.2f", busViewModelTest.selectedBus.ratingOverall).toDouble()}"
-        binding.ratingCountText.text = "(${busViewModelTest.selectedBus.ratingPeopleCount} reviews)"
-        updateRatingBar(busViewModelTest.busReviewsList.value)
+        binding.ratingText.text = "${String.format("%.2f", busViewModel.selectedBus.ratingOverall).toDouble()}"
+        binding.ratingCountText.text = "(${busViewModel.selectedBus.ratingPeopleCount} reviews)"
+        updateRatingBar(busViewModel.busReviewsList.value)
     }
 
     //    function to display data in rating bar
@@ -267,7 +266,7 @@ class BusInfoFragment : Fragment() {
                     var count = reviewList.filter {
                         it.rating == i
                     }.size
-                    var pCount = count/busViewModelTest.selectedBus.ratingPeopleCount.toDouble()
+                    var pCount = count/busViewModel.selectedBus.ratingPeopleCount.toDouble()
                     pCount *= 100
                     count = pCount.toInt()
                     when(i){

@@ -20,16 +20,10 @@ import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.model.data.AppDatabase
 import com.example.busticketreservationsystem.model.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
-import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
-import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BusViewModelTest
-import com.example.busticketreservationsystem.viewmodel.viewmodeltest.UserViewModelTest
+import com.example.busticketreservationsystem.viewmodel.viewmodeltest.UserViewModel
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class RegisterFragment : Fragment() {
@@ -48,7 +42,7 @@ class RegisterFragment : Fragment() {
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
 
 
-    private lateinit var userViewModelTest: UserViewModelTest
+    private lateinit var userViewModel: UserViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,10 +53,10 @@ class RegisterFragment : Fragment() {
         val repository = AppRepositoryImpl(database)
 
         val userViewModelFactory = UserViewModelFactory(repository)
-        userViewModelTest = ViewModelProvider(
+        userViewModel = ViewModelProvider(
             requireActivity(),
             userViewModelFactory
-        )[UserViewModelTest::class.java]
+        )[UserViewModel::class.java]
 
     }
 
@@ -156,18 +150,18 @@ class RegisterFragment : Fragment() {
         val validConfirmPassword = confirmPasswordLayout.helperText == null
 
         if (validNumber && validNewPassword && validConfirmPassword) {
-            userViewModelTest.isNumberAlreadyExists(mobileInput.text.toString())
+            userViewModel.isNumberAlreadyExists(mobileInput.text.toString())
 
-            userViewModelTest.isMobileExists.observe(viewLifecycleOwner, Observer {
-                if (userViewModelTest.isMobileExists.value == true) {
+            userViewModel.isMobileExists.observe(viewLifecycleOwner, Observer {
+                if (userViewModel.isMobileExists.value == true) {
                     mobileLayout.helperText = "Mobile Number already Exists."
                 } else {
-                    userViewModelTest.insertNewUser(
+                    userViewModel.insertNewUser(
                         newPasswordInput.text.toString(),
                         mobileInput.text.toString()
                     )
-                    userViewModelTest.isNewUserInserted.observe(viewLifecycleOwner, Observer{
-                        editor.putInt("userId", userViewModelTest.user.userId)
+                    userViewModel.isNewUserInserted.observe(viewLifecycleOwner, Observer{
+                        editor.putInt("userId", userViewModel.user.userId)
                         editor.putString("status", LoginStatus.LOGGED_IN.name)
                         editor.commit()
                         loginStatusViewModel.status = LoginStatus.LOGGED_IN

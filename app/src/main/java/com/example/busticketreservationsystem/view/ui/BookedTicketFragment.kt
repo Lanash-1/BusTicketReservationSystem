@@ -16,26 +16,16 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.databinding.FragmentBookedTicketBinding
-import com.example.busticketreservationsystem.model.entity.Bookings
-import com.example.busticketreservationsystem.model.entity.Bus
-import com.example.busticketreservationsystem.model.entity.Partners
-import com.example.busticketreservationsystem.model.entity.PassengerInformation
 import com.example.busticketreservationsystem.enums.BookedTicketStatus
 import com.example.busticketreservationsystem.model.data.AppDatabase
 import com.example.busticketreservationsystem.model.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.viewmodel.*
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BookingViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
-import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BookingViewModelTest
-import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BusViewModelTest
+import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BookingViewModel
+import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BusViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.text.SimpleDateFormat
 import java.time.Month
-import java.util.*
 
 class BookedTicketFragment : Fragment() {
 
@@ -45,8 +35,8 @@ class BookedTicketFragment : Fragment() {
     private val searchViewModel: SearchViewModel by activityViewModels()
 
 
-    private lateinit var bookingViewModelTest: BookingViewModelTest
-    private lateinit var busViewModelTest: BusViewModelTest
+    private lateinit var bookingViewModel: BookingViewModel
+    private lateinit var busViewModel: BusViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,10 +46,10 @@ class BookedTicketFragment : Fragment() {
         val repository = AppRepositoryImpl(database)
 
         val factory = BookingViewModelFactory(repository)
-        bookingViewModelTest = ViewModelProvider(requireActivity(), factory).get(BookingViewModelTest::class.java)
+        bookingViewModel = ViewModelProvider(requireActivity(), factory).get(BookingViewModel::class.java)
 
         val busViewModelFactory = BusViewModelFactory(repository)
-        busViewModelTest = ViewModelProvider(requireActivity(), busViewModelFactory)[BusViewModelTest::class.java]
+        busViewModel = ViewModelProvider(requireActivity(), busViewModelFactory)[BusViewModel::class.java]
 
 
 
@@ -148,13 +138,13 @@ class BookedTicketFragment : Fragment() {
         }
 
         binding.cancelTicketButton.setOnClickListener {
-            cancelTicketAction(bookingViewModelTest.bookingHistoryBookingList[bookingViewModelTest.selectedTicket].bookingId)
+            cancelTicketAction(bookingViewModel.bookingHistoryBookingList[bookingViewModel.selectedTicket].bookingId)
         }
 
         binding.moreInfoButton.setOnClickListener {
             navigationViewModel.fragment = BookedTicketFragment()
 //            busViewModel = bookingViewModel.filteredBookedBusesList[bookingViewModel.selectedTicket]
-            busViewModelTest.selectedBus = bookingViewModelTest.selectedBus
+            busViewModel.selectedBus = bookingViewModel.selectedBus
             parentFragmentManager.commit {
                 replace(R.id.homePageFragmentContainer, BusInfoFragment())
             }
@@ -165,7 +155,7 @@ class BookedTicketFragment : Fragment() {
 
     private fun selectedTicketOperations() {
         // cancel button visibility logic
-        if(bookingViewModelTest.bookingHistoryBookingList[bookingViewModelTest.selectedTicket].bookedTicketStatus == BookedTicketStatus.UPCOMING.name){
+        if(bookingViewModel.bookingHistoryBookingList[bookingViewModel.selectedTicket].bookedTicketStatus == BookedTicketStatus.UPCOMING.name){
             binding.cancelTicketButton.visibility = View.VISIBLE
         }else{
             binding.cancelTicketButton.visibility = View.GONE
@@ -173,9 +163,9 @@ class BookedTicketFragment : Fragment() {
 
 
         // fetch booked ticket data
-        bookingViewModelTest.fetchBookedTicketDetails(bookingViewModelTest.bookingHistoryBookingList[bookingViewModelTest.selectedTicket].bookingId)
+        bookingViewModel.fetchBookedTicketDetails(bookingViewModel.bookingHistoryBookingList[bookingViewModel.selectedTicket].bookingId)
 
-        bookingViewModelTest.bookedTicketDataFetched.observe(viewLifecycleOwner, Observer{
+        bookingViewModel.bookedTicketDataFetched.observe(viewLifecycleOwner, Observer{
             setTicketDataToView()
         })
 
@@ -275,10 +265,10 @@ class BookedTicketFragment : Fragment() {
     private fun backPressLogic() {
         when(navigationViewModel.fragment){
             is BookingDetailsFragment -> {
-                busViewModelTest.apply {
+                busViewModel.apply {
                     selectedSeats.clear()
                 }
-                bookingViewModelTest.apply {
+                bookingViewModel.apply {
                     selectedSeats.clear()
                     passengerInfo.clear()
                     contactEmailId = null
@@ -322,35 +312,35 @@ class BookedTicketFragment : Fragment() {
 //    }
 
     private fun setTicketDataToView() {
-        binding.sourceLocationText.text = bookingViewModelTest.bookedBus.sourceLocation
-        binding.destinationText.text = bookingViewModelTest.bookedBus.destination
-        binding.partnerNameText.text = bookingViewModelTest.bookedPartner.partnerName
-        binding.busEmailText.text = bookingViewModelTest.bookedPartner.partnerEmailId
-        binding.busMobileText.text = bookingViewModelTest.bookedPartner.partnerMobile
+        binding.sourceLocationText.text = bookingViewModel.bookedBus.sourceLocation
+        binding.destinationText.text = bookingViewModel.bookedBus.destination
+        binding.partnerNameText.text = bookingViewModel.bookedPartner.partnerName
+        binding.busEmailText.text = bookingViewModel.bookedPartner.partnerEmailId
+        binding.busMobileText.text = bookingViewModel.bookedPartner.partnerMobile
 
-        val list = bookingViewModelTest.booking.date.split("/")
+        val list = bookingViewModel.booking.date.split("/")
         binding.dayText.text = list[0]
         binding.monthText.text = Month.values()[list[1].toInt()-1].toString()
         binding.yearText.text = list[2]
 
-        binding.startTimeText.text = "(${bookingViewModelTest.bookedBus.startTime})"
-        binding.reachTimeText.text = "(${bookingViewModelTest.bookedBus.reachTime})"
+        binding.startTimeText.text = "(${bookingViewModel.bookedBus.startTime})"
+        binding.reachTimeText.text = "(${bookingViewModel.bookedBus.reachTime})"
 
-        binding.ticketCountText.text = "Tickets: ${bookingViewModelTest.booking.noOfTicketsBooked}"
-        binding.priceText.text = "₹ ${bookingViewModelTest.booking.totalCost}"
+        binding.ticketCountText.text = "Tickets: ${bookingViewModel.booking.noOfTicketsBooked}"
+        binding.priceText.text = "₹ ${bookingViewModel.booking.totalCost}"
 
-        binding.email.text = bookingViewModelTest.booking.contactEmail
-        binding.mobile.text = bookingViewModelTest.booking.contactNumber
+        binding.email.text = bookingViewModel.booking.contactEmail
+        binding.mobile.text = bookingViewModel.booking.contactNumber
 
-        println("LIST SIZE = ${bookingViewModelTest.booking.noOfTicketsBooked}")
+        println("LIST SIZE = ${bookingViewModel.booking.noOfTicketsBooked}")
 
-        for(i in 0 until bookingViewModelTest.booking.noOfTicketsBooked){
+        for(i in 0 until bookingViewModel.booking.noOfTicketsBooked){
             when(i+1){
                 1 -> {
 
                     binding.row1no.text = "1."
-                    binding.row1name.text = bookingViewModelTest.bookedPassengerInformation[0].passengerName
-                    binding.row1seat.text = bookingViewModelTest.bookedPassengerInformation[0].passengerSeatCode
+                    binding.row1name.text = bookingViewModel.bookedPassengerInformation[0].passengerName
+                    binding.row1seat.text = bookingViewModel.bookedPassengerInformation[0].passengerSeatCode
                     binding.row2.visibility = View.GONE
                     binding.row3.visibility = View.GONE
                     binding.row4.visibility = View.GONE
@@ -360,36 +350,36 @@ class BookedTicketFragment : Fragment() {
                 2 -> {
                     binding.row2.visibility = View.VISIBLE
                     binding.row2no.text = "2."
-                    binding.row2name.text = bookingViewModelTest.bookedPassengerInformation[1].passengerName
-                    binding.row2seat.text = bookingViewModelTest.bookedPassengerInformation[1].passengerSeatCode
+                    binding.row2name.text = bookingViewModel.bookedPassengerInformation[1].passengerName
+                    binding.row2seat.text = bookingViewModel.bookedPassengerInformation[1].passengerSeatCode
                 }
                 3 -> {
 
                     binding.row3.visibility = View.VISIBLE
                     binding.row3no.text = "3."
-                    binding.row3name.text = bookingViewModelTest.bookedPassengerInformation[2].passengerName
-                    binding.row3seat.text = bookingViewModelTest.bookedPassengerInformation[2].passengerSeatCode
+                    binding.row3name.text = bookingViewModel.bookedPassengerInformation[2].passengerName
+                    binding.row3seat.text = bookingViewModel.bookedPassengerInformation[2].passengerSeatCode
                 }
                 4 -> {
 
                     binding.row4.visibility = View.VISIBLE
                     binding.row4no.text = "4."
-                    binding.row4name.text = bookingViewModelTest.bookedPassengerInformation[3].passengerName
-                    binding.row4seat.text = bookingViewModelTest.bookedPassengerInformation[3].passengerSeatCode
+                    binding.row4name.text = bookingViewModel.bookedPassengerInformation[3].passengerName
+                    binding.row4seat.text = bookingViewModel.bookedPassengerInformation[3].passengerSeatCode
                 }
                 5 -> {
 
                     binding.row5.visibility = View.VISIBLE
                     binding.row5no.text = "5."
-                    binding.row5name.text = bookingViewModelTest.bookedPassengerInformation[4].passengerName
-                    binding.row5seat.text = bookingViewModelTest.bookedPassengerInformation[4].passengerSeatCode
+                    binding.row5name.text = bookingViewModel.bookedPassengerInformation[4].passengerName
+                    binding.row5seat.text = bookingViewModel.bookedPassengerInformation[4].passengerSeatCode
                 }
                 6 -> {
 
                     binding.row6.visibility = View.VISIBLE
                     binding.row6no.text = "6."
-                    binding.row6name.text = bookingViewModelTest.bookedPassengerInformation[5].passengerName
-                    binding.row6seat.text = bookingViewModelTest.bookedPassengerInformation[5].passengerSeatCode
+                    binding.row6name.text = bookingViewModel.bookedPassengerInformation[5].passengerName
+                    binding.row6seat.text = bookingViewModel.bookedPassengerInformation[5].passengerSeatCode
                 }
             }
         }
@@ -501,9 +491,9 @@ class BookedTicketFragment : Fragment() {
 
         builder.setPositiveButton("Yes") { _, _ ->
             run {
-                bookingViewModelTest.cancelBookedTicket(bookingViewModelTest.booking.bookingId)
+                bookingViewModel.cancelBookedTicket(bookingViewModel.booking.bookingId)
 
-                bookingViewModelTest.isTicketCancelled.observe(viewLifecycleOwner, Observer{
+                bookingViewModel.isTicketCancelled.observe(viewLifecycleOwner, Observer{
                     parentFragmentManager.commit {
                         replace(R.id.homePageFragmentContainer, BookingHistoryFragment())
 //                            parentFragmentManager.popBackStack()

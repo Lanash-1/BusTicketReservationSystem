@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class UserViewModelTest(
+class UserViewModel(
     private val repository: AppRepositoryImpl
 ): ViewModel() {
 

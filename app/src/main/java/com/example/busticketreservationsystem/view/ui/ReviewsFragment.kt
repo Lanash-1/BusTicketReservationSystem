@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,7 +18,7 @@ import com.example.busticketreservationsystem.databinding.FragmentReviewsBinding
 import com.example.busticketreservationsystem.model.data.AppDatabase
 import com.example.busticketreservationsystem.model.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
-import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BusViewModelTest
+import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BusViewModel
 
 
 class ReviewsFragment : Fragment() {
@@ -30,7 +29,7 @@ class ReviewsFragment : Fragment() {
 
 
 
-    private lateinit var busViewModelTest: BusViewModelTest
+    private lateinit var busViewModel: BusViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +39,7 @@ class ReviewsFragment : Fragment() {
         val repository = AppRepositoryImpl(database)
 
         val busViewModelFactory = BusViewModelFactory(repository)
-        busViewModelTest = ViewModelProvider(requireActivity(), busViewModelFactory)[BusViewModelTest::class.java]
+        busViewModel = ViewModelProvider(requireActivity(), busViewModelFactory)[BusViewModel::class.java]
 
     }
 
@@ -87,7 +86,7 @@ class ReviewsFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
 
-        busViewModelTest.busReviewsList.value?.let { reviewsAdapter.setReviewsList(it) }
+        busViewModel.busReviewsList.value?.let { reviewsAdapter.setReviewsList(it) }
         binding.reviewsRecyclerView.adapter = reviewsAdapter
         binding.reviewsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
