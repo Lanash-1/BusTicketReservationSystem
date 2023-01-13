@@ -2,8 +2,8 @@ package com.example.busticketreservationsystem.viewmodel.viewmodelfactory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.busticketreservationsystem.model.repository.AppRepositoryImpl
-import com.example.busticketreservationsystem.viewmodel.viewmodeltest.BookingViewModel
+import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
+import com.example.busticketreservationsystem.viewmodel.livedata.BookingViewModel
 
 class BookingViewModelFactory(
     private val repository: AppRepositoryImpl
