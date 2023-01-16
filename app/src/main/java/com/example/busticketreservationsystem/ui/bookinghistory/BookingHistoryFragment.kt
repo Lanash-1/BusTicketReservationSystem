@@ -137,22 +137,7 @@ class BookingHistoryFragment : Fragment() {
         viewPager.adapter = adapter
         viewPager.isSaveEnabled = false
 
-//        binding.bookingHistoryTabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
-//            override fun onTabSelected(tab: TabLayout.Tab?) {
-//                println("SELECTED")
-//            }
-//
-//            override fun onTabUnselected(tab: TabLayout.Tab?) {
-//                println("UNSELECTED")
-//
-//            }
-//
-//            override fun onTabReselected(tab: TabLayout.Tab?) {
-//                println("RESELECTED")
-//
-//            }
-//
-//        })
+
 
         TabLayoutMediator(tabLayout, viewPager){tab, position ->
             when(position){

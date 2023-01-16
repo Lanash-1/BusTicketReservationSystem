@@ -34,29 +34,6 @@ class SearchFragment : Fragment() {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
 
-//        OnBackPressedCallback callback = new OnBackPressedCallback(
-//            true // default to enabled
-//        ) {
-//            @Override
-//            public void handleOnBackPressed() {
-//                showAreYouSureDialog();
-//            }
-//        };
-//        requireActivity().getOnBackPressedDispatcher().addCallback(
-//            this, // LifecycleOwner
-//            callback);
-//    }
-//        val callback = object : OnBackPressedCallback(
-//            true // default to enabled
-//        ) {
-//            override fun handleOnBackPressed() {
-//                Nav
-//
-//            }
-//        }
-//
-//        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
-
     }
 
     override fun onCreateView(

@@ -174,40 +174,27 @@ class DashBoardFragment : Fragment() {
                     addToBackStack(null)
                 }
 
-//                busViewModel.filteredBusList = busViewModel.busList.filter {
-//                    it.sourceLocation == searchViewModel.sourceLocation && it.destination == searchViewModel.destinationLocation
-//                }
-//                bookingViewModel.date = "${searchViewModel.date}/${searchViewModel.month}/${searchViewModel.year}"
-//                GlobalScope.launch {
-//                    val list = busViewModel.filteredBusList
-//                    var amenities = listOf<String>()
-//                    var amenitiesList = mutableListOf<List<String>>()
-//                    val job = launch {
-//                        for (i in list.indices){
-//                            amenities = busDbViewModel.getBusAmenities(list[i].busId)
-//                            amenitiesList.add(amenities)
-//                            val seats = busDbViewModel.getBookedSeats(list[i].busId, bookingViewModel.date)
-//                            if(seats.isNotEmpty()){
-//                                list[i].availableSeats = 30 - seats.size
-//                            }else{
-//                                list[i].availableSeats = 30
-//                            }
-//                        }
-//                    }
-//                    job.join()
-//                    withContext(Dispatchers.Main){
-//                        busViewModel.filteredBusList = list
-//                        busViewModel.filteredBusAmenities = amenitiesList
-//                        parentFragmentManager.commit {
-//                            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-//                            replace(R.id.homePageFragmentContainer, BusResultsFragment())
-//                            addToBackStack(null)
-//                        }
-//                    }
-//                }
+
             }else{
-                Toast.makeText(requireContext(), "Enter required information", Toast.LENGTH_SHORT)
-                    .show()
+                if(searchViewModel.sourceLocation.isEmpty()){
+                    binding.enterSourceErrorIcon.visibility = View.VISIBLE
+                }else{
+                    binding.enterSourceErrorIcon.visibility = View.INVISIBLE
+                }
+
+                if(searchViewModel.destinationLocation.isEmpty()){
+                    binding.enterDestinationErrorIcon.visibility = View.VISIBLE
+                }else{
+                    binding.enterDestinationErrorIcon.visibility = View.INVISIBLE
+                }
+
+                if(searchViewModel.year == 0){
+                    binding.enterDateErrorIcon.visibility = View.VISIBLE
+                }else{
+                    binding.enterDateErrorIcon.visibility = View.INVISIBLE
+                }
+
+
             }
         }
 

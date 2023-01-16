@@ -42,6 +42,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_margin="16dp"
             style="@style/IconTint"
+            android:visibility="gone"
             android:src="@drawable/ic_baseline_keyboard_double_arrow_right_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

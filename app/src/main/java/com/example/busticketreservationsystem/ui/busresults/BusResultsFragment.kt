@@ -135,19 +135,7 @@ class BusResultsFragment : Fragment() {
 
 //        mvvm
 
-//        Toast.makeText(requireContext(), "${busViewModel.filteredBusList.size} buses found", Toast.LENGTH_SHORT).show()
 
-//        busResultAdapter.setBusList(busViewModel.filteredBusList)
-//        busResultAdapter.setPartnerList(busViewModel.partnerList)
-
-//        if(busViewModel.filteredBusList.isEmpty()){
-//            binding.emptyListImage.visibility = View.VISIBLE
-////            binding.emptyListImage.alpha = 0.1F
-//            binding.noResultsText.visibility = View.VISIBLE
-//        }else{
-//            binding.emptyListImage.visibility = View.GONE
-//            binding.noResultsText.visibility = View.GONE
-//        }
 
         busResultAdapter.setOnItemClickListener(object : OnItemClickListener{
             override fun onItemClick(position: Int) {
@@ -160,29 +148,7 @@ class BusResultsFragment : Fragment() {
                 }
 
 
-//                busViewModel.selectedBus = busViewModel.filteredBusList[position]
-//                busViewModel.selectedBusPosition = position
 
-//                GlobalScope.launch {
-//                    var seats = listOf<String>()
-//                    var amenities = listOf<String>()
-//                    val job = launch {
-//                        seats = busDbViewModel.getBookedSeats(busViewModel.selectedBus.busId, bookingViewModel.date)
-//                        amenities = busDbViewModel.getBusAmenities(busViewModel.selectedBus.busId)
-//                    }
-//                    job.join()
-//                    withContext(Dispatchers.IO){
-//                        busViewModel.notAvailableSeats = seats
-//                        busViewModel.busAmenities = amenities
-//                    }
-//                }
-
-//                if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
-//                    GlobalScope.launch {
-//                        if(!(busDbViewModel.isRecentlyViewedAvailable(userViewModel.user.userId, busViewModel.selectedBus.busId, bookingViewModel.date)))
-//                        busDbViewModel.insertRecentlyViewed(RecentlyViewed(0, busViewModel.selectedBus.busId, userViewModel.user.userId, bookingViewModel.date))
-//                    }
-//                }
 
                 parentFragmentManager.commit {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)

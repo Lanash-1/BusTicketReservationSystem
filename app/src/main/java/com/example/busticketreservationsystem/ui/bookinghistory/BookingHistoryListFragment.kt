@@ -38,11 +38,6 @@ class BookingHistoryListFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
 
-//        val database = AppDatabase.getDatabase(requireActivity().applicationContext)
-//        val repository = AppRepositoryImpl(database)
-//        val factory = TestViewModelFactory(repository)
-//        viewModel = ViewModelProvider(requireActivity(), factory).get(TestViewModel::class.java)
-
         val database = AppDatabase.getDatabase(requireActivity().applicationContext)
         val repository = AppRepositoryImpl(database)
 
@@ -94,17 +89,6 @@ class BookingHistoryListFragment : Fragment() {
 
         filterBooking(currentPosition)
 
-//        when (currentPosition) {
-//            0 -> {
-//                filterBookingList(BookedTicketStatus.UPCOMING.name)
-//            }
-//            1 -> {
-//                filterBookingList(BookedTicketStatus.COMPLETED.name)
-//            }
-//            2 -> {
-//                filterBookingList(BookedTicketStatus.CANCELLED.name)
-//            }
-//        }
     }
 
     private fun filterBooking(tabPosition: Int) {
@@ -133,36 +117,4 @@ class BookingHistoryListFragment : Fragment() {
         })
     }
 
-
-//        private fun filterBookingList(status: String) {
-//            val bookingList = mutableListOf<Bookings>()
-//            val busList = mutableListOf<Bus>()
-//            val partnerList = mutableListOf<String>()
-//            val passengerInfo = mutableListOf<PassengerInformation>()
-//            val partnerDetailList = mutableListOf<Partners>()
-//
-//            for (i in 0 until bookingViewModel.bookingHistory.size) {
-//                if (bookingViewModel.bookingHistory[i].bookedTicketStatus == status) {
-//                    bookingList.add(bookingViewModel.bookingHistory[i])
-//                    busList.add(bookingViewModel.bookedBusesList[i])
-//                    partnerList.add(bookingViewModel.bookedPartnerList[i])
-//                    partnerDetailList.add(bookingViewModel.bookedPartnerDetail[i])
-////                    passengerInfo.add(bookingViewModel.passengerInfo[i])
-//                }
-//            }
-//            bookingViewModel.apply {
-//                this.filteredBookedBusesList = busList
-//                this.filteredBookedPartnerList = partnerList
-//                this.filteredBookingHistory = bookingList
-//                this.filteredBookedPartnerDetailList = partnerDetailList
-////                this.filteredPassengerInfo = passengerInfo
-//            }
-//            bookingHistoryListAdapter.setBookedTicketList(bookingList, busList, partnerList)
-//            if(bookingList.isEmpty()){
-//                binding.emptyListImage.visibility = View.VISIBLE
-//            }
-//            else{
-//                binding.emptyListImage.visibility = View.GONE
-//            }
-//        }
     }

@@ -65,6 +65,19 @@
                style="@style/TextDefault"
                />
 
+               <ImageView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:id="@+id/enter_source_error_icon"
+                   android:src="@drawable/ic_baseline_error_24"
+                   app:layout_constraintTop_toTopOf="@id/sourceIcon"
+                   app:layout_constraintBottom_toBottomOf="@id/sourceIcon"
+                   app:layout_constraintLeft_toRightOf="@id/sourceText"
+                   android:layout_marginLeft="8dp"
+                   android:visibility="invisible"
+                   />
+
+
                <com.google.android.material.divider.MaterialDivider
                    android:id="@+id/first_divider"
                    android:layout_width="match_parent"
@@ -109,6 +122,18 @@
                style="@style/TextDefault"
                />
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/enter_destination_error_icon"
+                android:src="@drawable/ic_baseline_error_24"
+                app:layout_constraintTop_toTopOf="@id/destinationIcon"
+                app:layout_constraintBottom_toBottomOf="@id/destinationIcon"
+                app:layout_constraintLeft_toRightOf="@id/destinationText"
+                android:layout_marginLeft="8dp"
+                android:visibility="invisible"
+                />
+
            <com.google.android.material.divider.MaterialDivider
                android:id="@+id/second_divider"
                android:layout_width="match_parent"
@@ -152,6 +177,18 @@
                android:layout_marginLeft="16dp"
                style="@style/TextDefault"
                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/enter_date_error_icon"
+                app:layout_constraintTop_toTopOf="@id/calenderIcon"
+                app:layout_constraintBottom_toBottomOf="@id/calenderIcon"
+                app:layout_constraintLeft_toRightOf="@id/dateText"
+                android:src="@drawable/ic_baseline_error_24"
+                android:layout_marginLeft="8dp"
+                android:visibility="invisible"
+                />
 
            <com.google.android.material.divider.MaterialDivider
                android:id="@+id/third_divider"

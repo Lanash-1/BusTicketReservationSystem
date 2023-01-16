@@ -28,6 +28,7 @@ import com.example.busticketreservationsystem.enums.MyAccountOptions
 import com.example.busticketreservationsystem.listeners.OnItemClickListener
 import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
+import com.example.busticketreservationsystem.enums.Gender
 import com.example.busticketreservationsystem.ui.bookinghistory.BookingHistoryFragment
 import com.example.busticketreservationsystem.ui.dashboard.DashBoardFragment
 import com.example.busticketreservationsystem.ui.editprofile.EditProfileFragment
@@ -93,6 +94,7 @@ class MyAccountFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.visibility = View.VISIBLE
 
 
@@ -120,7 +122,14 @@ class MyAccountFragment : Fragment() {
             binding.username.text = userViewModel.user.username
             binding.email.text = userViewModel.user.emailId
             binding.mobile.text = userViewModel.user.mobileNumber
-            binding.gender.text = userViewModel.user.gender
+//            binding.gender.text = userViewModel.user.gender
+            if(userViewModel.user.gender == Gender.MALE.name){
+                binding.gender.text = "Male"
+            }else if(userViewModel.user.gender == Gender.FEMALE.name){
+                binding.gender.text = "Female"
+            }else{
+                binding.gender.text = ""
+            }
             binding.dob.text = userViewModel.user.dob
         }
 
@@ -161,8 +170,11 @@ class MyAccountFragment : Fragment() {
                     }
                     MyAccountOptions.SETTINGS -> {
                         parentFragmentManager.commit {
+                            setCustomAnimations(
+                                R.anim.from_right,
+                                R.anim.to_left
+                            )
                             replace(R.id.homePageFragmentContainer, SettingsFragment())
-                            setTransition(TRANSIT_FRAGMENT_OPEN)
                             addToBackStack(null)
                         }
                     }
@@ -206,6 +218,7 @@ class MyAccountFragment : Fragment() {
         builder.setTitle("Confirm Logout?")
         builder.setCancelable(false)
 
+
         builder.setNegativeButton("No"){
                 dialog, _ -> dialog.cancel()
         }
@@ -234,6 +247,9 @@ class MyAccountFragment : Fragment() {
             }
         }
         val alertDialog = builder.create()
+        if(alertDialog.window != null){
+            alertDialog.window!!.attributes.windowAnimations = R.style.DialogFragmentAnimation
+        }
         alertDialog.show()
     }
 

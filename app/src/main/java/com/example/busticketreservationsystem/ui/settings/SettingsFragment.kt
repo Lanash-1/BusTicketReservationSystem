@@ -46,6 +46,8 @@ class SettingsFragment : Fragment() {
 
         val userViewModelFactory = UserViewModelFactory(repository)
         userViewModel = ViewModelProvider(requireActivity(), userViewModelFactory)[UserViewModel::class.java]
+
+
     }
 
     override fun onCreateView(
@@ -66,7 +68,8 @@ class SettingsFragment : Fragment() {
         when(item.itemId){
             android.R.id.home -> {
                 parentFragmentManager.commit {
-                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+//                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.homePageFragmentContainer, MyAccountFragment())
                     parentFragmentManager.popBackStack()
                 }
@@ -93,7 +96,7 @@ class SettingsFragment : Fragment() {
             object : OnBackPressedCallback(true){
                 override fun handleOnBackPressed() {
                     parentFragmentManager.commit {
-                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                        setCustomAnimations(R.anim.from_left, R.anim.to_right)
                         replace(R.id.homePageFragmentContainer, MyAccountFragment())
                         parentFragmentManager.popBackStack()
                     }
@@ -118,7 +121,6 @@ class SettingsFragment : Fragment() {
 
         binding.deleteAccountLayout.setOnClickListener {
             deleteAction()
-
         }
 
         when(preferences.getString("theme", "")){
@@ -190,6 +192,9 @@ class SettingsFragment : Fragment() {
             }
         }
         val alertDialog = builder.create()
+        if(alertDialog.window != null){
+            alertDialog.window!!.attributes.windowAnimations = R.style.DialogFragmentAnimation
+        }
         alertDialog.show()
     }
 }

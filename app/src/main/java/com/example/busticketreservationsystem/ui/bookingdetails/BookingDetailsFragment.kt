@@ -249,76 +249,7 @@ class BookingDetailsFragment : Fragment() {
         })
     }
 
-//    private fun bookBusTickets() {
-//        bookingViewModel.selectedBus = busViewModel.selectedBus
-//        val booking = Bookings(0, userViewModel.user.userId, bookingViewModel.selectedBus.busId, bookingViewModel.contactEmail, bookingViewModel.contactNumber, bookingViewModel.boardingLocation, bookingViewModel.droppingLocation, bookingViewModel.totalTicketCost, BookedTicketStatus.UPCOMING.name, bookingViewModel.selectedSeats.size, bookingViewModel.date)
-//
-//
-//        GlobalScope.launch {
-//            val job = launch {
-//                bookingDbViewModel.insertBooking(booking)
-//            }
-//            job.join()
-//            var bookingId = 0
-//            val anotherJob = launch {
-//                bookingId = bookingDbViewModel.getBookingId(userViewModel.user.userId)
-//            }
-//            anotherJob.join()
-//            for(i in 0 until bookingViewModel.selectedSeats.size){
-//                bookingDbViewModel.insertSeatInformation(SeatInformation(0, bookingViewModel.selectedBus.busId, bookingId, bookingViewModel.selectedSeats[i], bookingViewModel.date))
-//            }
-////            busDbViewModel.updateBusSeatAvailableCount(bookingViewModel.selectedBus.availableSeats-bookingViewModel.selectedSeats.size, bookingViewModel.selectedBus.busId)
-//            val otherJob = launch {
-//                for(i in 0 until bookingViewModel.passengerInfo.size){
-//                    bookingDbViewModel.insertPassengerInfo(PassengerInformation(0, bookingId, bookingViewModel.passengerInfo[i].name!!, bookingViewModel.passengerInfo[i].age!!, bookingViewModel.passengerInfo[i].gender!!.name, bookingViewModel.selectedSeats[i]))
-//                }
-//            }
-//            otherJob.join()
-//            withContext(Dispatchers.Main){
-////                busViewModel.apply {
-////                    selectedSeats.clear()
-////                }
-//                bookingViewModel.apply {
-////                    selectedSeats.clear()
-////                    passengerInfo.clear()
-////                    contactEmail = ""
-////                    contactNumber = ""
-////                    bookingEmail = null
-////                    bookingMobile = null
-//
-//
-//                    bookedBus = busViewModel.selectedBus
-////                    bookedPartner = busViewModel.selectedPartner
-//
-//                }
-////                searchViewModel.apply {
-////                    this.sourceLocation = ""
-////                    this.destinationLocation = ""
-////                    this.year = 0
-////                    this.currentSearch = ""
-////                }
-//                Snackbar.make(requireView(), "Booked ticket successfully", Snackbar.LENGTH_SHORT).show()
-//                navigationViewModel.fragment = BookingDetailsFragment()
-//                parentFragmentManager.commit {
-//                    replace(R.id.homePageFragmentContainer, BookedTicketFragment())
-//                }
-////                parentFragmentManager.commit {
-////                    replace(R.id.main_fragment_container, HomePageFragment())
-////                    for(i in 0 until parentFragmentManager.backStackEntryCount){
-////                        parentFragmentManager.popBackStack()
-////                    }
-////                }
-//            }
-//        }
-//    }
 
-//    private fun emailFocusListener() {
-//        binding.emailInput.setOnFocusChangeListener{ _ , focused ->
-//            if(!focused){
-//                binding.emailLayout.helperText = validEmail()
-//            }
-//        }
-//    }
 
     private fun validEmail(): String? {
         val emailText = binding.emailInput.text.toString()

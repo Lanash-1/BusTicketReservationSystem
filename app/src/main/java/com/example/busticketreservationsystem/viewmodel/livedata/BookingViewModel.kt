@@ -10,6 +10,8 @@ import com.example.busticketreservationsystem.ui.bookingdetails.PassengerInfoMod
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.*
 
 class BookingViewModel(
     private val repository: AppRepositoryImpl
@@ -45,6 +47,23 @@ class BookingViewModel(
 
                 bookingDataFetched.value = true
             }
+        }
+    }
+
+    fun updateBookingHistoryList(userId: Int, currentDate: Date) {
+//        fetchBookingHistory(userId, BookedTicketStatus.UPCOMING.name)
+        viewModelScope.launch(Dispatchers.IO) {
+            var bookingsList = listOf<Bookings>()
+//            val job = launch {
+                val sdf = SimpleDateFormat("dd/MM/yyyy")
+                bookingsList = repository.getUserBookings(userId, BookedTicketStatus.UPCOMING.name)
+                for(booking in bookingsList){
+                    val strDate: Date = sdf.parse(booking.date)
+                    if(currentDate.compareTo(strDate) > 0){
+                        repository.updateTicketStatus(BookedTicketStatus.COMPLETED.name, booking.bookingId)
+                    }
+                }
+//            }
         }
     }
 
@@ -149,6 +168,8 @@ class BookingViewModel(
             }
         }
     }
+
+
 
 
 //    Tab Layout tab position related
