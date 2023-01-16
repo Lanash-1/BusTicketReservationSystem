@@ -17,6 +17,7 @@
         <entry key="app/src/main/res/drawable/switch_circle.xml" value="0.178" />
         <entry key="app/src/main/res/layout-v23/fragment_booking_details.xml" value="0.2078125" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3880208333333333" />
+        <entry key="app/src/main/res/layout/fragment_admin_panel.xml" value="0.3729166666666667" />
         <entry key="app/src/main/res/layout/fragment_boarding_and_dropping.xml" value="0.21893866184294092" />
         <entry key="app/src/main/res/layout/fragment_boarding_and_dropping_location.xml" value="0.35885416666666664" />
         <entry key="app/src/main/res/layout/fragment_booked_ticket.xml" value="0.26346588134765625" />
@@ -47,6 +48,7 @@
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.35829925537109375" />
         <entry key="app/src/main/res/layout/fragment_sort_and_filter.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_upcoming_booking.xml" value="0.17864583333333334" />
+        <entry key="app/src/main/res/layout/fragment_welcome.xml" value="0.2904052734375" />
         <entry key="app/src/main/res/layout/item_account.xml" value="0.2234375" />
         <entry key="app/src/main/res/layout/item_amenity.xml" value="0.38697916666666665" />
         <entry key="app/src/main/res/layout/item_booked_ticket.xml" value="0.2339975992838542" />
