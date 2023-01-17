@@ -79,11 +79,6 @@ class SelectedBusFragment : Fragment() {
         when(item.itemId){
             android.R.id.home -> {
                 backPressLogic()
-//                busViewModel.selectedSeats.clear()
-//                parentFragmentManager.commit {
-//                    replace(R.id.homePageFragmentContainer, BusResultsFragment())
-//                    parentFragmentManager.popBackStack()
-//                }
             }
             R.id.info_icon -> {
                 parentFragmentManager.commit {
@@ -164,11 +159,9 @@ class SelectedBusFragment : Fragment() {
 
 
         if(busViewModel.selectedSeats.size > 0){
-            println("SELECTED NOT ZERO")
             busSeatsAdapter.setBusSeatsList(busViewModel.selectedBusSeatDimensions)
             busSeatsAdapter.notifyDataSetChanged()
         }else{
-            println("SELECTED ZERO")
             createBusSeatsList()
             busViewModel.fetchBusSeatsData()
             busViewModel.seatDataFetched.observe(viewLifecycleOwner, Observer{

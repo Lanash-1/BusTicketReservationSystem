@@ -122,13 +122,6 @@ class BookingHistoryFragment : Fragment() {
                     super.onPageSelected(position)
                 }
 
-//                override fun onPageScrolled(
-//                    position: Int,
-//                    positionOffset: Float,
-//                    positionOffsetPixels: Int
-//                ) {
-//                    println("Scrolling...")
-//                }
             }
         )
 

@@ -47,7 +47,6 @@ class SettingsFragment : Fragment() {
         val userViewModelFactory = UserViewModelFactory(repository)
         userViewModel = ViewModelProvider(requireActivity(), userViewModelFactory)[UserViewModel::class.java]
 
-
     }
 
     override fun onCreateView(

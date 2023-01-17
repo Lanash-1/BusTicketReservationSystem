@@ -54,7 +54,6 @@ class BookingHistoryListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_booking_history_list, container, false)
         binding = FragmentBookingHistoryListBinding.inflate(inflater, container, false)
         currentPosition = requireArguments().getInt("object", -1)
         return binding.root
@@ -77,6 +76,14 @@ class BookingHistoryListFragment : Fragment() {
                     replace(R.id.homePageFragmentContainer, BookedTicketFragment())
 //                    addToBackStack(null)
                 }
+            }
+        })
+
+        bookingViewModel.bookingDataFetched.observe(viewLifecycleOwner, Observer{
+            if(bookingViewModel.bookingHistoryBookingList.isEmpty()){
+                binding.emptyListImage.visibility = View.VISIBLE
+            }else{
+                binding.emptyListImage.visibility = View.INVISIBLE
             }
         })
 

@@ -46,7 +46,6 @@ class BoardingAndDroppingLocationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_boarding_and_dropping_location, container, false)
         (activity as AppCompatActivity).supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             title = "Boarding and Dropping Points"
@@ -86,7 +85,6 @@ class BoardingAndDroppingLocationFragment : Fragment() {
                     busViewModel.droppingPoint.value = busViewModel.droppingPoints[position]
                 }
 
-//                boardingDroppingLocationsAdapter.notifyDataSetChanged()
             }
         })
 

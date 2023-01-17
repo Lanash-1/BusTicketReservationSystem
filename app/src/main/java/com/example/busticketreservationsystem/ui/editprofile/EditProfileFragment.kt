@@ -78,18 +78,15 @@ class EditProfileFragment : Fragment() {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true){
                 override fun handleOnBackPressed() {
-//                    Toast.makeText(requireContext(), "back presses", Toast.LENGTH_SHORT).show()
                     parentFragmentManager.commit {
                         setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                         replace(R.id.homePageFragmentContainer, MyAccountFragment())
                         parentFragmentManager.popBackStack()
                     }
-//                    requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).selectedItemId = R.id.dashboard
                 }
             }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
-
 
         binding.emailInputLayout.editText?.setText(userViewModel.user.emailId)
         binding.usernameInputLayout.editText?.setText(userViewModel.user.username)
@@ -131,14 +128,11 @@ class EditProfileFragment : Fragment() {
     }
 
     private fun updateUserProfile() {
-        println("CHECKING UPDATE")
         binding.emailInputLayout.helperText = validEmail()
-//        usernameLayout.helperText = validUsername()
 
         val validEmail = binding.emailInputLayout.helperText == null
 
         if(validEmail){
-            println("VALID EMAIL")
             userViewModel.user.apply {
                 emailId = binding.emailInput.text.toString()
 
@@ -154,10 +148,6 @@ class EditProfileFragment : Fragment() {
                 username = binding.usernameInput.text.toString()
             }
             userViewModel.updateUserDetails()
-//            GlobalScope.launch {
-//                userDbViewModel.updateUserData(userViewModel.user)
-//                userViewModel.user = userDbViewModel.getUserAccount(userViewModel.user.userId)
-//            }
             Snackbar.make(requireView(), "Saved changes successfully", Snackbar.LENGTH_SHORT).show()
             parentFragmentManager.commit {
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
@@ -170,10 +160,6 @@ class EditProfileFragment : Fragment() {
     private fun validEmail(): String? {
         val emailText = binding.emailInput.text.toString()
 
-//        if(emailText.isEmpty()){
-//            emailInput.error="Empty mail id"
-//            return emailInput.error as String
-//        }
 
         if(emailText.isEmpty() || emailText == userViewModel.user.emailId){
             return null

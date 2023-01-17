@@ -136,7 +136,6 @@ class RegisterFragment : Fragment() {
         confirmPasswordFocusListener()
 
         registerButton.setOnClickListener {
-//            println("MOBILE: ${mobileInput.text}")
             registerAccount()
         }
 
@@ -176,63 +175,9 @@ class RegisterFragment : Fragment() {
                 }
             })
 
-//            GlobalScope.launch {
-//                var result: Boolean = false
-//            val job = launch {
-//                result = userDbViewModel.getAccountCount(mobileInput.text.toString())
-//            }
-//                job.join()
-//                withContext(Dispatchers.Main){
-//                    if(result){
-////                        userViewModel.user.apply {
-////                            this.mobileNumber = mobileInput.text.toString()
-////                            this.password = newPasswordInput.text.toString()
-////                        }
-//                        userViewModel.user.mobileNumber = mobileInput.text.toString()
-//                        userViewModel.user.password = newPasswordInput.text.toString()
-//                        userViewModel.mobileNumber = mobileInput.text.toString()
-//                        userViewModel.password = newPasswordInput.text.toString()
-//
-//
-//
-//
-//                        GlobalScope.launch {
-//                            userDbViewModel.insertUserData(userViewModel.user)
-//                            val updatedUser = userDbViewModel.getUserAccount(userViewModel.mobileNumber)
-//                            userViewModel.user = updatedUser
-//                            editor.putInt("userId", userViewModel.user.userId)
-//                            editor.commit()
-//                        }
-//                        editor.putString("status", LoginStatus.LOGGED_IN.name)
-//                        editor.commit()
-////                        GlobalScope.launch {
-////                            var job = launch {
-////                                userViewModel.user = userDbViewModel.getUserAccount(userViewModel.mobileNumber)
-////                            }
-////                            job.join()
-////                            editor.putInt("userId", userViewModel.user.userId)
-////                            editor.commit()
-////                        }
-//                        loginStatusViewModel.status = LoginStatus.LOGGED_IN
-//                        parentFragmentManager.commit {
-//                            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-//                            replace(R.id.main_fragment_container, RegistrationDetailsFragment())
-//                        }
-//                    }else{
-//                        mobileLayout.helperText = "Mobile Number already exists"
-//                    }
+
         }
     }
-//            userViewModel.user.apply {
-//                this.mobileNumber = mobileInput.text.toString()
-//                this.password = newPasswordInput.text.toString()
-//            }
-//            editor.putString("status", LoginStatus.LOGGED_IN.name)
-//            parentFragmentManager.commit {
-//                replace(R.id.main_fragment_container, RegistrationDetailsFragment())
-//            }
-//  }
-// }
 
     private fun numberFocusListener() {
         mobileInput.setOnFocusChangeListener { _, focused ->

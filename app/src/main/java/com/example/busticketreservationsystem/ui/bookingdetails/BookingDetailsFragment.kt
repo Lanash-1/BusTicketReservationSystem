@@ -81,7 +81,6 @@ class BookingDetailsFragment : Fragment() {
             title = "Booking details"
         }
         // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_booking_details, container, false)
 
         binding = FragmentBookingDetailsBinding.inflate(inflater, container, false)
         return binding.root
@@ -122,13 +121,11 @@ class BookingDetailsFragment : Fragment() {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true){
                 override fun handleOnBackPressed() {
-//                    Toast.makeText(requireContext(), "back presses", Toast.LENGTH_SHORT).show()
                     parentFragmentManager.commit {
                         setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                         replace(R.id.homePageFragmentContainer, BoardingAndDroppingFragment())
                         parentFragmentManager.popBackStack()
                     }
-//                    requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).selectedItemId = R.id.dashboard
                 }
             }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
@@ -165,15 +162,9 @@ class BookingDetailsFragment : Fragment() {
                 if(result){
                     bookingViewModel.contactEmailId = binding.emailInput.text.toString()
                     bookingViewModel.contactMobileNumber = binding.mobileInput.text.toString()
-//                    parentFragmentManager.commit {
-//                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-//                        replace(R.id.homePageFragmentContainer, PaymentOptionsFragment())
-//                        addToBackStack(null)
-//                    }
                     bookBusTickets()
                 }
             }else{
-//                binding.emailLayout.helperText = "Enter a valid Email to proceed"
                 if(binding.mobileInput.text?.length != 10){
                     binding.mobileLayout.error = "Enter a valid mobile number 1"
                 }else if(binding.mobileInput.text?.isEmpty() == true){
@@ -181,13 +172,9 @@ class BookingDetailsFragment : Fragment() {
                 }else{
                     binding.mobileLayout.error = null
                 }
-//                binding.emailLayout.error = "Enter a valid Email to proceed"
             }
         }
         if(bookingViewModel.passengerInfo.isEmpty() || bookingViewModel.passengerInfo.size != bookingViewModel.selectedSeats.size){
-//            if(bookingViewModel.passengerInfo.size != bookingViewModel.selectedSeats.size){
-//                bookingViewModel.passengerInfo.clear()
-//            }
             bookingViewModel.passengerInfo.clear()
             for(i in 0 until bookingViewModel.selectedSeats.size){
                 bookingViewModel.passengerInfo.add(PassengerInfoModel(null, null, null))
@@ -217,20 +204,17 @@ class BookingDetailsFragment : Fragment() {
         passengerInfoAdapter.setPassengerInfoChangeListener(object: PassengerInfoChangeListener{
 
             override fun onPassengerNameChanged(position: Int, name: String) {
-//                println("POSITION - $position \n Name: $name")
                 bookingViewModel.passengerInfo[position].name = name
-
             }
 
             override fun onPassengerAgeChanged(position: Int, age: Int) {
-//                println("POSITION - $position \n Age: $age")
                 bookingViewModel.passengerInfo[position].age = age
             }
 
             override fun onPassengerGenderSelected(position: Int, gender: Gender) {
-//                println("POSITION - $position \n GENDER: ${gender.name}")
                 bookingViewModel.passengerInfo[position].gender = gender
             }
+
         })
     }
 
@@ -253,11 +237,6 @@ class BookingDetailsFragment : Fragment() {
 
     private fun validEmail(): String? {
         val emailText = binding.emailInput.text.toString()
-
-//        if(emailText.isEmpty()){
-//            emailInput.error="Empty mail id"
-//            return emailInput.error as String
-//        }
 
         if(emailText.isEmpty()){
             return "Email should not be Empty"

@@ -90,22 +90,18 @@ class DashBoardFragment : Fragment() {
 
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.visibility = View.VISIBLE
 
-//        getBusList()
 
-
-        if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
-//            userViewModelTest.fetchUserData()
-//            userViewModelTest.fetchRecentlyViewedData()
-
-
-//            getRecentlyViewedDetails()
-//            getBookingHistoryList(userViewModel.user.userId)
-        }else{
+        if(loginStatusViewModel.status != LoginStatus.LOGGED_IN){
             binding.recentlyViewedRecyclerView.visibility = View.GONE
             binding.recentlyViewedText.visibility = View.GONE
         }
 
         userViewModel.dataFetched.observe(viewLifecycleOwner, Observer{
+            if(userViewModel.recentlyViewedBusList.isEmpty()){
+                binding.recentlyViewedText.visibility = View.GONE
+            }else{
+                binding.recentlyViewedText.visibility = View.VISIBLE
+            }
             recentlyViewedAdapter.setRecentlyViewedList(userViewModel.recentlyViewedBusList, userViewModel.recentlyViewedList, userViewModel.recentlyViewedPartnerList)
         })
 

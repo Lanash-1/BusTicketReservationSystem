@@ -150,34 +150,7 @@ class RegistrationDetailsFragment : Fragment() {
             }
 
             userViewModel.updateUserDetails()
-//            userViewModel.user.apply {
-//                this.emailId = emailInput.text.toString()
-////                if(ageInput.text.toString().isEmpty()){
-////                    this.age = 0
-////                }else{
-////                    this.age = ageInput.text.toString().toInt()
-////                }
-//                if(dateViewModel.year != 0){
-//                    this.dob = "${dateViewModel.date} - ${dateViewModel.month} - ${dateViewModel.year}"
-//                }else{
-//                    this.dob = "DD - MM - YYYY"
-//                }
-//                if(selectedGenderRadioButton == null){
-//                    this.gender = ""
-//                }else{
-//                    if(selectedGenderRadioButton?.text.toString() == "Male"){
-//                        this.gender = Gender.MALE.name
-//                    }else{
-//                        this.gender = Gender.FEMALE.name
-//                    }
-//                }
-////                this.gender = selectedGenderRadioButton.text.toString()
-//                this.username = usernameInput.text.toString()
-//            }
-//            GlobalScope.launch {
-//                userDbViewModel.updateUserData(userViewModel.user)
-//                userViewModel.user = userDbViewModel.getUserAccount(userViewModel.user.userId)
-//            }
+
             parentFragmentManager.commit {
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 replace(R.id.main_fragment_container, HomePageFragment())
@@ -185,23 +158,6 @@ class RegistrationDetailsFragment : Fragment() {
         }
     }
 
-
-//    private fun usernameFocusListener(){
-//        usernameInput.setOnFocusChangeListener{_ , focused ->
-//            if(!focused){
-//                usernameLayout.helperText = validUsername()
-//            }
-//        }
-//    }
-//
-//    private fun validUsername(): String? {
-//        val username = usernameInput.text.toString()
-//
-//        if(username.isEmpty()){
-//            usernameInput.error = "Username cannot be empty"
-//
-//        }
-//    }
 
     private fun emailFocusListener() {
         emailInput.setOnFocusChangeListener{ _ , focused ->
@@ -214,10 +170,6 @@ class RegistrationDetailsFragment : Fragment() {
     private fun validEmail(): String? {
         val emailText = emailInput.text.toString()
 
-//        if(emailText.isEmpty()){
-//            emailInput.error="Empty mail id"
-//            return emailInput.error as String
-//        }
 
         if(emailText.isEmpty()){
             return null

@@ -56,11 +56,6 @@ class MyAccountFragment : Fragment() {
     private val navigationViewModel: NavigationViewModel by activityViewModels()
 
 
-
-//    private val testViewModel: TestViewModel by activityViewModels()
-
-
-
     private val myAccountAdapter = MyAccountAdapter()
 
     private lateinit var myAccountRecyclerView: RecyclerView
@@ -75,6 +70,7 @@ class MyAccountFragment : Fragment() {
         val repository = AppRepositoryImpl(database)
         val userViewModelFactory = UserViewModelFactory(repository)
         userViewModel = ViewModelProvider(requireActivity(), userViewModelFactory)[UserViewModel::class.java]
+
     }
 
     override fun onCreateView(
@@ -88,7 +84,6 @@ class MyAccountFragment : Fragment() {
         }
         binding = FragmentMyAccountBinding.inflate(inflater, container, false)
         return binding.root
-//        return inflater.inflate(R.layout.fragment_my_account, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

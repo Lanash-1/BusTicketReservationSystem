@@ -118,7 +118,6 @@ class SearchFragment : Fragment() {
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.visibility = View.GONE
 
 
-
         binding.searchResultsLayout.layoutManager = LinearLayoutManager(requireContext())
         binding.searchResultsLayout.adapter = searchLocationAdapter
         searchLocationAdapter.setLocationList(listOf())

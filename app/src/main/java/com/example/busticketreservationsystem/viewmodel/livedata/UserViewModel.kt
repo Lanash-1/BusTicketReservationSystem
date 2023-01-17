@@ -66,7 +66,7 @@ class UserViewModel(
             val recentlyViewedBus = mutableListOf<Bus>()
             val recentlyViewedPartner = mutableListOf<String>()
             val fetchJob = launch {
-                recentlyViewed = repository.getRecentlyViewed(user.userId)
+                recentlyViewed = repository.getRecentlyViewed(user.userId).reversed()
                 for(i in recentlyViewed.indices){
                     recentlyViewedBus.add(repository.getBus(recentlyViewed[i].busId))
                     recentlyViewedPartner.add(repository.getPartnerName(recentlyViewedBus[i].partnerId))

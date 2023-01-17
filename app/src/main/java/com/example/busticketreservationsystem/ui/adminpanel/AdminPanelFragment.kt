@@ -5,8 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.commit
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.databinding.FragmentAdminPanelBinding
+import com.example.busticketreservationsystem.ui.adminservices.AdminServicesFragment
+import com.example.busticketreservationsystem.ui.adminsettings.AdminSettingsFragment
+import com.example.busticketreservationsystem.ui.analytics.AnalyticsFragment
 
 
 class AdminPanelFragment : Fragment() {
@@ -29,6 +33,31 @@ class AdminPanelFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if(savedInstanceState == null){
+            setCurrentFragment(AdminServicesFragment())
+        }
+
+        binding.adminBottomNavigationView.setOnNavigationItemSelectedListener {
+            when(it.itemId){
+                R.id.services -> {
+                    setCurrentFragment(AdminServicesFragment())
+                }
+                R.id.analytics -> {
+                    setCurrentFragment(AnalyticsFragment())
+                }
+                R.id.settings -> {
+                    setCurrentFragment(AdminSettingsFragment())
+                }
+            }
+            true
+        }
+    }
+
+    private fun setCurrentFragment(fragment: Fragment) {
+        parentFragmentManager.commit {
+            replace(R.id.adminPanelFragmentContainer, fragment)
+        }
     }
 
 }

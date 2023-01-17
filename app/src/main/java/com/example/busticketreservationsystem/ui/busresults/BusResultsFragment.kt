@@ -57,9 +57,6 @@ class BusResultsFragment : Fragment() {
         userViewModel = ViewModelProvider(requireActivity(), userViewModelFactory)[UserViewModel::class.java]
 
 
-//        val factory = TestViewModelFactory(repository)
-//        viewModel = ViewModelProvider(requireActivity(), factory).get(TestViewModel::class.java)
-
 
     }
 
@@ -146,9 +143,6 @@ class BusResultsFragment : Fragment() {
                 if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
                     userViewModel.addRecentlyViewed(busViewModel.selectedBusId, busViewModel.selectedDate)
                 }
-
-
-
 
                 parentFragmentManager.commit {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)

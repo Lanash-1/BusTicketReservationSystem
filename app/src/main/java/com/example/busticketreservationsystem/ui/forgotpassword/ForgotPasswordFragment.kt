@@ -32,7 +32,6 @@ class ForgotPasswordFragment : Fragment() {
     private lateinit var resetPasswordButton: Button
 
 
-
     private lateinit var userViewModel: UserViewModel
 
 
@@ -142,37 +141,6 @@ class ForgotPasswordFragment : Fragment() {
             }
         })
 
-
-//        GlobalScope.launch {
-//            var isAccountAvailable = false
-//            val job = launch {
-//                isAccountAvailable = userDbViewModel.getAccountCount(mobileInput.text.toString())
-//            }
-//            job.join()
-//            if(!isAccountAvailable){
-//                withContext(Dispatchers.Main){
-//                    mobileLayout.isHelperTextEnabled = false
-//                    newPasswordLayout.helperText = validPassword()
-//                    confirmPasswordLayout.helperText = validConfirmPassword()
-//                    val validNewPassword = newPasswordLayout.helperText == null
-//                    val validConfirmPassword = confirmPasswordLayout.helperText == null
-//                    if(validNewPassword && validConfirmPassword){
-//                        GlobalScope.launch {
-//                            userDbViewModel.updateUserPassword(password, mobileNumber)
-//                        }
-//                        parentFragmentManager.commit {
-//                            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-//                            replace(R.id.main_fragment_container, LoginFragment())
-//                            parentFragmentManager.popBackStack()
-//                        }
-//                    }
-//                }
-//            }else{
-//                withContext(Dispatchers.Main){
-//                    mobileLayout.helperText = "No Account linked with this mobile number"
-//                }
-//            }
-//        }
     }
 
     private fun newPasswordFocusListener() {

@@ -131,9 +131,6 @@ class BusInfoFragment : Fragment() {
             if(busViewModel.userReview != null){
                 binding.rateBusButton.text = "Update Rating"
             }
-//            else{
-//                binding.rateBusButton.text = "Rate Bus"
-//            }
         })
 
 
@@ -147,15 +144,9 @@ class BusInfoFragment : Fragment() {
         })
 
 
-
-
-
         binding.amenityRecyclerView.adapter = amenitiesAdapter
         binding.amenityRecyclerView.layoutManager = GridLayoutManager(requireContext(), 4)
 
-//        amenitiesAdapter.setAmenitiesList(busViewModel.busAmenities)
-
-//        ratingAndReviewOperations(busViewModel.selectedBus.busId)
 
         binding.readReviewsButton.setOnClickListener {
             parentFragmentManager.commit {
@@ -165,13 +156,6 @@ class BusInfoFragment : Fragment() {
             }
         }
 
-//        if(bookingViewModel.bookedBusesList.filter {
-//                it.busId == busViewModel.selectedBus.busId
-//            }.isEmpty()){
-//            binding.rateBusButton.visibility = View.GONE
-//        }else{
-//            binding.rateBusButton.visibility = View.VISIBLE
-//        }
 
         busViewModel.checkUserBookedBus(busViewModel.selectedBus.busId)
 
@@ -202,17 +186,6 @@ class BusInfoFragment : Fragment() {
                                 val time = Calendar.getInstance().time
                                 val current = sdf.format(time)
                                 rateBusOperation(rating, feedback, current)
-//                                if(busViewModel.userReview.size == 1){
-//                                    updateRating(busViewModel.userReview[0].reviewId, rating, feedback)
-//                                }else {
-//                                    postRating(
-//                                        userViewModel.user.userId,
-//                                        busViewModel.selectedBus.busId,
-//                                        rating,
-//                                        feedback,
-//                                        current
-//                                    )
-//                                }
                             }else{
                                 Toast.makeText(requireContext(), "Rating should be selected", Toast.LENGTH_SHORT).show()
                             }
@@ -224,7 +197,6 @@ class BusInfoFragment : Fragment() {
 
                 val alertDialog = builder.show()
 
-//            }
         }
     }
 

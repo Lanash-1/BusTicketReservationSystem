@@ -65,7 +65,6 @@ class BookedTicketFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_booked_ticket, container, false)
         (activity as AppCompatActivity).supportActionBar?.apply {
             title = "Ticket Details"
                 setDisplayHomeAsUpEnabled(true)
@@ -93,11 +92,6 @@ class BookedTicketFragment : Fragment() {
             object : OnBackPressedCallback(true){
                 override fun handleOnBackPressed() {
                     backPressLogic()
-//                    parentFragmentManager.commit {
-//                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-//                        replace(R.id.homePageFragmentContainer, BookingHistoryFragment())
-////                        parentFragmentManager.popBackStack()
-//                    }
                 }
             }
 
@@ -109,9 +103,7 @@ class BookedTicketFragment : Fragment() {
 
 
         if(navigationViewModel.fragment is BookingDetailsFragment){
-//            binding.ticketLayout.visibility = View.GONE
             binding.cancelTicketButton.visibility = View.GONE
-//            setTicketData()
             setTicketDataToView()
         }else{
             selectedTicketOperations()
@@ -123,7 +115,6 @@ class BookedTicketFragment : Fragment() {
 
         binding.moreInfoButton.setOnClickListener {
             navigationViewModel.fragment = BookedTicketFragment()
-//            busViewModel = bookingViewModel.filteredBookedBusesList[bookingViewModel.selectedTicket]
             busViewModel.selectedBus = bookingViewModel.selectedBus
             parentFragmentManager.commit {
                 replace(R.id.homePageFragmentContainer, BusInfoFragment())
@@ -211,12 +202,9 @@ class BookedTicketFragment : Fragment() {
         binding.email.text = bookingViewModel.booking.contactEmail
         binding.mobile.text = bookingViewModel.booking.contactNumber
 
-        println("LIST SIZE = ${bookingViewModel.booking.noOfTicketsBooked}")
-
         for(i in 0 until bookingViewModel.booking.noOfTicketsBooked){
             when(i+1){
                 1 -> {
-
                     binding.row1no.text = "1."
                     binding.row1name.text = bookingViewModel.bookedPassengerInformation[0].passengerName
                     binding.row1seat.text = bookingViewModel.bookedPassengerInformation[0].passengerSeatCode
@@ -289,7 +277,6 @@ class BookedTicketFragment : Fragment() {
                 })
 
             }
-
         }
         val alertDialog = builder.create()
         alertDialog.show()

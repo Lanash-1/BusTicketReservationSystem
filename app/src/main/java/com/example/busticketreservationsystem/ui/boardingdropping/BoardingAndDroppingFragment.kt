@@ -10,7 +10,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_CLOSE
 import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_OPEN
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -21,7 +20,6 @@ import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.ui.bookingdetails.BookingDetailsFragment
 import com.example.busticketreservationsystem.ui.selectedbus.SelectedBusFragment
-import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.livedata.BusViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -32,7 +30,6 @@ class BoardingAndDroppingFragment : Fragment() {
 
     private lateinit var binding: FragmentBoardingAndDroppingBinding
 
-    private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
 
     private lateinit var busViewModel: BusViewModel
 
@@ -53,7 +50,6 @@ class BoardingAndDroppingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_boarding_and_dropping, container, false)
 
         (activity as AppCompatActivity).supportActionBar?.apply {
             title = "Boarding and Dropping Points"
@@ -108,29 +104,18 @@ class BoardingAndDroppingFragment : Fragment() {
         val viewPager = binding.boardingDroppingViewPager
 
         binding.nextButton.setOnClickListener{
-//            if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
                 parentFragmentManager.commit {
                     setTransition(TRANSIT_FRAGMENT_OPEN)
                     replace(R.id.homePageFragmentContainer, BookingDetailsFragment())
                     addToBackStack(null)
                 }
-//            }else{
-//                parentFragmentManager.commit {
-//                    replace(R.id.homePageFragmentContainer, BookingDetailsGuestFragment())
-//                    addToBackStack(null)
-//                }
-//            }
+
         }
 
         viewPager.registerOnPageChangeCallback(
             object: ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
-                    if(position == 0){
-//                        busViewModel.droppingPoint = busViewModel.drop
-                    }else{
-//                        busViewModel.boardingPoint = busViewModel.currentPoint
-                    }
                 }
             }
         )

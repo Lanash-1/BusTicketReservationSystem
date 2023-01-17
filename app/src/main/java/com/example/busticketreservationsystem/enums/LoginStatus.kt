@@ -4,5 +4,6 @@ enum class LoginStatus {
     SKIPPED,
     LOGGED_IN,
     NEW,
-    LOGGED_OUT
+    LOGGED_OUT,
+    ADMIN_LOGGED_IN
 }

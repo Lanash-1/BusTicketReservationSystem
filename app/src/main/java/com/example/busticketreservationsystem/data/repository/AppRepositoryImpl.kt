@@ -176,7 +176,6 @@ class AppRepositoryImpl(
         return list[list.size-1]
     }
 
-
     override fun getUserBookings(userId: Int): List<Bookings>{
         return appDb.bookingsDao().getUserBookings(userId)
     }

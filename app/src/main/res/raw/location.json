@@ -1,0 +1,214 @@
+{
+  "states": [
+    {
+      "name": "Rajasthan",
+      "cities": [
+        {
+          "name": "Jaipur",
+          "areas": [
+            "C Scheme",
+            "Malviya Nagar",
+            "Sikar Road"
+          ]
+        },
+        {
+          "name": "Jodhpur",
+          "areas": [
+            "Ratanada",
+            "Shastri Nagar",
+            "Paota"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Punjab",
+      "cities": [
+        {
+          "name": "Amritsar",
+          "areas": [
+            "Ranjit Avenue",
+            "Guru Nanak Avenue",
+            "Lawrence Road"
+          ]
+        },
+        {
+          "name": "Ludhiana",
+          "areas": [
+            "Feroze Gandhi Market",
+            "Model Town",
+            "Pakhowal Road"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Kerala",
+      "cities": [
+        {
+          "name": "Thiruvananthapuram",
+          "areas": [
+            "Pattom",
+            "Kowdiar",
+            "Vazhuthacaud"
+          ]
+        },
+        {
+          "name": "Kochi",
+          "areas": [
+            "Ernakulam",
+            "Fort Kochi",
+            "Kaloor"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Odisha",
+      "cities": [
+        {
+          "name": "Bhubaneswar",
+          "areas": [
+            "Sahid Nagar",
+            "Rasulgarh",
+            "Nayapalli"
+          ]
+        },
+        {
+          "name": "Cuttack",
+          "areas": [
+            "College Square",
+            "Markat Nagar",
+            "Badambadi"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "West Bengal",
+      "cities": [
+        {
+          "name": "Kolkata",
+          "areas": [
+            "Park Street",
+            "Salt Lake",
+            "Ballygunge"
+          ]
+        },
+        {
+          "name": "Asansol",
+          "areas": [
+            "Burnpur",
+            "Pandaveswar",
+            "Barakar"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Andhra Pradesh",
+      "cities": [
+        {
+          "name": "Visakhapatnam",
+          "areas": [
+            "Dwarka Nagar",
+            "Gajuwaka",
+            "MVP Colony"
+          ]
+        },
+        {
+          "name": "Vijayawada",
+          "areas": [
+            "Benz Circle",
+            "Governorpet",
+            "One Town"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Karnataka",
+      "cities": [
+        {
+          "name": "Bengaluru",
+          "areas": [
+            "Jayanagar",
+            "Koramangala",
+            "Indira Nagar"
+          ]
+        },
+        {
+          "name": "Mysuru",
+          "areas": [
+            "Devaraja Mohalla",
+            "Vontikoppal",
+            "Krishnamurthypuram"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Tamil Nadu",
+      "cities": [
+        {
+          "name": "Chennai",
+          "areas": [
+            "Anna Nagar",
+            "T Nagar",
+            "Adyar"
+          ]
+        },
+        {
+          "name": "Coimbatore",
+          "areas": [
+            "Gandhipuram",
+            "Peelamedu",
+            "Saravanampatti"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Maharashtra",
+      "cities": [
+        {
+          "name": "Mumbai",
+          "areas": [
+            "Andheri",
+            "Bandra",
+            "Dadar"
+          ]
+        },
+        {
+          "name": "Pune",
+          "areas": [
+            "Kothrud",
+            "Shivaji Nagar",
+            "Wakad"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Uttar Pradesh",
+      "cities": [
+        {
+          "name": "Lucknow",
+          "areas": [
+            "Hazratganj",
+            "Gomti Nagar",
+            "Aliganj"
+          ]
+        },
+        {
+          "name": "Kanpur",
+          "areas": [
+            "Civil Lines",
+            "Naubasta",
+            "Barra"
+          ]
+        }
+      ]
+    }
+  ]
+}
