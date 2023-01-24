@@ -1,5 +1,6 @@
 package com.example.busticketreservationsystem.ui.editprofile
 
+import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Patterns
@@ -18,7 +19,6 @@ import com.example.busticketreservationsystem.enums.Gender
 import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.ui.myaccount.MyAccountFragment
-import com.example.busticketreservationsystem.utils.Helper
 import com.example.busticketreservationsystem.viewmodel.DateViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.livedata.UserViewModel
@@ -28,7 +28,6 @@ import com.google.android.material.snackbar.Snackbar
 
 class EditProfileFragment : Fragment() {
 
-    private val helper = Helper()
 
     private val dateViewModel: DateViewModel by activityViewModels()
 
@@ -63,14 +62,73 @@ class EditProfileFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home -> {
-                parentFragmentManager.commit {
-                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-                    replace(R.id.homePageFragmentContainer, MyAccountFragment())
-                    parentFragmentManager.popBackStack()
-                }
+                backPressOperation()
+
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun backPressOperation() {
+        var selectedGender: String? = null
+        selectedGender = when(binding.genderRadioGroup.checkedRadioButtonId){
+            R.id.male_radio_button -> {
+                Gender.MALE.name
+            }
+            R.id.female_radio_button -> {
+                Gender.FEMALE.name
+            }
+            else ->{
+                ""
+            }
+        }
+        var birthDate = if(binding.dob.text.toString() == "DD - MM - YYYY"){
+            ""
+        }else{
+            binding.dob.text.toString()
+        }
+
+        if(
+            userViewModel.user.emailId != binding.emailInput.text.toString() ||
+                    userViewModel.user.username != binding.usernameInput.text.toString() ||
+                    userViewModel.user.dob != birthDate ||
+                    userViewModel.user.gender != selectedGender
+        ){
+            backPressAlert()
+        }else{
+            moveToMyAccount()
+        }
+    }
+
+    private fun backPressAlert() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setMessage("Changes will not be updated")
+        builder.setTitle("Discard changes?")
+        builder.setCancelable(false)
+
+
+        builder.setNegativeButton("Cancel"){
+                dialog, _ -> dialog.cancel()
+        }
+
+        builder.setPositiveButton("Discard"){
+                _, _ ->
+            run {
+                moveToMyAccount()
+            }
+        }
+        val alertDialog = builder.create()
+        if(alertDialog.window != null){
+            alertDialog.window!!.attributes.windowAnimations = R.style.DialogFragmentAnimation
+        }
+        alertDialog.show()
+    }
+
+    private fun moveToMyAccount() {
+        parentFragmentManager.commit {
+            setCustomAnimations(R.anim.from_left, R.anim.to_right)
+            replace(R.id.homePageFragmentContainer, MyAccountFragment())
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -81,11 +139,7 @@ class EditProfileFragment : Fragment() {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true){
                 override fun handleOnBackPressed() {
-                    parentFragmentManager.commit {
-                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-                        replace(R.id.homePageFragmentContainer, MyAccountFragment())
-                        parentFragmentManager.popBackStack()
-                    }
+                    backPressOperation()
                 }
             }
 

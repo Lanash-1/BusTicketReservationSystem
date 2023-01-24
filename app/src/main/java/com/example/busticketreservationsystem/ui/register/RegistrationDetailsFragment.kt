@@ -138,7 +138,7 @@ class RegistrationDetailsFragment : Fragment() {
                 if(dateViewModel.year != 0){
                     this.dob = "${dateViewModel.date} - ${dateViewModel.month} - ${dateViewModel.year}"
                 }else{
-                    this.dob = "DD - MM - YYYY"
+                    this.dob = ""
                 }
 
                 if(selectedGenderRadioButton == null){

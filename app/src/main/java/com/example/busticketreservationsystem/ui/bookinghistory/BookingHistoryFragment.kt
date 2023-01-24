@@ -83,6 +83,8 @@ class BookingHistoryFragment : Fragment() {
             }
         }
 
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.selectedItemId = R.id.bookingHistory
+
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.visibility = View.VISIBLE
 
         val callback: OnBackPressedCallback =
