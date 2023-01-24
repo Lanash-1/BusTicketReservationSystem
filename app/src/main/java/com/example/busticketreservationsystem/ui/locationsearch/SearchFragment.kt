@@ -16,15 +16,17 @@ import com.example.busticketreservationsystem.databinding.FragmentSearchBinding
 import com.example.busticketreservationsystem.enums.LocationOptions
 import com.example.busticketreservationsystem.listeners.OnItemClickListener
 import com.example.busticketreservationsystem.ui.dashboard.DashBoardFragment
+import com.example.busticketreservationsystem.viewmodel.LocationViewModel
 import com.example.busticketreservationsystem.viewmodel.SearchViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
-
 
 class SearchFragment : Fragment() {
 
     private lateinit var binding: FragmentSearchBinding
 
     private val searchViewModel: SearchViewModel by activityViewModels()
+
+    private val locationViewModel: LocationViewModel by activityViewModels()
 
     private var searchLocationAdapter = SearchLocationAdapter()
 
@@ -54,9 +56,9 @@ class SearchFragment : Fragment() {
         val searchItem = menu.findItem(R.id.search)
         val searchView = searchItem.actionView as SearchView
 
-
         searchItem.expandActionView()
         searchView.setQuery("", false)
+
 
         searchView.isIconified = false
 
@@ -83,7 +85,7 @@ class SearchFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                newList = searchViewModel.location.filter {
+                newList = locationViewModel.allCities.filter {
                     it.lowercase().startsWith(newText?.lowercase()!!)
                 }
                 if(newText!!.isEmpty()){
@@ -118,12 +120,14 @@ class SearchFragment : Fragment() {
 
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.visibility = View.GONE
 
+        locationViewModel.fetchAllCities()
+
 
         binding.searchResultsLayout.layoutManager = LinearLayoutManager(requireContext())
         binding.searchResultsLayout.adapter = searchLocationAdapter
         searchLocationAdapter.setLocationList(listOf())
 
-        val listViewAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, searchViewModel.popularCities)
+        val listViewAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, locationViewModel.allCities)
         binding.popularCitiesListView.adapter = listViewAdapter
 
         binding.popularCitiesListView.setOnItemClickListener{ parent, _, position, _ ->
@@ -149,10 +153,10 @@ class SearchFragment : Fragment() {
                 val selectedItem = newList[position]
                 when(searchViewModel.currentSearch){
                     LocationOptions.SOURCE.name -> {
-                        searchViewModel.sourceLocation = selectedItem.toString()
+                        searchViewModel.sourceLocation = selectedItem
                     }
                     LocationOptions.DESTINATION.name -> {
-                        searchViewModel.destinationLocation = selectedItem.toString()
+                        searchViewModel.destinationLocation = selectedItem
                     }
                 }
                 parentFragmentManager.commit {
@@ -162,9 +166,6 @@ class SearchFragment : Fragment() {
                     parentFragmentManager.popBackStack()
                 }
             }
-
         })
-
-
     }
 }

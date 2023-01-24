@@ -104,8 +104,8 @@ class RegistrationDetailsFragment : Fragment() {
             datePickerFragment.show(parentFragmentManager, "datePicker")
         }
 
-        dateViewModel.edited.observe(viewLifecycleOwner, Observer{
-            binding.dob.text = "${dateViewModel.date} - ${dateViewModel.month} - ${dateViewModel.year}"
+        dateViewModel.birthDateEdited.observe(viewLifecycleOwner, Observer{
+            binding.dob.text = "${dateViewModel.birthDate} - ${dateViewModel.birthMonth} - ${dateViewModel.birthYear}"
         })
 
         genderRadioGroup.setOnCheckedChangeListener { _, checkedId ->
@@ -137,8 +137,8 @@ class RegistrationDetailsFragment : Fragment() {
             userViewModel.user.apply {
                 this.emailId = emailInput.text.toString()
 
-                if(dateViewModel.year != 0){
-                    this.dob = "${dateViewModel.date} - ${dateViewModel.month} - ${dateViewModel.year}"
+                if(dateViewModel.birthYear != 0){
+                    this.dob = "${dateViewModel.birthDate} - ${dateViewModel.birthMonth} - ${dateViewModel.birthYear}"
                 }else{
                     this.dob = ""
                 }

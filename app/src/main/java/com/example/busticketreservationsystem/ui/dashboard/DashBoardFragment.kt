@@ -61,7 +61,6 @@ class DashBoardFragment : Fragment() {
 
         val busViewModelFactory = BusViewModelFactory(repository)
         busViewModel = ViewModelProvider(requireActivity(), busViewModelFactory)[BusViewModel::class.java]
-
     }
 
     override fun onCreateView(
@@ -111,18 +110,14 @@ class DashBoardFragment : Fragment() {
         recentlyViewedAdapter.setOnRemoveClickListener(object: OnRemoveClickListener{
             override fun onRemoveClick(position: Int) {
                 userViewModel.removeRecentlyViewedData(userViewModel.recentlyViewedList[position])
-
-
             }
         })
-
 
 
         recentlyViewedAdapter.setOnItemClickListener(object : OnItemClickListener{
             override fun onItemClick(position: Int) {
                 busViewModel.selectedBus  = userViewModel.recentlyViewedBusList[position]
                 busViewModel.selectedDate = userViewModel.recentlyViewedList[position].date
-
 
 
                 navigationViewModel.fragment = DashBoardFragment()
@@ -152,7 +147,6 @@ class DashBoardFragment : Fragment() {
                     addToBackStack(null)
                 }
 
-
             }else{
                 if(searchViewModel.sourceLocation.isEmpty()){
                     binding.enterSourceErrorIcon.visibility = View.VISIBLE
@@ -171,7 +165,6 @@ class DashBoardFragment : Fragment() {
                 }else{
                     binding.enterDateErrorIcon.visibility = View.INVISIBLE
                 }
-
 
             }
         }
@@ -211,13 +204,13 @@ class DashBoardFragment : Fragment() {
             datePickerFragment.show(parentFragmentManager, "datePicker")
         }
 
-        dateViewModel.travelEdited.observe(viewLifecycleOwner, Observer {
-            if(dateViewModel.year != 0){
-                binding.dateText.text = "${dateViewModel.date} - ${dateViewModel.month} - ${dateViewModel.year}"
+        dateViewModel.travelDateEdited.observe(viewLifecycleOwner, Observer {
+            if(dateViewModel.travelYear != 0){
+                binding.dateText.text = "${dateViewModel.travelDate} - ${dateViewModel.travelMonth} - ${dateViewModel.travelYear}"
                 searchViewModel.apply {
-                    year = dateViewModel.year
-                    month = dateViewModel.month
-                    date = dateViewModel.date
+                    year = dateViewModel.travelYear
+                    month = dateViewModel.travelMonth
+                    date = dateViewModel.travelDate
                 }
             }else{
                 binding.dateText.text = "DD - MM - YYYY"
@@ -229,12 +222,6 @@ class DashBoardFragment : Fragment() {
             }
         })
 
-//        binding.viewAllText.setOnClickListener {
-//            parentFragmentManager.commit {
-//                replace(R.id.homePageFragmentContainer, RecentlyViewedFragment())
-//                addToBackStack(null)
-//            }
-//        }
     }
 
     private fun clearAllValues() {

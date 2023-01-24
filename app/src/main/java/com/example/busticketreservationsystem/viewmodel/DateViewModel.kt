@@ -11,6 +11,35 @@ class DateViewModel: ViewModel() {
 
     var edited = MutableLiveData<Boolean>()
 
-    var travelEdited = MutableLiveData<Boolean>()
+
+//    Date of birth related
+
+
+    var birthDate = 0
+    var birthMonth = 0
+    var birthYear = 0
+
+    var birthDateEdited = MutableLiveData<Boolean>()
+
+
+
+//    travel Date related
+
+
+    var travelDate = 0
+    var travelMonth = 0
+    var travelYear = 0
+
+    var travelDateEdited = MutableLiveData<Boolean>()
+
+
+//    edit profile date related
+
+    var editedDate = 0
+    var editedMonth = 0
+    var editedYear = 0
+
+    var dobEdited = MutableLiveData<Boolean>()
+
 
 }

@@ -30,7 +30,7 @@
     </style>
 
     <style name="ButtonIconColor">
-        <item name="iconTint">@color/white</item>
+        <item name="drawableTint">@color/white</item>
     </style>
 
     <style name="TextDefault">

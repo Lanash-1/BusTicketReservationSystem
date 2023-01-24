@@ -82,7 +82,7 @@ class EditProfileFragment : Fragment() {
                 ""
             }
         }
-        var birthDate = if(binding.dob.text.toString() == "DD - MM - YYYY"){
+        val birthDate = if(binding.dob.text.toString() == "DD - MM - YYYY"){
             ""
         }else{
             binding.dob.text.toString()
@@ -94,6 +94,7 @@ class EditProfileFragment : Fragment() {
                     userViewModel.user.dob != birthDate ||
                     userViewModel.user.gender != selectedGender
         ){
+
             backPressAlert()
         }else{
             moveToMyAccount()
@@ -114,6 +115,11 @@ class EditProfileFragment : Fragment() {
         builder.setPositiveButton("Discard"){
                 _, _ ->
             run {
+
+                dateViewModel.birthDate = dateViewModel.editedDate
+                dateViewModel.birthMonth = dateViewModel.editedMonth
+                dateViewModel.birthYear = dateViewModel.editedYear
+
                 moveToMyAccount()
             }
         }
@@ -158,8 +164,8 @@ class EditProfileFragment : Fragment() {
             datePickerFragment.show(parentFragmentManager, "datePicker")
         }
 
-        dateViewModel.edited.observe(viewLifecycleOwner, Observer{
-            binding.dob.text = "${dateViewModel.date} - ${dateViewModel.month} - ${dateViewModel.year}"
+        dateViewModel.birthDateEdited.observe(viewLifecycleOwner, Observer{
+            binding.dob.text = "${dateViewModel.birthDate} - ${dateViewModel.birthMonth} - ${dateViewModel.birthYear}"
         })
 
         when(userViewModel.user.gender){
@@ -193,8 +199,8 @@ class EditProfileFragment : Fragment() {
             userViewModel.user.apply {
                 emailId = binding.emailInput.text.toString()
 
-                if(dateViewModel.edited.value == true){
-                    dob = "${dateViewModel.date} - ${dateViewModel.month} - ${dateViewModel.year}"
+                if(dateViewModel.birthDateEdited.value == true){
+                    dob = "${dateViewModel.birthDate} - ${dateViewModel.birthMonth} - ${dateViewModel.birthYear}"
                 }
 
                 if(binding.maleRadioButton.isChecked){

@@ -1,7 +1,5 @@
 package com.example.busticketreservationsystem.viewmodel
 
-import android.content.Context
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.busticketreservationsystem.data.entity.LocationModel
@@ -52,5 +50,19 @@ class LocationViewModel: ViewModel() {
         }
         return areas
     }
+
+
+    var allCities = mutableListOf<String>()
+
+    fun fetchAllCities(){
+        allCities.clear()
+        for(location in locationData){
+            for(city in location.cities){
+                allCities.add(city)
+            }
+        }
+        allCities.sorted()
+    }
+
 
 }

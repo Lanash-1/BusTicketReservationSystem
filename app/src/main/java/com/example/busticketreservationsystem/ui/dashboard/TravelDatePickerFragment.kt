@@ -23,9 +23,9 @@ class TravelDatePickerFragment: DialogFragment(), DatePickerDialog.OnDateSetList
         val month = calendar.get(Calendar.MONTH)
         val date = calendar.get(Calendar.DAY_OF_MONTH)
 //
-        this.date = dateViewModel.date
-        this.month = dateViewModel.month
-        this.year = dateViewModel.year
+        this.date = dateViewModel.travelDate
+        this.month = dateViewModel.travelMonth
+        this.year = dateViewModel.travelYear
 
         val dialog = DatePickerDialog(requireContext(),this, year, month, date)
         calendar.set(year, month, date)
@@ -46,17 +46,17 @@ class TravelDatePickerFragment: DialogFragment(), DatePickerDialog.OnDateSetList
 
 
     override fun onDateSet(p0: DatePicker?, year: Int, month: Int, date: Int) {
-        dateViewModel.date = date
-        dateViewModel.month = month+1
-        dateViewModel.year = year
-        dateViewModel.travelEdited.value = true
+        dateViewModel.travelDate = date
+        dateViewModel.travelMonth = month+1
+        dateViewModel.travelYear = year
+        dateViewModel.travelDateEdited.value = true
     }
 
     override fun onCancel(dialog: DialogInterface) {
         dateViewModel.apply {
-            this.date = date
-            this.month = month
-            this.year = year
+            travelDate = date
+            travelMonth = month
+            travelYear = year
         }
         super.onCancel(dialog)
     }
