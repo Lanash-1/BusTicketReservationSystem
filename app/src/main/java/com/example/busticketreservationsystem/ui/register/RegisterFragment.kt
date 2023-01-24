@@ -92,6 +92,7 @@ class RegisterFragment : Fragment() {
                 editor.commit()
                 parentFragmentManager.commit {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    setCustomAnimations(R.anim.from_right, R.anim.to_left)
                     replace(R.id.main_fragment_container, HomePageFragment())
                 }
             }
@@ -102,6 +103,7 @@ class RegisterFragment : Fragment() {
     private fun backPressOperation() {
         parentFragmentManager.commit {
             setCustomAnimations(R.anim.from_right, R.anim.to_left)
+            setCustomAnimations(R.anim.from_left, R.anim.to_right)
             replace(R.id.main_fragment_container, WelcomeFragment())
         }
     }
@@ -137,6 +139,7 @@ class RegisterFragment : Fragment() {
         alreadyUserLoginText.setOnClickListener {
             parentFragmentManager.commit {
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                setCustomAnimations(R.anim.from_right, R.anim.to_left)
                 replace(R.id.main_fragment_container, LoginFragment())
 //                parentFragmentManager.popBackStack()
             }
@@ -178,7 +181,6 @@ class RegisterFragment : Fragment() {
 
         }
 
-
     }
 
     private fun registerNewUser() {
@@ -193,6 +195,7 @@ class RegisterFragment : Fragment() {
             loginStatusViewModel.status = LoginStatus.LOGGED_IN
             parentFragmentManager.commit {
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                setCustomAnimations(R.anim.from_right, R.anim.to_left)
                 replace(R.id.main_fragment_container, RegistrationDetailsFragment())
             }
         })

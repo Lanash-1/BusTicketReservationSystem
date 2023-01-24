@@ -93,12 +93,14 @@ class BusInfoFragment : Fragment() {
 //                navigationViewModel.fragment = null
                 parentFragmentManager.commit {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.homePageFragmentContainer, BookedTicketFragment())
                 }
             }
             else -> {
                 parentFragmentManager.commit {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.homePageFragmentContainer, SelectedBusFragment())
                     parentFragmentManager.popBackStack()
                 }
@@ -228,6 +230,7 @@ class BusInfoFragment : Fragment() {
         binding.readReviewsButton.setOnClickListener {
             parentFragmentManager.commit {
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                setCustomAnimations(R.anim.from_right, R.anim.to_left)
                 replace(R.id.homePageFragmentContainer, ReviewsFragment())
                 addToBackStack(null)
             }

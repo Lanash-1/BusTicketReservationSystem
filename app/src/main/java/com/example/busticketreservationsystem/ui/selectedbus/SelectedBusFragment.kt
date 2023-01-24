@@ -83,6 +83,7 @@ class SelectedBusFragment : Fragment() {
             R.id.info_icon -> {
                 parentFragmentManager.commit {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    setCustomAnimations(R.anim.from_right, R.anim.to_left)
                     replace(R.id.homePageFragmentContainer, BusInfoFragment())
                     addToBackStack(null)
                 }
@@ -99,12 +100,14 @@ class SelectedBusFragment : Fragment() {
                 navigationViewModel.fragment = null
                 parentFragmentManager.commit {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.homePageFragmentContainer, DashBoardFragment())
                 }
             }
             else -> {
                 parentFragmentManager.commit {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.homePageFragmentContainer, BusResultsFragment())
                     parentFragmentManager.popBackStack()
                 }
@@ -136,6 +139,7 @@ class SelectedBusFragment : Fragment() {
             bookingViewModel.selectedSeats = busViewModel.selectedSeats
             parentFragmentManager.commit {
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                setCustomAnimations(R.anim.from_right, R.anim.to_left)
                 replace(R.id.homePageFragmentContainer, BoardingAndDroppingFragment())
                 addToBackStack(null)
             }
@@ -144,6 +148,7 @@ class SelectedBusFragment : Fragment() {
         binding.aboutBusButton.setOnClickListener {
             parentFragmentManager.commit {
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                setCustomAnimations(R.anim.from_right, R.anim.to_left)
                 replace(R.id.homePageFragmentContainer, BusInfoFragment())
                 addToBackStack(null)
             }

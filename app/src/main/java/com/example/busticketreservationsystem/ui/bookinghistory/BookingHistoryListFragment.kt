@@ -73,6 +73,7 @@ class BookingHistoryListFragment : Fragment() {
                 bookingViewModel.selectedBus = bookingViewModel.bookingHistoryBusList[position]
 
                 parentFragmentManager.commit {
+                    setCustomAnimations(R.anim.from_right, R.anim.to_left)
                     replace(R.id.homePageFragmentContainer, BookedTicketFragment())
 //                    addToBackStack(null)
                 }

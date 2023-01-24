@@ -64,6 +64,7 @@ class BoardingAndDroppingFragment : Fragment() {
             android.R.id.home -> {
                 parentFragmentManager.commit {
                     setTransition(TRANSIT_FRAGMENT_CLOSE)
+                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.homePageFragmentContainer, SelectedBusFragment())
                     parentFragmentManager.popBackStack()
                 }
@@ -83,6 +84,7 @@ class BoardingAndDroppingFragment : Fragment() {
                 override fun handleOnBackPressed() {
                     parentFragmentManager.commit {
                         setTransition(TRANSIT_FRAGMENT_CLOSE)
+                        setCustomAnimations(R.anim.from_left, R.anim.to_right)
                         replace(R.id.homePageFragmentContainer, SelectedBusFragment())
                         parentFragmentManager.popBackStack()
                     }
@@ -106,6 +108,7 @@ class BoardingAndDroppingFragment : Fragment() {
         binding.nextButton.setOnClickListener{
                 parentFragmentManager.commit {
                     setTransition(TRANSIT_FRAGMENT_OPEN)
+                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.homePageFragmentContainer, BookingDetailsFragment())
                     addToBackStack(null)
                 }

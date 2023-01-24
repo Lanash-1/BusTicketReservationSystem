@@ -99,6 +99,7 @@ class MyAccountFragment : Fragment() {
                 override fun handleOnBackPressed() {
                     parentFragmentManager.commit {
                         setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        setCustomAnimations(R.anim.from_left, R.anim.to_right)
                         replace(R.id.homePageFragmentContainer, DashBoardFragment())
                     }
                     requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.selectedItemId =
@@ -135,8 +136,8 @@ class MyAccountFragment : Fragment() {
         editProfileChip.setOnClickListener{
             parentFragmentManager.commit {
                 setTransition(TRANSIT_FRAGMENT_OPEN)
+                setCustomAnimations(R.anim.from_right, R.anim.to_left)
                 replace(R.id.homePageFragmentContainer, EditProfileFragment())
-                addToBackStack(null)
             }
         }
 
@@ -158,6 +159,7 @@ class MyAccountFragment : Fragment() {
                         navigationViewModel.fragment = MyAccountFragment()
                         parentFragmentManager.commit {
                             setTransition(TRANSIT_FRAGMENT_OPEN)
+                            setCustomAnimations(R.anim.from_left, R.anim.to_right)
                             replace(R.id.homePageFragmentContainer, BookingHistoryFragment())
                         }
                         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.selectedItemId =
@@ -165,10 +167,7 @@ class MyAccountFragment : Fragment() {
                     }
                     MyAccountOptions.SETTINGS -> {
                         parentFragmentManager.commit {
-                            setCustomAnimations(
-                                R.anim.from_right,
-                                R.anim.to_left
-                            )
+                            setCustomAnimations(R.anim.from_right, R.anim.to_left)
                             replace(R.id.homePageFragmentContainer, SettingsFragment())
                             addToBackStack(null)
                         }
@@ -192,6 +191,7 @@ class MyAccountFragment : Fragment() {
                         }else{
                             parentFragmentManager.commit {
                                 setTransition(TRANSIT_FRAGMENT_OPEN)
+                                setCustomAnimations(R.anim.from_right, R.anim.to_left)
                                 replace(R.id.main_fragment_container, LoginFragment())
                             }
                         }
@@ -235,6 +235,7 @@ class MyAccountFragment : Fragment() {
                 editor.commit()
                 parentFragmentManager.commit {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                    setCustomAnimations(R.anim.from_right, R.anim.to_left)
                     replace(R.id.main_fragment_container, LoginFragment())
                 }
             }

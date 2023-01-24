@@ -112,7 +112,7 @@ class AddBusFragment : Fragment() {
                     selectedDestinationState.value = ""
                 }
                 parentFragmentManager.commit {
-                    setCustomAnimations(R.anim.from_right, R.anim.to_left)
+                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
                 }
             }
@@ -174,12 +174,12 @@ class AddBusFragment : Fragment() {
                 )
                 busViewModel.registerNewBus(adminViewModel.newBus, adminViewModel.amenities)
                 parentFragmentManager.commit {
+                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
                 }
             }
 
         }
-
 
 
         binding.autoCompleteTextView.setOnClickListener{

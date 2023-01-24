@@ -208,6 +208,7 @@ class EditProfileFragment : Fragment() {
             Snackbar.make(requireView(), "Saved changes successfully", Snackbar.LENGTH_SHORT).show()
             parentFragmentManager.commit {
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                setCustomAnimations(R.anim.from_left, R.anim.to_right)
                 replace(R.id.homePageFragmentContainer, MyAccountFragment())
                 parentFragmentManager.popBackStack()
             }

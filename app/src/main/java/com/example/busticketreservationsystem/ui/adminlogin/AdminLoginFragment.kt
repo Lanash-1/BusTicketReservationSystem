@@ -70,6 +70,7 @@ class AdminLoginFragment : Fragment() {
 
     private fun backPressOperation() {
         parentFragmentManager.commit {
+            setCustomAnimations(R.anim.from_left, R.anim.to_right)
             replace(R.id.main_fragment_container, WelcomeFragment())
 //            parentFragmentManager.popBackStack()
         }

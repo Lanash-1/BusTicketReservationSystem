@@ -79,6 +79,7 @@ class BookingHistoryFragment : Fragment() {
         binding.loginOrRegisterButton.setOnClickListener {
             parentFragmentManager.commit {
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                setCustomAnimations(R.anim.from_left, R.anim.to_right)
                 replace(R.id.main_fragment_container, LoginFragment())
             }
         }
@@ -95,6 +96,7 @@ class BookingHistoryFragment : Fragment() {
                             navigationViewModel.fragment = null
                             parentFragmentManager.commit {
                                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                                setCustomAnimations(R.anim.from_right, R.anim.to_left)
                                 replace(R.id.homePageFragmentContainer, MyAccountFragment())
                             }
                             requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.selectedItemId =
@@ -103,6 +105,7 @@ class BookingHistoryFragment : Fragment() {
                         else -> {
                             parentFragmentManager.commit {
                                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                                setCustomAnimations(R.anim.from_left, R.anim.to_right)
                                 replace(R.id.homePageFragmentContainer, DashBoardFragment())
                             }
                             requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.selectedItemId =
@@ -124,7 +127,6 @@ class BookingHistoryFragment : Fragment() {
                     bookingViewModel.tabPosition.value = position
                     super.onPageSelected(position)
                 }
-
             }
         )
 

@@ -91,6 +91,7 @@ class BookingDetailsFragment : Fragment() {
             android.R.id.home -> {
                 parentFragmentManager.commit {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.homePageFragmentContainer, BoardingAndDroppingFragment())
                     parentFragmentManager.popBackStack()
                 }
@@ -112,6 +113,7 @@ class BookingDetailsFragment : Fragment() {
             navigationViewModel.fragment = BookingDetailsFragment()
             parentFragmentManager.commit {
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                setCustomAnimations(R.anim.from_right, R.anim.to_left)
                 replace(R.id.main_fragment_container, LoginFragment())
             }
         }
@@ -123,6 +125,7 @@ class BookingDetailsFragment : Fragment() {
                 override fun handleOnBackPressed() {
                     parentFragmentManager.commit {
                         setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                        setCustomAnimations(R.anim.from_left, R.anim.to_right)
                         replace(R.id.homePageFragmentContainer, BoardingAndDroppingFragment())
                         parentFragmentManager.popBackStack()
                     }
@@ -228,6 +231,7 @@ class BookingDetailsFragment : Fragment() {
             Snackbar.make(requireView(), "Booked ticket successfully", Snackbar.LENGTH_SHORT).show()
             navigationViewModel.fragment = BookingDetailsFragment()
             parentFragmentManager.commit {
+                setCustomAnimations(R.anim.from_right, R.anim.to_left)
                 replace(R.id.homePageFragmentContainer, BookedTicketFragment())
             }
         })

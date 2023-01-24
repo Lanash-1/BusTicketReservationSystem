@@ -90,7 +90,7 @@ class AddPartnerFragment : Fragment() {
                 _, _ ->
             run {
                 parentFragmentManager.commit {
-                    setCustomAnimations(R.anim.from_right, R.anim.to_left)
+                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
                 }
             }
@@ -178,7 +178,7 @@ class AddPartnerFragment : Fragment() {
 
     private fun moveToDashboard() {
         parentFragmentManager.commit {
-            setCustomAnimations(R.anim.from_right, R.anim.to_left)
+            setCustomAnimations(R.anim.from_left, R.anim.to_right)
             replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
         }
     }

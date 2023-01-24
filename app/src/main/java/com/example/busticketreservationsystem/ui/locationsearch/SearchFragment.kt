@@ -69,6 +69,7 @@ class SearchFragment : Fragment() {
 
                 parentFragmentManager.commit {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.homePageFragmentContainer, DashBoardFragment())
                     parentFragmentManager.popBackStack()
                 }
@@ -103,6 +104,7 @@ class SearchFragment : Fragment() {
                 Toast.makeText(requireContext(), "search up button", Toast.LENGTH_SHORT).show()
                 parentFragmentManager.commit {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.homePageFragmentContainer, DashBoardFragment())
                     parentFragmentManager.popBackStack()
                 }
@@ -136,6 +138,7 @@ class SearchFragment : Fragment() {
             }
             parentFragmentManager.commit {
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                setCustomAnimations(R.anim.from_left, R.anim.to_right)
                 replace(R.id.homePageFragmentContainer, DashBoardFragment())
                 parentFragmentManager.popBackStack()
             }
@@ -154,6 +157,7 @@ class SearchFragment : Fragment() {
                 }
                 parentFragmentManager.commit {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.homePageFragmentContainer, DashBoardFragment())
                     parentFragmentManager.popBackStack()
                 }

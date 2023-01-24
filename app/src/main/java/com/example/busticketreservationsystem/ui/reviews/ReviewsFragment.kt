@@ -28,7 +28,6 @@ class ReviewsFragment : Fragment() {
     private var reviewsAdapter = ReviewsAdapter()
 
 
-
     private lateinit var busViewModel: BusViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,6 +61,7 @@ class ReviewsFragment : Fragment() {
             android.R.id.home -> {
                 parentFragmentManager.commit {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.homePageFragmentContainer, BusInfoFragment())
                     parentFragmentManager.popBackStack()
                 }
@@ -78,6 +78,7 @@ class ReviewsFragment : Fragment() {
                 override fun handleOnBackPressed() {
                     parentFragmentManager.commit {
                         setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                        setCustomAnimations(R.anim.from_left, R.anim.to_right)
                         replace(R.id.homePageFragmentContainer, BusInfoFragment())
                         parentFragmentManager.popBackStack()
                     }

@@ -76,6 +76,7 @@ class RegistrationDetailsFragment : Fragment() {
 //                    Toast.makeText(requireContext(), "back presses", Toast.LENGTH_SHORT).show()
                     parentFragmentManager.commit {
                         setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        setCustomAnimations(R.anim.from_right, R.anim.to_left)
                         replace(R.id.main_fragment_container, HomePageFragment())
                     }
 //                    requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).selectedItemId = R.id.dashboard
@@ -114,6 +115,7 @@ class RegistrationDetailsFragment : Fragment() {
         skipText.setOnClickListener {
             parentFragmentManager.commit {
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                setCustomAnimations(R.anim.from_right, R.anim.to_left)
                 replace(R.id.main_fragment_container, HomePageFragment())
             }
         }
@@ -159,6 +161,7 @@ class RegistrationDetailsFragment : Fragment() {
 
             parentFragmentManager.commit {
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                setCustomAnimations(R.anim.from_right, R.anim.to_left)
                 replace(R.id.main_fragment_container, HomePageFragment())
             }
         }

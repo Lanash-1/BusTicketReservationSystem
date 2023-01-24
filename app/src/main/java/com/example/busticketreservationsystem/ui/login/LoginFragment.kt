@@ -88,6 +88,7 @@ class LoginFragment : Fragment() {
                 editor.commit()
                 parentFragmentManager.commit {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    setCustomAnimations(R.anim.from_right, R.anim.to_left)
                     replace(R.id.main_fragment_container, HomePageFragment())
                 }
             }
@@ -142,6 +143,7 @@ class LoginFragment : Fragment() {
         forgotPasswordText.setOnClickListener {
             parentFragmentManager.commit {
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                setCustomAnimations(R.anim.from_right, R.anim.to_left)
                 replace(R.id.main_fragment_container, ForgotPasswordFragment())
                 addToBackStack(null)
             }
@@ -157,6 +159,7 @@ class LoginFragment : Fragment() {
                 editor.commit()
                 parentFragmentManager.commit {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    setCustomAnimations(R.anim.from_right, R.anim.to_left)
                     replace(R.id.main_fragment_container, HomePageFragment())
                 }
             }

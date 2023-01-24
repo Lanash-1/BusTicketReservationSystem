@@ -129,6 +129,7 @@ class DashBoardFragment : Fragment() {
 //
                 parentFragmentManager.commit {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    setCustomAnimations(R.anim.from_right, R.anim.to_left)
                     replace(R.id.homePageFragmentContainer, SelectedBusFragment())
                 }
             }
@@ -146,6 +147,7 @@ class DashBoardFragment : Fragment() {
 
                 parentFragmentManager.commit {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    setCustomAnimations(R.anim.from_right, R.anim.to_left)
                     replace(R.id.homePageFragmentContainer, BusResultsFragment())
                     addToBackStack(null)
                 }
@@ -227,12 +229,12 @@ class DashBoardFragment : Fragment() {
             }
         })
 
-        binding.viewAllText.setOnClickListener {
-            parentFragmentManager.commit {
-                replace(R.id.homePageFragmentContainer, RecentlyViewedFragment())
-                addToBackStack(null)
-            }
-        }
+//        binding.viewAllText.setOnClickListener {
+//            parentFragmentManager.commit {
+//                replace(R.id.homePageFragmentContainer, RecentlyViewedFragment())
+//                addToBackStack(null)
+//            }
+//        }
     }
 
     private fun clearAllValues() {
@@ -264,6 +266,7 @@ class DashBoardFragment : Fragment() {
     private fun openSearchFragment() {
         parentFragmentManager.commit {
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            setCustomAnimations(R.anim.from_right, R.anim.to_left)
             replace(R.id.homePageFragmentContainer, SearchFragment())
             addToBackStack(null)
         }

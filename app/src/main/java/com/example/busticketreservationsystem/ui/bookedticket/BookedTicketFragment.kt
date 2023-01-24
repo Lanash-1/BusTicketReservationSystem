@@ -118,6 +118,7 @@ class BookedTicketFragment : Fragment() {
             navigationViewModel.fragment = BookedTicketFragment()
             busViewModel.selectedBus = bookingViewModel.selectedBus
             parentFragmentManager.commit {
+                setCustomAnimations(R.anim.from_right, R.anim.to_left)
                 replace(R.id.homePageFragmentContainer, BusInfoFragment())
             }
         }
@@ -165,6 +166,7 @@ class BookedTicketFragment : Fragment() {
                 }
                 navigationViewModel.fragment = null
                 parentFragmentManager.commit {
+                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.main_fragment_container, HomePageFragment())
                     for(i in 0 until parentFragmentManager.backStackEntryCount){
                         parentFragmentManager.popBackStack()
@@ -174,6 +176,7 @@ class BookedTicketFragment : Fragment() {
             else -> {
                 parentFragmentManager.commit {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.homePageFragmentContainer, BookingHistoryFragment())
 //                        parentFragmentManager.popBackStack()
                 }
@@ -272,6 +275,7 @@ class BookedTicketFragment : Fragment() {
 
                 bookingViewModel.isTicketCancelled.observe(viewLifecycleOwner, Observer{
                     parentFragmentManager.commit {
+                        setCustomAnimations(R.anim.from_left, R.anim.to_right)
                         replace(R.id.homePageFragmentContainer, BookingHistoryFragment())
 //                            parentFragmentManager.popBackStack()
                     }

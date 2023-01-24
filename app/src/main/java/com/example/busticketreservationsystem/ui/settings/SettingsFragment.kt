@@ -181,6 +181,7 @@ class SettingsFragment : Fragment() {
                 loginStatusViewModel.status = LoginStatus.LOGGED_OUT
                 editor.commit()
                 parentFragmentManager.commit {
+                    setCustomAnimations(R.anim.from_right, R.anim.to_left)
                     replace(R.id.main_fragment_container, RegisterFragment())
                     if(parentFragmentManager.backStackEntryCount>0){
                         for(i in 0 until parentFragmentManager.backStackEntryCount){

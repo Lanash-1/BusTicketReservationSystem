@@ -67,6 +67,7 @@ class ForgotPasswordFragment : Fragment() {
             android.R.id.home -> {
                 parentFragmentManager.commit {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.main_fragment_container, LoginFragment())
                     parentFragmentManager.popBackStack()
                 }
@@ -93,6 +94,7 @@ class ForgotPasswordFragment : Fragment() {
                 override fun handleOnBackPressed() {
                     parentFragmentManager.commit {
                         setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                        setCustomAnimations(R.anim.from_left, R.anim.to_right)
                         replace(R.id.main_fragment_container, LoginFragment())
                         parentFragmentManager.popBackStack()
                     }
@@ -105,6 +107,7 @@ class ForgotPasswordFragment : Fragment() {
         backToLoginText.setOnClickListener {
             parentFragmentManager.commit {
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                setCustomAnimations(R.anim.from_left, R.anim.to_right)
                 replace(R.id.main_fragment_container, LoginFragment())
                 parentFragmentManager.popBackStack()
             }
@@ -135,6 +138,7 @@ class ForgotPasswordFragment : Fragment() {
             }else{
                 parentFragmentManager.commit {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.main_fragment_container, LoginFragment())
                     parentFragmentManager.popBackStack()
                 }

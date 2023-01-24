@@ -64,6 +64,7 @@ class AdminSettingsFragment : Fragment() {
                 override fun handleOnBackPressed() {
                     parentFragmentManager.commit {
 //                        setCustomAnimations(R.anim.from_left, R.anim.to_right)
+                        setCustomAnimations(R.anim.from_left, R.anim.to_right)
                         replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
 //                        parentFragmentManager.popBackStack()
                     }
@@ -100,6 +101,7 @@ class AdminSettingsFragment : Fragment() {
 
                 parentFragmentManager.commit {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.main_fragment_container, WelcomeFragment())
                 }
             }
