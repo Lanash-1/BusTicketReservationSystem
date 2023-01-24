@@ -155,9 +155,6 @@ class SelectedBusFragment : Fragment() {
         busSeatsRecyclerView.adapter = busSeatsAdapter
 
 
-
-
-
         if(busViewModel.selectedSeats.size > 0){
             busSeatsAdapter.setBusSeatsList(busViewModel.selectedBusSeatDimensions)
             busSeatsAdapter.notifyDataSetChanged()

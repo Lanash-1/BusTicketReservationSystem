@@ -32,7 +32,6 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_margin="16dp"
-            style="@style/TitleTextStyle"
             />
 
         <TextView
@@ -45,7 +44,7 @@
             app:layout_constraintTop_toTopOf="@id/username_text"
             app:layout_constraintBottom_toBottomOf="@id/username_text"
             android:layout_marginLeft="8dp"
-            style="@style/TextColor"
+            style="@style/TitleTextStyle"
             />
 
         <TextView
@@ -54,11 +53,9 @@
             android:layout_height="wrap_content"
             android:text="Email ID: "
             android:textSize="16sp"
-
             app:layout_constraintStart_toStartOf="@id/username_text"
             app:layout_constraintTop_toBottomOf="@id/username_text"
             android:layout_marginTop="16dp"
-            style="@style/TitleTextStyle"
             />
 
         <TextView
@@ -71,7 +68,7 @@
             app:layout_constraintTop_toTopOf="@id/email_text"
             app:layout_constraintBottom_toBottomOf="@id/email_text"
             android:layout_marginLeft="8dp"
-            style="@style/TextColor"
+            style="@style/TitleTextStyle"
             />
 
         <TextView
@@ -79,12 +76,10 @@
             android:layout_height="wrap_content"
             android:id="@+id/mobile_text"
             android:textSize="16sp"
-
             app:layout_constraintStart_toStartOf="@id/email_text"
             app:layout_constraintTop_toBottomOf="@id/email_text"
             android:layout_marginTop="16dp"
             android:text="Mobile Number: "
-            style="@style/TitleTextStyle"
         />
 
         <TextView
@@ -97,7 +92,7 @@
             app:layout_constraintBottom_toBottomOf="@id/mobile_text"
             android:text="+91 9876543210"
             android:layout_marginLeft="8dp"
-            style="@style/TextColor"
+            style="@style/TitleTextStyle"
             />
 
 
@@ -106,12 +101,10 @@
             android:layout_height="wrap_content"
             android:id="@+id/dob_text"
             android:textSize="16sp"
-
             app:layout_constraintStart_toStartOf="@id/mobile_text"
             app:layout_constraintTop_toBottomOf="@id/mobile_text"
             android:layout_marginTop="16dp"
             android:text="Date of Birth: "
-            style="@style/TitleTextStyle"
             />
 
         <TextView
@@ -124,7 +117,7 @@
             app:layout_constraintStart_toEndOf="@id/dob_text"
             app:layout_constraintTop_toTopOf="@id/dob_text"
             app:layout_constraintBottom_toBottomOf="@id/dob_text"
-            style="@style/TextColor"
+            style="@style/TitleTextStyle"
             />
 
         <TextView
@@ -136,7 +129,6 @@
             app:layout_constraintTop_toBottomOf="@id/dob_text"
             android:layout_marginTop="16dp"
             android:text="Gender: "
-            style="@style/TitleTextStyle"
             />
 
         <TextView
@@ -149,7 +141,7 @@
             app:layout_constraintStart_toEndOf="@id/gender_text"
             app:layout_constraintTop_toTopOf="@id/gender_text"
             app:layout_constraintBottom_toBottomOf="@id/gender_text"
-            style="@style/TextColor"
+            style="@style/TitleTextStyle"
             />
 
 

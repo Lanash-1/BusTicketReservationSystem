@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
@@ -93,6 +94,11 @@ class RegistrationDetailsFragment : Fragment() {
 
 
         binding.calenderIcon.setOnClickListener {
+            val datePickerFragment = DatePickerFragment()
+            datePickerFragment.show(parentFragmentManager, "datePicker")
+        }
+
+        binding.dob.setOnClickListener {
             val datePickerFragment = DatePickerFragment()
             datePickerFragment.show(parentFragmentManager, "datePicker")
         }

@@ -1,4 +1,4 @@
-package com.example.busticketreservationsystem.data.Dao
+package com.example.busticketreservationsystem.data.dao
 
 import androidx.room.*
 import com.example.busticketreservationsystem.data.entity.User
@@ -32,5 +32,8 @@ interface UserDao {
 
     @Delete
     fun deleteUserAccount(user: User)
+
+    @Query("select count(*) from user_table")
+    fun getUserCount(): Int
 
 }

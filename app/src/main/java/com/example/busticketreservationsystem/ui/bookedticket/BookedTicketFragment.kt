@@ -1,7 +1,9 @@
 package com.example.busticketreservationsystem.ui.bookedticket
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -77,7 +79,6 @@ class BookedTicketFragment : Fragment() {
         when(item.itemId){
             android.R.id.home -> {
                 backPressLogic()
-
             }
         }
         return super.onOptionsItemSelected(item)
@@ -102,7 +103,7 @@ class BookedTicketFragment : Fragment() {
 
 
 
-        if(navigationViewModel.fragment is BookingDetailsFragment){
+        if(navigationViewModel.fragment is BookingDetailsFragment || navigationViewModel.fragment is BookedTicketFragment){
             binding.cancelTicketButton.visibility = View.GONE
             setTicketDataToView()
         }else{

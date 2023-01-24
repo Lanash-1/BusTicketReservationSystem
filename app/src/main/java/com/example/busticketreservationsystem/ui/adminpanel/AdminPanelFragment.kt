@@ -12,7 +12,6 @@ import com.example.busticketreservationsystem.ui.adminservices.AdminServicesFrag
 import com.example.busticketreservationsystem.ui.adminsettings.AdminSettingsFragment
 import com.example.busticketreservationsystem.ui.analytics.AnalyticsFragment
 
-
 class AdminPanelFragment : Fragment() {
 
     private lateinit var binding: FragmentAdminPanelBinding
@@ -26,7 +25,6 @@ class AdminPanelFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         binding = FragmentAdminPanelBinding.inflate(inflater, container, false)
         return binding.root
     }

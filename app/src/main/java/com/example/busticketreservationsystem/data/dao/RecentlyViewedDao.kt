@@ -1,4 +1,4 @@
-package com.example.busticketreservationsystem.data.Dao
+package com.example.busticketreservationsystem.data.dao
 
 import androidx.room.*
 import com.example.busticketreservationsystem.data.entity.RecentlyViewed

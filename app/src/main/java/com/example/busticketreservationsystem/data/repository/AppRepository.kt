@@ -1,6 +1,8 @@
 package com.example.busticketreservationsystem.data.repository
 
+import com.example.busticketreservationsystem.data.dao.BusAmenitiesDao
 import com.example.busticketreservationsystem.data.entity.*
+import com.example.busticketreservationsystem.enums.BusAmenities
 
 interface AppRepository {
 
@@ -24,16 +26,18 @@ interface AppRepository {
 
     fun deleteUserAccount(user: User)
 
+    fun getUserCount(): Int
+
 
 //    Bus related Data
 
-    fun insertPartnerData(list: List<Partners>)
+    fun insertPartnerData(partner: Partners)
 
-    fun insertBusData(list: List<Bus>)
+    fun insertBusData(bus: Bus)
 
     fun getPartnerName(partnerId: Int): String
 
-    fun insertBusAmenitiesData(list: List<BusAmenities>)
+    fun insertBusAmenitiesData(amenity: com.example.busticketreservationsystem.data.entity.BusAmenities)
 
     fun getBusAmenities(busId: Int): List<String>
 
@@ -80,6 +84,8 @@ interface AppRepository {
 
 //    Booking related data
 
+    fun getBookingCount(): Int
+
     fun insertBooking(booking: Bookings)
 
     fun insertPassengerInfo(passengerInformation: PassengerInformation)
@@ -104,5 +110,6 @@ interface AppRepository {
 
     fun usersBusReview(userId: Int, busId: Int): Reviews
 
-    fun isUserBooked(busId: Int): Boolean
+    fun isUserBooked(userId: Int, busId: Int): Boolean
+
 }

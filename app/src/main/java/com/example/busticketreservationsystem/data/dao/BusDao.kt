@@ -1,4 +1,4 @@
-package com.example.busticketreservationsystem.data.Dao
+package com.example.busticketreservationsystem.data.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -10,7 +10,7 @@ import com.example.busticketreservationsystem.data.entity.Bus
 interface BusDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertBusData(list: List<Bus>)
+    fun insertBusData(bus: Bus)
 
     @Query("SELECT * FROM bus_table")
     fun getBusData(): List<Bus>

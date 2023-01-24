@@ -1,4 +1,4 @@
-package com.example.busticketreservationsystem.data.Dao
+package com.example.busticketreservationsystem.data.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -10,7 +10,7 @@ import com.example.busticketreservationsystem.data.entity.Partners
 interface PartnersDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertPartnerData(list: List<Partners>)
+    fun insertPartnerData(partner: Partners)
 
     @Query("SELECT * FROM partners_table")
     fun getPartnersData(): List<Partners>

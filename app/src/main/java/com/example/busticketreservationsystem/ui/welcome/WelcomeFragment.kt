@@ -1,5 +1,7 @@
 package com.example.busticketreservationsystem.ui.welcome
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
+import androidx.viewpager2.widget.ViewPager2
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.databinding.FragmentWelcomeBinding
 import com.example.busticketreservationsystem.ui.adminlogin.AdminLoginFragment
@@ -31,7 +34,7 @@ class WelcomeFragment : Fragment() {
 
         (activity as AppCompatActivity).supportActionBar!!.apply {
             setDisplayHomeAsUpEnabled(false)
-            title = ""
+            title = "Book Bus"
         }
         // Inflate the layout for this fragment
         binding = FragmentWelcomeBinding.inflate(inflater, container, false)
@@ -42,9 +45,34 @@ class WelcomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val sliderViewPager = binding.welcomePageViewPager
-//        viewPager.registerOnPageChangeCallback(ViewPager2.OnPageChangeCallback -> {
 
-//        })
+        sliderViewPager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback(){
+            override fun onPageSelected(position: Int) {
+                when (position) {
+                    0 -> {
+                        binding.dot1.setImageResource(R.color.black)
+                        binding.dot2.setImageResource(R.color.sliderGray)
+                        binding.dot3.setImageResource(R.color.sliderGray)
+                    }
+                    1 -> {
+                        binding.dot1.setImageResource(R.color.sliderGray)
+                        binding.dot2.setImageResource(R.color.black)
+                        binding.dot3.setImageResource(R.color.sliderGray)
+                    }
+                    2 -> {
+                        binding.dot1.setImageResource(R.color.sliderGray)
+                        binding.dot2.setImageResource(R.color.sliderGray)
+                        binding.dot3.setImageResource(R.color.black)
+                    }
+                }
+                super.onPageSelected(position)
+            }
+        })
+
+        val adapter = WelcomeViewPagerAdapter()
+        sliderViewPager.adapter = adapter
+
+
 
 
         binding.userBtn.setOnClickListener {

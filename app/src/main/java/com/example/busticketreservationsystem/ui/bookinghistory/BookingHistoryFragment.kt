@@ -31,6 +31,7 @@ class BookingHistoryFragment : Fragment() {
 
     private lateinit var binding: FragmentBookingHistoryBinding
 
+
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
     private val navigationViewModel: NavigationViewModel by activityViewModels()
 
@@ -87,7 +88,6 @@ class BookingHistoryFragment : Fragment() {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true){
                 override fun handleOnBackPressed() {
-//                    Toast.makeText(requireContext(), "back presses", Toast.LENGTH_SHORT).show()
                     when(navigationViewModel.fragment){
                         is MyAccountFragment -> {
                             navigationViewModel.fragment = null
@@ -114,6 +114,7 @@ class BookingHistoryFragment : Fragment() {
 
         val tabLayout = binding.bookingHistoryTabLayout
         val viewPager = binding.bookingHistoryViewPager
+
 
         viewPager.registerOnPageChangeCallback(
             object : ViewPager2.OnPageChangeCallback() {

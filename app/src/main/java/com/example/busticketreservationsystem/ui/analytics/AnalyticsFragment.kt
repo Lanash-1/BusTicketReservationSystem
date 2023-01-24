@@ -8,19 +8,33 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.example.busticketreservationsystem.R
+import com.example.busticketreservationsystem.data.database.AppDatabase
+import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.databinding.FragmentAnalyticsBinding
 import com.example.busticketreservationsystem.ui.adminservices.AdminServicesFragment
 import com.example.busticketreservationsystem.ui.myaccount.MyAccountFragment
+import com.example.busticketreservationsystem.viewmodel.livedata.AdminViewModel
+import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.AdminViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class AnalyticsFragment : Fragment() {
 
     private lateinit var binding: FragmentAnalyticsBinding
 
+    private lateinit var adminViewModel: AdminViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
+        val database = AppDatabase.getDatabase(requireActivity().applicationContext)
+        val repository = AppRepositoryImpl(database)
+
+        val adminViewModelFactory = AdminViewModelFactory(repository)
+        adminViewModel = ViewModelProvider(requireActivity(), adminViewModelFactory)[AdminViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -55,7 +69,21 @@ class AnalyticsFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
 
+        adminViewModel.fetchAnalyticsData()
 
+        adminViewModel.partnerCount.observe(viewLifecycleOwner, Observer{
+            setDataToView()
+        })
+
+    }
+
+    private fun setDataToView() {
+        binding.apply {
+            userCountTextView.text = adminViewModel.userCount.toString()
+            partnerCountTextView.text = adminViewModel.partnerCount.value.toString()
+            busCountTextView.text = adminViewModel.busCount.toString()
+            ticketsCountTextView.text = adminViewModel.ticketCount.toString()
+        }
     }
 
 

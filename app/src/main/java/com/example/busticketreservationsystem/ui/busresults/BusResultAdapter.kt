@@ -57,8 +57,6 @@ class BusResultAdapter: RecyclerView.Adapter<BusResultAdapter.BusResultViewHolde
             durationText.text = "${busList[position].duration} hrs"
 
 
-
-
             val rating = busList[position].ratingOverall
 
             ratingText.text = "${String.format("%.1f", rating).toDouble()}"

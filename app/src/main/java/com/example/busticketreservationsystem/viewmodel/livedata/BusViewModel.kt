@@ -7,6 +7,7 @@ import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.enums.BusTypes
 import com.example.busticketreservationsystem.data.entity.*
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
+import com.example.busticketreservationsystem.enums.BusAmenities
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -17,18 +18,61 @@ class BusViewModel(
 
 //    Insert bus details fetched from json file
 
-    fun insertInitialData(
-        partnersList: MutableList<Partners>,
-        busList: MutableList<Bus>,
-        amenitiesList: MutableList<BusAmenities>
-    ) {
+//    fun insertInitialData(
+//        partnersList: MutableList<Partners>,
+//        busList: MutableList<Bus>,
+//        amenitiesList: MutableList<BusAmenities>
+//    ) {
+//        viewModelScope.launch(Dispatchers.IO) {
+////            repository.insertPartnerData(partnersList)
+//            repository.insertBusData(busList)
+//            repository.insertBusAmenitiesData(amenitiesList)
+//        }
+//    }
+
+    fun insertPartnerData(partner: Partners) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.insertPartnerData(partnersList)
-            repository.insertBusData(busList)
-            repository.insertBusAmenitiesData(amenitiesList)
+            val job = launch {
+                repository.insertPartnerData(partner)
+            }
+            job.join()
+            withContext(Dispatchers.Main){
+                fetchPartners()
+            }
         }
     }
 
+    fun registerNewBus(newBus: Bus, amenities: List<String>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val job = launch {
+                repository.insertBusData(newBus)
+                val busId = repository.getBusData().last().busId
+                for(amenity in amenities){
+                    repository.insertBusAmenitiesData(BusAmenities(0, busId, amenity))
+                }
+            }
+            job.join()
+            withContext(Dispatchers.Main){
+                //
+            }
+        }
+    }
+
+
+    var partners = listOf<Partners>()
+
+    fun fetchPartners(){
+        viewModelScope.launch(Dispatchers.IO) {
+            var partnerList = listOf<Partners>()
+            val job = launch {
+                partnerList = repository.getPartnerData()
+            }
+            job.join()
+            withContext(Dispatchers.Main){
+                partners = partnerList
+            }
+        }
+    }
 
 
 //    Bus results related data operations
@@ -141,7 +185,9 @@ class BusViewModel(
                     }
                 }
             }
-            newList = sortedList as MutableList<Bus>
+            if(newList.isNotEmpty()){
+                newList = sortedList as MutableList<Bus>
+            }
         }
         return newList
     }
@@ -188,19 +234,47 @@ class BusViewModel(
 
     var isBusReviewUpdated = MutableLiveData<Boolean>()
 
-    fun fetchBusReviewData(){
+    fun fetchBusAmenities() {
         viewModelScope.launch(Dispatchers.IO) {
-            var reviewsList = listOf<Reviews>()
             var amenities = listOf<String>()
             val fetchJob = launch {
-                reviewsList = repository.getReviewData(selectedBus.busId)
                 amenities = repository.getBusAmenities(selectedBus.busId)
             }
             fetchJob.join()
             withContext(Dispatchers.Main){
-                busReviewsList.value = reviewsList
                 busAmenities.value = amenities
             }
+        }
+    }
+
+    fun fetchBusReviewData(){
+        viewModelScope.launch(Dispatchers.IO) {
+            var reviewsList = listOf<Reviews>()
+            val fetchJob = launch {
+                reviewsList = repository.getReviewData(selectedBus.busId)
+            }
+            fetchJob.join()
+            withContext(Dispatchers.Main){
+                selectedBus.ratingPeopleCount = reviewsList.size
+                var overall = 0.0
+                for(rating in reviewsList){
+                    overall += rating.rating
+                }
+                selectedBus.ratingOverall = overall/selectedBus.ratingPeopleCount
+
+                if(reviewsList.isEmpty()) {
+                    selectedBus.ratingOverall = 0.0
+                }
+
+                updateBusRating(selectedBusId, selectedBus.ratingPeopleCount, selectedBus.ratingOverall)
+                busReviewsList.value = reviewsList
+            }
+        }
+    }
+
+    fun updateBusRating(busId: Int, ratingCount: Int, overallRating: Double){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateBusRating(busId, ratingCount, overallRating)
         }
     }
 
@@ -251,11 +325,12 @@ class BusViewModel(
     }
 
     var isUserBooked = MutableLiveData<Boolean>()
-    fun checkUserBookedBus(busId: Int) {
+
+    fun checkUserBookedBus(userId: Int, busId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             var result: Boolean = false
             val job = launch {
-                result = repository.isUserBooked(busId)
+                result = repository.isUserBooked(userId, busId)
             }
             job.join()
             withContext(Dispatchers.Main){
@@ -265,9 +340,11 @@ class BusViewModel(
     }
 
 
+
+
 //    Bus boarding and dropping
 
-    val boardingPoints = listOf(
+    var boardingPoints = listOf(
         "Maple Street Station",
         "Park Avenue Terminal",
         "Lakeside Loop",
@@ -280,7 +357,7 @@ class BusViewModel(
         "City Centre Station"
     )
 
-    val droppingPoints = listOf(
+    var droppingPoints = listOf(
         "Riverfront Road",
         "The Woodlands Park",
         "Rockville Corner",

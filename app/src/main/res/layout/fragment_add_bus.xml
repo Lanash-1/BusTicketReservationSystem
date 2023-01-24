@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.addbus.AddBusFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/title_text"
+            style="@style/TitleTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Bus Registration"
+            android:textSize="24sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/select_partner_dropdown"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title_text"
+            >
+
+            <!-- Inside text input layout add
+                  an auto complete text view
+                    and make its input type to none-->
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:inputType="none"
+                android:text="Select Partner"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/bus_name_input_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Bus name"
+            android:layout_marginEnd="16dp"
+            app:helperTextTextColor="#AA0000"
+            android:layout_marginStart="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/select_partner_dropdown"
+            android:layout_marginTop="16dp"
+            app:counterEnabled="true"
+            app:counterMaxLength="30"
+            app:startIconDrawable="@drawable/ic_baseline_abc_24"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/bus_name_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLength="30"
+                android:maxLines="1"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/source_text_view"
+            android:text="Boarding Location Details"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bus_name_input_layout"
+            android:layout_marginTop="16dp"
+            style="@style/TitleTextStyle"
+            android:layout_marginStart="16dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/source_state_view"
+            android:hint="Select Boarding State"
+            android:padding="16dp"
+            android:gravity="center_vertical"
+            android:background="@android:drawable/editbox_background"
+            app:drawableEndCompat="@drawable/ic_baseline_keyboard_arrow_down_24"
+            app:layout_constraintTop_toBottomOf="@id/source_text_view"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            style="@style/TextColor"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/source_city_view"
+            android:hint="Select City"
+            android:padding="16dp"
+            android:gravity="center_vertical"
+            android:background="@android:drawable/editbox_background"
+            app:drawableEndCompat="@drawable/ic_baseline_keyboard_arrow_down_24"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/source_state_view"
+            android:visibility="gone"
+            style="@style/TextColor"
+            />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/destination_text_view"
+            android:text="Destination Location Details"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/source_city_view"
+            android:layout_marginTop="16dp"
+            style="@style/TitleTextStyle"
+            android:layout_marginStart="16dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/destination_state_view"
+            android:hint="Select Destination State"
+            android:padding="16dp"
+            android:gravity="center_vertical"
+            android:background="@android:drawable/editbox_background"
+            app:drawableEndCompat="@drawable/ic_baseline_keyboard_arrow_down_24"
+            app:layout_constraintTop_toBottomOf="@id/destination_text_view"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            style="@style/TextColor"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/destination_city_view"
+            android:hint="Select City"
+            android:padding="16dp"
+            android:gravity="center_vertical"
+            android:background="@android:drawable/editbox_background"
+            app:drawableEndCompat="@drawable/ic_baseline_keyboard_arrow_down_24"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/destination_state_view"
+            android:visibility="gone"
+            style="@style/TextColor"
+            />
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:id="@+id/cost_text_view"-->
+<!--            android:text="Ticket Cost"-->
+<!--            style="@style/TextDefault"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/destination_city_view"-->
+<!--            android:layout_margin="16dp" />-->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/timing_details_text"
+            android:text="Timing Details"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/destination_city_view"
+            android:layout_margin="16dp"
+            style="@style/TitleTextStyle"
+            />
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/start_time_picker"
+            android:hint="Start time"
+            android:padding="16dp"
+            android:gravity="center_vertical"
+            android:background="@android:drawable/editbox_background"
+            app:drawableEndCompat="@drawable/ic_baseline_keyboard_arrow_down_24"
+            app:layout_constraintTop_toBottomOf="@id/timing_details_text"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/reach_time_picker"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            style="@style/TextDefault"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/reach_time_picker"
+            android:hint="Reach time"
+            android:padding="16dp"
+            android:gravity="center_vertical"
+            android:background="@android:drawable/editbox_background"
+            app:drawableEndCompat="@drawable/ic_baseline_keyboard_arrow_down_24"
+            app:layout_constraintTop_toTopOf="@id/start_time_picker"
+            app:layout_constraintBottom_toBottomOf="@id/start_time_picker"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/start_time_picker"
+            android:layout_marginHorizontal="16dp"
+            style="@style/TextDefault"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/pricing_details_text"
+            android:text="Pricing"
+            app:layout_constraintTop_toBottomOf="@id/start_time_picker"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_margin="16dp"
+            style="@style/TitleTextStyle"
+            />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/price_input_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ticket cost"
+            app:helperTextTextColor="#AA0000"
+            app:startIconDrawable="@drawable/ic_baseline_currency_rupee_24"
+            app:layout_constraintTop_toBottomOf="@id/pricing_details_text"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_margin="16dp"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/price_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLength="5"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bus_type_text"
+            android:text="Bus Type"
+            style="@style/TitleTextStyle"
+            app:layout_constraintTop_toBottomOf="@id/price_input_layout"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_margin="16dp"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/bus_type_dropdown"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bus_type_text"
+            >
+
+            <AutoCompleteTextView
+                android:id="@+id/bus_type_autoCompleteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:inputType="none"
+                android:text="Select Bus Type"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/amenities_title_textView"
+            android:text="Amenities"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bus_type_dropdown"
+            android:layout_margin="16dp"
+            style="@style/TitleTextStyle"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/optional_text"
+            android:text="(Select if any)"
+            app:layout_constraintTop_toTopOf="@id/amenities_title_textView"
+            app:layout_constraintBottom_toBottomOf="@id/amenities_title_textView"
+            app:layout_constraintLeft_toRightOf="@id/amenities_title_textView"
+            android:layout_marginLeft="16dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkBox_linearLayout"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/amenities_title_textView"
+            android:orientation="vertical"
+            android:layout_marginStart="16dp"
+            >
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/blanket"
+                android:text="Blankets"
+                style="@style/TextDefault"
+                />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/charging_point"
+                android:text="Charging point"
+                style="@style/TextDefault"
+                />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/emergency_contact_number"
+                android:text="Emergency contact number"
+                style="@style/TextDefault"
+                />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/track_my_bus"
+                android:text="Live Bus Tracking"
+                style="@style/TextDefault"
+                />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/wifi"
+                android:text="Wifi"
+                style="@style/TextDefault"
+                />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/water_bottle"
+                android:text="Water Bottle"
+                style="@style/TextDefault"
+                />
+
+
+        </LinearLayout>
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/add_bus_button"
+            android:text="Register Bus"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/checkBox_linearLayout"
+            android:layout_marginTop="16dp"
+            />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

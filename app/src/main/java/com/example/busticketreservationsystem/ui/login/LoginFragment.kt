@@ -21,6 +21,7 @@ import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.ui.forgotpassword.ForgotPasswordFragment
 import com.example.busticketreservationsystem.ui.homepage.HomePageFragment
 import com.example.busticketreservationsystem.ui.register.RegisterFragment
+import com.example.busticketreservationsystem.ui.welcome.WelcomeFragment
 import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
 import com.example.busticketreservationsystem.viewmodel.NavigationViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
@@ -64,7 +65,7 @@ class LoginFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         (activity as AppCompatActivity).supportActionBar?.apply{
-            setDisplayHomeAsUpEnabled(false)
+            setDisplayHomeAsUpEnabled(true)
             title = "Login"
         }
         return inflater.inflate(R.layout.fragment_login, container, false)
@@ -78,6 +79,9 @@ class LoginFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when(item.itemId){
+            android.R.id.home -> {
+                backPressOperation()
+            }
             R.id.skip -> {
                 editor.putString("status", LoginStatus.SKIPPED.name)
                 loginStatusViewModel.status = LoginStatus.SKIPPED
@@ -91,10 +95,17 @@ class LoginFragment : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
+    private fun backPressOperation() {
+        parentFragmentManager.commit {
+            setCustomAnimations(R.anim.from_right, R.anim.to_left)
+            replace(R.id.main_fragment_container, WelcomeFragment())
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as AppCompatActivity)?.apply {
+        (activity as AppCompatActivity).apply {
             val writeSharedPreferences: SharedPreferences = getSharedPreferences("LoginStatus", Context.MODE_PRIVATE)
             editor = writeSharedPreferences.edit()
         }
@@ -102,7 +113,7 @@ class LoginFragment : Fragment() {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true){
                 override fun handleOnBackPressed() {
-                    requireActivity().finish()
+                    backPressOperation()
                 }
             }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)

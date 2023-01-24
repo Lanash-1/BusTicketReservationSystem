@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../Library/Android/sdk/platforms/android-32/data/res/layout/simple_list_item_1.xml" value="0.3729166666666667" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.196" />
         <entry key="app/src/main/res/drawable/ic_baseline_compare_arrows_24.xml" value="0.178" />
         <entry key="app/src/main/res/drawable/ic_baseline_dashboard_24.xml" value="0.1415" />
@@ -13,15 +14,20 @@
         <entry key="app/src/main/res/drawable/ic_baseline_filter_alt_24.xml" value="0.137" />
         <entry key="app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.1795" />
         <entry key="app/src/main/res/drawable/ic_baseline_swap_vert_24.xml" value="0.1085" />
+        <entry key="app/src/main/res/drawable/ic_baseline_verified_24.xml" value="0.109" />
         <entry key="app/src/main/res/drawable/ic_outline_event_seat_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/switch_circle.xml" value="0.178" />
         <entry key="app/src/main/res/layout-v23/fragment_booking_details.xml" value="0.2078125" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3880208333333333" />
+        <entry key="app/src/main/res/layout/dialog_searchable_spinner.xml" value="0.371875" />
+        <entry key="app/src/main/res/layout/dropdown_item.xml" value="0.2171875" />
+        <entry key="app/src/main/res/layout/fragment_add_bus.xml" value="0.125" />
+        <entry key="app/src/main/res/layout/fragment_add_partner.xml" value="0.22709350585937502" />
         <entry key="app/src/main/res/layout/fragment_admin_login.xml" value="0.25588703984799593" />
         <entry key="app/src/main/res/layout/fragment_admin_panel.xml" value="0.3729166666666667" />
-        <entry key="app/src/main/res/layout/fragment_admin_services.xml" value="0.30978260869565216" />
+        <entry key="app/src/main/res/layout/fragment_admin_services.xml" value="0.2437349402386209" />
         <entry key="app/src/main/res/layout/fragment_admin_settings.xml" value="0.35885416666666664" />
-        <entry key="app/src/main/res/layout/fragment_analytics.xml" value="0.3729166666666667" />
+        <entry key="app/src/main/res/layout/fragment_analytics.xml" value="0.32309977213541674" />
         <entry key="app/src/main/res/layout/fragment_boarding_and_dropping.xml" value="0.21893866184294092" />
         <entry key="app/src/main/res/layout/fragment_boarding_and_dropping_location.xml" value="0.35885416666666664" />
         <entry key="app/src/main/res/layout/fragment_booked_ticket.xml" value="0.26346588134765625" />
@@ -64,6 +70,8 @@
         <entry key="app/src/main/res/layout/item_recently_viewed_extra.xml" value="0.25104166666666666" />
         <entry key="app/src/main/res/layout/item_review.xml" value="0.24274291992187497" />
         <entry key="app/src/main/res/layout/item_seat.xml" value="0.2573898315429688" />
+        <entry key="app/src/main/res/layout/item_service.xml" value="0.23291473388671882" />
+        <entry key="app/src/main/res/layout/item_welcome.xml" value="0.38697916666666665" />
         <entry key="app/src/main/res/layout/rating_dialog.xml" value="0.25047454833984373" />
         <entry key="app/src/main/res/menu/admin_bottom_nav_menu.xml" value="0.3729166666666667" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />

@@ -35,7 +35,7 @@ class BusResultsFragment : Fragment() {
 
     private val searchViewModel: SearchViewModel by activityViewModels()
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
-
+    private val locationViewModel: LocationViewModel by activityViewModels()
 
     private var busResultAdapter = BusResultAdapter()
 
@@ -117,6 +117,9 @@ class BusResultsFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
 
+        busViewModel.boardingPoints = locationViewModel.fetchAreas(busViewModel.sourceLocation)
+        busViewModel.droppingPoints = locationViewModel.fetchAreas(busViewModel.destinationLocation)
+
         binding.busResultsRv.layoutManager = LinearLayoutManager(requireContext())
         binding.busResultsRv.adapter = busResultAdapter
 
@@ -131,7 +134,6 @@ class BusResultsFragment : Fragment() {
         busViewModel.fetchBusResultsDetails()
 
 //        mvvm
-
 
 
         busResultAdapter.setOnItemClickListener(object : OnItemClickListener{

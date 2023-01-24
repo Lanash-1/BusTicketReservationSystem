@@ -117,13 +117,13 @@ class UserViewModel(
 
     fun isNumberAlreadyExists(number: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            var result = false
+            var result: Boolean? = null
             val job = launch {
                 result = repository.getAccountCount(number)
             }
             job.join()
             withContext(Dispatchers.Main){
-                isMobileExists.value = result
+                isMobileExists.value = result!!
             }
         }
     }
@@ -184,7 +184,6 @@ class UserViewModel(
             withContext(Dispatchers.Main){
                 isEmailExists.value = !result
             }
-
         }
     }
 

@@ -13,6 +13,10 @@ class AppRepositoryImpl(
         appDb.userDao().insert(user)
     }
 
+    override fun getUserCount(): Int {
+        return appDb.userDao().getUserCount()
+    }
+
     override fun updateUserData(user: User){
         appDb.userDao().updateUserData(user.userId, user.username, user.emailId, user.mobileNumber, user.password, user.dob, user.gender)
     }
@@ -49,20 +53,20 @@ class AppRepositoryImpl(
 //    Bus related Data
 
 
-    override fun insertPartnerData(list: List<Partners>){
-        appDb.partnersDao().insertPartnerData(list)
+    override fun insertPartnerData(partner: Partners){
+        appDb.partnersDao().insertPartnerData(partner)
     }
 
-    override fun insertBusData(list: List<Bus>){
-        appDb.busDao().insertBusData(list)
+    override fun insertBusData(bus: Bus){
+        appDb.busDao().insertBusData(bus)
     }
 
     override fun getPartnerName(partnerId: Int): String{
         return appDb.partnersDao().getPartnerName(partnerId)
     }
 
-    override fun insertBusAmenitiesData(list: List<BusAmenities>){
-        appDb.busAmenitiesDao().insert(list)
+    override fun insertBusAmenitiesData(amenity: com.example.busticketreservationsystem.data.entity.BusAmenities){
+        appDb.busAmenitiesDao().insert(amenity)
     }
 
     override fun getBusAmenities(busId: Int): List<String> {
@@ -116,8 +120,8 @@ class AppRepositoryImpl(
         return appDb.reviewsDao().getUsersBusReview(userId, busId)
     }
 
-    override fun isUserBooked(busId: Int): Boolean {
-        return appDb.bookingsDao().getParticularBusBooking(busId) > 0
+    override fun isUserBooked(userId: Int, busId: Int): Boolean {
+        return appDb.bookingsDao().getUserBooking(userId, busId) > 0
     }
 
 
@@ -157,10 +161,16 @@ class AppRepositoryImpl(
         return appDb.partnersDao().getPartnerDetails(partnerId)
     }
 
+
+
 //    Booking related data
 
     override fun insertBooking(booking: Bookings) {
         appDb.bookingsDao().insert(booking)
+    }
+
+    override fun getBookingCount(): Int {
+        return appDb.bookingsDao().getBookingCount()
     }
 
     override fun insertPassengerInfo(passengerInformation: PassengerInformation){

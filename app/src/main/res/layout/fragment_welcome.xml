@@ -33,8 +33,8 @@
         >
 
         <androidx.cardview.widget.CardView
-            android:layout_width="12dp"
-            android:layout_height="12dp"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
             app:cardCornerRadius="20dp"
             app:cardElevation="0dp"
             android:layout_margin="10dp"
@@ -51,8 +51,8 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:layout_width="12dp"
-            android:layout_height="12dp"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
             app:cardCornerRadius="20dp"
             app:cardElevation="0dp"
             android:layout_margin="10dp"
@@ -62,15 +62,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/dot2"
-                android:src="#808080"
+                android:src="#e0e0e0"
                 />
 
 
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:layout_width="12dp"
-            android:layout_height="12dp"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
             app:cardCornerRadius="20dp"
             app:cardElevation="0dp"
             android:layout_margin="10dp"
@@ -80,7 +80,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/dot3"
-                android:src="#808080"
+                android:src="#e0e0e0"
                 />
 
 

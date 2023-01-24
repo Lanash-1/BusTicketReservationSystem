@@ -15,7 +15,7 @@ import androidx.room.PrimaryKey
 )
 
 data class Bus(
-    @PrimaryKey val busId: Int,
+    @PrimaryKey(autoGenerate = true) val busId: Int,
     @ColumnInfo(index = true) var partnerId: Int,
     var busName: String,
     var sourceLocation: String,

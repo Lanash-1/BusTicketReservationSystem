@@ -70,61 +70,56 @@ class MainActivity : AppCompatActivity() {
 
         fetchLocationData()
 
-
     }
+
+//     END OF ON-CREATE
 
     private fun fetchLocationData() {
-        var stateName = ""
-        val cities = mutableListOf<String>()
-        val areaList = mutableListOf<List<String>>()
-        val areas = mutableListOf<String>()
+        locationViewModel.locationData.clear()
+        var stateName: String
+        var cities = mutableListOf<String>()
+        var areaList = mutableListOf<List<String>>()
+        var areas = mutableListOf<String>()
 
 
-            val jsonData = applicationContext.resources.openRawResource(
-                applicationContext.resources.getIdentifier(
-                    "location",
-                    "raw",
-                    applicationContext.packageName
-                )
-            ).bufferedReader().use{it.readText()}
+        val jsonData = applicationContext.resources.openRawResource(
+            applicationContext.resources.getIdentifier(
+                "location",
+                "raw",
+                applicationContext.packageName
+            )
+        ).bufferedReader().use{it.readText()}
 
-            val jsonString = JSONObject(jsonData)
+        val jsonString = JSONObject(jsonData)
 
-            val statesList = jsonString.getJSONArray("states") as JSONArray
+        val statesList = jsonString.getJSONArray("states") as JSONArray
 
-            for(i in 0 until statesList.length()){
+        for(i in 0 until statesList.length()){
 
-                stateName = statesList.getJSONObject(i).get("name").toString()
+            stateName = statesList.getJSONObject(i).get("name").toString()
 
-                val cityList = statesList.getJSONObject(i).getJSONArray("cities") as JSONArray
+            val cityList = statesList.getJSONObject(i).getJSONArray("cities") as JSONArray
 
-                for(j in 0 until cityList.length()){
+            for(j in 0 until cityList.length()){
 
-                    cities.add(cityList.getJSONObject(j).get("name").toString())
+                cities.add(cityList.getJSONObject(j).get("name").toString())
 
-                    val areasList = cityList.getJSONObject(i).getJSONArray("areas") as JSONArray
+                val areasList = cityList.getJSONObject(j).getJSONArray("areas") as JSONArray
 
-
-                    for(k in 0 until areasList.length()){
-
-                        areas.add(areasList[k].toString())
-
-                    }
-
-                    areaList.add(areas)
-                    areas.clear()
+                for(k in 0 until areasList.length()){
+                    areas.add(areasList[k].toString())
                 }
 
-                locationViewModel.locationData.add(LocationModel(stateName, cities, areaList))
-
+                areaList.add(areas)
+                areas = mutableListOf()
             }
 
-
-
-        println("LIST: ${locationViewModel.locationData}")
-
+            locationViewModel.locationData.add(LocationModel(stateName, cities, areaList))
+            cities = mutableListOf()
+            areaList = mutableListOf()
+        }
+        println("FETCHED SIZE = ${locationViewModel.locationData.size}")
     }
-//     END OF ON-CREATE
 
     private fun loginPreferenceOperations(savedInstanceState: Bundle?) {
         val writeSharedPreferences: SharedPreferences = getSharedPreferences("LoginStatus", MODE_PRIVATE)

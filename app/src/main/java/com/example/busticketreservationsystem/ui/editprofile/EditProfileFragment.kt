@@ -18,6 +18,7 @@ import com.example.busticketreservationsystem.enums.Gender
 import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.ui.myaccount.MyAccountFragment
+import com.example.busticketreservationsystem.utils.Helper
 import com.example.busticketreservationsystem.viewmodel.DateViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.livedata.UserViewModel
@@ -26,6 +27,8 @@ import com.google.android.material.snackbar.Snackbar
 
 
 class EditProfileFragment : Fragment() {
+
+    private val helper = Helper()
 
     private val dateViewModel: DateViewModel by activityViewModels()
 
@@ -159,7 +162,6 @@ class EditProfileFragment : Fragment() {
 
     private fun validEmail(): String? {
         val emailText = binding.emailInput.text.toString()
-
 
         if(emailText.isEmpty() || emailText == userViewModel.user.emailId){
             return null

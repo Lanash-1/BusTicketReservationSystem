@@ -181,8 +181,7 @@ class MyAccountFragment : Fragment() {
                     MyAccountOptions.FEEDBACK -> {
 
                         val intent = Intent(Intent.ACTION_SENDTO).apply {
-                            data = Uri.parse("mailto:")
-                            putExtra(Intent.EXTRA_EMAIL, "lanashdamodharan@gmail.com")
+                            data = Uri.parse("mailto:uei19112@rmd.ac.in")
                             putExtra(Intent.EXTRA_SUBJECT, "App Usage Feedback")
                         }
                         startActivity(intent)
@@ -202,7 +201,6 @@ class MyAccountFragment : Fragment() {
 
         })
         myAccountRecyclerView.adapter = myAccountAdapter
-
     }
 
    

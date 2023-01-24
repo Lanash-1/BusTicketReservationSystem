@@ -70,6 +70,46 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/otp_input_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter SIX digit OTP"
+                app:startIconDrawable="@drawable/ic_baseline_password_24"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:helperTextTextColor="#AA0000"
+                android:layout_marginStart="16dp"
+                app:shapeAppearance="@style/Rounded"
+                app:endIconMode="custom"
+                android:visibility="gone"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/otp_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="true"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/resend_otp_text"
+                android:textAlignment="center"
+                android:text="Resend OTP"
+                android:layout_marginTop="8dp"
+                android:textSize="16sp"
+                android:textColor="#0000ff"
+                android:clickable="true"
+                android:visibility="gone"
+                />
+
         </LinearLayout>
 
         <Button
@@ -81,7 +121,7 @@
             android:layout_marginTop="16dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:visibility="visible"
+            android:enabled="false"
             />
 
         <Button
@@ -94,6 +134,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:visibility="invisible"
+            android:enabled="false"
             />
 
 

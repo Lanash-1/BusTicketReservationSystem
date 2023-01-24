@@ -21,6 +21,7 @@ import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.ui.login.LoginFragment
 import com.example.busticketreservationsystem.ui.homepage.HomePageFragment
+import com.example.busticketreservationsystem.ui.welcome.WelcomeFragment
 import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.livedata.UserViewModel
@@ -68,7 +69,7 @@ class RegisterFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         (activity as AppCompatActivity).supportActionBar?.apply {
-            setDisplayHomeAsUpEnabled(false)
+            setDisplayHomeAsUpEnabled(true)
             title = "Register"
         }
         return inflater.inflate(R.layout.fragment_register, container, false)
@@ -82,6 +83,9 @@ class RegisterFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
+            android.R.id.home -> {
+                backPressOperation()
+            }
             R.id.skip -> {
                 editor.putString("status", LoginStatus.SKIPPED.name)
                 loginStatusViewModel.status = LoginStatus.SKIPPED
@@ -93,6 +97,13 @@ class RegisterFragment : Fragment() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun backPressOperation() {
+        parentFragmentManager.commit {
+            setCustomAnimations(R.anim.from_right, R.anim.to_left)
+            replace(R.id.main_fragment_container, WelcomeFragment())
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -107,7 +118,8 @@ class RegisterFragment : Fragment() {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    requireActivity().finish()
+//                    requireActivity().finish()
+                    backPressOperation()
                 }
             }
 
@@ -150,33 +162,40 @@ class RegisterFragment : Fragment() {
         val validNewPassword = newPasswordLayout.helperText == null
         val validConfirmPassword = confirmPasswordLayout.helperText == null
 
+
         if (validNumber && validNewPassword && validConfirmPassword) {
-            userViewModel.isNumberAlreadyExists(mobileInput.text.toString())
 
-            userViewModel.isMobileExists.observe(viewLifecycleOwner, Observer {
-                if (userViewModel.isMobileExists.value == true) {
+            userViewModel.isMobileExists.observe(viewLifecycleOwner, Observer{
+                if (it == true) {
                     mobileLayout.helperText = "Mobile Number already Exists."
-                } else {
-                    userViewModel.insertNewUser(
-                        newPasswordInput.text.toString(),
-                        mobileInput.text.toString()
-                    )
-                    userViewModel.isNewUserInserted.observe(viewLifecycleOwner, Observer{
-                        editor.putInt("userId", userViewModel.user.userId)
-                        editor.putString("status", LoginStatus.LOGGED_IN.name)
-                        editor.commit()
-                        loginStatusViewModel.status = LoginStatus.LOGGED_IN
-                        parentFragmentManager.commit {
-                            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                            replace(R.id.main_fragment_container, RegistrationDetailsFragment())
-                        }
-                    })
-
+                }else {
+                    registerNewUser()
                 }
             })
 
+            userViewModel.isNumberAlreadyExists(mobileInput.text.toString())
+
 
         }
+
+
+    }
+
+    private fun registerNewUser() {
+        userViewModel.insertNewUser(
+            newPasswordInput.text.toString(),
+            mobileInput.text.toString()
+        )
+        userViewModel.isNewUserInserted.observe(viewLifecycleOwner, Observer{
+            editor.putInt("userId", userViewModel.user.userId)
+            editor.putString("status", LoginStatus.LOGGED_IN.name)
+            editor.commit()
+            loginStatusViewModel.status = LoginStatus.LOGGED_IN
+            parentFragmentManager.commit {
+                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                replace(R.id.main_fragment_container, RegistrationDetailsFragment())
+            }
+        })
     }
 
     private fun numberFocusListener() {

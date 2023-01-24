@@ -2,13 +2,43 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.adminsettings.AdminSettingsFragment">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.adminsettings.AdminSettingsFragment"
+    android:id="@+id/logout_layout"
+    >
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/logout_icon"
+        android:src="@drawable/ic_baseline_logout_24"
+        style="@style/IconTint"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_margin="16dp" />
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/logout_text"
+        android:text="Logout"
+        style="@style/TextDefault"
+        app:layout_constraintTop_toTopOf="@id/logout_icon"
+        app:layout_constraintBottom_toBottomOf="@id/logout_icon"
+        app:layout_constraintLeft_toRightOf="@id/logout_icon"
+        android:layout_marginLeft="16dp"
+        />
+
+    <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Admin Settings"
-        style="@style/TitleTextStyle"/>
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/logout_icon"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?android:selectableItemBackground"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

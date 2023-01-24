@@ -239,6 +239,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="1."
+                                android:textColor="@color/black"
                                 />
                             <TextView
                                 android:id="@+id/row1name"
@@ -246,12 +247,14 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="Lanash"
+                                android:textColor="@color/black"
                                 />
                             <TextView
                                 android:id="@+id/row1seat"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:textColor="@color/black"
                                 android:text="LW1" />
 
                         </TableRow>
@@ -266,6 +269,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="1."
+                                android:textColor="@color/black"
                                 />
                             <TextView
                                 android:id="@+id/row2name"
@@ -273,12 +277,14 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="Lanash"
+                                android:textColor="@color/black"
                                 />
                             <TextView
                                 android:id="@+id/row2seat"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:textColor="@color/black"
                                 android:text="LW1" />
 
                         </TableRow>
@@ -292,6 +298,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="1."
+                                android:textColor="@color/black"
                                 />
                             <TextView
                                 android:id="@+id/row3name"
@@ -299,12 +306,14 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="Lanash"
+                                android:textColor="@color/black"
                                 />
                             <TextView
                                 android:id="@+id/row3seat"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:textColor="@color/black"
                                 android:text="LW1" />
 
                         </TableRow>
@@ -317,6 +326,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:textColor="@color/black"
                                 android:text="1."
                                 />
                             <TextView
@@ -324,6 +334,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:textColor="@color/black"
                                 android:text="Lanash"
                                 />
                             <TextView
@@ -331,6 +342,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:textColor="@color/black"
                                 android:text="LW1" />
 
                         </TableRow>
@@ -343,6 +355,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:textColor="@color/black"
                                 android:text="1."
                                 />
                             <TextView
@@ -350,6 +363,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:textColor="@color/black"
                                 android:text="Lanash"
                                 />
                             <TextView
@@ -357,6 +371,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:textColor="@color/black"
                                 android:text="LW1" />
 
                         </TableRow>
@@ -369,6 +384,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:textColor="@color/black"
                                 android:text="1."
                                 />
                             <TextView
@@ -376,6 +392,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:textColor="@color/black"
                                 android:text="Lanash"
                                 />
                             <TextView
@@ -383,6 +400,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:textColor="@color/black"
                                 android:text="LW1" />
 
                         </TableRow>
@@ -504,10 +522,10 @@
                         android:id="@+id/bus_email_text"
                         android:text="qwerty@skjdnc.cikmnd"
                         android:gravity="center"
+                        android:autoLink="email"
                         app:layout_constraintTop_toTopOf="@id/email_icon"
                         app:layout_constraintBottom_toBottomOf="@id/email_icon"
                         app:layout_constraintLeft_toRightOf="@id/email_icon"
-                        style="@style/TextLink"
                         android:paddingStart="8dp"
                         />
 
@@ -531,10 +549,10 @@
                         android:id="@+id/bus_mobile_text"
                         android:text="9098765432"
                         android:gravity="center"
+                        android:autoLink="phone"
                         app:layout_constraintTop_toTopOf="@id/phone_icon"
                         app:layout_constraintBottom_toBottomOf="@id/phone_icon"
                         app:layout_constraintLeft_toRightOf="@id/phone_icon"
-                        style="@style/TextLink"
                         android:paddingLeft="8dp"
                         />
 

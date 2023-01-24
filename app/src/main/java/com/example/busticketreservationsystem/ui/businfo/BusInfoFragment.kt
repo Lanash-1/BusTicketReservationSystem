@@ -90,7 +90,7 @@ class BusInfoFragment : Fragment() {
     fun backPressOperation(){
         when(navigationViewModel.fragment){
             is BookedTicketFragment -> {
-                navigationViewModel.fragment = null
+//                navigationViewModel.fragment = null
                 parentFragmentManager.commit {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                     replace(R.id.homePageFragmentContainer, BookedTicketFragment())
@@ -120,32 +120,109 @@ class BusInfoFragment : Fragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
+//        fetch amenities of the bus
 
-        busViewModel.fetchBusReviewData()
+        binding.amenityRecyclerView.adapter = amenitiesAdapter
+        binding.amenityRecyclerView.layoutManager = GridLayoutManager(requireContext(), 4)
 
-        if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
-            busViewModel.fetchUserReview(userViewModel.user.userId)
-        }
-
-        busViewModel.isUserReviewFetched.observe(viewLifecycleOwner, Observer{
-            if(busViewModel.userReview != null){
-                binding.rateBusButton.text = "Update Rating"
-            }
-        })
-
+        busViewModel.fetchBusAmenities()
 
         busViewModel.busAmenities.observe(viewLifecycleOwner, Observer{
             amenitiesAdapter.setAmenitiesList(busViewModel.busAmenities.value!!)
             amenitiesAdapter.notifyDataSetChanged()
         })
 
+//        fetch ratings and reviews data of the bus
+
+        busViewModel.fetchBusReviewData()
+
         busViewModel.busReviewsList.observe(viewLifecycleOwner, Observer {
             ratingBarOperation()
         })
 
+//        if user logged in check if user booked the bus before
+//        if user booked check whether user given review for the bus
+//        if review not given display rate bus button
+//        else display update rating button
+        if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
+            busViewModel.checkUserBookedBus(userViewModel.user.userId,busViewModel.selectedBus.busId)
 
-        binding.amenityRecyclerView.adapter = amenitiesAdapter
-        binding.amenityRecyclerView.layoutManager = GridLayoutManager(requireContext(), 4)
+            busViewModel.isUserBooked.observe(viewLifecycleOwner, Observer{
+                ratingButtonOperation()
+            })
+        }
+
+//        on clicking rate bus button
+//        insert the new rating and fetch rating and review data and update the ui
+
+        binding.rateBusButton.setOnClickListener {
+
+            val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.rating_dialog, null)
+
+            val builder = AlertDialog.Builder(requireContext())
+                .setView(dialogView)
+                .setTitle("Rating and Review")
+                .setPositiveButton("Submit"){
+                        _, _ ->
+                    run {
+
+                        val feedback: String = dialogView.findViewById<TextInputEditText>(R.id.review_input).text.toString()
+                        val rating: Int = dialogView.findViewById<RatingBar>(R.id.ratingBar).rating.toString().toDouble().toInt()
+                        if(rating > 0){
+                            Toast.makeText(requireContext(), "$rating - $feedback", Toast.LENGTH_SHORT).show()
+                            val sdf = SimpleDateFormat("dd/MM/yyyy")
+                            val time = Calendar.getInstance().time
+                            val current = sdf.format(time)
+                            rateBusOperation(rating, feedback, current)
+                        }else{
+                            Toast.makeText(requireContext(), "Rating should be selected", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+                .setNegativeButton("Cancel"){
+                        dialog, _ -> dialog.cancel()
+                }
+
+            val alertDialog = builder.show()
+        }
+
+//        on clicking update rating button
+//        update the old rating and fetch rating and review data and update the ui
+
+        binding.updateBusRatingButton.setOnClickListener {
+
+            val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.rating_dialog, null)
+
+            val builder = AlertDialog.Builder(requireContext())
+                .setView(dialogView)
+                .setTitle("Rating and Review")
+                .setPositiveButton("Submit"){
+                        _, _ ->
+                    run {
+                        val feedback: String = dialogView.findViewById<TextInputEditText>(R.id.review_input).text.toString()
+                        val rating: Int = dialogView.findViewById<RatingBar>(R.id.ratingBar).rating.toString().toDouble().toInt()
+                        if(rating > 0){
+                            Toast.makeText(requireContext(), "$rating - $feedback", Toast.LENGTH_SHORT).show()
+                            val sdf = SimpleDateFormat("dd/MM/yyyy")
+                            val time = Calendar.getInstance().time
+                            val current = sdf.format(time)
+                            updateUserRating(rating, feedback, current)
+                        }else{
+                            Toast.makeText(requireContext(), "Rating should be selected", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+                .setNegativeButton("Cancel"){
+                        dialog, _ -> dialog.cancel()
+                }
+
+            val alertDialog = builder.show()
+        }
+
+//        if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
+//        }
+
+
 
 
         binding.readReviewsButton.setOnClickListener {
@@ -157,63 +234,79 @@ class BusInfoFragment : Fragment() {
         }
 
 
-        busViewModel.checkUserBookedBus(busViewModel.selectedBus.busId)
 
-        busViewModel.isUserBooked.observe(viewLifecycleOwner, Observer{
-            if(busViewModel.isUserBooked.value == true){
-                binding.rateBusButton.visibility = View.VISIBLE
-            }else{
-                binding.rateBusButton.visibility = View.GONE
-            }
-        })
+//        binding.rateBusButton.setOnClickListener {
 
-        binding.rateBusButton.setOnClickListener {
+//                val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.rating_dialog, null)
+//
+//                val builder = AlertDialog.Builder(requireContext())
+//                    .setView(dialogView)
+//                    .setTitle("Rating and Review")
+//                    .setPositiveButton("Submit"){
+//                            _, _ ->
+//                        run {
+//
+//                            val feedback: String = dialogView.findViewById<TextInputEditText>(R.id.review_input).text.toString()
+//                            val rating: Int = dialogView.findViewById<RatingBar>(R.id.ratingBar).rating.toString().toDouble().toInt()
+//                            if(rating > 0){
+//                                Toast.makeText(requireContext(), "$rating - $feedback", Toast.LENGTH_SHORT).show()
+//                                val sdf = SimpleDateFormat("dd/MM/yyyy")
+//                                val time = Calendar.getInstance().time
+//                                val current = sdf.format(time)
+//                                rateBusOperation(rating, feedback, current)
+//                            }else{
+//                                Toast.makeText(requireContext(), "Rating should be selected", Toast.LENGTH_SHORT).show()
+//                            }
+//                        }
+//                    }
+//                    .setNegativeButton("Cancel"){
+//                            dialog, _ -> dialog.cancel()
+//                    }
+//
+//                val alertDialog = builder.show()
 
-                val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.rating_dialog, null)
+//        }
+    }
 
-                val builder = AlertDialog.Builder(requireContext())
-                    .setView(dialogView)
-                    .setTitle("Rating and Review")
-                    .setPositiveButton("Submit"){
-                            _, _ ->
-                        run {
-
-                            val feedback: String = dialogView.findViewById<TextInputEditText>(R.id.review_input).text.toString()
-                            val rating: Int = dialogView.findViewById<RatingBar>(R.id.ratingBar).rating.toString().toDouble().toInt()
-                            if(rating > 0){
-                                Toast.makeText(requireContext(), "$rating - $feedback", Toast.LENGTH_SHORT).show()
-                                val sdf = SimpleDateFormat("dd/MM/yyyy")
-                                val time = Calendar.getInstance().time
-                                val current = sdf.format(time)
-                                rateBusOperation(rating, feedback, current)
-                            }else{
-                                Toast.makeText(requireContext(), "Rating should be selected", Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                    }
-                    .setNegativeButton("Cancel"){
-                            dialog, _ -> dialog.cancel()
-                    }
-
-                val alertDialog = builder.show()
-
+    private fun ratingButtonOperation() {
+        if(busViewModel.isUserBooked.value == true){
+            busViewModel.fetchUserReview(userViewModel.user.userId)
+//                    binding.rateBusButton.visibility = View.VISIBLE
+            busViewModel.isUserReviewFetched.observe(viewLifecycleOwner, Observer{
+                if(busViewModel.userReview != null){
+                    binding.rateBusButton.visibility = View.GONE
+                    binding.updateBusRatingButton.visibility = View.VISIBLE
+                }else{
+                    binding.rateBusButton.visibility = View.VISIBLE
+                    binding.updateBusRatingButton.visibility = View.GONE
+                }
+            })
+        }else{
+            binding.rateBusButton.visibility = View.GONE
+            binding.updateBusRatingButton.visibility = View.GONE
         }
     }
 
     private fun rateBusOperation(rating: Int, feedback: String, date: String) {
-        if(busViewModel.userReview != null){
-            updateUserRating(rating, feedback, date)
-        }else{
+//        if(busViewModel.userReview != null){
+//            updateUserRating(rating, feedback, date)
+//        }else{
             insertUserRating(rating, feedback, date)
-        }
+//        }
     }
 
     private fun updateUserRating(rating: Int, feedback: String, date: String) {
         busViewModel.updateUserRating(rating, feedback, date)
 
         busViewModel.isBusReviewUpdated.observe(viewLifecycleOwner, Observer{
+            println("BUS REVIEW")
             busViewModel.fetchBusReviewData()
+
+            busViewModel.busReviewsList.observe(viewLifecycleOwner, Observer{
+                ratingBarOperation()
+            })
         })
+
     }
 
     private fun insertUserRating(rating: Int, feedback: String, date: String) {
@@ -221,6 +314,10 @@ class BusInfoFragment : Fragment() {
 
         busViewModel.isBusReviewUpdated.observe(viewLifecycleOwner, Observer{
             busViewModel.fetchBusReviewData()
+
+            busViewModel.busReviewsList.observe(viewLifecycleOwner, Observer{
+                ratingBarOperation()
+            })
         })
     }
 

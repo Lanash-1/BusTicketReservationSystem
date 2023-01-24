@@ -30,6 +30,16 @@ class TravelDatePickerFragment: DialogFragment(), DatePickerDialog.OnDateSetList
         val dialog = DatePickerDialog(requireContext(),this, year, month, date)
         calendar.set(year, month, date)
         dialog.datePicker.minDate = calendar.timeInMillis
+        var maxMonth = 0
+        var maxYear = year
+        if(month <= 5){
+            maxMonth = month + 6
+        }else{
+            maxMonth += month - 12
+            maxYear += 1
+        }
+        calendar.set(maxYear, maxMonth, date)
+        dialog.datePicker.maxDate = calendar.timeInMillis
         return dialog
 //        return DatePickerDialog(requireContext(), this,year, month, date)
     }
