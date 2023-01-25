@@ -28,9 +28,9 @@ open class Helper {
         val hours = (millis / (1000 * 60 * 60)).toInt()
         val mins = (millis / (1000 * 60) % 60).toInt()
 
-        val diff = "$hours:$mins"
+        val diff = "$hours.$mins"
 
-        println("Duration : ${diff}")
+        println("Duration : $diff")
 
         return diff
     }

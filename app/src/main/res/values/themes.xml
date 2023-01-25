@@ -6,15 +6,17 @@
         <item name="colorPrimary">@color/customRed</item>
         <item name="colorPrimaryVariant">@color/customRed</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="android:textCursorDrawable" parent="androidx.appcompat.widget.SearchView">@drawable/white_cursor</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/customRed</item>
         <item name="colorSecondaryVariant">@color/customRed</item>
         <item name="colorOnSecondary">@color/white</item>
-        <item name="colorControlActivated">@color/customBlue</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+
 
     <style name="TextColor">
         <item name="android:textColor">@color/black</item>

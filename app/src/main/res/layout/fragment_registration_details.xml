@@ -45,6 +45,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
+            android:cursorVisible="true"
+            android:textCursorDrawable="@drawable/red_cursor"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -71,6 +73,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
+            android:cursorVisible="true"
+            android:textCursorDrawable="@drawable/red_cursor"
             />
 
     </com.google.android.material.textfield.TextInputLayout>

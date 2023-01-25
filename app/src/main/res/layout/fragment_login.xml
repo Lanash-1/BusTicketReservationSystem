@@ -30,7 +30,6 @@
         android:hint="Enter Mobile Number"
         app:endIconMode="custom"
         app:helperTextTextColor="#AA0000"
-
         app:endIconDrawable="@drawable/ic_baseline_local_phone_24"
         app:counterEnabled="true"
         app:counterMaxLength="10"
@@ -48,6 +47,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="phone"
+            android:cursorVisible="true"
+            android:textCursorDrawable="@drawable/red_cursor"
             android:maxLength="10"/>
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -68,6 +69,8 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/mobile_input_layout"
         app:shapeAppearance="@style/Rounded"
+        android:cursorVisible="true"
+        android:textCursorDrawable="@drawable/red_cursor"
         >
 
         <com.google.android.material.textfield.TextInputEditText

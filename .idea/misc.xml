@@ -16,7 +16,9 @@
         <entry key="app/src/main/res/drawable/ic_baseline_swap_vert_24.xml" value="0.1085" />
         <entry key="app/src/main/res/drawable/ic_baseline_verified_24.xml" value="0.109" />
         <entry key="app/src/main/res/drawable/ic_outline_event_seat_24.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/red_cursor.xml" value="0.14" />
         <entry key="app/src/main/res/drawable/switch_circle.xml" value="0.178" />
+        <entry key="app/src/main/res/drawable/white_cursor.xml" value="0.14" />
         <entry key="app/src/main/res/layout-v23/fragment_booking_details.xml" value="0.2078125" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3880208333333333" />
         <entry key="app/src/main/res/layout/dialog_searchable_spinner.xml" value="0.371875" />

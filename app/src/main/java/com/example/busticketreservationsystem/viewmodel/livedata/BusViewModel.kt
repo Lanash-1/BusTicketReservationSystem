@@ -113,6 +113,7 @@ class BusViewModel(
         }
     }
 
+
     private fun sortAndFilterOperation(list: List<Bus>): List<Bus> {
         var newList = mutableListOf<Bus>()
         if(checkedList.isNotEmpty()) {
@@ -191,7 +192,6 @@ class BusViewModel(
         }
         return newList
     }
-
 
 //    Selected bus and seats related operations
 
