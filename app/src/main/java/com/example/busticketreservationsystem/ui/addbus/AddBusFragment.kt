@@ -29,6 +29,7 @@ import com.example.busticketreservationsystem.databinding.FragmentAddBusBinding
 import com.example.busticketreservationsystem.enums.BusAmenities
 import com.example.busticketreservationsystem.enums.BusTypes
 import com.example.busticketreservationsystem.ui.adminservices.AdminServicesFragment
+import com.example.busticketreservationsystem.utils.Helper
 import com.example.busticketreservationsystem.viewmodel.livedata.AdminViewModel
 import com.example.busticketreservationsystem.viewmodel.LocationViewModel
 import com.example.busticketreservationsystem.viewmodel.livedata.BusViewModel
@@ -41,6 +42,7 @@ import java.util.*
 class AddBusFragment : Fragment() {
 
     private lateinit var binding: FragmentAddBusBinding
+    private val helper = Helper()
 
     private lateinit var busViewModel: BusViewModel
     private val locationViewModel: LocationViewModel by activityViewModels()
@@ -144,6 +146,7 @@ class AddBusFragment : Fragment() {
 
 
         binding.addBusButton.setOnClickListener {
+
 //            validations should be done
 //            After validations,
 //            add bus data to database
@@ -156,6 +159,7 @@ class AddBusFragment : Fragment() {
             val validBusType = validBusType()
             val validAmenities = validAmenities()
             if(validPartner && validBusName && validBoardingDetails && validDestinationDetails && validTimingDetails && validPriceDetail && validBusType && validAmenities){
+                val duration = helper.getDuration(binding.startTimePicker.text.toString(), binding.reachTimePicker.text.toString())
                 adminViewModel.newBus = Bus(
                     0,
                     adminViewModel.partner.partnerId,
@@ -168,7 +172,7 @@ class AddBusFragment : Fragment() {
                     30,
                     adminViewModel.startTime,
                     adminViewModel.reachTime,
-                    (adminViewModel.reachTime.toDouble()-adminViewModel.startTime.toDouble()).toString(),
+                    duration,
                     0.0,
                     0
                 )
@@ -414,7 +418,12 @@ class AddBusFragment : Fragment() {
 
         val timePickerDialog = TimePickerDialog(requireContext(),{
                view, hourOfDay, minute ->
-            timeText.text = "$hourOfDay: $minute"
+            if(minute < 10){
+                timeText.text = "$hourOfDay: 0$minute"
+            }else{
+                timeText.text = "$hourOfDay: $minute"
+            }
+
             if(timeText == binding.startTimePicker){
                 adminViewModel.startTime = "$hourOfDay.$minute"
             }else{
