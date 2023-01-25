@@ -18,6 +18,7 @@ import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.ui.dashboard.DashBoardFragment
+import com.example.busticketreservationsystem.ui.homepage.HomePageFragment
 import com.example.busticketreservationsystem.ui.login.LoginFragment
 import com.example.busticketreservationsystem.ui.myaccount.MyAccountFragment
 import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
@@ -106,7 +107,7 @@ class BookingHistoryFragment : Fragment() {
                             parentFragmentManager.commit {
                                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                                 setCustomAnimations(R.anim.from_left, R.anim.to_right)
-                                replace(R.id.homePageFragmentContainer, DashBoardFragment())
+                                replace(R.id.main_fragment_container, HomePageFragment())
                             }
                             requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.selectedItemId =
                                 R.id.dashboard
