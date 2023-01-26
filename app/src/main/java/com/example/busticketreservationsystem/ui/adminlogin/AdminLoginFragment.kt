@@ -24,9 +24,12 @@ import com.example.busticketreservationsystem.databinding.FragmentAdminLoginBind
 import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.ui.adminpanel.AdminPanelFragment
 import com.example.busticketreservationsystem.ui.welcome.WelcomeFragment
+import com.example.busticketreservationsystem.utils.Helper
 import java.util.*
 
 class AdminLoginFragment : Fragment() {
+
+    private val helper = Helper()
 
     private lateinit var editor: SharedPreferences.Editor
 
@@ -72,7 +75,6 @@ class AdminLoginFragment : Fragment() {
         parentFragmentManager.commit {
             setCustomAnimations(R.anim.from_left, R.anim.to_right)
             replace(R.id.main_fragment_container, WelcomeFragment())
-//            parentFragmentManager.popBackStack()
         }
     }
 
@@ -99,18 +101,16 @@ class AdminLoginFragment : Fragment() {
 
 
         binding.verifyEmailButton.setOnClickListener {
-            if(verifyEmail(binding.emailInput.text.toString())){
-                binding.emailInputLayout.isEnabled = false
-                binding.emailInputLayout.isErrorEnabled = false
-                binding.emailInputLayout.setEndIconDrawable(R.drawable.ic_baseline_verified_24)
-
-                binding.otpInputLayout.visibility = View.VISIBLE
-                binding.resendOtpText.visibility = View.VISIBLE
-
-                binding.verifyOtpButton.visibility = View.VISIBLE
-                binding.verifyEmailButton.visibility = View.INVISIBLE
-
-                sendNotification()
+            val inputEmail = binding.emailInput.text.toString()
+            val validEmail = helper.validEmail(inputEmail)
+            if(validEmail == ""){
+                if(helper.isAdminEmail(inputEmail)){
+                    validEmailOperations()
+                    sendNotification()
+                }else{
+                    binding.emailInputLayout.isErrorEnabled = true
+                    binding.emailInputLayout.error = "Not an admin Email Id. Try Again"
+                }
             }else{
                 binding.emailInputLayout.isErrorEnabled = true
                 binding.emailInputLayout.error = "Invalid email address"
@@ -139,8 +139,16 @@ class AdminLoginFragment : Fragment() {
         }
     }
 
-    private fun verifyEmail(email: String): Boolean {
-        return email == "admin@admin.com"
+    private fun validEmailOperations() {
+        binding.emailInputLayout.isEnabled = false
+        binding.emailInputLayout.isErrorEnabled = false
+        binding.emailInputLayout.setEndIconDrawable(R.drawable.ic_baseline_verified_24)
+
+        binding.otpInputLayout.visibility = View.VISIBLE
+        binding.resendOtpText.visibility = View.VISIBLE
+
+        binding.verifyOtpButton.visibility = View.VISIBLE
+        binding.verifyEmailButton.visibility = View.INVISIBLE
     }
 
 
@@ -166,21 +174,15 @@ class AdminLoginFragment : Fragment() {
             notificationManager.createNotificationChannel(notificationChannel)
 
             builder = Notification.Builder(requireContext(), channelId)
-//                .setContent(contentView)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("Admin Authentication")
                 .setContentText("OTP: $generatedOtp")
-//                .setLargeIcon(BitmapFactory.decodeResource(this.resources, R.drawable.ic_launcher_background))
-//                .setContentIntent(pendingIntent)
         } else {
 
             builder = Notification.Builder(requireContext())
-//                .setContent(contentView)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("Admin Authentication")
                 .setContentText("OTP $generatedOtp")
-//                .setLargeIcon(BitmapFactory.decodeResource(this.resources, R.drawable.ic_launcher_background))
-//                .setContentIntent(pendingIntent)
         }
         notificationManager.notify(1234, builder.build())
     }

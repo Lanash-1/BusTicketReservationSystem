@@ -8,6 +8,7 @@ class LocationViewModel: ViewModel() {
 
     var locationData = mutableListOf<LocationModel>()
 
+
     var states = mutableListOf<String>()
     var cities = mutableListOf<String>()
     var areas = mutableListOf<String>()
@@ -53,6 +54,16 @@ class LocationViewModel: ViewModel() {
 
 
     var allCities = mutableListOf<String>()
+
+    var popularCities = listOf(
+        "Chennai",
+        "Bengaluru",
+        "Kochi",
+        "Mumbai",
+        "Pune",
+    )
+
+
 
     fun fetchAllCities(){
         allCities.clear()

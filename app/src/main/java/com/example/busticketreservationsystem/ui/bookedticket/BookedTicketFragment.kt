@@ -178,7 +178,6 @@ class BookedTicketFragment : Fragment() {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                     setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.homePageFragmentContainer, BookingHistoryFragment())
-//                        parentFragmentManager.popBackStack()
                 }
             }
         }

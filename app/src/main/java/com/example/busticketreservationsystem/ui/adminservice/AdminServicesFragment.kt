@@ -1,4 +1,4 @@
-package com.example.busticketreservationsystem.ui.adminservices
+package com.example.busticketreservationsystem.ui.adminservice
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -49,7 +49,7 @@ class AdminServicesFragment : Fragment() {
         // Inflate the layout for this fragment
         (activity as AppCompatActivity).supportActionBar!!.apply {
             setDisplayHomeAsUpEnabled(false)
-            title="Admin Services"
+            title="Services"
         }
 
         binding = FragmentAdminServicesBinding.inflate(inflater, container, false)

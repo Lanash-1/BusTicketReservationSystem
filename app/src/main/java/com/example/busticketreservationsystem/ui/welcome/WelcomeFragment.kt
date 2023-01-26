@@ -86,7 +86,6 @@ class WelcomeFragment : Fragment() {
             parentFragmentManager.commit {
                 setCustomAnimations(R.anim.from_right, R.anim.to_left)
                 replace(R.id.main_fragment_container, AdminLoginFragment())
-//                addToBackStack(null)
             }
         }
 

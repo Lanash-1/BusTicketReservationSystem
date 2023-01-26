@@ -127,7 +127,7 @@ class SearchFragment : Fragment() {
         binding.searchResultsLayout.adapter = searchLocationAdapter
         searchLocationAdapter.setLocationList(listOf())
 
-        val listViewAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, locationViewModel.allCities)
+        val listViewAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, locationViewModel.popularCities)
         binding.popularCitiesListView.adapter = listViewAdapter
 
         binding.popularCitiesListView.setOnItemClickListener{ parent, _, position, _ ->

@@ -8,6 +8,7 @@
     >
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/booking_details_scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -227,6 +228,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/booking_details_scrollView"
         android:background="@color/customRed"
         android:visibility="gone"
         />

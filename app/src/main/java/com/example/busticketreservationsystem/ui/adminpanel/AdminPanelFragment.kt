@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.commit
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.databinding.FragmentAdminPanelBinding
-import com.example.busticketreservationsystem.ui.adminservices.AdminServicesFragment
+import com.example.busticketreservationsystem.ui.adminservice.AdminServicesFragment
 import com.example.busticketreservationsystem.ui.adminsettings.AdminSettingsFragment
 import com.example.busticketreservationsystem.ui.analytics.AnalyticsFragment
 

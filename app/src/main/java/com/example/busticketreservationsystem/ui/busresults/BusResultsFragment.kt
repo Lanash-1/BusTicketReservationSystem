@@ -81,6 +81,8 @@ class BusResultsFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home -> {
+                busViewModel.selectedSort = null
+                busViewModel.checkedList = listOf()
                 parentFragmentManager.commit {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                     setCustomAnimations(R.anim.from_left, R.anim.to_right)

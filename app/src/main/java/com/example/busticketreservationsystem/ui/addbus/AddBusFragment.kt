@@ -28,7 +28,7 @@ import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.databinding.FragmentAddBusBinding
 import com.example.busticketreservationsystem.enums.BusAmenities
 import com.example.busticketreservationsystem.enums.BusTypes
-import com.example.busticketreservationsystem.ui.adminservices.AdminServicesFragment
+import com.example.busticketreservationsystem.ui.adminservice.AdminServicesFragment
 import com.example.busticketreservationsystem.utils.Helper
 import com.example.busticketreservationsystem.viewmodel.livedata.AdminViewModel
 import com.example.busticketreservationsystem.viewmodel.LocationViewModel
@@ -98,7 +98,7 @@ class AddBusFragment : Fragment() {
     private fun backPressOperation() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setMessage("Bus details will not be saved")
-        builder.setTitle("Discard Draft?")
+        builder.setTitle("Discard Registration?")
         builder.setCancelable(false)
 
 

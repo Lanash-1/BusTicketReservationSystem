@@ -13,12 +13,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
 import com.example.busticketreservationsystem.R
-import com.example.busticketreservationsystem.data.entity.User
 import com.example.busticketreservationsystem.databinding.FragmentAdminSettingsBinding
 import com.example.busticketreservationsystem.enums.LoginStatus
-import com.example.busticketreservationsystem.ui.adminservices.AdminServicesFragment
-import com.example.busticketreservationsystem.ui.login.LoginFragment
-import com.example.busticketreservationsystem.ui.myaccount.MyAccountFragment
+import com.example.busticketreservationsystem.ui.adminservice.AdminServicesFragment
 import com.example.busticketreservationsystem.ui.welcome.WelcomeFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 

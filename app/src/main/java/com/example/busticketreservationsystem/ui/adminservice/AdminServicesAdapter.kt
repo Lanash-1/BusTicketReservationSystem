@@ -1,4 +1,4 @@
-package com.example.busticketreservationsystem.ui.adminservices
+package com.example.busticketreservationsystem.ui.adminservice
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -35,5 +35,12 @@ open class Helper {
         return diff
     }
 
+    fun isAdminEmail(inputEmail: String): Boolean{
+        if(inputEmail == "admin@admin.com"){
+            return true
+        }
+        return false
+    }
+
 
 }

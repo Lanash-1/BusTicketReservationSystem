@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.busticketreservationsystem.databinding.ItemBusBinding
 import com.example.busticketreservationsystem.data.entity.Bus
 import com.example.busticketreservationsystem.data.entity.Partners
+import com.example.busticketreservationsystem.databinding.ItemBusResultBinding
 import com.example.busticketreservationsystem.enums.BusTypes
 import com.example.busticketreservationsystem.listeners.OnItemClickListener
 
@@ -31,7 +32,7 @@ class BusResultAdapter: RecyclerView.Adapter<BusResultAdapter.BusResultViewHolde
     }
 
 
-    inner class BusResultViewHolder(val binding: ItemBusBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class BusResultViewHolder(val binding: ItemBusResultBinding): RecyclerView.ViewHolder(binding.root) {
         init {
             itemView.setOnClickListener{
                 listener.onItemClick(absoluteAdapterPosition)
@@ -41,7 +42,7 @@ class BusResultAdapter: RecyclerView.Adapter<BusResultAdapter.BusResultViewHolde
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BusResultViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ItemBusBinding.inflate(inflater, parent, false)
+        val binding = ItemBusResultBinding.inflate(inflater, parent, false)
         return BusResultViewHolder(binding)
     }
 

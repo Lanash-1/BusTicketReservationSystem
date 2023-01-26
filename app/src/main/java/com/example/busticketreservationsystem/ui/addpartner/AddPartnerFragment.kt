@@ -2,7 +2,6 @@ package com.example.busticketreservationsystem.ui.addpartner
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -10,14 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.databinding.FragmentAddPartnerBinding
-import com.example.busticketreservationsystem.ui.adminservices.AdminServicesFragment
+import com.example.busticketreservationsystem.ui.adminservice.AdminServicesFragment
 import com.example.busticketreservationsystem.utils.Helper
 import com.example.busticketreservationsystem.viewmodel.livedata.AdminViewModel
 import com.example.busticketreservationsystem.viewmodel.livedata.BusViewModel
@@ -76,30 +74,43 @@ class AddPartnerFragment : Fragment() {
     }
 
     fun backPressOperation(){
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setMessage("Bus details will not be saved")
-        builder.setTitle("Discard Draft?")
-        builder.setCancelable(false)
+        if(checkChanged()){
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setMessage("Partner details will not be saved")
+            builder.setTitle("Discard Registration?")
+            builder.setCancelable(false)
 
 
-        builder.setNegativeButton("Cancel"){
-                dialog, _ -> dialog.cancel()
-        }
+            builder.setNegativeButton("Cancel"){
+                    dialog, _ -> dialog.cancel()
+            }
 
-        builder.setPositiveButton("Discard"){
-                _, _ ->
-            run {
-                parentFragmentManager.commit {
-                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
-                    replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
+            builder.setPositiveButton("Discard"){
+                    _, _ ->
+                run {
+                    moveToAdminServicesFragment()
                 }
             }
+            val alertDialog = builder.create()
+            if(alertDialog.window != null){
+                alertDialog.window!!.attributes.windowAnimations = R.style.DialogFragmentAnimation
+            }
+            alertDialog.show()
+        }else{
+            moveToAdminServicesFragment()
         }
-        val alertDialog = builder.create()
-        if(alertDialog.window != null){
-            alertDialog.window!!.attributes.windowAnimations = R.style.DialogFragmentAnimation
+
+    }
+
+    private fun checkChanged(): Boolean {
+        return binding.partnerEmailInput.text?.isNotEmpty() == true ||  binding.partnerName.text?.isNotEmpty() == true || binding.partnerMobileInput.text?.isNotEmpty() == true
+    }
+
+    private fun moveToAdminServicesFragment() {
+        parentFragmentManager.commit {
+            setCustomAnimations(R.anim.from_left, R.anim.to_right)
+            replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
         }
-        alertDialog.show()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -131,11 +142,7 @@ class AddPartnerFragment : Fragment() {
                 addPartnerData()
                 moveToDashboard()
             }
-
-
         }
-
-
     }
 
     private fun validPartnerMobile(): Boolean {

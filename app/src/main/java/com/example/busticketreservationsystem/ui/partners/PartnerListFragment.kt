@@ -1,29 +1,32 @@
-package com.example.busticketreservationsystem.ui.analytics
+package com.example.busticketreservationsystem.ui.partners
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
-import com.example.busticketreservationsystem.databinding.FragmentAnalyticsBinding
+import com.example.busticketreservationsystem.databinding.FragmentPartnersListBinding
 import com.example.busticketreservationsystem.ui.adminservice.AdminServicesFragment
+import com.example.busticketreservationsystem.ui.analytics.AnalyticsFragment
 import com.example.busticketreservationsystem.viewmodel.livedata.AdminViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.AdminViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class AnalyticsFragment : Fragment() {
+class PartnerListFragment : Fragment() {
 
-    private lateinit var binding: FragmentAnalyticsBinding
+
+    private lateinit var binding: FragmentPartnersListBinding
 
     private lateinit var adminViewModel: AdminViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,50 +43,49 @@ class AnalyticsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         (activity as AppCompatActivity).supportActionBar!!.apply {
-            setDisplayHomeAsUpEnabled(false)
-            title="Analytics"
+            title = "Partners"
+            setDisplayHomeAsUpEnabled(true)
         }
-        binding = FragmentAnalyticsBinding.inflate(inflater, container, false)
+        // Inflate the layout for this fragment
+        binding = FragmentPartnersListBinding.inflate(inflater, container, false)
         return binding.root
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            android.R.id.home -> {
+                backPressOperation()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun backPressOperation() {
+        parentFragmentManager.commit {
+            setCustomAnimations(R.anim.from_left, R.anim.to_right)
+            replace(R.id.adminPanelFragmentContainer, AnalyticsFragment())
+        }
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        requireActivity().findViewById<BottomNavigationView>(R.id.admin_bottomNavigationView).visibility = View.GONE
+
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true){
                 override fun handleOnBackPressed() {
-                    parentFragmentManager.commit {
-                        setCustomAnimations(R.anim.from_left, R.anim.to_right)
-                        replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
-//                        parentFragmentManager.popBackStack()
-                    }
-//                    requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).selectedItemId = R.id.dashboard
-                    requireActivity().findViewById<BottomNavigationView>(R.id.admin_bottomNavigationView).selectedItemId = R.id.services
+                    backPressOperation()
                 }
             }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
 
-        adminViewModel.fetchAnalyticsData()
 
-        adminViewModel.partnerCount.observe(viewLifecycleOwner, Observer{
-            setDataToView()
-        })
+
 
     }
-
-    private fun setDataToView() {
-        binding.apply {
-            userCountTextView.text = adminViewModel.userCount.toString()
-            partnerCountTextView.text = adminViewModel.partnerCount.value.toString()
-            busCountTextView.text = adminViewModel.busCount.toString()
-            ticketsCountTextView.text = adminViewModel.ticketCount.toString()
-        }
-    }
-
-
 }

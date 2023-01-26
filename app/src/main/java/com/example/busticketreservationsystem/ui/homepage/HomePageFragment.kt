@@ -47,6 +47,23 @@ class HomePageFragment : Fragment() {
         val bookingHistoryFragment = BookingHistoryFragment()
         val myAccountFragment = MyAccountFragment()
 
+        binding.bottomNavigationView.setOnItemSelectedListener {
+            when(it.itemId){
+                R.id.dashboard -> {
+                    navigationViewModel.fragment = null
+                    setCurrentFragment(dashBoardFragment)
+                }
+                R.id.bookingHistory -> {
+                    setCurrentFragment(bookingHistoryFragment)
+                }
+                R.id.myAccount -> {
+                    navigationViewModel.fragment = null
+                    setCurrentFragment(myAccountFragment)
+                }
+            }
+            true
+        }
+
         when(navigationViewModel.fragment) {
             is BookingDetailsFragment -> {
                 navigationViewModel.fragment = null
@@ -57,19 +74,7 @@ class HomePageFragment : Fragment() {
             }
 //        }
             else -> {
-//                (activity as AppCompatActivity).apply {
-//                    writeSharedPreferences= getSharedPreferences("LoginStatus", MODE_PRIVATE)
-//                }
 
-//        when(writeSharedPreferences.getString("status", "")){
-//            LoginStatus.LOGGED_IN.name -> {
-//                GlobalScope.launch {
-//                    userViewModel.user = userDbViewModel.getUserAccount(writeSharedPreferences.getInt("userId", 0))
-//                }
-//            }
-//    }
-
-//                val bottomNavigationView = view.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
 
 
                 if(savedInstanceState == null){
@@ -77,37 +82,9 @@ class HomePageFragment : Fragment() {
                 }
 
 
-        binding.bottomNavigationView.setOnNavigationItemSelectedListener {
-            when(it.itemId){
-                R.id.dashboard -> {
-                    navigationViewModel.fragment = null
-                    setCurrentFragment(dashBoardFragment)
-                }
-                R.id.bookingHistory -> {
-//                    setCurrentFragment(bookingHistoryFragment)
 
-//                    if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
-                        setCurrentFragment(bookingHistoryFragment)
-//                    }else{
-//                        setCurrentFragment(bookingHistoryGuestFragment)
-//                    }
-                }
-                R.id.myAccount -> {
-                    navigationViewModel.fragment = null
-//                    if(writeSharedPreferences.getString("status", "") == LoginStatus.LOGGED_IN.name){
-                        setCurrentFragment(myAccountFragment)
-//                    }
-//                    else{
-//                        setCurrentFragment(myAccountGuestFragment)
-//                    }
-                }
-            }
-            true
-        }
     }
             }}
-//        }
-//    }
 
     private fun setCurrentFragment(fragment: Fragment) {
         parentFragmentManager.commit {
