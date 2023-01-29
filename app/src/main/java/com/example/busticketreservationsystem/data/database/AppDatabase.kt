@@ -17,7 +17,8 @@ import com.example.busticketreservationsystem.data.dao.*
             RecentlyViewed::class,
             Reviews::class,
             SeatInformation::class,
-            User::class
+            User::class,
+            Chat::class
                      ], version = 1, exportSchema = false)
 abstract class AppDatabase: RoomDatabase() {
 
@@ -30,6 +31,8 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun reviewsDao(): ReviewsDao
     abstract fun seatInformationDao(): SeatInformationDao
     abstract fun userDao(): UserDao
+
+    abstract fun chatDao(): ChatDao
 
     companion object{
         @Volatile

@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.databinding.FragmentBusesListBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -14,6 +15,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class BusesListFragment : Fragment() {
 
     private lateinit var binding: FragmentBusesListBinding
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +28,10 @@ class BusesListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
+        (activity as AppCompatActivity).supportActionBar!!.apply {
+            title = "Buses Operated"
+            setDisplayHomeAsUpEnabled(true)
+        }
         binding = FragmentBusesListBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -39,7 +46,7 @@ class BusesListFragment : Fragment() {
     }
 
     private fun backPressOperation() {
-        TODO("Not yet implemented")
+        // TODO: check the previous fragment and handle back press operation
     }
 
 

@@ -8,8 +8,6 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.text.Editable
-import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -18,6 +16,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.databinding.FragmentAdminLoginBinding
@@ -25,11 +24,13 @@ import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.ui.adminpanel.AdminPanelFragment
 import com.example.busticketreservationsystem.ui.welcome.WelcomeFragment
 import com.example.busticketreservationsystem.utils.Helper
-import java.util.*
+import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
 
 class AdminLoginFragment : Fragment() {
 
     private val helper = Helper()
+
+    private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
 
     private lateinit var editor: SharedPreferences.Editor
 
@@ -131,6 +132,7 @@ class AdminLoginFragment : Fragment() {
 
         binding.verifyOtpButton.setOnClickListener {
             if(generatedOtp == binding.otpInput.text.toString().toInt()){
+                loginStatusViewModel.status = LoginStatus.ADMIN_LOGGED_IN
                 moveToAdminConsole()
             }else{
                 binding.otpInputLayout.isErrorEnabled = true

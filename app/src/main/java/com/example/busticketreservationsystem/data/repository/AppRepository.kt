@@ -112,4 +112,12 @@ interface AppRepository {
 
     fun isUserBooked(userId: Int, busId: Int): Boolean
 
+
+//    Chat related functions
+
+    fun insertChat(chat: Chat)
+
+    fun getUserChat(userId: Int): List<Chat>
+    fun getUserListFromChat(): List<Int>
+
 }

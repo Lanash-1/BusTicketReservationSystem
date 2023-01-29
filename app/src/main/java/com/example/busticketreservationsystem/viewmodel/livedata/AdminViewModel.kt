@@ -17,7 +17,8 @@ class AdminViewModel(
 
 //    Analytics related data
 
-    var partnerCount = MutableLiveData<Int>()
+
+    var partnerCount = MutableLiveData(0)
     var busCount = 0
     var userCount = 0
     var ticketCount = 0
@@ -79,12 +80,15 @@ class AdminViewModel(
 
 
 
-
-
-
-
-
 //    Analytics related data
+
+
+
+
+//    chat related data
+
+    var chatUserId: Int = 0
+
 
 
 }

@@ -125,6 +125,7 @@ class AppRepositoryImpl(
     }
 
 
+
 //    Seats related data
 
     override fun getBookedSeats(busId: Int, date: String): List<String>{
@@ -211,6 +212,19 @@ class AppRepositoryImpl(
     }
 
 
+//    chat related functions
+
+    override fun insertChat(chat: Chat) {
+        appDb.chatDao().insertChat(chat)
+    }
+
+    override fun getUserChat(userId: Int): List<Chat> {
+        return appDb.chatDao().getChatOfAUser(userId)
+    }
+
+    override fun getUserListFromChat(): List<Int> {
+        return appDb.chatDao().getUserList()
+    }
 
 
 }

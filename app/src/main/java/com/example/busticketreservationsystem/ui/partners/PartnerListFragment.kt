@@ -14,8 +14,7 @@ import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.databinding.FragmentPartnersListBinding
-import com.example.busticketreservationsystem.ui.adminservice.AdminServicesFragment
-import com.example.busticketreservationsystem.ui.analytics.AnalyticsFragment
+import com.example.busticketreservationsystem.ui.analytics.AnalyticsPageFragment
 import com.example.busticketreservationsystem.viewmodel.livedata.AdminViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.AdminViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -64,7 +63,7 @@ class PartnerListFragment : Fragment() {
     private fun backPressOperation() {
         parentFragmentManager.commit {
             setCustomAnimations(R.anim.from_left, R.anim.to_right)
-            replace(R.id.adminPanelFragmentContainer, AnalyticsFragment())
+            replace(R.id.adminPanelFragmentContainer, AnalyticsPageFragment())
         }
     }
 

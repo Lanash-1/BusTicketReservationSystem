@@ -1,6 +1,5 @@
 package com.example.busticketreservationsystem.ui
 
-import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -18,7 +17,6 @@ import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.ui.adminpanel.AdminPanelFragment
 import com.example.busticketreservationsystem.ui.homepage.HomePageFragment
 import com.example.busticketreservationsystem.ui.login.LoginFragment
-import com.example.busticketreservationsystem.ui.register.RegisterFragment
 import com.example.busticketreservationsystem.ui.welcome.WelcomeFragment
 import com.example.busticketreservationsystem.viewmodel.*
 import com.example.busticketreservationsystem.viewmodel.livedata.BookingViewModel
@@ -58,15 +56,15 @@ class MainActivity : AppCompatActivity() {
         bookingViewModel = ViewModelProvider(this, bookingViewModelFactory)[BookingViewModel::class.java]
 
 
-//        Theme preference start
-        appThemeOperations()
+//      Theme preference start
 
+        appThemeOperations()
 
 //      login preference start
 
         loginPreferenceOperations(savedInstanceState)
 
-//        fetch location data from json
+//      fetch location data from json
 
         fetchLocationData()
 
@@ -117,8 +115,8 @@ class MainActivity : AppCompatActivity() {
             locationViewModel.locationData.add(LocationModel(stateName, cities, areaList))
             cities = mutableListOf()
             areaList = mutableListOf()
+
         }
-        println("FETCHED SIZE = ${locationViewModel.locationData.size}")
     }
 
     private fun loginPreferenceOperations(savedInstanceState: Bundle?) {

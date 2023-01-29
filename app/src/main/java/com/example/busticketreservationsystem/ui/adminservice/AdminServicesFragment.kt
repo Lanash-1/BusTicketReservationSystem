@@ -17,6 +17,7 @@ import com.example.busticketreservationsystem.enums.AdminServices
 import com.example.busticketreservationsystem.listeners.OnItemClickListener
 import com.example.busticketreservationsystem.ui.addbus.AddBusFragment
 import com.example.busticketreservationsystem.ui.addpartner.AddPartnerFragment
+import com.example.busticketreservationsystem.ui.chat.ChatFragment
 import com.example.busticketreservationsystem.viewmodel.livedata.BusViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -73,9 +74,12 @@ class AdminServicesFragment : Fragment() {
             override fun onItemClick(position: Int) {
                 when(AdminServices.values()[position]){
                     AdminServices.ADD_BUS -> {
+//                        parentFragmentManager.commit {
+//                            setCustomAnimations(R.anim.from_right, R.anim.to_left)
+//                            replace(R.id.adminPanelFragmentContainer, AddBusFragment())
+//                        }
                         parentFragmentManager.commit {
-                            setCustomAnimations(R.anim.from_right, R.anim.to_left)
-                            replace(R.id.adminPanelFragmentContainer, AddBusFragment())
+                            replace(R.id.adminPanelFragmentContainer, ChatFragment())
                         }
                     }
                     AdminServices.ADD_PARTNER -> {

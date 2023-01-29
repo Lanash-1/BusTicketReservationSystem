@@ -9,6 +9,7 @@ import com.example.busticketreservationsystem.data.entity.Bus
 @Dao
 interface BusDao {
 
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertBusData(bus: Bus)
 

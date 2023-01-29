@@ -42,5 +42,43 @@ open class Helper {
         return false
     }
 
+    fun isValidMessage(message: String): Boolean {
+        if(message.isNotEmpty()){
+           return true
+        }
+        return false
+    }
+
+    fun getTimeStamp(): String {
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        return sdf.format(Calendar.getInstance().time)
+    }
+
+
+    fun getOnlyTime(timeStamp: String): String{
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        val date = sdf.parse(timeStamp)
+        val cal = Calendar.getInstance()
+        cal.time = date
+        var hour = cal.get(Calendar.HOUR)
+        val minute = cal.get(Calendar.MINUTE)
+        var extension = ""
+        when(cal.get(Calendar.AM_PM)){
+            1 -> {
+                extension = "pm"
+            }
+            0 -> {
+                extension = "am"
+            }
+        }
+        if(hour == 0){
+            hour = 12
+        }
+        if(minute < 10){
+            return "$hour:0$minute $extension"
+        }
+        return "$hour:$minute $extension"
+    }
+
 
 }

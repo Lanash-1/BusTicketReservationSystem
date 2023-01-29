@@ -58,8 +58,6 @@ class BookedTicketFragment : Fragment() {
         val busViewModelFactory = BusViewModelFactory(repository)
         busViewModel = ViewModelProvider(requireActivity(), busViewModelFactory)[BusViewModel::class.java]
 
-
-
     }
 
     override fun onCreateView(
@@ -102,7 +100,6 @@ class BookedTicketFragment : Fragment() {
         // observe booked ticket data fetched
 
 
-
         if(navigationViewModel.fragment is BookingDetailsFragment || navigationViewModel.fragment is BookedTicketFragment){
             binding.cancelTicketButton.visibility = View.GONE
             setTicketDataToView()
@@ -143,7 +140,6 @@ class BookedTicketFragment : Fragment() {
         })
 
     }
-
 
 
     private fun backPressLogic() {
@@ -255,7 +251,6 @@ class BookedTicketFragment : Fragment() {
         }
 
     }
-
 
 
     private fun cancelTicketAction(bookingId: Int) {

@@ -14,8 +14,14 @@ class PassengerInfoAdapter: RecyclerView.Adapter<PassengerInfoAdapter.PassengerI
 
     private lateinit var selectedSeats: List<String>
 
+    private var check: Boolean = false
+
     fun setSelectedSeats(selectedSeats: List<String>){
         this.selectedSeats = selectedSeats
+    }
+
+    fun setCheck(){
+        check = true
     }
 
     private lateinit var infoList: List<PassengerInfoModel>
@@ -60,6 +66,33 @@ class PassengerInfoAdapter: RecyclerView.Adapter<PassengerInfoAdapter.PassengerI
 
     override fun onBindViewHolder(holder: PassengerInfoViewHolder, position: Int) {
         holder.binding.apply {
+            when(check){
+                true -> {
+
+//                    name check
+                    if(infoList[position].name == null || infoList[position].name?.isEmpty() == true){
+                        passengerNameLayout.error = "Name should not be empty"
+                        passengerNameLayout.isErrorEnabled = true
+                    }else{
+                        passengerNameLayout.isErrorEnabled = false
+                    }
+
+//                    age check
+
+                    if(infoList[position].age == null || infoList[position].age?.toString()!!.toInt() < 1){
+                        ageInputLayout.error = "Invalid input"
+                        ageInputLayout.isErrorEnabled = true
+                    }else{
+                        ageInputLayout.isErrorEnabled = false
+                    }
+
+//                    gender check
+
+                }
+                false -> {
+//
+                }
+            }
             passengerTitleText.text = "Passenger ${position+1}"
             seatText.text = "Seat - ${selectedSeats[position]}"
             if(infoList[position].name != null){
@@ -83,4 +116,5 @@ class PassengerInfoAdapter: RecyclerView.Adapter<PassengerInfoAdapter.PassengerI
     override fun getItemCount(): Int {
         return selectedSeats.size
     }
+
 }

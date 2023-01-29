@@ -5,6 +5,7 @@ import android.view.*
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
@@ -22,6 +23,7 @@ import com.example.busticketreservationsystem.listeners.OnRemoveClickListener
 import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.ui.busresults.BusResultsFragment
+import com.example.busticketreservationsystem.ui.chat.ChatFragment
 import com.example.busticketreservationsystem.ui.recentlyviewed.RecentlyViewedFragment
 import com.example.busticketreservationsystem.ui.locationsearch.SearchFragment
 import com.example.busticketreservationsystem.ui.selectedbus.SelectedBusFragment
@@ -39,6 +41,7 @@ class DashBoardFragment : Fragment() {
     private val searchViewModel: SearchViewModel by activityViewModels()
     private val dateViewModel: DateViewModel by activityViewModels()
     private val navigationViewModel: NavigationViewModel by activityViewModels()
+    private val locationViewModel: LocationViewModel by activityViewModels()
 
     private lateinit var binding: FragmentDashBoardBinding
 
@@ -51,8 +54,6 @@ class DashBoardFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-
         val database = AppDatabase.getDatabase(requireActivity().applicationContext)
         val repository = AppRepositoryImpl(database)
 
@@ -61,6 +62,10 @@ class DashBoardFragment : Fragment() {
 
         val busViewModelFactory = BusViewModelFactory(repository)
         busViewModel = ViewModelProvider(requireActivity(), busViewModelFactory)[BusViewModel::class.java]
+
+
+        setHasOptionsMenu(true)
+
     }
 
     override fun onCreateView(
@@ -72,8 +77,56 @@ class DashBoardFragment : Fragment() {
             setDisplayHomeAsUpEnabled(false)
             title = "Dashboard"
         }
+
+
+//        requireActivity().addMenuProvider(object : MenuProvider{
+//
+//            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+//                if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
+//                    menuInflater.inflate(R.menu.dashboard_menu, menu)
+//                }
+//            }
+//
+//            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+//                return when(menuItem.itemId){
+//                    R.id.chat_support_icon -> {
+//                        parentFragmentManager.commit {
+//                            setCustomAnimations(R.anim.from_right, R.anim.to_left)
+//                            replace(R.id.homePageFragmentContainer, ChatFragment())
+//                        }
+//                        true
+//                    }
+//                    else -> {
+//                        false
+//                    }
+//                }
+//            }
+//
+//        })
+
         binding = FragmentDashBoardBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
+            setHasOptionsMenu(true)
+            inflater.inflate(R.menu.dashboard_menu, menu)
+        }else{
+            setHasOptionsMenu(false)
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.chat_support_icon -> {
+                parentFragmentManager.commit {
+                    setCustomAnimations(R.anim.from_right, R.anim.to_left)
+                    replace(R.id.homePageFragmentContainer, ChatFragment())
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 
@@ -118,6 +171,9 @@ class DashBoardFragment : Fragment() {
             override fun onItemClick(position: Int) {
                 busViewModel.selectedBus  = userViewModel.recentlyViewedBusList[position]
                 busViewModel.selectedDate = userViewModel.recentlyViewedList[position].date
+
+                busViewModel.boardingPoints = locationViewModel.fetchAreas(busViewModel.selectedBus.sourceLocation)
+                busViewModel.droppingPoints = locationViewModel.fetchAreas(busViewModel.selectedBus.destination)
 
 
                 navigationViewModel.fragment = DashBoardFragment()

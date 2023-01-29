@@ -89,15 +89,20 @@ class BookingDetailsFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home -> {
-                parentFragmentManager.commit {
-                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
-                    replace(R.id.homePageFragmentContainer, BoardingAndDroppingFragment())
-                    parentFragmentManager.popBackStack()
-                }
+                backPressOperation()
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun backPressOperation() {
+        bookingViewModel.passengerInfo.clear()
+        parentFragmentManager.commit {
+            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+            setCustomAnimations(R.anim.from_left, R.anim.to_right)
+            replace(R.id.homePageFragmentContainer, BoardingAndDroppingFragment())
+            parentFragmentManager.popBackStack()
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -123,12 +128,7 @@ class BookingDetailsFragment : Fragment() {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true){
                 override fun handleOnBackPressed() {
-                    parentFragmentManager.commit {
-                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-                        setCustomAnimations(R.anim.from_left, R.anim.to_right)
-                        replace(R.id.homePageFragmentContainer, BoardingAndDroppingFragment())
-                        parentFragmentManager.popBackStack()
-                    }
+                    backPressOperation()
                 }
             }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
@@ -144,6 +144,8 @@ class BookingDetailsFragment : Fragment() {
         }
 
         binding.proceedText.setOnClickListener {
+            passengerInfoAdapter.setCheck()
+            passengerInfoAdapter.notifyDataSetChanged()
             binding.emailLayout.error = validEmail()
 
             val validEmail = binding.emailLayout.error == null

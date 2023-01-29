@@ -30,6 +30,7 @@ import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.enums.Gender
 import com.example.busticketreservationsystem.ui.bookinghistory.BookingHistoryFragment
+import com.example.busticketreservationsystem.ui.chat.ChatFragment
 import com.example.busticketreservationsystem.ui.dashboard.DashBoardFragment
 import com.example.busticketreservationsystem.ui.editprofile.EditProfileFragment
 import com.example.busticketreservationsystem.ui.login.LoginFragment
@@ -39,6 +40,7 @@ import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserVie
 import com.example.busticketreservationsystem.viewmodel.livedata.UserViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.chip.Chip
+import com.google.android.material.transition.Hold
 
 class MyAccountFragment : Fragment() {
 
@@ -65,6 +67,7 @@ class MyAccountFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
 
         val database = AppDatabase.getDatabase(requireActivity().applicationContext)
         val repository = AppRepositoryImpl(database)
@@ -184,6 +187,7 @@ class MyAccountFragment : Fragment() {
                             putExtra(Intent.EXTRA_SUBJECT, "App Usage Feedback")
                         }
                         startActivity(intent)
+
                     }
                     MyAccountOptions.LOGIN_LOGOUT -> {
                         if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
