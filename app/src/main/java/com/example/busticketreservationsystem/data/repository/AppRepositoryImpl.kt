@@ -226,5 +226,9 @@ class AppRepositoryImpl(
         return appDb.chatDao().getUserList()
     }
 
+    override fun updatePartnerDetails(partner: Partners) {
+        appDb.partnersDao().updatePartnerDetails(partner.partnerId, partner.partnerName, partner.partnerEmailId, partner.partnerMobile)
+    }
+
 
 }

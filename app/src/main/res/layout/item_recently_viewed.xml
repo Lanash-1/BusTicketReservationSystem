@@ -48,7 +48,7 @@
                 android:padding="8dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:background="?android:selectableItemBackground"
+                android:background="?android:selectableItemBackgroundBorderless"
                 />
 
             <TextView

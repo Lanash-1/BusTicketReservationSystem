@@ -60,12 +60,9 @@ class AdminSettingsFragment : Fragment() {
             object : OnBackPressedCallback(true){
                 override fun handleOnBackPressed() {
                     parentFragmentManager.commit {
-//                        setCustomAnimations(R.anim.from_left, R.anim.to_right)
                         setCustomAnimations(R.anim.from_left, R.anim.to_right)
                         replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
-//                        parentFragmentManager.popBackStack()
                     }
-//                    requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).selectedItemId = R.id.dashboard
                     requireActivity().findViewById<BottomNavigationView>(R.id.admin_bottomNavigationView).selectedItemId = R.id.services
                 }
             }

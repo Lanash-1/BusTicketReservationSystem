@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.data.database.AppDatabase
+import com.example.busticketreservationsystem.data.entity.Partners
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.databinding.FragmentAdminServicesBinding
 import com.example.busticketreservationsystem.enums.AdminServices
@@ -18,7 +19,9 @@ import com.example.busticketreservationsystem.listeners.OnItemClickListener
 import com.example.busticketreservationsystem.ui.addbus.AddBusFragment
 import com.example.busticketreservationsystem.ui.addpartner.AddPartnerFragment
 import com.example.busticketreservationsystem.ui.chat.ChatFragment
+import com.example.busticketreservationsystem.viewmodel.livedata.AdminViewModel
 import com.example.busticketreservationsystem.viewmodel.livedata.BusViewModel
+import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.AdminViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -30,6 +33,7 @@ class AdminServicesFragment : Fragment() {
     private val adminServiceAdapter = AdminServicesAdapter()
 
     private lateinit var busViewModel: BusViewModel
+    private lateinit var adminViewModel: AdminViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +45,9 @@ class AdminServicesFragment : Fragment() {
 
         val busViewModelFactory = BusViewModelFactory(repository)
         busViewModel = ViewModelProvider(requireActivity(), busViewModelFactory)[BusViewModel::class.java]
+        
+        val adminViewModelFactory = AdminViewModelFactory(repository)
+        adminViewModel = ViewModelProvider(requireActivity(), adminViewModelFactory)[AdminViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -74,15 +81,13 @@ class AdminServicesFragment : Fragment() {
             override fun onItemClick(position: Int) {
                 when(AdminServices.values()[position]){
                     AdminServices.ADD_BUS -> {
-//                        parentFragmentManager.commit {
-//                            setCustomAnimations(R.anim.from_right, R.anim.to_left)
-//                            replace(R.id.adminPanelFragmentContainer, AddBusFragment())
-//                        }
                         parentFragmentManager.commit {
-                            replace(R.id.adminPanelFragmentContainer, ChatFragment())
+                            setCustomAnimations(R.anim.from_right, R.anim.to_left)
+                            replace(R.id.adminPanelFragmentContainer, AddBusFragment())
                         }
                     }
                     AdminServices.ADD_PARTNER -> {
+                        adminViewModel.selectedPartner = Partners(0, "", 0, "", "")
                         parentFragmentManager.commit {
                             setCustomAnimations(R.anim.from_right, R.anim.to_left)
                             replace(R.id.adminPanelFragmentContainer, AddPartnerFragment())

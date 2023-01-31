@@ -3,6 +3,7 @@ package com.example.busticketreservationsystem.ui.sortandfilter
 import android.os.Bundle
 import android.view.*
 import android.widget.RadioButton
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -13,6 +14,7 @@ import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.databinding.FragmentSortAndFilterBinding
 import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
+import com.example.busticketreservationsystem.ui.adminservice.AdminServicesFragment
 import com.example.busticketreservationsystem.ui.busresults.BusResultsFragment
 import com.example.busticketreservationsystem.viewmodel.*
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
@@ -58,15 +60,19 @@ class SortAndFilterFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                parentFragmentManager.commit {
-                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
-                    replace(R.id.homePageFragmentContainer, BusResultsFragment())
-                    parentFragmentManager.popBackStack()
-                }
+                backPressOperation()
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun backPressOperation() {
+        parentFragmentManager.commit {
+//            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+            setCustomAnimations(R.anim.from_left, R.anim.to_right)
+            replace(R.id.homePageFragmentContainer, BusResultsFragment())
+//            parentFragmentManager.popBackStack()
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -74,6 +80,14 @@ class SortAndFilterFragment : Fragment() {
 
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.visibility = View.GONE
 
+
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true){
+                override fun handleOnBackPressed() {
+                    backPressOperation()
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
 
         if(busViewModel.selectedSort != null){
@@ -119,6 +133,8 @@ class SortAndFilterFragment : Fragment() {
 
 
     }
+
+
 
     private fun moveToBusResults() {
         parentFragmentManager.commit {

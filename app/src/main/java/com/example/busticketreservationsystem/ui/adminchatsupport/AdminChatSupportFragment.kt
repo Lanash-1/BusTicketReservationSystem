@@ -96,6 +96,8 @@ class AdminChatSupportFragment : Fragment() {
             if(it.isNotEmpty()){
                 chatUserListAdapter.setUserList(it)
                 chatUserListAdapter.notifyDataSetChanged()
+            }else{
+                binding.emptyListLayout.visibility = View.VISIBLE
             }
         })
 
@@ -105,11 +107,6 @@ class AdminChatSupportFragment : Fragment() {
                 moveToChatFragment()
             }
         })
-
-
-
-
-
     }
 
     private fun moveToChatFragment() {

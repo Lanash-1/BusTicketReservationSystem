@@ -1,5 +1,6 @@
 package com.example.busticketreservationsystem.ui.bookinghistory
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -85,9 +86,10 @@ class BookingHistoryFragment : Fragment() {
             }
         }
 
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.selectedItemId = R.id.bookingHistory
-
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.visibility = View.VISIBLE
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.apply {
+            selectedItemId = R.id.bookingHistory
+            visibility = View.VISIBLE
+        }
 
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true){

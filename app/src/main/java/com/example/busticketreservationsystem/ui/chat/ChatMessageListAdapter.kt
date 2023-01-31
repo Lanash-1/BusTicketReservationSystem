@@ -49,6 +49,7 @@ class ChatMessageListAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val time = helper.getOnlyTime(chatList[position].timestamp)
+
         when(appUserType){
             AppUserType.ADMIN -> {
                 when(chatList[position].messageType){

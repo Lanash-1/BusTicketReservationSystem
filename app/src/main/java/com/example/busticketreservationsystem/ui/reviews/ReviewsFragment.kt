@@ -92,5 +92,9 @@ class ReviewsFragment : Fragment() {
         binding.reviewsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
 
+        if(busViewModel.busReviewsList.value?.isEmpty() == true){
+            binding.emptyListLayout.visibility = View.VISIBLE
+        }
+
     }
 }

@@ -9,11 +9,15 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.databinding.FragmentPartnersListBinding
+import com.example.busticketreservationsystem.listeners.OnExpandIconClickListener
+import com.example.busticketreservationsystem.listeners.OnItemClickListener
 import com.example.busticketreservationsystem.ui.analytics.AnalyticsPageFragment
 import com.example.busticketreservationsystem.viewmodel.livedata.AdminViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.AdminViewModelFactory
@@ -26,6 +30,10 @@ class PartnerListFragment : Fragment() {
 
     private lateinit var adminViewModel: AdminViewModel
 
+    private val partnerListAdapter = PartnerListAdapter()
+
+    private var expandItemPosition = -1
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +44,7 @@ class PartnerListFragment : Fragment() {
 
         val adminViewModelFactory = AdminViewModelFactory(repository)
         adminViewModel = ViewModelProvider(requireActivity(), adminViewModelFactory)[AdminViewModel::class.java]
+
     }
 
     override fun onCreateView(
@@ -83,8 +92,52 @@ class PartnerListFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
 
+        val partnerListRecyclerView = binding.partnersListRecyclerView
+        partnerListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        partnerListRecyclerView.adapter = partnerListAdapter
 
 
+        adminViewModel.fetchPartnersData()
 
+        adminViewModel.partnersList.observe(viewLifecycleOwner, Observer{
+            if(it.isNotEmpty()){
+                partnerListAdapter.setPartnerList(it, expandItemPosition)
+                partnerListAdapter.notifyDataSetChanged()
+            }
+        })
+
+        partnerListAdapter.setOnItemClickListener(object: OnItemClickListener {
+            override fun onItemClick(position: Int) {
+                adminViewModel.selectedPartner = adminViewModel.partnersList.value!![position]
+                moveToPartnerDetailsFragment()
+            }
+        })
+
+        partnerListAdapter.setOnExpandIconClickListener(object: OnExpandIconClickListener{
+            override fun onClickExpandMore(position: Int) {
+                expandItemPosition = position
+                partnerListAdapter.setPartnerList(adminViewModel.partnersList.value!!, expandItemPosition)
+//                partnerListAdapter.notifyDataSetChanged()
+                partnerListAdapter.notifyItemChanged(position)
+
+            }
+
+            override fun onClickExpandLess(position: Int) {
+                expandItemPosition = -1
+                partnerListAdapter.setPartnerList(adminViewModel.partnersList.value!!, expandItemPosition)
+//                partnerListAdapter.notifyDataSetChanged()
+                partnerListAdapter.notifyItemChanged(position)
+
+            }
+
+        })
+
+    }
+
+    private fun moveToPartnerDetailsFragment() {
+        parentFragmentManager.commit {
+            setCustomAnimations(R.anim.from_right, R.anim.to_left)
+            replace(R.id.adminPanelFragmentContainer, PartnerDetailsFragment())
+        }
     }
 }

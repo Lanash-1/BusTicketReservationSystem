@@ -10,15 +10,12 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import com.example.busticketreservationsystem.R
-import com.example.busticketreservationsystem.databinding.FragmentBusesListBinding
-import com.example.busticketreservationsystem.enums.Analytics
-import com.example.busticketreservationsystem.ui.analytics.AnalyticsPageFragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.busticketreservationsystem.databinding.FragmentBusDetailsBinding
 
-class BusesListFragment : Fragment() {
 
-    private lateinit var binding: FragmentBusesListBinding
+class BusDetailsFragment : Fragment() {
 
+    private lateinit var binding: FragmentBusDetailsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,12 +26,12 @@ class BusesListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         (activity as AppCompatActivity).supportActionBar!!.apply {
             title = "Buses Operated"
             setDisplayHomeAsUpEnabled(true)
         }
-        binding = FragmentBusesListBinding.inflate(inflater, container, false)
+        // Inflate the layout for this fragment
+        binding = FragmentBusDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -50,15 +47,12 @@ class BusesListFragment : Fragment() {
     private fun backPressOperation() {
         parentFragmentManager.commit {
             setCustomAnimations(R.anim.from_left, R.anim.to_right)
-            replace(R.id.adminPanelFragmentContainer, AnalyticsPageFragment())
+            replace(R.id.adminPanelFragmentContainer, BusesListFragment())
         }
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        requireActivity().findViewById<BottomNavigationView>(R.id.admin_bottomNavigationView).visibility = View.GONE
 
         val callback: OnBackPressedCallback = object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {

@@ -69,15 +69,16 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/mobile_input_layout"
         app:shapeAppearance="@style/Rounded"
-        android:cursorVisible="true"
-        android:textCursorDrawable="@drawable/red_cursor"
+
         >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"/>
+            android:inputType="textPassword"
+            android:cursorVisible="true"
+            android:textCursorDrawable="@drawable/red_cursor"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 

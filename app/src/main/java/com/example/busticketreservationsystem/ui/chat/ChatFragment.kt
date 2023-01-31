@@ -32,6 +32,7 @@ import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.AdminVi
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.ChatViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.delay
 
 
 class ChatFragment : Fragment() {
@@ -126,12 +127,9 @@ class ChatFragment : Fragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
-
-
         val chatRecyclerView = binding.chatRecyclerView
         chatRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         chatRecyclerView.adapter = chatListAdapter
-
 
         if(loginStatusViewModel.status == LoginStatus.ADMIN_LOGGED_IN){
             requireActivity().findViewById<BottomNavigationView>(R.id.admin_bottomNavigationView).visibility = View.GONE
@@ -147,7 +145,6 @@ class ChatFragment : Fragment() {
             chatViewModel.fetchUserChat(userViewModel.user.userId)
         }
 
-
         chatViewModel.userChat.observe(viewLifecycleOwner, Observer{
             binding.loaderIcon.visibility = View.GONE
             if(it.isNotEmpty()){
@@ -158,7 +155,6 @@ class ChatFragment : Fragment() {
             }
         })
 
-
         binding.sendButton.setOnClickListener {
             val message = binding.enterMessageEditText.text.toString()
             if(helper.isValidMessage(message)){
@@ -167,7 +163,6 @@ class ChatFragment : Fragment() {
                 binding.enterMessageEditText.setText("")
             }
         }
-
     }
 
 }

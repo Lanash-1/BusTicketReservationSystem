@@ -36,6 +36,7 @@ import com.example.busticketreservationsystem.viewmodel.livedata.BusViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.AdminViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 import java.util.*
 
 
@@ -113,6 +114,7 @@ class AddBusFragment : Fragment() {
                     selectedSourceState.value = ""
                     selectedDestinationState.value = ""
                 }
+
                 parentFragmentManager.commit {
                     setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
@@ -177,6 +179,8 @@ class AddBusFragment : Fragment() {
                     0
                 )
                 busViewModel.registerNewBus(adminViewModel.newBus, adminViewModel.amenities)
+                Snackbar.make(requireView(), "Bus Added Successfully", Snackbar.LENGTH_SHORT).show()
+
                 parentFragmentManager.commit {
                     setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())

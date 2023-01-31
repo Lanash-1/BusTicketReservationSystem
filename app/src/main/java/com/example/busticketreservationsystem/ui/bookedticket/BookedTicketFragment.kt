@@ -67,7 +67,7 @@ class BookedTicketFragment : Fragment() {
         // Inflate the layout for this fragment
         (activity as AppCompatActivity).supportActionBar?.apply {
             title = "Ticket Details"
-                setDisplayHomeAsUpEnabled(true)
+            setDisplayHomeAsUpEnabled(true)
         }
         binding = FragmentBookedTicketBinding.inflate(inflater, container, false)
         return binding.root

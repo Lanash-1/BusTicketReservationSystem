@@ -36,7 +36,7 @@ class AdminChatSupportUserListAdapter: RecyclerView.Adapter<AdminChatSupportUser
 
     override fun onBindViewHolder(holder: UserListViewHolder, position: Int) {
         holder.binding.apply {
-            userIdTextView.text = userList[position].toString()
+            userIdTextView.text = "User Id: #${userList[position]}"
         }
     }
 

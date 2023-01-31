@@ -13,15 +13,18 @@ import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.data.database.AppDatabase
+import com.example.busticketreservationsystem.data.entity.Partners
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.databinding.FragmentAddPartnerBinding
 import com.example.busticketreservationsystem.ui.adminservice.AdminServicesFragment
+import com.example.busticketreservationsystem.ui.partners.PartnerDetailsFragment
 import com.example.busticketreservationsystem.utils.Helper
 import com.example.busticketreservationsystem.viewmodel.livedata.AdminViewModel
 import com.example.busticketreservationsystem.viewmodel.livedata.BusViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.AdminViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 
 
 class AddPartnerFragment : Fragment() {
@@ -47,6 +50,7 @@ class AddPartnerFragment : Fragment() {
 
         val adminViewModelFactory = AdminViewModelFactory(repository)
         adminViewModel = ViewModelProvider(requireActivity(), adminViewModelFactory)[AdminViewModel::class.java]
+
     }
 
     override fun onCreateView(
@@ -54,10 +58,19 @@ class AddPartnerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        (activity as AppCompatActivity).supportActionBar!!.apply {
-            setDisplayHomeAsUpEnabled(true)
-            title="Add Partner"
-        }
+//        (activity as AppCompatActivity).supportActionBar!!.apply {
+//            setDisplayHomeAsUpEnabled(true)
+//            if(adminViewModel.selectedPartner.partnerName.isNotEmpty()){
+//                title = "Update Partner Details"
+//                binding.titleText.visibility = View.GONE
+//                binding.updatePartnerButton.visibility = View.VISIBLE
+//                binding.createPartner.visibility = View.GONE
+//            }else{
+//                title="Add Partner"
+//                binding.updatePartnerButton.visibility = View.GONE
+//                binding.createPartner.visibility = View.VISIBLE
+//            }
+//        }
 
         // Inflate the layout for this fragment
         binding = FragmentAddPartnerBinding.inflate(inflater, container, false)
@@ -88,7 +101,7 @@ class AddPartnerFragment : Fragment() {
             builder.setPositiveButton("Discard"){
                     _, _ ->
                 run {
-                    moveToAdminServicesFragment()
+                    moveToPreviousFragment()
                 }
             }
             val alertDialog = builder.create()
@@ -97,24 +110,45 @@ class AddPartnerFragment : Fragment() {
             }
             alertDialog.show()
         }else{
-            moveToAdminServicesFragment()
+            moveToPreviousFragment()
         }
-
     }
 
     private fun checkChanged(): Boolean {
-        return binding.partnerEmailInput.text?.isNotEmpty() == true ||  binding.partnerName.text?.isNotEmpty() == true || binding.partnerMobileInput.text?.isNotEmpty() == true
+        return binding.partnerEmailInput.text.toString() != adminViewModel.selectedPartner.partnerEmailId ||  binding.partnerName.text.toString() != adminViewModel.selectedPartner.partnerName || binding.partnerMobileInput.text.toString() != adminViewModel.selectedPartner.partnerMobile
     }
 
-    private fun moveToAdminServicesFragment() {
-        parentFragmentManager.commit {
-            setCustomAnimations(R.anim.from_left, R.anim.to_right)
-            replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
+    private fun moveToPreviousFragment() {
+        if(adminViewModel.selectedPartner.partnerName.isNotEmpty()){
+            parentFragmentManager.commit {
+                setCustomAnimations(R.anim.from_left, R.anim.to_right)
+                replace(R.id.adminPanelFragmentContainer, PartnerDetailsFragment())
+            }
+        }else{
+            parentFragmentManager.commit {
+                setCustomAnimations(R.anim.from_left, R.anim.to_right)
+                replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
+            }
         }
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        (activity as AppCompatActivity).supportActionBar!!.apply {
+            setDisplayHomeAsUpEnabled(true)
+            if(adminViewModel.selectedPartner.partnerName.isNotEmpty()){
+                title = "Update Partner Details"
+                binding.titleText.visibility = View.GONE
+                binding.updatePartnerButton.visibility = View.VISIBLE
+                binding.createPartner.visibility = View.GONE
+            }else{
+                title="Add Partner"
+                binding.updatePartnerButton.visibility = View.GONE
+                binding.createPartner.visibility = View.VISIBLE
+            }
+        }
 
         requireActivity().findViewById<BottomNavigationView>(R.id.admin_bottomNavigationView)?.visibility = View.GONE
 
@@ -126,6 +160,8 @@ class AddPartnerFragment : Fragment() {
             }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
+        updateDataToInput()
 
         binding.createPartner.setOnClickListener {
 
@@ -142,6 +178,33 @@ class AddPartnerFragment : Fragment() {
                 addPartnerData()
                 moveToDashboard()
             }
+        }
+
+        binding.updatePartnerButton.setOnClickListener {
+            val validPartnerName = validPartnerName()
+            val validPartnerEmail = validPartnerEmail()
+            val validPartnerMobile = validPartnerMobile()
+            if(validPartnerEmail && validPartnerName && validPartnerMobile){
+                adminViewModel.selectedPartner.apply {
+                    partnerName = adminViewModel.partnerName
+                    partnerEmailId = adminViewModel.partnerEmail
+                    partnerMobile = adminViewModel.partnerMobile
+                }
+                updatePartnerData(adminViewModel.selectedPartner)
+                moveToPreviousFragment()
+            }
+        }
+    }
+
+    private fun updatePartnerData(partner: Partners) {
+        adminViewModel.updatePartnerDetails(partner)
+    }
+
+    private fun updateDataToInput() {
+        if(adminViewModel.selectedPartner.partnerName.isNotEmpty()){
+            binding.partnerName.setText(adminViewModel.selectedPartner.partnerName)
+            binding.partnerMobileInput.setText(adminViewModel.selectedPartner.partnerMobile)
+            binding.partnerEmailInput.setText(adminViewModel.selectedPartner.partnerEmailId)
         }
     }
 
@@ -184,6 +247,9 @@ class AddPartnerFragment : Fragment() {
     }
 
     private fun moveToDashboard() {
+
+        Snackbar.make(requireView(), "Partner Added Successfully", Snackbar.LENGTH_SHORT).show()
+
         parentFragmentManager.commit {
             setCustomAnimations(R.anim.from_left, R.anim.to_right)
             replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())

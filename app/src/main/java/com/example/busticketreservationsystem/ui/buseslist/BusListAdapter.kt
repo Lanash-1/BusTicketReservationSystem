@@ -14,7 +14,11 @@ class BusListAdapter: RecyclerView.Adapter<BusListAdapter.BusListViewHolder>() {
         this.busList = busList
     }
 
-    class BusListViewHolder(val binding: ItemBusBinding): RecyclerView.ViewHolder(binding.root)
+    inner class BusListViewHolder(val binding: ItemBusBinding): RecyclerView.ViewHolder(binding.root){
+        init {
+
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BusListViewHolder {
         val inflater = LayoutInflater.from(parent.context)

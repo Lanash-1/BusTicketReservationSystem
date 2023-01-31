@@ -46,6 +46,30 @@ class AdminViewModel(
     }
 
 
+    var partnersList = MutableLiveData<List<Partners>>()
+
+    var selectedPartner = Partners(0, "", 0, "", "")
+
+    fun fetchPartnersData() {
+        viewModelScope.launch(Dispatchers.IO) {
+            var list = listOf<Partners>()
+            val job = launch {
+                list = repository.getPartnerData()
+            }
+            job.join()
+            withContext(Dispatchers.Main){
+                partnersList.value = list
+            }
+        }
+    }
+
+    fun updatePartnerDetails(partner: Partners) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updatePartnerDetails(partner)
+        }
+    }
+
+
 //    Add bus related operation
 
     var busName = ""
