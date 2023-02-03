@@ -43,7 +43,6 @@ class EditProfileFragment : Fragment() {
         val repository = AppRepositoryImpl(database)
         val userViewModelFactory = UserViewModelFactory(repository)
         userViewModel = ViewModelProvider(requireActivity(), userViewModelFactory)[UserViewModel::class.java]
-
     }
 
     override fun onCreateView(
@@ -63,7 +62,6 @@ class EditProfileFragment : Fragment() {
         when(item.itemId){
             android.R.id.home -> {
                 backPressOperation()
-
             }
         }
         return super.onOptionsItemSelected(item)

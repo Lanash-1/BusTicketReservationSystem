@@ -36,4 +36,7 @@ interface BookingsDao {
     @Query("select count(*) from bookings_table where busId like :busId and userId like :userId")
     fun getUserBooking(userId: Int, busId: Int): Int
 
+    @Query("select count(*) from bookings_table join bus_table on bookings_table.busId = bus_table.busId where bus_table.partnerId = :partnerId")
+    fun getTicketCount(partnerId: Int): Int
+
 }

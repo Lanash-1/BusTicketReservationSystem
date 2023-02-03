@@ -121,12 +121,12 @@ class SortAndFilterFragment : Fragment() {
             selectedSortRadioButton = view.findViewById(id)
         }
 
-        binding.applyText.setOnClickListener {
+        binding.applyButton.setOnClickListener {
             filterBusList()
             moveToBusResults()
         }
 
-        binding.clearText.setOnClickListener{
+        binding.clearButton.setOnClickListener{
             clearFilters()
             moveToBusResults()
         }
@@ -156,8 +156,6 @@ class SortAndFilterFragment : Fragment() {
     private fun filterBusList(){
 
         val checkedList = mutableListOf<Int>()
-
-
 
 
             if(binding.acCheckbox.isChecked){

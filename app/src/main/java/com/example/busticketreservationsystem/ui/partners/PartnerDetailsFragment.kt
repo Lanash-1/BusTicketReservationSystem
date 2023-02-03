@@ -6,9 +6,11 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.data.database.AppDatabase
+import com.example.busticketreservationsystem.data.entity.Partners
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.databinding.FragmentPartnerDetailsBinding
 import com.example.busticketreservationsystem.ui.addpartner.AddPartnerFragment
@@ -93,7 +95,26 @@ class PartnerDetailsFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
 
-        println("SELECTED PARTNER: ${adminViewModel.selectedPartner}")
 
+        setDataToView(adminViewModel.selectedPartner)
+
+        adminViewModel.fetchBookedTicketCount(adminViewModel.selectedPartner.partnerId)
+
+        adminViewModel.bookedTicketCount.observe(viewLifecycleOwner, Observer{
+            binding.ticketCountTextView.text = it.toString()
+        })
+
+
+
+    }
+
+    private fun setDataToView(partner: Partners) {
+        binding.apply {
+            partnerNameTextView.text = partner.partnerName
+            mobileTextView.text = partner.partnerMobile
+            emailTextView.text = partner.partnerEmailId
+            countTextView.text = partner.noOfBusesOperated.toString()
+            ticketCountTextView.text = "00"
+        }
     }
 }

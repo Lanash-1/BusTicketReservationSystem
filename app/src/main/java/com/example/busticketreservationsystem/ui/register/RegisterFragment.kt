@@ -212,17 +212,19 @@ class RegisterFragment : Fragment() {
     private fun validNumber(): String? {
         val number = mobileInput.text.toString()
 
-        if(!number.matches(".*[0-9].*".toRegex()))
-        {
-            return "Invalid mobile number"
+        if(number.isEmpty()){
+            return "Should not be empty"
         }
         if(number.length != 10)
         {
             return "Must be 10 Digits"
         }
-        if(number.isEmpty()){
-            return "Should not be empty"
+        if(!number.matches(".*[0-9].*".toRegex()))
+        {
+            return "Invalid mobile number"
         }
+
+
         return null
     }
 
@@ -238,19 +240,25 @@ class RegisterFragment : Fragment() {
         val passwordText = newPasswordInput.text.toString()
         if(passwordText.length < 8)
         {
-            return "Minimum 8 Character Password"
+            return "Password must be at least 8 characters long and include at least one upper case letter, one lower case letter, and one special character."
         }
         if(!passwordText.matches(".*[A-Z].*".toRegex()))
         {
-            return "Must Contain 1 Upper-case Character"
+//            return "Must Contain 1 Upper-case Character"
+            return "Password must be at least 8 characters long and include at least one upper case letter, one lower case letter, and one special character."
+
         }
         if(!passwordText.matches(".*[a-z].*".toRegex()))
         {
-            return "Must Contain 1 Lower-case Character"
+            return "Password must be at least 8 characters long and include at least one upper case letter, one lower case letter, and one special character."
+
+//            return "Must Contain 1 Lower-case Character"
         }
         if(!passwordText.matches(".*[@#\$%^&+=].*".toRegex()))
         {
-            return "Must Contain 1 Special Character (@#\$%^&+=)"
+            return "Password must be at least 8 characters long and include at least one upper case letter, one lower case letter, and one special character."
+
+//            return "Must Contain 1 Special Character (@#\$%^&+=)"
         }
 
         return null

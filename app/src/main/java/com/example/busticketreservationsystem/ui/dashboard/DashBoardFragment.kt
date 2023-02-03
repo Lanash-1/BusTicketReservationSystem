@@ -110,7 +110,6 @@ class DashBoardFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
-            setHasOptionsMenu(true)
             inflater.inflate(R.menu.dashboard_menu, menu)
         }else{
             setHasOptionsMenu(false)
@@ -139,30 +138,58 @@ class DashBoardFragment : Fragment() {
             parentFragmentManager.popBackStack()
         }
 
-
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.visibility = View.VISIBLE
-
-
-        if(loginStatusViewModel.status != LoginStatus.LOGGED_IN){
-            binding.recentlyViewedRecyclerView.visibility = View.GONE
-            binding.recentlyViewedText.visibility = View.GONE
-        }
-
-        userViewModel.dataFetched.observe(viewLifecycleOwner, Observer{
-            if(userViewModel.recentlyViewedBusList.isEmpty()){
-                binding.recentlyViewedText.visibility = View.GONE
-            }else{
-                binding.recentlyViewedText.visibility = View.VISIBLE
-            }
-            recentlyViewedAdapter.setRecentlyViewedList(userViewModel.recentlyViewedBusList, userViewModel.recentlyViewedList, userViewModel.recentlyViewedPartnerList)
-        })
+//        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.selectedItemId =
+//            R.id.dashboard
 
         binding.recentlyViewedRecyclerView.adapter = recentlyViewedAdapter
         binding.recentlyViewedRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
+//        if(loginStatusViewModel.status != LoginStatus.LOGGED_IN){
+//            println("WORKING ")
+//
+//        }else{
+//            println("NOT WORKING")
+//            userViewModel.fetchRecentlyViewedData()
+//        }
+
+        if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
+            println("INSIDE IF")
+
+            binding.recentlyViewedRecyclerView.visibility = View.GONE
+            binding.recentlyViewedText.visibility = View.GONE
+
+            userViewModel.fetchRecentlyViewedData()
+
+
+
+        }else{
+            println("OUTSIDE IF")
+
+            binding.recentlyViewedRecyclerView.visibility = View.GONE
+            binding.recentlyViewedText.visibility = View.GONE
+        }
+
+        userViewModel.recentlyViewedList.observe(viewLifecycleOwner, Observer{
+            if(it.isNotEmpty()){
+                println("INSIDE IF observer")
+
+                recentlyViewedAdapter.setRecentlyViewedList(userViewModel.recentlyViewedBusList, userViewModel.recentlyViewedList.value!!, userViewModel.recentlyViewedPartnerList)
+                binding.recentlyViewedText.visibility = View.VISIBLE
+                binding.recentlyViewedRecyclerView.visibility = View.VISIBLE
+            }else{
+                println("outside observer IF")
+
+                binding.recentlyViewedText.visibility = View.GONE
+                binding.recentlyViewedRecyclerView.visibility = View.GONE
+            }
+        })
+
+
+
         recentlyViewedAdapter.setOnRemoveClickListener(object: OnRemoveClickListener{
             override fun onRemoveClick(position: Int) {
-                userViewModel.removeRecentlyViewedData(userViewModel.recentlyViewedList[position])
+                userViewModel.removeRecentlyViewedData(userViewModel.recentlyViewedList.value!![position])
             }
         })
 
@@ -170,7 +197,7 @@ class DashBoardFragment : Fragment() {
         recentlyViewedAdapter.setOnItemClickListener(object : OnItemClickListener{
             override fun onItemClick(position: Int) {
                 busViewModel.selectedBus  = userViewModel.recentlyViewedBusList[position]
-                busViewModel.selectedDate = userViewModel.recentlyViewedList[position].date
+                busViewModel.selectedDate = userViewModel.recentlyViewedList.value!![position].date
 
                 busViewModel.boardingPoints = locationViewModel.fetchAreas(busViewModel.selectedBus.sourceLocation)
                 busViewModel.droppingPoints = locationViewModel.fetchAreas(busViewModel.selectedBus.destination)
@@ -200,7 +227,6 @@ class DashBoardFragment : Fragment() {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     setCustomAnimations(R.anim.from_right, R.anim.to_left)
                     replace(R.id.homePageFragmentContainer, BusResultsFragment())
-                    addToBackStack(null)
                 }
 
             }else{
@@ -221,7 +247,6 @@ class DashBoardFragment : Fragment() {
                 }else{
                     binding.enterDateErrorIcon.visibility = View.INVISIBLE
                 }
-
             }
         }
 
@@ -311,7 +336,6 @@ class DashBoardFragment : Fragment() {
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             setCustomAnimations(R.anim.from_right, R.anim.to_left)
             replace(R.id.homePageFragmentContainer, SearchFragment())
-            addToBackStack(null)
         }
     }
 }

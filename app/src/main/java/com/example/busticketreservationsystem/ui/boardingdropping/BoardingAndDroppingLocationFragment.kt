@@ -88,8 +88,5 @@ class BoardingAndDroppingLocationFragment : Fragment() {
             }
         })
 
-
-
-
     }
 }

@@ -81,8 +81,6 @@ class HomePageFragment : Fragment() {
                     setCurrentFragment(dashBoardFragment)
                 }
 
-
-
     }
             }}
 

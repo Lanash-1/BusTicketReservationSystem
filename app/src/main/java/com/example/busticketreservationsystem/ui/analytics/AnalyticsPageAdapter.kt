@@ -52,7 +52,7 @@ class AnalyticsPageAdapter: RecyclerView.Adapter<AnalyticsPageAdapter.AnalyticsP
                     countTextView.text = "$partnerCount"
                 }
                 Analytics.BUSES_OPERATED -> {
-                    titleTextView.text = "Bused Operated"
+                    titleTextView.text = "Buses Operated"
                     countTextView.text = "$busCount"
                 }
                 Analytics.TICKETS_BOOKED -> {

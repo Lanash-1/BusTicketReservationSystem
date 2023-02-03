@@ -30,7 +30,8 @@ interface PartnersDao {
         partnerMobile: String
     )
 
-
+    @Query("update partners_table set noOfBusesOperated =+ 1 where partnerId = :partnerId")
+    fun updateBusCount(partnerId: Int)
 
 
 }

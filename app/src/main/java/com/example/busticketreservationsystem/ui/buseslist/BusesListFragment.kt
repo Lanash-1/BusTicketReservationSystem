@@ -8,21 +8,43 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.busticketreservationsystem.R
+import com.example.busticketreservationsystem.data.database.AppDatabase
+import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.databinding.FragmentBusesListBinding
 import com.example.busticketreservationsystem.enums.Analytics
+import com.example.busticketreservationsystem.listeners.OnItemClickListener
 import com.example.busticketreservationsystem.ui.analytics.AnalyticsPageFragment
+import com.example.busticketreservationsystem.ui.businfo.BusInfoFragment
+import com.example.busticketreservationsystem.viewmodel.NavigationViewModel
+import com.example.busticketreservationsystem.viewmodel.livedata.AdminViewModel
+import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.AdminViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class BusesListFragment : Fragment() {
 
     private lateinit var binding: FragmentBusesListBinding
 
+    private val busListAdapter = BusListAdapter()
+
+    private lateinit var adminViewModel: AdminViewModel
+
+    private val navigationViewModel: NavigationViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
+        val database = AppDatabase.getDatabase(requireActivity().applicationContext)
+        val repository = AppRepositoryImpl(database)
+
+        val adminViewModelFactory = AdminViewModelFactory(repository)
+        adminViewModel = ViewModelProvider(requireActivity(), adminViewModelFactory)[AdminViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -68,7 +90,36 @@ class BusesListFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
 
+        val busListRecyclerView = binding.busesListRecyclerView
+        busListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        busListRecyclerView.adapter = busListAdapter
 
+        adminViewModel.fetchAllBuses()
 
+        adminViewModel.allBuses.observe(viewLifecycleOwner, Observer{
+            if(it.isNotEmpty()){
+                busListAdapter.setBusList(it)
+                busListAdapter.notifyDataSetChanged()
+            }else{
+                binding.emptyListLayout.visibility = View.VISIBLE
+            }
+        })
+
+        busListAdapter.setOnItemClickListener(object: OnItemClickListener{
+            override fun onItemClick(position: Int) {
+                adminViewModel.selectedBus = adminViewModel.allBuses.value!![position]
+                moveToBusInfoFragment()
+            }
+
+        })
+
+    }
+
+    private fun moveToBusInfoFragment() {
+        navigationViewModel.fragment = BusesListFragment()
+        parentFragmentManager.commit {
+            setCustomAnimations(R.anim.from_right, R.anim.to_left)
+            replace(R.id.adminPanelFragmentContainer, BusInfoFragment())
+        }
     }
 }

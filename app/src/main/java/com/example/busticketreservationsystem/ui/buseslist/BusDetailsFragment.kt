@@ -62,7 +62,5 @@ class BusDetailsFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
 
-
-
     }
 }

@@ -73,7 +73,6 @@ class SearchFragment : Fragment() {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                     setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.homePageFragmentContainer, DashBoardFragment())
-                    parentFragmentManager.popBackStack()
                 }
                 return false
             }
@@ -108,7 +107,6 @@ class SearchFragment : Fragment() {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                     setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.homePageFragmentContainer, DashBoardFragment())
-                    parentFragmentManager.popBackStack()
                 }
             }
         }

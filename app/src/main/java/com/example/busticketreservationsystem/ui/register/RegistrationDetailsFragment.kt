@@ -49,6 +49,8 @@ class RegistrationDetailsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        setHasOptionsMenu(false)
+
         val database = AppDatabase.getDatabase(requireActivity().applicationContext)
         val repository = AppRepositoryImpl(database)
 
@@ -62,6 +64,11 @@ class RegistrationDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
+        (activity as AppCompatActivity).supportActionBar!!.apply {
+            title = "Register"
+            setDisplayHomeAsUpEnabled(false)
+        }
+
         binding = FragmentRegistrationDetailsBinding.inflate(inflater, container, false)
         return binding.root
 //        return inflater.inflate(R.layout.fragment_registration_details, container, false)

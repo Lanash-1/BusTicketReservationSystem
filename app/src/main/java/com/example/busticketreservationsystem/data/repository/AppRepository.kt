@@ -112,6 +112,8 @@ interface AppRepository {
 
     fun isUserBooked(userId: Int, busId: Int): Boolean
 
+    fun getTicketCount(partnerId: Int): Int
+
 
 //    Chat related functions
 
@@ -120,5 +122,6 @@ interface AppRepository {
     fun getUserChat(userId: Int): List<Chat>
     fun getUserListFromChat(): List<Int>
     fun updatePartnerDetails(partner: Partners)
+    fun updateBusCount(partnerId: Int)
 
 }

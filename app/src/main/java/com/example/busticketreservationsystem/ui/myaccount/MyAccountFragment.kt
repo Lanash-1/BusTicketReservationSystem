@@ -49,14 +49,12 @@ class MyAccountFragment : Fragment() {
     private lateinit var editProfileChip: Chip
     private lateinit var accountLayout: ConstraintLayout
 
-
     private lateinit var editor: SharedPreferences.Editor
 
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
     private val searchViewModel: SearchViewModel by activityViewModels()
     private val dateViewModel: DateViewModel by activityViewModels()
     private val navigationViewModel: NavigationViewModel by activityViewModels()
-
 
     private val myAccountAdapter = MyAccountAdapter()
 
@@ -67,7 +65,6 @@ class MyAccountFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-
 
         val database = AppDatabase.getDatabase(requireActivity().applicationContext)
         val repository = AppRepositoryImpl(database)
@@ -233,6 +230,10 @@ class MyAccountFragment : Fragment() {
                     month = 0
                     date = 0
                 }
+
+                userViewModel.recentlyViewedList.value = mutableListOf()
+
+
                 userViewModel.user = User(0,"","","","","","")
                 editor.putString("status", LoginStatus.LOGGED_OUT.name)
                 loginStatusViewModel.status = LoginStatus.LOGGED_OUT

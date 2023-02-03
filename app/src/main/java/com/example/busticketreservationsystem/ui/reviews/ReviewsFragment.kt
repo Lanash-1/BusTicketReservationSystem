@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +17,9 @@ import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.databinding.FragmentReviewsBinding
 import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
+import com.example.busticketreservationsystem.ui.buseslist.BusesListFragment
 import com.example.busticketreservationsystem.ui.businfo.BusInfoFragment
+import com.example.busticketreservationsystem.viewmodel.NavigationViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.livedata.BusViewModel
 
@@ -29,6 +32,7 @@ class ReviewsFragment : Fragment() {
 
 
     private lateinit var busViewModel: BusViewModel
+    private val navigationViewModel: NavigationViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,16 +63,30 @@ class ReviewsFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home -> {
-                parentFragmentManager.commit {
-                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
-                    replace(R.id.homePageFragmentContainer, BusInfoFragment())
-                    parentFragmentManager.popBackStack()
-                }
+                backPressOperation()
             }
         }
         return super.onOptionsItemSelected(item)
     }
+
+    private fun backPressOperation() {
+        when(navigationViewModel.fragment){
+            is BusesListFragment -> {
+                parentFragmentManager.commit {
+                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
+                    replace(R.id.adminPanelFragmentContainer, BusInfoFragment())
+                }
+            }else -> {
+            parentFragmentManager.commit {
+                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                setCustomAnimations(R.anim.from_left, R.anim.to_right)
+                replace(R.id.homePageFragmentContainer, BusInfoFragment())
+            }
+            }
+        }
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -76,12 +94,7 @@ class ReviewsFragment : Fragment() {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true){
                 override fun handleOnBackPressed() {
-                    parentFragmentManager.commit {
-                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-                        setCustomAnimations(R.anim.from_left, R.anim.to_right)
-                        replace(R.id.homePageFragmentContainer, BusInfoFragment())
-                        parentFragmentManager.popBackStack()
-                    }
+                    backPressOperation()
                 }
             }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)

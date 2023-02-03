@@ -30,7 +30,7 @@ class UserViewModel(
             fetchJob.join()
             withContext(Dispatchers.Main){
                 user = userData
-                fetchRecentlyViewedData()
+//                fetchRecentlyViewedData()
             }
         }
     }
@@ -44,7 +44,7 @@ class UserViewModel(
             fetchJob.join()
             withContext(Dispatchers.Main){
                 user = userData
-                fetchRecentlyViewedData()
+//                fetchRecentlyViewedData()
                 isLoggedIn.value = true
             }
         }
@@ -54,11 +54,11 @@ class UserViewModel(
 
 //    User Recently Viewed Bus related
 
-    var recentlyViewedList = listOf<RecentlyViewed>()
-    var recentlyViewedBusList = listOf<Bus>()
-    var recentlyViewedPartnerList = listOf<String>()
+    var recentlyViewedList = MutableLiveData<MutableList<RecentlyViewed>>()
+    var recentlyViewedBusList = mutableListOf<Bus>()
+    var recentlyViewedPartnerList = mutableListOf<String>()
 
-    var dataFetched = MutableLiveData<Boolean>()
+//    var dataFetched = MutableLiveData<Boolean>()
 
     fun fetchRecentlyViewedData(){
         viewModelScope.launch(Dispatchers.IO) {
@@ -74,12 +74,11 @@ class UserViewModel(
             }
             fetchJob.join()
             withContext(Dispatchers.Main){
-                recentlyViewedList = recentlyViewed
                 recentlyViewedBusList = recentlyViewedBus
                 recentlyViewedPartnerList = recentlyViewedPartner
-
-                dataFetched.value = true
-
+                if(recentlyViewed.isNotEmpty()){
+                    recentlyViewedList.value = recentlyViewed as MutableList<RecentlyViewed>
+                }
             }
         }
     }

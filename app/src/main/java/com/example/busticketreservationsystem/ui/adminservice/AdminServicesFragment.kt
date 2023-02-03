@@ -69,7 +69,12 @@ class AdminServicesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         requireActivity().findViewById<BottomNavigationView>(R.id.admin_bottomNavigationView)?.visibility = View.VISIBLE
+//        requireActivity().findViewById<BottomNavigationView>(R.id.admin_bottomNavigationView).selectedItemId = R.id.services
 
+//        requireActivity().findViewById<BottomNavigationView>(R.id.admin_bottomNavigationView)?.apply {
+//            visibility = View.VISIBLE
+//            selectedItemId = R.id.services
+//        }
 
         val adminServicesRecyclerView = binding.adminServicesRecyclerView
         adminServicesRecyclerView.layoutManager = GridLayoutManager(requireContext(), 2)

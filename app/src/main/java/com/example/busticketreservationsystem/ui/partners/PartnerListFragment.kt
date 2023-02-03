@@ -96,13 +96,14 @@ class PartnerListFragment : Fragment() {
         partnerListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         partnerListRecyclerView.adapter = partnerListAdapter
 
-
         adminViewModel.fetchPartnersData()
 
         adminViewModel.partnersList.observe(viewLifecycleOwner, Observer{
             if(it.isNotEmpty()){
                 partnerListAdapter.setPartnerList(it, expandItemPosition)
                 partnerListAdapter.notifyDataSetChanged()
+            }else{
+                binding.emptyListLayout.visibility = View.VISIBLE
             }
         })
 

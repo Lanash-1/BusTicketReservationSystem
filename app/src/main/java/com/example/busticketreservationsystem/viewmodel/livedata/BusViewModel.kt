@@ -7,7 +7,6 @@ import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.enums.BusTypes
 import com.example.busticketreservationsystem.data.entity.*
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
-import com.example.busticketreservationsystem.enums.BusAmenities
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -30,6 +29,22 @@ class BusViewModel(
 //        }
 //    }
 
+
+    var selectedPartner = MutableLiveData<Partners>()
+    fun fetchPartnerData(partnerId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            lateinit var partner: Partners
+            val job = launch {
+                partner = repository.getPartnerDetails(partnerId)
+            }
+            job.join()
+            withContext(Dispatchers.Main){
+                selectedPartner.value = partner
+            }
+
+        }
+    }
+
     fun insertPartnerData(partner: Partners) {
         viewModelScope.launch(Dispatchers.IO) {
             val job = launch {
@@ -46,10 +61,11 @@ class BusViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             val job = launch {
                 repository.insertBusData(newBus)
-                val busId = repository.getBusData().last().busId
+                val bus = repository.getBusData().last()
                 for(amenity in amenities){
-                    repository.insertBusAmenitiesData(BusAmenities(0, busId, amenity))
+                    repository.insertBusAmenitiesData(BusAmenities(0, bus.busId, amenity))
                 }
+                repository.updateBusCount(bus.partnerId)
             }
             job.join()
             withContext(Dispatchers.Main){
@@ -234,11 +250,11 @@ class BusViewModel(
 
     var isBusReviewUpdated = MutableLiveData<Boolean>()
 
-    fun fetchBusAmenities() {
+    fun fetchBusAmenities(busId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             var amenities = listOf<String>()
             val fetchJob = launch {
-                amenities = repository.getBusAmenities(selectedBus.busId)
+                amenities = repository.getBusAmenities(busId)
             }
             fetchJob.join()
             withContext(Dispatchers.Main){
@@ -247,11 +263,11 @@ class BusViewModel(
         }
     }
 
-    fun fetchBusReviewData(){
+    fun fetchBusReviewData(busId: Int, selectedBus: Bus) {
         viewModelScope.launch(Dispatchers.IO) {
             var reviewsList = listOf<Reviews>()
             val fetchJob = launch {
-                reviewsList = repository.getReviewData(selectedBus.busId)
+                reviewsList = repository.getReviewData(busId)
             }
             fetchJob.join()
             withContext(Dispatchers.Main){
@@ -266,7 +282,7 @@ class BusViewModel(
                     selectedBus.ratingOverall = 0.0
                 }
 
-                updateBusRating(selectedBusId, selectedBus.ratingPeopleCount, selectedBus.ratingOverall)
+                updateBusRating(busId, selectedBus.ratingPeopleCount, selectedBus.ratingOverall)
                 busReviewsList.value = reviewsList
             }
         }
@@ -338,6 +354,7 @@ class BusViewModel(
             }
         }
     }
+
 
 
 

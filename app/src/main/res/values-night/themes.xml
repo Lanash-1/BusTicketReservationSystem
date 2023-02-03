@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.BusTicketReservationSystem" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/customRed</item>
+        <item name="colorPrimary">@color/seatGreen</item>
         <item name="colorPrimaryVariant">@color/black</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
@@ -62,7 +62,7 @@
     </style>
 
     <style name="DividerColor">
-        <item name="dividerColor">@color/white</item>
+        <item name="dividerColor">#808080</item>
     </style>
 
     <style name="Image">

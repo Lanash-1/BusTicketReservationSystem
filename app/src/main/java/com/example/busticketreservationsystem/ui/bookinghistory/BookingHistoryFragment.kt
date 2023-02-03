@@ -106,13 +106,13 @@ class BookingHistoryFragment : Fragment() {
                                 R.id.myAccount
                         }
                         else -> {
+                            navigationViewModel.fragment = null
                             parentFragmentManager.commit {
                                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                                 setCustomAnimations(R.anim.from_left, R.anim.to_right)
                                 replace(R.id.main_fragment_container, HomePageFragment())
                             }
-                            requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.selectedItemId =
-                                R.id.dashboard
+
                         }
                     }
                 }

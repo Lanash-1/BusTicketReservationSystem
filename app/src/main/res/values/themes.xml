@@ -3,8 +3,8 @@
     <style name="Theme.BusTicketReservationSystem" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
 <!--        <item name="colorPrimary">#D0191D</item>-->
-        <item name="colorPrimary">@color/customRed</item>
-        <item name="colorPrimaryVariant">@color/customRed</item>
+        <item name="colorPrimary">@color/seatGreen</item>
+        <item name="colorPrimaryVariant">@color/seatGreen</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="android:textCursorDrawable" parent="androidx.appcompat.widget.SearchView">@drawable/white_cursor</item>
         <!-- Secondary brand color. -->

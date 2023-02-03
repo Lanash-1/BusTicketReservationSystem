@@ -1,5 +1,6 @@
 package com.example.busticketreservationsystem.ui.addbus
 
+import android.app.ActionBar.LayoutParams
 import android.app.AlertDialog
 import android.app.Dialog
 import android.app.TimePickerDialog
@@ -278,7 +279,6 @@ class AddBusFragment : Fragment() {
             openSearchableDialogDestination(list)
         }
 
-
         binding.startTimePicker.setOnClickListener {
             openTimePicker(binding.startTimePicker)
         }
@@ -449,7 +449,7 @@ class AddBusFragment : Fragment() {
         dialog = Dialog(requireContext())
         dialog.setContentView(R.layout.dialog_searchable_spinner)
 
-        dialog.window?.setLayout(800,1000)
+        dialog.window?.setLayout(800, LayoutParams.WRAP_CONTENT)
 
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
@@ -497,7 +497,7 @@ class AddBusFragment : Fragment() {
         dialog = Dialog(requireContext())
         dialog.setContentView(R.layout.dialog_searchable_spinner)
 
-        dialog.window?.setLayout(800,1000)
+        dialog.window?.setLayout(800,LayoutParams.WRAP_CONTENT)
 
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 

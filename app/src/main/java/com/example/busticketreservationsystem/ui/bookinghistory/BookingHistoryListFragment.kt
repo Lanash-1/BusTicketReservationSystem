@@ -68,14 +68,12 @@ class BookingHistoryListFragment : Fragment() {
 
         bookingHistoryListAdapter.setOnItemClickListener(object : OnItemClickListener{
             override fun onItemClick(position: Int) {
-//               bookingViewModel.selectedTicket = position
                 bookingViewModel.selectedTicket = position
                 bookingViewModel.selectedBus = bookingViewModel.bookingHistoryBusList[position]
 
                 parentFragmentManager.commit {
                     setCustomAnimations(R.anim.from_right, R.anim.to_left)
                     replace(R.id.homePageFragmentContainer, BookedTicketFragment())
-//                    addToBackStack(null)
                 }
             }
         })
@@ -87,8 +85,6 @@ class BookingHistoryListFragment : Fragment() {
                 binding.emptyListImage.visibility = View.INVISIBLE
             }
         })
-
-
 
 
         bookingViewModel.tabPosition.observe(viewLifecycleOwner, Observer {
@@ -112,7 +108,6 @@ class BookingHistoryListFragment : Fragment() {
             2 -> {
 //                filterBookingList(BookedTicketStatus.CANCELLED.name)
                 fetchBookingHistoryData(userViewModel.user.userId, BookedTicketStatus.CANCELLED.name)
-
             }
         }
     }
@@ -124,5 +119,4 @@ class BookingHistoryListFragment : Fragment() {
             bookingHistoryListAdapter.setBookedTicketList(bookingViewModel.bookingHistoryBookingList, bookingViewModel.bookingHistoryBusList, bookingViewModel.bookingHistoryPartnerList)
         })
     }
-
     }

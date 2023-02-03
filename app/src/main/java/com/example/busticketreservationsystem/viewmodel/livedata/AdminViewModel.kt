@@ -70,6 +70,44 @@ class AdminViewModel(
     }
 
 
+
+//    Bus list related operations
+
+    var allBuses = MutableLiveData<List<Bus>>()
+
+    var selectedBus: Bus? = null
+
+    fun fetchAllBuses(){
+        viewModelScope.launch(Dispatchers.IO) {
+            var busList = listOf<Bus>()
+            val job = launch {
+                busList = repository.getBusData()
+            }
+            job.join()
+            withContext(Dispatchers.Main){
+                allBuses.value = busList
+            }
+
+        }
+    }
+
+
+    var bookedTicketCount = MutableLiveData<Int>()
+
+    fun fetchBookedTicketCount(partnerId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            var count = 0
+            val job = launch {
+                count = repository.getTicketCount(partnerId)
+            }
+            job.join()
+            withContext(Dispatchers.Main){
+                bookedTicketCount.value = count
+            }
+        }
+    }
+
+
 //    Add bus related operation
 
     var busName = ""
@@ -91,6 +129,7 @@ class AdminViewModel(
 
     lateinit var newBus: Bus
 
+
 //    add partner Related operation
 
     var partner = Partners(0, "", 0, "", "")
@@ -98,10 +137,6 @@ class AdminViewModel(
     var partnerName = ""
     var partnerEmail = ""
     var partnerMobile = ""
-
-
-
-
 
 
 //    Analytics related data

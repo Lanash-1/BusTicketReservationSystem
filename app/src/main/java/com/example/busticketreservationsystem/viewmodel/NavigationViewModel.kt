@@ -7,4 +7,6 @@ class NavigationViewModel: ViewModel() {
 
     var fragment: Fragment? = null
 
+    var previousFragment: Fragment? = null
+
 }

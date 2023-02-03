@@ -87,7 +87,6 @@ class BusResultsFragment : Fragment() {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                     setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.main_fragment_container, HomePageFragment())
-                    parentFragmentManager.popBackStack()
                 }
             }
             R.id.filter -> {
@@ -95,7 +94,6 @@ class BusResultsFragment : Fragment() {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     setCustomAnimations(R.anim.from_right, R.anim.to_left)
                     replace(R.id.homePageFragmentContainer, SortAndFilterFragment())
-                    addToBackStack(null)
                 }
             }
         }
@@ -114,7 +112,6 @@ class BusResultsFragment : Fragment() {
                         setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                         setCustomAnimations(R.anim.from_left, R.anim.to_right)
                         replace(R.id.main_fragment_container, HomePageFragment())
-                        parentFragmentManager.popBackStack()
                     }
                 }
             }
@@ -155,7 +152,6 @@ class BusResultsFragment : Fragment() {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     setCustomAnimations(R.anim.from_right, R.anim.to_left)
                     replace(R.id.homePageFragmentContainer, SelectedBusFragment())
-                    addToBackStack(null)
                 }
             }
         })

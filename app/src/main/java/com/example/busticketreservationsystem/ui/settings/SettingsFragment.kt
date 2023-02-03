@@ -77,7 +77,6 @@ class SettingsFragment : Fragment() {
                 }
             }
         }
-
         return super.onOptionsItemSelected(item)
     }
 

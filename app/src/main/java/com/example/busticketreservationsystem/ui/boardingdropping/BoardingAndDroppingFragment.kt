@@ -66,7 +66,6 @@ class BoardingAndDroppingFragment : Fragment() {
                     setTransition(TRANSIT_FRAGMENT_CLOSE)
                     setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.homePageFragmentContainer, SelectedBusFragment())
-                    parentFragmentManager.popBackStack()
                 }
 
             }
@@ -86,7 +85,6 @@ class BoardingAndDroppingFragment : Fragment() {
                         setTransition(TRANSIT_FRAGMENT_CLOSE)
                         setCustomAnimations(R.anim.from_left, R.anim.to_right)
                         replace(R.id.homePageFragmentContainer, SelectedBusFragment())
-                        parentFragmentManager.popBackStack()
                     }
                 }
             }
@@ -110,7 +108,6 @@ class BoardingAndDroppingFragment : Fragment() {
                     setTransition(TRANSIT_FRAGMENT_OPEN)
                     setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.homePageFragmentContainer, BookingDetailsFragment())
-                    addToBackStack(null)
                 }
 
         }

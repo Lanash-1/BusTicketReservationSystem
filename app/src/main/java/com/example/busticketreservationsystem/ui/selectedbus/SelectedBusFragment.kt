@@ -73,6 +73,7 @@ class SelectedBusFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.selected_bus_menu, menu)
+//        menu.findItem(R.id.info_icon).setVisible(false)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -85,7 +86,6 @@ class SelectedBusFragment : Fragment() {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     setCustomAnimations(R.anim.from_right, R.anim.to_left)
                     replace(R.id.homePageFragmentContainer, BusInfoFragment())
-                    addToBackStack(null)
                 }
             }
         }
@@ -109,7 +109,6 @@ class SelectedBusFragment : Fragment() {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                     setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.homePageFragmentContainer, BusResultsFragment())
-                    parentFragmentManager.popBackStack()
                 }
             }
         }
@@ -141,7 +140,6 @@ class SelectedBusFragment : Fragment() {
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 setCustomAnimations(R.anim.from_right, R.anim.to_left)
                 replace(R.id.homePageFragmentContainer, BoardingAndDroppingFragment())
-                addToBackStack(null)
             }
         }
 
@@ -150,7 +148,6 @@ class SelectedBusFragment : Fragment() {
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 setCustomAnimations(R.anim.from_right, R.anim.to_left)
                 replace(R.id.homePageFragmentContainer, BusInfoFragment())
-                addToBackStack(null)
             }
         }
 

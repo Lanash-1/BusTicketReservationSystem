@@ -163,6 +163,8 @@ class ChatFragment : Fragment() {
                 binding.enterMessageEditText.setText("")
             }
         }
+
+//        chatRecyclerView.scroll
     }
 
 }

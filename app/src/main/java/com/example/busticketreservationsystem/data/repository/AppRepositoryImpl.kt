@@ -53,6 +53,9 @@ class AppRepositoryImpl(
 //    Bus related Data
 
 
+    override fun updateBusCount(partnerId: Int) {
+        appDb.partnersDao().updateBusCount(partnerId)
+    }
     override fun insertPartnerData(partner: Partners){
         appDb.partnersDao().insertPartnerData(partner)
     }
@@ -209,6 +212,10 @@ class AppRepositoryImpl(
 
     override fun getBookedTicketPassengerInfo(bookingId: Int): List<PassengerInformation> {
         return appDb.passengerInformationDao().getPassengerInfo(bookingId)
+    }
+
+    override fun getTicketCount(partnerId: Int): Int {
+        return appDb.bookingsDao().getTicketCount(partnerId)
     }
 
 

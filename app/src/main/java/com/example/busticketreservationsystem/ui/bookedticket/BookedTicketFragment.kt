@@ -100,7 +100,7 @@ class BookedTicketFragment : Fragment() {
         // observe booked ticket data fetched
 
 
-        if(navigationViewModel.fragment is BookingDetailsFragment || navigationViewModel.fragment is BookedTicketFragment){
+        if(navigationViewModel.fragment is BookingDetailsFragment){
             binding.cancelTicketButton.visibility = View.GONE
             setTicketDataToView()
         }else{
@@ -112,6 +112,7 @@ class BookedTicketFragment : Fragment() {
         }
 
         binding.moreInfoButton.setOnClickListener {
+            navigationViewModel.previousFragment = navigationViewModel.fragment
             navigationViewModel.fragment = BookedTicketFragment()
             busViewModel.selectedBus = bookingViewModel.selectedBus
             parentFragmentManager.commit {
@@ -143,8 +144,13 @@ class BookedTicketFragment : Fragment() {
 
 
     private fun backPressLogic() {
-        when(navigationViewModel.fragment){
-            is BookingDetailsFragment -> {
+        parentFragmentManager.commit {
+            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+            setCustomAnimations(R.anim.from_left, R.anim.to_right)
+            replace(R.id.homePageFragmentContainer, BookingHistoryFragment())
+        }
+//        when(navigationViewModel.fragment){
+//            is BookingDetailsFragment -> {
                 busViewModel.apply {
                     selectedSeats.clear()
                 }
@@ -160,23 +166,23 @@ class BookedTicketFragment : Fragment() {
                     this.year = 0
                     this.currentSearch = ""
                 }
-                navigationViewModel.fragment = null
-                parentFragmentManager.commit {
-                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
-                    replace(R.id.main_fragment_container, HomePageFragment())
-                    for(i in 0 until parentFragmentManager.backStackEntryCount){
-                        parentFragmentManager.popBackStack()
-                    }
-                }
-            }
-            else -> {
-                parentFragmentManager.commit {
-                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
-                    replace(R.id.homePageFragmentContainer, BookingHistoryFragment())
-                }
-            }
-        }
+//                navigationViewModel.fragment = null
+//                parentFragmentManager.commit {
+//                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
+//                    replace(R.id.main_fragment_container, HomePageFragment())
+//                    for(i in 0 until parentFragmentManager.backStackEntryCount){
+//                        parentFragmentManager.popBackStack()
+//                    }
+//                }
+//            }
+//            else -> {
+//                parentFragmentManager.commit {
+//                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+//                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
+//                    replace(R.id.homePageFragmentContainer, BookingHistoryFragment())
+//                }
+//            }
+//        }
     }
 
 
