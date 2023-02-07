@@ -1,11 +1,12 @@
 package com.example.busticketreservationsystem.ui.dashboard
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.*
 import android.view.animation.AnimationUtils
-import android.widget.*
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
@@ -14,7 +15,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.busticketreservationsystem.R
-import com.example.busticketreservationsystem.ui.recentlyviewed.RecentlyViewedAdapter
 import com.example.busticketreservationsystem.databinding.FragmentDashBoardBinding
 import com.example.busticketreservationsystem.enums.LocationOptions
 import com.example.busticketreservationsystem.enums.LoginStatus
@@ -22,9 +22,9 @@ import com.example.busticketreservationsystem.listeners.OnItemClickListener
 import com.example.busticketreservationsystem.listeners.OnRemoveClickListener
 import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
+import com.example.busticketreservationsystem.ui.adminservice.AdminServicesFragment
 import com.example.busticketreservationsystem.ui.busresults.BusResultsFragment
 import com.example.busticketreservationsystem.ui.chat.ChatFragment
-import com.example.busticketreservationsystem.ui.recentlyviewed.RecentlyViewedFragment
 import com.example.busticketreservationsystem.ui.locationsearch.SearchFragment
 import com.example.busticketreservationsystem.ui.selectedbus.SelectedBusFragment
 import com.example.busticketreservationsystem.viewmodel.*
@@ -44,6 +44,10 @@ class DashBoardFragment : Fragment() {
     private val locationViewModel: LocationViewModel by activityViewModels()
 
     private lateinit var binding: FragmentDashBoardBinding
+
+    lateinit var editor: SharedPreferences.Editor
+    lateinit var writeSharedPreferences: SharedPreferences
+
 
 
     private var recentlyViewedAdapter = RecentlyViewedAdapter()
@@ -145,6 +149,14 @@ class DashBoardFragment : Fragment() {
         binding.recentlyViewedRecyclerView.adapter = recentlyViewedAdapter
         binding.recentlyViewedRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true){
+                override fun handleOnBackPressed() {
+                    requireActivity().finish()
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
 //        if(loginStatusViewModel.status != LoginStatus.LOGGED_IN){
 //            println("WORKING ")
 //
@@ -154,13 +166,23 @@ class DashBoardFragment : Fragment() {
 //        }
 
         if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
+            (activity as AppCompatActivity).apply {
+                writeSharedPreferences = getSharedPreferences("LoginStatus",
+                    Context.MODE_PRIVATE
+                )
+                editor = writeSharedPreferences.edit()
+            }
+
             println("INSIDE IF")
 
             binding.recentlyViewedRecyclerView.visibility = View.GONE
             binding.recentlyViewedText.visibility = View.GONE
 
-            userViewModel.fetchRecentlyViewedData()
+            userViewModel.fetchUserData(writeSharedPreferences.getInt("userId", 0))
 
+            userViewModel.isUserFetched.observe(viewLifecycleOwner, Observer{
+                userViewModel.fetchRecentlyViewedData()
+            })
 
 
         }else{

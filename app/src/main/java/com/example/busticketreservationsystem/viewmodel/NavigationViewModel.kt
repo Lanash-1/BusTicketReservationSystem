@@ -9,4 +9,6 @@ class NavigationViewModel: ViewModel() {
 
     var previousFragment: Fragment? = null
 
+    var adminNavigation: Fragment? = null
+
 }

@@ -5,6 +5,7 @@ import android.view.*
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -14,6 +15,8 @@ import com.example.busticketreservationsystem.data.entity.Partners
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.databinding.FragmentPartnerDetailsBinding
 import com.example.busticketreservationsystem.ui.addpartner.AddPartnerFragment
+import com.example.busticketreservationsystem.ui.buseslist.BusesListFragment
+import com.example.busticketreservationsystem.viewmodel.NavigationViewModel
 import com.example.busticketreservationsystem.viewmodel.livedata.AdminViewModel
 import com.example.busticketreservationsystem.viewmodel.livedata.BusViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.AdminViewModelFactory
@@ -24,6 +27,7 @@ class PartnerDetailsFragment : Fragment() {
     private lateinit var binding: FragmentPartnerDetailsBinding
 
     private lateinit var adminViewModel: AdminViewModel
+    private val navigationViewModel: NavigationViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,6 +80,7 @@ class PartnerDetailsFragment : Fragment() {
     }
 
     private fun backPressOperation() {
+        navigationViewModel.adminNavigation = null
         parentFragmentManager.commit {
             setCustomAnimations(R.anim.from_left, R.anim.to_right)
             replace(R.id.adminPanelFragmentContainer, PartnerListFragment())
@@ -95,7 +100,6 @@ class PartnerDetailsFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
 
-
         setDataToView(adminViewModel.selectedPartner)
 
         adminViewModel.fetchBookedTicketCount(adminViewModel.selectedPartner.partnerId)
@@ -104,6 +108,13 @@ class PartnerDetailsFragment : Fragment() {
             binding.ticketCountTextView.text = it.toString()
         })
 
+        binding.busOperatedCardView.setOnClickListener {
+            navigationViewModel.adminNavigation = PartnerDetailsFragment()
+            parentFragmentManager.commit {
+                setCustomAnimations(R.anim.from_right, R.anim.to_left)
+                replace(R.id.adminPanelFragmentContainer, BusesListFragment())
+            }
+        }
 
 
     }

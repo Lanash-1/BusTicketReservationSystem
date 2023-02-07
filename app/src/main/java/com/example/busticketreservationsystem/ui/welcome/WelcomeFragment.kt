@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import androidx.viewpager2.widget.ViewPager2
@@ -14,6 +15,7 @@ import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.databinding.FragmentWelcomeBinding
 import com.example.busticketreservationsystem.ui.adminlogin.AdminLoginFragment
 import com.example.busticketreservationsystem.ui.adminpanel.AdminPanelFragment
+import com.example.busticketreservationsystem.ui.adminservice.AdminServicesFragment
 import com.example.busticketreservationsystem.ui.register.RegisterFragment
 
 
@@ -43,6 +45,14 @@ class WelcomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true){
+                override fun handleOnBackPressed() {
+                    requireActivity().finish()
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
         val sliderViewPager = binding.welcomePageViewPager
 

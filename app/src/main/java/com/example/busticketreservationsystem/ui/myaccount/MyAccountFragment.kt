@@ -232,9 +232,8 @@ class MyAccountFragment : Fragment() {
                 }
 
                 userViewModel.recentlyViewedList.value = mutableListOf()
-
-
                 userViewModel.user = User(0,"","","","","","")
+
                 editor.putString("status", LoginStatus.LOGGED_OUT.name)
                 loginStatusViewModel.status = LoginStatus.LOGGED_OUT
                 editor.commit()

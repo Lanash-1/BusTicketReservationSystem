@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.busticketreservationsystem.data.entity.Bus
 import com.example.busticketreservationsystem.data.entity.Partners
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
+import com.example.busticketreservationsystem.ui.buseslist.BusesListFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -87,7 +88,6 @@ class AdminViewModel(
             withContext(Dispatchers.Main){
                 allBuses.value = busList
             }
-
         }
     }
 
@@ -103,6 +103,22 @@ class AdminViewModel(
             job.join()
             withContext(Dispatchers.Main){
                 bookedTicketCount.value = count
+            }
+        }
+    }
+
+
+    var partnerBuses = MutableLiveData<List<Bus>>()
+
+    fun getBusOfPartner(partnerId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            var buses = listOf<Bus>()
+            val job = launch {
+                buses = repository.getBusOfPartner(partnerId)
+            }
+            job.join()
+            withContext(Dispatchers.Main){
+                allBuses.value = buses
             }
         }
     }

@@ -31,4 +31,8 @@ interface BusDao {
     @Query("select * from bus_table where sourceLocation like :source and destination like :destination")
     fun getBusOfRoute(source: String, destination: String): List<Bus>
 
+    @Query("select * from bus_table where partnerId = :partnerId")
+    fun getBusOfPartner(partnerId: Int): List<Bus>
+
+
 }

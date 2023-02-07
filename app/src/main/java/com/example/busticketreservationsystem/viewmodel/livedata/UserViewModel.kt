@@ -19,6 +19,8 @@ class UserViewModel(
 
     lateinit var user: User
 
+    var isUserFetched = MutableLiveData<Boolean>()
+
     var isLoggedIn = MutableLiveData<Boolean>()
 
     fun fetchUserData(userId: Int) {
@@ -30,6 +32,7 @@ class UserViewModel(
             fetchJob.join()
             withContext(Dispatchers.Main){
                 user = userData
+                isUserFetched.value = true
 //                fetchRecentlyViewedData()
             }
         }

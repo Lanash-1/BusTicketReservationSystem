@@ -102,6 +102,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toLeftOf="@id/ticketCount_cardView"
             android:layout_margin="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:selectableItemBackground"
             >
 
             <androidx.constraintlayout.widget.ConstraintLayout

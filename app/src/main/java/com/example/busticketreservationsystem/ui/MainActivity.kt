@@ -56,6 +56,8 @@ class MainActivity : AppCompatActivity() {
         bookingViewModel = ViewModelProvider(this, bookingViewModelFactory)[BookingViewModel::class.java]
 
 
+        println("App THEME OPeration")
+
 //      Theme preference start
 
         appThemeOperations()
@@ -126,6 +128,7 @@ class MainActivity : AppCompatActivity() {
         if(savedInstanceState == null) {
             when (writeSharedPreferences.getString("status", "")) {
                 "" -> {
+                    println("EMPTY")
                     editor.putString("status", LoginStatus.NEW.name)
                     loginStatusViewModel.status = LoginStatus.NEW
                     editor.apply()
@@ -138,6 +141,8 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 LoginStatus.SKIPPED.name -> {
+                    println("SKIPPED")
+
                     loginStatusViewModel.status = LoginStatus.SKIPPED
                     supportFragmentManager.commit {
                         setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
@@ -145,10 +150,12 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 LoginStatus.LOGGED_IN.name -> {
+                    println("LOG IN")
+
                     loginStatusViewModel.status = LoginStatus.LOGGED_IN
 
 //                    fetch data of user already logged in
-                    userViewModel.fetchUserData(writeSharedPreferences.getInt("userId", 0))
+//                    userViewModel.fetchUserData(writeSharedPreferences.getInt("userId", 0))
                     updateBookingHistory(writeSharedPreferences.getInt("userId", 0))
 
                     supportFragmentManager.commit {
@@ -157,6 +164,8 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 LoginStatus.NEW.name -> {
+                    println("NEW ")
+
                     loginStatusViewModel.status = LoginStatus.NEW
                     supportFragmentManager.commit {
                         setCustomAnimations(R.anim.from_right, R.anim.to_left)
@@ -164,6 +173,8 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 LoginStatus.LOGGED_OUT.name -> {
+                    println("LOG OUT")
+
                     loginStatusViewModel.status = LoginStatus.LOGGED_OUT
                     supportFragmentManager.commit {
                         setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
@@ -171,11 +182,16 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 LoginStatus.ADMIN_LOGGED_IN.name -> {
+                    println("ADMIN LOG IN")
+
                     loginStatusViewModel.status = LoginStatus.ADMIN_LOGGED_IN
                     supportFragmentManager.commit {
                         setCustomAnimations(R.anim.from_right, R.anim.to_left)
                         replace(R.id.main_fragment_container, AdminPanelFragment())
                     }
+                }
+                else -> {
+                    println("ELSE NOT OPENING")
                 }
             }
         }

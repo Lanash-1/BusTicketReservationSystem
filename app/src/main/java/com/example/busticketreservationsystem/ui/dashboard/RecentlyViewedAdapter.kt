@@ -1,4 +1,4 @@
-package com.example.busticketreservationsystem.ui.recentlyviewed
+package com.example.busticketreservationsystem.ui.dashboard
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

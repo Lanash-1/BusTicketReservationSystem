@@ -40,7 +40,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
 
-
 class AddBusFragment : Fragment() {
 
     private lateinit var binding: FragmentAddBusBinding
@@ -187,7 +186,6 @@ class AddBusFragment : Fragment() {
                     replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
                 }
             }
-
         }
 
 
@@ -218,13 +216,13 @@ class AddBusFragment : Fragment() {
 
             openSearchableDialogSource(list)
 
-            selectedSourceLocation.observe(viewLifecycleOwner, Observer{
-                if(locationViewModel.states.contains(selectedSourceLocation.value)){
+            selectedSourceLocation.observe(viewLifecycleOwner) {
+                if (locationViewModel.states.contains(selectedSourceLocation.value)) {
                     locationViewModel.selectedSourceState.value = selectedSourceLocation.value
-                }else{
+                } else {
                     locationViewModel.selectedSourceCity.value = selectedSourceLocation.value
                 }
-            })
+            }
         }
 
         locationViewModel.selectedSourceCity.observe(viewLifecycleOwner, Observer{

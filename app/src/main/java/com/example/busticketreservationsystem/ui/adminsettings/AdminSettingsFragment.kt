@@ -59,7 +59,7 @@ class AdminSettingsFragment : Fragment() {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true){
                 override fun handleOnBackPressed() {
-                    requireActivity().findViewById<BottomNavigationView>(R.id.admin_bottomNavigationView).selectedItemId = R.id.services
+                    println("BACK PRESS CALLING...")
                     parentFragmentManager.commit {
                         setCustomAnimations(R.anim.from_left, R.anim.to_right)
                         replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())

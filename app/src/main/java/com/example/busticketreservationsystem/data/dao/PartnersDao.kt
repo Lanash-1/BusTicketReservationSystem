@@ -21,16 +21,10 @@ interface PartnersDao {
     @Query("select * from partners_table where partnerId like :partnerId")
     fun getPartnerDetails(partnerId: Int): Partners
 
-
     @Query("update partners_table set partnerName=:partnerName, partnerEmailId=:partnerEmailId, partnerMobile=:partnerMobile where partnerId like :partnerId")
-    fun updatePartnerDetails(
-        partnerId: Int,
-        partnerName: String,
-        partnerEmailId: String,
-        partnerMobile: String
-    )
+    fun updatePartnerDetails(partnerId: Int, partnerName: String, partnerEmailId: String, partnerMobile: String)
 
-    @Query("update partners_table set noOfBusesOperated =+ 1 where partnerId = :partnerId")
+    @Query("update partners_table set noOfBusesOperated = noOfBusesOperated + 1 where partnerId = :partnerId")
     fun updateBusCount(partnerId: Int)
 
 

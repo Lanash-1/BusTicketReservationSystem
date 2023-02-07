@@ -123,5 +123,6 @@ interface AppRepository {
     fun getUserListFromChat(): List<Int>
     fun updatePartnerDetails(partner: Partners)
     fun updateBusCount(partnerId: Int)
+    fun getBusOfPartner(partnerId: Int): List<Bus>
 
 }

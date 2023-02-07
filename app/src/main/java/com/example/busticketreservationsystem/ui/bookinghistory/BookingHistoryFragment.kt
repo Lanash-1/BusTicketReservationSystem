@@ -139,7 +139,6 @@ class BookingHistoryFragment : Fragment() {
         viewPager.isSaveEnabled = false
 
 
-
         TabLayoutMediator(tabLayout, viewPager){tab, position ->
             when(position){
                 0 -> {

@@ -84,6 +84,10 @@ class AppRepositoryImpl(
         return appDb.busDao().getBus(busId)
     }
 
+    override fun getBusOfPartner(partnerId: Int): List<Bus> {
+        return appDb.busDao().getBusOfPartner(partnerId)
+    }
+
     override fun getPartnerData(): List<Partners>{
         return appDb.partnersDao().getPartnersData()
     }
