@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:src="@drawable/no_tickets"
-        android:visibility="invisible"
+        android:visibility="gone"
         />
 
 

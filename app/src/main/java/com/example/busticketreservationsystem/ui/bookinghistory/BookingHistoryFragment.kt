@@ -1,6 +1,5 @@
 package com.example.busticketreservationsystem.ui.bookinghistory
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.example.busticketreservationsystem.R
@@ -18,7 +18,6 @@ import com.example.busticketreservationsystem.databinding.FragmentBookingHistory
 import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
-import com.example.busticketreservationsystem.ui.dashboard.DashBoardFragment
 import com.example.busticketreservationsystem.ui.homepage.HomePageFragment
 import com.example.busticketreservationsystem.ui.login.LoginFragment
 import com.example.busticketreservationsystem.ui.myaccount.MyAccountFragment
@@ -26,6 +25,8 @@ import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
 import com.example.busticketreservationsystem.viewmodel.NavigationViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BookingViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.livedata.BookingViewModel
+import com.example.busticketreservationsystem.viewmodel.livedata.UserViewModel
+import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -34,11 +35,13 @@ class BookingHistoryFragment : Fragment() {
     private lateinit var binding: FragmentBookingHistoryBinding
 
 
+
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
     private val navigationViewModel: NavigationViewModel by activityViewModels()
 
 
     private lateinit var bookingViewModel: BookingViewModel
+    private lateinit var userViewModel: UserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +52,9 @@ class BookingHistoryFragment : Fragment() {
 
         val bookingViewModelFactory = BookingViewModelFactory(repository)
         bookingViewModel = ViewModelProvider(requireActivity(), bookingViewModelFactory)[BookingViewModel::class.java]
+
+        val userViewModelFactory = UserViewModelFactory(repository)
+        userViewModel = ViewModelProvider(requireActivity(), userViewModelFactory)[UserViewModel::class.java]
 
     }
 
@@ -68,7 +74,18 @@ class BookingHistoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val adapter = BookingHistoryViewPagerAdapter(parentFragmentManager, lifecycle)
+
+
         if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
+
+            bookingViewModel.fetchBookingOfUser(userViewModel.user.userId)
+
+            bookingViewModel.bookingDataFetched.observe(viewLifecycleOwner, Observer{
+                adapter.setBookingData(bookingViewModel.bookingHistoryBookingList, bookingViewModel.bookingHistoryBusList, bookingViewModel.bookingHistoryPartnerList)
+                adapter.notifyDataSetChanged()
+            })
+
             binding.loginOrRegisterButton.visibility = View.GONE
             binding.bookingHistoryTabLayout.visibility = View.VISIBLE
             binding.bookingHistoryViewPager.visibility = View.VISIBLE
@@ -123,20 +140,10 @@ class BookingHistoryFragment : Fragment() {
         val tabLayout = binding.bookingHistoryTabLayout
         val viewPager = binding.bookingHistoryViewPager
 
-
-        viewPager.registerOnPageChangeCallback(
-            object : ViewPager2.OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) {
-                    bookingViewModel.tabPosition.value = position
-                    super.onPageSelected(position)
-                }
-            }
-        )
-
-        val adapter = BookingHistoryViewPagerAdapter(parentFragmentManager, lifecycle)
-
         viewPager.adapter = adapter
         viewPager.isSaveEnabled = false
+//        viewPager.offscreenPageLimit = 0
+
 
 
         TabLayoutMediator(tabLayout, viewPager){tab, position ->

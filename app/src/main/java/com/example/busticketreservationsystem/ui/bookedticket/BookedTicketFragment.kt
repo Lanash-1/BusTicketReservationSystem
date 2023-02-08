@@ -108,7 +108,7 @@ class BookedTicketFragment : Fragment() {
         }
 
         binding.cancelTicketButton.setOnClickListener {
-            cancelTicketAction(bookingViewModel.bookingHistoryBookingList[bookingViewModel.selectedTicket].bookingId)
+            cancelTicketAction(bookingViewModel.filteredBookingList[bookingViewModel.selectedTicket].bookingId)
         }
 
         binding.moreInfoButton.setOnClickListener {
@@ -126,7 +126,7 @@ class BookedTicketFragment : Fragment() {
 
     private fun selectedTicketOperations() {
         // cancel button visibility logic
-        if(bookingViewModel.bookingHistoryBookingList[bookingViewModel.selectedTicket].bookedTicketStatus == BookedTicketStatus.UPCOMING.name){
+        if(bookingViewModel.filteredBookingList[bookingViewModel.selectedTicket].bookedTicketStatus == BookedTicketStatus.UPCOMING.name){
             binding.cancelTicketButton.visibility = View.VISIBLE
         }else{
             binding.cancelTicketButton.visibility = View.GONE
@@ -134,7 +134,7 @@ class BookedTicketFragment : Fragment() {
 
 
         // fetch booked ticket data
-        bookingViewModel.fetchBookedTicketDetails(bookingViewModel.bookingHistoryBookingList[bookingViewModel.selectedTicket].bookingId)
+        bookingViewModel.fetchBookedTicketDetails(bookingViewModel.filteredBookingList[bookingViewModel.selectedTicket].bookingId)
 
         bookingViewModel.bookedTicketDataFetched.observe(viewLifecycleOwner, Observer{
             setTicketDataToView()

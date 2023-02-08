@@ -7,6 +7,7 @@ import com.example.busticketreservationsystem.data.entity.Bus
 import com.example.busticketreservationsystem.data.entity.RecentlyViewed
 import com.example.busticketreservationsystem.data.entity.User
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
+import com.example.busticketreservationsystem.utils.Helper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -14,6 +15,8 @@ import kotlinx.coroutines.withContext
 class UserViewModel(
     private val repository: AppRepositoryImpl
 ): ViewModel() {
+
+    private val helper = Helper()
 
 //    User Details Related
 
@@ -68,19 +71,27 @@ class UserViewModel(
             var recentlyViewed = listOf<RecentlyViewed>()
             val recentlyViewedBus = mutableListOf<Bus>()
             val recentlyViewedPartner = mutableListOf<String>()
+            val filteredRecentlyViewed = mutableListOf<RecentlyViewed>()
             val fetchJob = launch {
                 recentlyViewed = repository.getRecentlyViewed(user.userId).reversed()
                 for(i in recentlyViewed.indices){
-                    recentlyViewedBus.add(repository.getBus(recentlyViewed[i].busId))
-                    recentlyViewedPartner.add(repository.getPartnerName(recentlyViewedBus[i].partnerId))
+                    if(helper.compareToCurrentDate(recentlyViewed[i].date)){
+                        println("Older DATE")
+
+                    }else{
+                        recentlyViewedBus.add(repository.getBus(recentlyViewed[i].busId))
+                        recentlyViewedPartner.add(repository.getPartnerName(recentlyViewedBus[i].partnerId))
+                        filteredRecentlyViewed.add(recentlyViewed[i])
+                    }
+
                 }
             }
             fetchJob.join()
             withContext(Dispatchers.Main){
                 recentlyViewedBusList = recentlyViewedBus
                 recentlyViewedPartnerList = recentlyViewedPartner
-                if(recentlyViewed.isNotEmpty()){
-                    recentlyViewedList.value = recentlyViewed as MutableList<RecentlyViewed>
+                if(filteredRecentlyViewed.isNotEmpty()){
+                    recentlyViewedList.value = filteredRecentlyViewed
                 }
             }
         }

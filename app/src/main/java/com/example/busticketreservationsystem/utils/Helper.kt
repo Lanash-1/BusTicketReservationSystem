@@ -1,6 +1,7 @@
 package com.example.busticketreservationsystem.utils
 
 import android.util.Patterns
+import com.example.busticketreservationsystem.enums.BookedTicketStatus
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -84,5 +85,17 @@ open class Helper {
 //
 //    }
 
+
+    fun compareToCurrentDate(date: String): Boolean{
+        val sdf = SimpleDateFormat("dd/MM/yyyy")
+        val time = Calendar.getInstance().time
+        val current = sdf.format(time)
+        val currentDate = sdf.parse(current)
+        val strDate: Date = sdf.parse(date)
+        if(currentDate.compareTo(strDate) > 0){
+            return true
+        }
+        return false
+    }
 
 }

@@ -23,6 +23,11 @@ class BookingViewModel(
     var bookingHistoryBookingList = listOf<Bookings>()
     var bookingHistoryPartnerList = listOf<String>()
 
+
+    var filteredBookingList = listOf<Bookings>()
+    var filteredBusList = listOf<Bus>()
+    var filteredPartnerList = listOf<String>()
+
     var bookingDataFetched = MutableLiveData<Boolean>()
 
 
@@ -33,6 +38,31 @@ class BookingViewModel(
             val partnerName = mutableListOf<String>()
             val fetchJob = launch {
                 bookings = repository.getUserBookings(userId, ticketStatus)
+                for(i in bookings){
+                    busList.add(repository.getBus(i.busId))
+                }
+                for(i in busList){
+                    partnerName.add(repository.getPartnerName(i.partnerId))
+                }
+            }
+            fetchJob.join()
+            withContext(Dispatchers.Main){
+                bookingHistoryBookingList = bookings
+                bookingHistoryBusList = busList
+                bookingHistoryPartnerList = partnerName
+
+                bookingDataFetched.value = true
+            }
+        }
+    }
+
+    fun fetchBookingOfUser(userId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val busList = mutableListOf<Bus>()
+            var bookings = listOf<Bookings>()
+            val partnerName = mutableListOf<String>()
+            val fetchJob = launch {
+                bookings = repository.getUserBookings(userId)
                 for(i in bookings){
                     busList.add(repository.getBus(i.busId))
                 }
