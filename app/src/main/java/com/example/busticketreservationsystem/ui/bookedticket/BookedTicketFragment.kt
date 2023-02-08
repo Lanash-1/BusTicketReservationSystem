@@ -40,6 +40,7 @@ class BookedTicketFragment : Fragment() {
 
     private val navigationViewModel: NavigationViewModel by activityViewModels()
     private val searchViewModel: SearchViewModel by activityViewModels()
+    private val dateViewModel: DateViewModel by activityViewModels()
 
 
     private lateinit var bookingViewModel: BookingViewModel
@@ -123,7 +124,6 @@ class BookedTicketFragment : Fragment() {
     }
 
 
-
     private fun selectedTicketOperations() {
         // cancel button visibility logic
         if(bookingViewModel.filteredBookingList[bookingViewModel.selectedTicket].bookedTicketStatus == BookedTicketStatus.UPCOMING.name){
@@ -142,10 +142,9 @@ class BookedTicketFragment : Fragment() {
 
     }
 
-
     private fun backPressLogic() {
         parentFragmentManager.commit {
-            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+//            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
             setCustomAnimations(R.anim.from_left, R.anim.to_right)
             replace(R.id.homePageFragmentContainer, BookingHistoryFragment())
         }
@@ -166,23 +165,9 @@ class BookedTicketFragment : Fragment() {
                     this.year = 0
                     this.currentSearch = ""
                 }
-//                navigationViewModel.fragment = null
-//                parentFragmentManager.commit {
-//                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
-//                    replace(R.id.main_fragment_container, HomePageFragment())
-//                    for(i in 0 until parentFragmentManager.backStackEntryCount){
-//                        parentFragmentManager.popBackStack()
-//                    }
-//                }
-//            }
-//            else -> {
-//                parentFragmentManager.commit {
-//                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-//                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
-//                    replace(R.id.homePageFragmentContainer, BookingHistoryFragment())
-//                }
-//            }
-//        }
+                dateViewModel.travelYear = 0
+                navigationViewModel.fragment = null
+
     }
 
 

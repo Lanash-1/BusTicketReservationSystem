@@ -77,7 +77,6 @@ class UserViewModel(
                 for(i in recentlyViewed.indices){
                     if(helper.compareToCurrentDate(recentlyViewed[i].date)){
                         println("Older DATE")
-
                     }else{
                         recentlyViewedBus.add(repository.getBus(recentlyViewed[i].busId))
                         recentlyViewedPartner.add(repository.getPartnerName(recentlyViewedBus[i].partnerId))

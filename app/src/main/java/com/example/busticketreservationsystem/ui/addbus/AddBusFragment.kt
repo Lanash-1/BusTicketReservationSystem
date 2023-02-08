@@ -131,6 +131,8 @@ class AddBusFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.addBusLayout.transitionName = "service_transition1"
+
         requireActivity().findViewById<BottomNavigationView>(R.id.admin_bottomNavigationView)?.visibility = View.GONE
 
         val callback: OnBackPressedCallback =
@@ -145,7 +147,6 @@ class AddBusFragment : Fragment() {
         for(partner in busViewModel.partners){
             partnerList.add(partner.partnerName)
         }
-
 
         binding.addBusButton.setOnClickListener {
 

@@ -36,4 +36,7 @@ interface UserDao {
     @Query("select count(*) from user_table")
     fun getUserCount(): Int
 
+    @Query("select * from user_table")
+    fun getAllUsers(): List<User>
+
 }

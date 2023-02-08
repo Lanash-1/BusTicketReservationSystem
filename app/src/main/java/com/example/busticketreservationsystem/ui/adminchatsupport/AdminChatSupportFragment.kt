@@ -48,7 +48,6 @@ class AdminChatSupportFragment : Fragment() {
         val adminViewModelFactory = AdminViewModelFactory(repository)
         adminViewModel = ViewModelProvider(requireActivity(), adminViewModelFactory)[AdminViewModel::class.java]
 
-
     }
 
     override fun onCreateView(
@@ -59,7 +58,6 @@ class AdminChatSupportFragment : Fragment() {
             title = "Chat Box"
             setDisplayHomeAsUpEnabled(false)
         }
-        // Inflate the layout for this fragment
         binding = FragmentAdminChatSupportBinding.inflate(inflater, container, false)
         return binding.root
     }

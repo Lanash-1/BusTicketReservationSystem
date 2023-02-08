@@ -142,12 +142,8 @@ class BusInfoFragment : Fragment() {
         when(navigationViewModel.fragment){
             is BusesListFragment -> {
                 busViewModel.selectedBus = adminViewModel.selectedBus!!
-//                busViewModel.fetchBusAmenities(adminViewModel.selectedBus!!.busId)
-//                busViewModel.fetchBusReviewData(adminViewModel.selectedBus!!.busId, adminViewModel.selectedBus!!)
             }
             else -> {
-//                busViewModel.fetchBusAmenities(busViewModel.selectedBus.busId)
-//                busViewModel.fetchBusReviewData(busViewModel.selectedBus.busId, busViewModel.selectedBus)
             }
         }
 
@@ -245,6 +241,10 @@ class BusInfoFragment : Fragment() {
                 .setPositiveButton("Submit"){
                         _, _ ->
                     run {
+//                        val ratingBar = dialogView.findViewById<RatingBar>(R.id.ratingBar)
+//                        ratingBar.setRating(busViewModel.userReview!!.rating.toFloat());
+//                        val feedBackField = dialogView.findViewById<TextInputEditText>(R.id.review_input)
+//                        feedBackField.setText(busViewModel.userReview!!.feedback)
                         val feedback: String = dialogView.findViewById<TextInputEditText>(R.id.review_input).text.toString()
                         val rating: Int = dialogView.findViewById<RatingBar>(R.id.ratingBar).rating.toString().toDouble().toInt()
                         if(rating > 0){

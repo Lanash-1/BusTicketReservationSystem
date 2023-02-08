@@ -63,6 +63,7 @@
                app:layout_constraintTop_toTopOf="@id/sourceIcon"
                android:layout_marginLeft="16dp"
                style="@style/TextDefault"
+               android:textColor="#808080"
                />
 
                <ImageView
@@ -120,6 +121,7 @@
                app:layout_constraintTop_toTopOf="@id/destinationIcon"
                android:layout_marginLeft="16dp"
                style="@style/TextDefault"
+               android:textColor="#808080"
                />
 
             <ImageView
@@ -176,6 +178,7 @@
                app:layout_constraintTop_toTopOf="@id/calenderIcon"
                android:layout_marginLeft="16dp"
                style="@style/TextDefault"
+               android:textColor="#808080"
                />
 
             <ImageView

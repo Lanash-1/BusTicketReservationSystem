@@ -82,7 +82,6 @@ class BookingViewModel(
     }
 
     fun updateBookingHistoryList(userId: Int, currentDate: Date) {
-//        fetchBookingHistory(userId, BookedTicketStatus.UPCOMING.name)
         viewModelScope.launch(Dispatchers.IO) {
             var bookingsList = listOf<Bookings>()
 //            val job = launch {

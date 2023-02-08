@@ -11,7 +11,8 @@
     app:cardCornerRadius="10dp"
     android:clickable="true"
     android:focusable="true"
-    android:foreground="@android:color/transparent"
+    android:foreground="?android:selectableItemBackground"
+    android:transitionName="service_transition"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,12 +1,18 @@
 package com.example.busticketreservationsystem.ui.adminservice
 
+import android.graphics.Interpolator
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.commit
+import androidx.interpolator.view.animation.FastOutLinearInInterpolator
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.busticketreservationsystem.R
@@ -24,6 +30,8 @@ import com.example.busticketreservationsystem.viewmodel.livedata.BusViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.AdminViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.transition.Hold
+import com.google.android.material.transition.MaterialContainerTransform
 
 
 class AdminServicesFragment : Fragment() {
@@ -39,6 +47,7 @@ class AdminServicesFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
 
         val database = AppDatabase.getDatabase(requireActivity().applicationContext)
         val repository = AppRepositoryImpl(database)
@@ -69,12 +78,6 @@ class AdminServicesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         requireActivity().findViewById<BottomNavigationView>(R.id.admin_bottomNavigationView)?.visibility = View.VISIBLE
-//        requireActivity().findViewById<BottomNavigationView>(R.id.admin_bottomNavigationView).selectedItemId = R.id.services
-
-//        requireActivity().findViewById<BottomNavigationView>(R.id.admin_bottomNavigationView)?.apply {
-//            visibility = View.VISIBLE
-//            selectedItemId = R.id.services
-//        }
 
         val adminServicesRecyclerView = binding.adminServicesRecyclerView
         adminServicesRecyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
@@ -82,30 +85,46 @@ class AdminServicesFragment : Fragment() {
 
         busViewModel.fetchPartners()
 
+
         adminServiceAdapter.setOnItemClickListener(object : OnItemClickListener{
             override fun onItemClick(position: Int) {
                 when(AdminServices.values()[position]){
                     AdminServices.ADD_BUS -> {
+                        val fragment = AddBusFragment()
                         parentFragmentManager.commit {
-                            setCustomAnimations(R.anim.from_right, R.anim.to_left)
-                            replace(R.id.adminPanelFragmentContainer, AddBusFragment())
+//                            setCustomAnimations(R.anim.from_right, R.anim.to_left)
+                            val item = adminServicesRecyclerView.findViewHolderForAdapterPosition(position)?.itemView
+                            item!!.transitionName = "service_transition${position}"
+                            addSharedElement(item, "service_transition${position}")
+                            fragment.sharedElementEnterTransition = MaterialContainerTransform()
+
+                            item.findViewById<TextView>(R.id.serviceTitle_textView).visibility = View.GONE
+                            item.findViewById<ImageView>(R.id.service_icon).visibility = View.GONE
+
+                            replace(R.id.adminPanelFragmentContainer, fragment)
+
                         }
                     }
                     AdminServices.ADD_PARTNER -> {
                         adminViewModel.selectedPartner = Partners(0, "", 0, "", "")
+                        val fragment = AddPartnerFragment()
                         parentFragmentManager.commit {
-                            setCustomAnimations(R.anim.from_right, R.anim.to_left)
-                            replace(R.id.adminPanelFragmentContainer, AddPartnerFragment())
+//                            setCustomAnimations(R.anim.from_right, R.anim.to_left)
+                            println("POSITION  =  $position")
+                            val item = adminServicesRecyclerView.findViewHolderForAdapterPosition(position)?.itemView
+                            item!!.transitionName = "service_transition${position}"
+                            addSharedElement(item, "service_transition${position}")
+                            fragment.sharedElementEnterTransition = MaterialContainerTransform()
+                            item.findViewById<TextView>(R.id.serviceTitle_textView).visibility = View.GONE
+                            item.findViewById<ImageView>(R.id.service_icon).visibility = View.GONE
+
+                            replace(R.id.adminPanelFragmentContainer, fragment)
+
                         }
                     }
                 }
             }
 
         })
-
-
-
-
-
     }
 }

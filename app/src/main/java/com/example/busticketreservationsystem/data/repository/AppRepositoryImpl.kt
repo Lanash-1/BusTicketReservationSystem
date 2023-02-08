@@ -13,6 +13,10 @@ class AppRepositoryImpl(
         appDb.userDao().insert(user)
     }
 
+    override fun getAllUsers(): List<User> {
+        return appDb.userDao().getAllUsers()
+    }
+
     override fun getUserCount(): Int {
         return appDb.userDao().getUserCount()
     }

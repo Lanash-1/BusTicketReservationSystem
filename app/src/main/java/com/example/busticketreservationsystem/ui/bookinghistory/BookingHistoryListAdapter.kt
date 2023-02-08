@@ -39,7 +39,6 @@ class BookingHistoryListAdapter: RecyclerView.Adapter<BookingHistoryListAdapter.
             }
         }
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookingHistoryListViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemBookedTicketBinding.inflate(inflater, parent, false)

@@ -34,8 +34,6 @@ class BookingHistoryFragment : Fragment() {
 
     private lateinit var binding: FragmentBookingHistoryBinding
 
-
-
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
     private val navigationViewModel: NavigationViewModel by activityViewModels()
 
@@ -76,19 +74,40 @@ class BookingHistoryFragment : Fragment() {
 
         val adapter = BookingHistoryViewPagerAdapter(parentFragmentManager, lifecycle)
 
+        val tabLayout = binding.bookingHistoryTabLayout
+        val viewPager = binding.bookingHistoryViewPager
+
+        viewPager.isSaveEnabled = false
 
         if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
-
-            bookingViewModel.fetchBookingOfUser(userViewModel.user.userId)
-
-            bookingViewModel.bookingDataFetched.observe(viewLifecycleOwner, Observer{
-                adapter.setBookingData(bookingViewModel.bookingHistoryBookingList, bookingViewModel.bookingHistoryBusList, bookingViewModel.bookingHistoryPartnerList)
-                adapter.notifyDataSetChanged()
-            })
 
             binding.loginOrRegisterButton.visibility = View.GONE
             binding.bookingHistoryTabLayout.visibility = View.VISIBLE
             binding.bookingHistoryViewPager.visibility = View.VISIBLE
+
+            bookingViewModel.fetchBookingOfUser(userViewModel.user.userId)
+
+            bookingViewModel.bookingDataFetched.observe(viewLifecycleOwner, Observer{
+                println("ON PARENT TICKET = ${bookingViewModel.bookingHistoryBookingList.size}")
+                adapter.setBookingData(bookingViewModel.bookingHistoryBookingList, bookingViewModel.bookingHistoryBusList, bookingViewModel.bookingHistoryPartnerList)
+                viewPager.adapter = adapter
+
+                TabLayoutMediator(tabLayout, viewPager){tab, position ->
+                    when(position){
+                        0 -> {
+                            tab.text = "Upcoming"
+                        }
+                        1 -> {
+                            tab.text = "Completed"
+                        }
+                        2 -> {
+                            tab.text = "Cancelled"
+                        }
+                    }
+                }.attach()
+            })
+
+
         }else{
             binding.loginOrRegisterButton.visibility = View.VISIBLE
             binding.bookingHistoryTabLayout.visibility = View.GONE
@@ -104,8 +123,8 @@ class BookingHistoryFragment : Fragment() {
         }
 
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.apply {
-            selectedItemId = R.id.bookingHistory
             visibility = View.VISIBLE
+            selectedItemId = R.id.bookingHistory
         }
 
         val callback: OnBackPressedCallback =
@@ -137,28 +156,11 @@ class BookingHistoryFragment : Fragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
-        val tabLayout = binding.bookingHistoryTabLayout
-        val viewPager = binding.bookingHistoryViewPager
-
-        viewPager.adapter = adapter
-        viewPager.isSaveEnabled = false
-//        viewPager.offscreenPageLimit = 0
 
 
 
-        TabLayoutMediator(tabLayout, viewPager){tab, position ->
-            when(position){
-                0 -> {
-                    tab.text = "Upcoming"
-                }
-                1 -> {
-                    tab.text = "Completed"
-                }
-                2 -> {
-                    tab.text = "Cancelled"
-                }
-            }
-        }.attach()
+
+
     }
 
 }

@@ -4,7 +4,7 @@
     android:id="@+id/account_items_layout"
     android:focusable="true"
     android:clickable="true"
-    android:background="?android:selectableItemBackground"
+    android:foreground="?android:selectableItemBackground"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     >

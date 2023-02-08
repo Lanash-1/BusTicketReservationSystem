@@ -6,6 +6,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.adminsettings.AdminSettingsFragment"
     android:id="@+id/logout_layout"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:selectableItemBackground"
     >
 
     <ImageView

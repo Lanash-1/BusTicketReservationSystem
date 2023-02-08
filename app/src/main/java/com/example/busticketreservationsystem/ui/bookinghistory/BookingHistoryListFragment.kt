@@ -48,9 +48,6 @@ class BookingHistoryListFragment(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        println("FRAGMENT ON CREATE")
-
-//        println("CURRENT PAGE NO = ${requireActivity().findViewById<TabLayout>(R.id.booking_history_tabLayout).selectedTabPosition}")
 
         val database = AppDatabase.getDatabase(requireActivity().applicationContext)
         val repository = AppRepositoryImpl(database)
@@ -61,7 +58,6 @@ class BookingHistoryListFragment(
         val userViewModelFactory =  UserViewModelFactory(repository)
         userViewModel = ViewModelProvider(requireActivity(), userViewModelFactory)[UserViewModel::class.java]
 
-
     }
 
     override fun onCreateView(
@@ -69,12 +65,9 @@ class BookingHistoryListFragment(
         savedInstanceState: Bundle?
     ): View {
 
-
-
         // Inflate the layout for this fragment
         binding = FragmentBookingHistoryListBinding.inflate(inflater, container, false)
         currentPosition = requireArguments().getInt("object", -1)
-
 
         return binding.root
 
@@ -84,10 +77,14 @@ class BookingHistoryListFragment(
         super.onViewCreated(view, savedInstanceState)
         currentPosition = requireArguments().getInt("object", -1)
 
+        println("TICKETS  = ${tickets.size}")
+
+
 
         requireActivity().findViewById<ViewPager2>(R.id.booking_history_viewPager).registerOnPageChangeCallback(
             object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
+                    println("ON PAGE SELECTED IS CALLED , PAGE SELECTED = ${position}")
                     val filteredTickets = mutableListOf<Bookings>()
                     val filteredBuses = mutableListOf<Bus>()
                     val filteredPartner = mutableListOf<String>()
@@ -133,12 +130,6 @@ class BookingHistoryListFragment(
         binding.bookingHistoryRecyclerView.adapter = bookingHistoryListAdapter
         binding.bookingHistoryRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-//        bookingViewModel.apply {
-//            filteredBookingList = tickets
-//            filteredBusList = buses
-//            filteredPartnerList = partnerName
-//        }
-
 
         if(tickets.isEmpty()){
             binding.emptyListImage.visibility = View.VISIBLE
@@ -154,6 +145,7 @@ class BookingHistoryListFragment(
             override fun onItemClick(position: Int) {
 
                 bookingViewModel.selectedTicket = position
+                println("FILTERED BUS SIZE = ${bookingViewModel.filteredBusList.size} - SELECTED POSITION  = $position")
                 bookingViewModel.selectedBus = bookingViewModel.filteredBusList[position]
 
                 parentFragmentManager.commit {
@@ -163,72 +155,5 @@ class BookingHistoryListFragment(
             }
         })
 
-
-//        bookingViewModel.bookingDataFetched.observe(viewLifecycleOwner, Observer{
-//            println("FEtching booking data")
-//            if(bookingViewModel.bookingHistoryBookingList.isEmpty()){
-//                binding.emptyListImage.visibility = View.VISIBLE
-//            }else{
-//                binding.emptyListImage.visibility = View.INVISIBLE
-//            }
-//        })
-
-//        bookingViewModel.tabPosition.observe(viewLifecycleOwner, Observer {
-//            filterBooking(bookingViewModel.tabPosition.value!!)
-//        })
-
-//        filterBooking(currentPosition)
-
-//        requireActivity().findViewById<ViewPager2>(R.id.booking_history_viewPager).registerOnPageChangeCallback(
-//            object : ViewPager2.OnPageChangeCallback() {
-//
-////                override fun onPageScrollStateChanged(state: Int) {
-////                    bookingHistoryListAdapter.setBookedTicketList(listOf(), listOf(), listOf())
-////                    bookingHistoryListAdapter.notifyDataSetChanged()
-////                    super.onPageScrollStateChanged(state)
-////                }
-//
-//                override fun onPageSelected(position: Int) {
-//                    filterBooking(position)
-//                    super.onPageSelected(position)
-//                }
-//            }
-//        )
-
     }
-
-    private fun filterBooking(tabPosition: Int) {
-        when (tabPosition) {
-            0 -> {
-//                filterBookingList(BookedTicketStatus.UPCOMING.name)
-                fetchBookingHistoryData(userViewModel.user.userId, BookedTicketStatus.UPCOMING.name)
-            }
-            1 -> {
-//                filterBookingList(BookedTicketStatus.COMPLETED.name)
-                fetchBookingHistoryData(userViewModel.user.userId, BookedTicketStatus.COMPLETED.name)
-            }
-            2 -> {
-//                filterBookingList(BookedTicketStatus.CANCELLED.name)
-                fetchBookingHistoryData(userViewModel.user.userId, BookedTicketStatus.CANCELLED.name)
-            }
-        }
-    }
-
-    private fun fetchBookingHistoryData(userId: Int, ticketStatus: String) {
-
-        bookingViewModel.fetchBookingHistory(userId, ticketStatus)
-
-        bookingViewModel.bookingDataFetched.observe(viewLifecycleOwner, Observer{
-            if(bookingViewModel.bookingHistoryBookingList.isEmpty()){
-                binding.emptyListImage.visibility = View.VISIBLE
-                bookingHistoryListAdapter.setBookedTicketList(listOf(), listOf(), listOf())
-                bookingHistoryListAdapter.notifyDataSetChanged()
-            }else{
-                bookingHistoryListAdapter.setBookedTicketList(bookingViewModel.bookingHistoryBookingList, bookingViewModel.bookingHistoryBusList, bookingViewModel.bookingHistoryPartnerList)
-                bookingHistoryListAdapter.notifyDataSetChanged()
-                binding.emptyListImage.visibility = View.GONE
-            }
-
-        })
-    }
-    }
+}

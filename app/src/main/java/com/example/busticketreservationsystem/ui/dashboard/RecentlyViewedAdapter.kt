@@ -18,8 +18,6 @@ class RecentlyViewedAdapter: RecyclerView.Adapter<RecentlyViewedAdapter.Recently
     private var partnerList: List<String> = listOf()
 
     fun setRecentlyViewedList(recentlyViewedBusList: List<Bus>, recentlyViewedList: List<RecentlyViewed>, partnerList: List<String>){
-//        this.recentlyViewedBusList = recentlyViewedBusList
-//        this.recentlyViewedList = recentlyViewedList
         val recentlyViewedDiffUtil = RecentlyViewedDiffUtils(this.recentlyViewedList, recentlyViewedList)
         val diffResults = DiffUtil.calculateDiff(recentlyViewedDiffUtil)
         this.recentlyViewedList = recentlyViewedList
@@ -28,11 +26,7 @@ class RecentlyViewedAdapter: RecyclerView.Adapter<RecentlyViewedAdapter.Recently
         println(partnerList)
         println(recentlyViewedBusList)
         diffResults.dispatchUpdatesTo(this)
-//
-//        val locationDiffUtil = LocationDiffUtils(locationList, list)
-//        val diffResults = DiffUtil.calculateDiff(locationDiffUtil)
-//        locationList = list
-//        diffResults.dispatchUpdatesTo(this)
+
     }
 
     private lateinit var listener: OnItemClickListener

@@ -74,15 +74,12 @@ class HomePageFragment : Fragment() {
             }
 //        }
             else -> {
-
-
-
                 if(savedInstanceState == null){
                     setCurrentFragment(dashBoardFragment)
                 }
-
+            }
+        }
     }
-            }}
 
     private fun setCurrentFragment(fragment: Fragment) {
         parentFragmentManager.commit {

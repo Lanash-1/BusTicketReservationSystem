@@ -16,9 +16,19 @@
         app:layout_constraintBottom_toTopOf="@id/enter_message_editText"
         />
 
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/enter_message_editText"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
     <EditText
         android:layout_width="0dp"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
+        android:maxHeight="200dp"
         android:id="@+id/enter_message_editText"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/chat_recyclerView"
@@ -28,7 +38,9 @@
         android:cursorVisible="true"
         android:textCursorDrawable="@drawable/red_cursor"
         android:hint="Enter your query"
-        android:inputType="text" />
+        android:inputType="text|textMultiLine"
+        android:scrollHorizontally="false"
+        />
 
     <Button
         android:layout_width="wrap_content"

@@ -25,6 +25,7 @@ import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.AdminVi
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.transition.MaterialContainerTransform
 
 
 class AddPartnerFragment : Fragment() {
@@ -42,6 +43,9 @@ class AddPartnerFragment : Fragment() {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
 
+
+//        sharedElementEnterTransition = MaterialContainerTransform()
+
         val database = AppDatabase.getDatabase(requireActivity().applicationContext)
         val repository = AppRepositoryImpl(database)
 
@@ -57,20 +61,6 @@ class AddPartnerFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-//        (activity as AppCompatActivity).supportActionBar!!.apply {
-//            setDisplayHomeAsUpEnabled(true)
-//            if(adminViewModel.selectedPartner.partnerName.isNotEmpty()){
-//                title = "Update Partner Details"
-//                binding.titleText.visibility = View.GONE
-//                binding.updatePartnerButton.visibility = View.VISIBLE
-//                binding.createPartner.visibility = View.GONE
-//            }else{
-//                title="Add Partner"
-//                binding.updatePartnerButton.visibility = View.GONE
-//                binding.createPartner.visibility = View.VISIBLE
-//            }
-//        }
 
         // Inflate the layout for this fragment
         binding = FragmentAddPartnerBinding.inflate(inflater, container, false)
@@ -126,15 +116,16 @@ class AddPartnerFragment : Fragment() {
             }
         }else{
             parentFragmentManager.commit {
-                setCustomAnimations(R.anim.from_left, R.anim.to_right)
+//                setCustomAnimations(R.anim.from_left, R.anim.to_right)
                 replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
             }
         }
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.addPartnerLayout.transitionName = "service_transition0"
 
         (activity as AppCompatActivity).supportActionBar!!.apply {
             setDisplayHomeAsUpEnabled(true)
@@ -248,7 +239,9 @@ class AddPartnerFragment : Fragment() {
 
     private fun moveToDashboard() {
 
-        Snackbar.make(requireView(), "Partner Added Successfully", Snackbar.LENGTH_SHORT).show()
+        val snackBar = Snackbar.make(requireView(), "Partner Added Successfully", Snackbar.LENGTH_SHORT)
+//        snackBar.setAnchorView(requireActivity().findViewById(R.id.admin_bottomNavigationView))
+        snackBar.show()
 
         parentFragmentManager.commit {
             setCustomAnimations(R.anim.from_left, R.anim.to_right)

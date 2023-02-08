@@ -40,10 +40,16 @@ class AdminSettingsFragment : Fragment() {
             title="Settings"
         }
 
-        // Inflate the layout for this fragment
         binding = FragmentAdminSettingsBinding.inflate(inflater, container, false)
         return binding.root
 
+    }
+
+    private fun backPressOperation() {
+        parentFragmentManager.commit {
+            setCustomAnimations(R.anim.from_left, R.anim.to_right)
+            replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -59,11 +65,8 @@ class AdminSettingsFragment : Fragment() {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true){
                 override fun handleOnBackPressed() {
-                    println("BACK PRESS CALLING...")
-                    parentFragmentManager.commit {
-                        setCustomAnimations(R.anim.from_left, R.anim.to_right)
-                        replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
-                    }
+                    backPressOperation()
+                    requireActivity().findViewById<BottomNavigationView>(R.id.admin_bottomNavigationView).selectedItemId = R.id.services
                 }
             }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
@@ -77,7 +80,7 @@ class AdminSettingsFragment : Fragment() {
 
     private fun logoutOperation() {
         val builder = AlertDialog.Builder(requireContext())
-        builder.setMessage("You will redirected to Welcome page")
+        builder.setMessage("You will be redirected to Welcome page")
         builder.setTitle("Confirm Logout?")
         builder.setCancelable(false)
 

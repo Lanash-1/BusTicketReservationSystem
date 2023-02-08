@@ -22,13 +22,14 @@ class BookingHistoryViewPagerAdapter(fragmentManager: FragmentManager, lifecycle
         this.partnerName = partnerName
     }
 
+
     override fun getItemCount() = 3
 
     override fun createFragment(position: Int): Fragment {
-        println("FRAGMENT CREATING NEW TIME")
-        var filteredTickets = mutableListOf<Bookings>()
-        var filteredBuses = mutableListOf<Bus>()
-        var filteredPartner = mutableListOf<String>()
+        val filteredTickets = mutableListOf<Bookings>()
+        val filteredBuses = mutableListOf<Bus>()
+        val filteredPartner = mutableListOf<String>()
+        println("ADAPTER = ${tickets.size}")
         when(position){
             0 -> {
                 for(i in tickets.indices){

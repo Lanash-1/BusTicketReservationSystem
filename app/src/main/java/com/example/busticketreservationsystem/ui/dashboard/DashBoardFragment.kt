@@ -2,6 +2,7 @@ package com.example.busticketreservationsystem.ui.dashboard
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import android.view.animation.AnimationUtils
@@ -48,8 +49,6 @@ class DashBoardFragment : Fragment() {
     lateinit var editor: SharedPreferences.Editor
     lateinit var writeSharedPreferences: SharedPreferences
 
-
-
     private var recentlyViewedAdapter = RecentlyViewedAdapter()
 
 
@@ -67,7 +66,6 @@ class DashBoardFragment : Fragment() {
         val busViewModelFactory = BusViewModelFactory(repository)
         busViewModel = ViewModelProvider(requireActivity(), busViewModelFactory)[BusViewModel::class.java]
 
-
         setHasOptionsMenu(true)
 
     }
@@ -81,32 +79,6 @@ class DashBoardFragment : Fragment() {
             setDisplayHomeAsUpEnabled(false)
             title = "Dashboard"
         }
-
-
-//        requireActivity().addMenuProvider(object : MenuProvider{
-//
-//            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-//                if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
-//                    menuInflater.inflate(R.menu.dashboard_menu, menu)
-//                }
-//            }
-//
-//            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-//                return when(menuItem.itemId){
-//                    R.id.chat_support_icon -> {
-//                        parentFragmentManager.commit {
-//                            setCustomAnimations(R.anim.from_right, R.anim.to_left)
-//                            replace(R.id.homePageFragmentContainer, ChatFragment())
-//                        }
-//                        true
-//                    }
-//                    else -> {
-//                        false
-//                    }
-//                }
-//            }
-//
-//        })
 
         binding = FragmentDashBoardBinding.inflate(inflater, container, false)
         return binding.root
@@ -143,8 +115,7 @@ class DashBoardFragment : Fragment() {
         }
 
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.visibility = View.VISIBLE
-//        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.selectedItemId =
-//            R.id.dashboard
+
 
         binding.recentlyViewedRecyclerView.adapter = recentlyViewedAdapter
         binding.recentlyViewedRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -157,13 +128,6 @@ class DashBoardFragment : Fragment() {
             }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
-//        if(loginStatusViewModel.status != LoginStatus.LOGGED_IN){
-//            println("WORKING ")
-//
-//        }else{
-//            println("NOT WORKING")
-//            userViewModel.fetchRecentlyViewedData()
-//        }
 
         if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
             (activity as AppCompatActivity).apply {
@@ -172,8 +136,6 @@ class DashBoardFragment : Fragment() {
                 )
                 editor = writeSharedPreferences.edit()
             }
-
-            println("INSIDE IF")
 
             binding.recentlyViewedRecyclerView.visibility = View.GONE
             binding.recentlyViewedText.visibility = View.GONE
@@ -186,7 +148,6 @@ class DashBoardFragment : Fragment() {
 
 
         }else{
-            println("OUTSIDE IF")
 
             binding.recentlyViewedRecyclerView.visibility = View.GONE
             binding.recentlyViewedText.visibility = View.GONE
@@ -194,13 +155,11 @@ class DashBoardFragment : Fragment() {
 
         userViewModel.recentlyViewedList.observe(viewLifecycleOwner, Observer{
             if(it.isNotEmpty()){
-                println("INSIDE IF observer")
 
                 recentlyViewedAdapter.setRecentlyViewedList(userViewModel.recentlyViewedBusList, userViewModel.recentlyViewedList.value!!, userViewModel.recentlyViewedPartnerList)
                 binding.recentlyViewedText.visibility = View.VISIBLE
                 binding.recentlyViewedRecyclerView.visibility = View.VISIBLE
             }else{
-                println("outside observer IF")
 
                 binding.recentlyViewedText.visibility = View.GONE
                 binding.recentlyViewedRecyclerView.visibility = View.GONE
@@ -224,7 +183,6 @@ class DashBoardFragment : Fragment() {
                 busViewModel.boardingPoints = locationViewModel.fetchAreas(busViewModel.selectedBus.sourceLocation)
                 busViewModel.droppingPoints = locationViewModel.fetchAreas(busViewModel.selectedBus.destination)
 
-
                 navigationViewModel.fragment = DashBoardFragment()
 //
                 parentFragmentManager.commit {
@@ -246,33 +204,14 @@ class DashBoardFragment : Fragment() {
 //                mvvm
 
                 parentFragmentManager.commit {
-                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     setCustomAnimations(R.anim.from_right, R.anim.to_left)
                     replace(R.id.homePageFragmentContainer, BusResultsFragment())
                 }
 
             }else{
-                if(searchViewModel.sourceLocation.isEmpty()){
-                    binding.enterSourceErrorIcon.visibility = View.VISIBLE
-                }else{
-                    binding.enterSourceErrorIcon.visibility = View.INVISIBLE
-                }
-
-                if(searchViewModel.destinationLocation.isEmpty()){
-                    binding.enterDestinationErrorIcon.visibility = View.VISIBLE
-                }else{
-                    binding.enterDestinationErrorIcon.visibility = View.INVISIBLE
-                }
-
-                if(searchViewModel.year == 0){
-                    binding.enterDateErrorIcon.visibility = View.VISIBLE
-                }else{
-                    binding.enterDateErrorIcon.visibility = View.INVISIBLE
-                }
+                checkErrorInput()
             }
         }
-
-
 
         setLocation()
 
@@ -310,11 +249,14 @@ class DashBoardFragment : Fragment() {
         dateViewModel.travelDateEdited.observe(viewLifecycleOwner, Observer {
             if(dateViewModel.travelYear != 0){
                 binding.dateText.text = "${dateViewModel.travelDate} - ${dateViewModel.travelMonth} - ${dateViewModel.travelYear}"
+                binding.dateText.setTextColor(Color.parseColor("#000000"))
                 searchViewModel.apply {
                     year = dateViewModel.travelYear
                     month = dateViewModel.travelMonth
                     date = dateViewModel.travelDate
                 }
+
+                binding.enterDateErrorIcon.visibility = View.INVISIBLE
             }else{
                 binding.dateText.text = "DD - MM - YYYY"
                 searchViewModel.apply {
@@ -324,7 +266,26 @@ class DashBoardFragment : Fragment() {
                 }
             }
         })
+    }
 
+    private fun checkErrorInput() {
+        if(searchViewModel.sourceLocation.isEmpty()){
+            binding.enterSourceErrorIcon.visibility = View.VISIBLE
+        }else{
+            binding.enterSourceErrorIcon.visibility = View.INVISIBLE
+        }
+
+        if(searchViewModel.destinationLocation.isEmpty()){
+            binding.enterDestinationErrorIcon.visibility = View.VISIBLE
+        }else{
+            binding.enterDestinationErrorIcon.visibility = View.INVISIBLE
+        }
+
+        if(searchViewModel.year == 0){
+            binding.enterDateErrorIcon.visibility = View.VISIBLE
+        }else{
+            binding.enterDateErrorIcon.visibility = View.INVISIBLE
+        }
     }
 
     private fun clearAllValues() {
@@ -340,16 +301,31 @@ class DashBoardFragment : Fragment() {
         if(source.isEmpty() && destination.isEmpty()){
             binding.sourceText.text = "Enter Source"
             binding.destinationText.text = "Enter Destination"
+            binding.sourceText.setTextColor(Color.parseColor("#808080"))
+            binding.destinationText.setTextColor(Color.parseColor("#808080"))
         }
         if(source.isNotEmpty() && destination.isNotEmpty()){
             binding.sourceText.text = source
             binding.destinationText.text = destination
+            binding.sourceText.setTextColor(Color.parseColor("#000000"))
+            binding.destinationText.setTextColor(Color.parseColor("#000000"))
+            checkErrorInput()
+
         }else if(source.isNotEmpty() && destination.isEmpty()){
             binding.sourceText.text = source
             binding.destinationText.text = "Enter Destination"
+            binding.sourceText.setTextColor(Color.parseColor("#000000"))
+            binding.destinationText.setTextColor(Color.parseColor("#808080"))
+            checkErrorInput()
+
+
         }else if(source.isEmpty() && destination.isNotEmpty()) {
             binding.sourceText.text = "Enter Source"
             binding.destinationText.text = destination
+            binding.sourceText.setTextColor(Color.parseColor("#808080"))
+            binding.destinationText.setTextColor(Color.parseColor("#000000"))
+            checkErrorInput()
+
         }
     }
 

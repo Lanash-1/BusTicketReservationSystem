@@ -134,9 +134,6 @@ class MainActivity : AppCompatActivity() {
                     editor.apply()
                     supportFragmentManager.commit {
                         setCustomAnimations(R.anim.from_right, R.anim.to_left)
-//                        replace(R.id.main_fragment_container, RegisterFragment())
-
-//                        change
                         replace(R.id.main_fragment_container, WelcomeFragment())
                     }
                 }
@@ -154,8 +151,6 @@ class MainActivity : AppCompatActivity() {
 
                     loginStatusViewModel.status = LoginStatus.LOGGED_IN
 
-//                    fetch data of user already logged in
-//                    userViewModel.fetchUserData(writeSharedPreferences.getInt("userId", 0))
                     updateBookingHistory(writeSharedPreferences.getInt("userId", 0))
 
                     supportFragmentManager.commit {

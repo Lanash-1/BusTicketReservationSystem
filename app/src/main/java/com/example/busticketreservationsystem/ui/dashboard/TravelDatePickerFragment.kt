@@ -16,7 +16,6 @@ class TravelDatePickerFragment: DialogFragment(), DatePickerDialog.OnDateSetList
     private var date: Int = 0
     private var month: Int = 0
     private var year: Int = 0
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
@@ -41,7 +40,6 @@ class TravelDatePickerFragment: DialogFragment(), DatePickerDialog.OnDateSetList
         calendar.set(maxYear, maxMonth, date)
         dialog.datePicker.maxDate = calendar.timeInMillis
         return dialog
-//        return DatePickerDialog(requireContext(), this,year, month, date)
     }
 
 

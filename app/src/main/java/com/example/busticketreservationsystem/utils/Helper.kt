@@ -81,11 +81,6 @@ open class Helper {
         return "$hour:$minute $extension"
     }
 
-//    fun getDateExtended(timeStamp: String){
-//
-//    }
-
-
     fun compareToCurrentDate(date: String): Boolean{
         val sdf = SimpleDateFormat("dd/MM/yyyy")
         val time = Calendar.getInstance().time

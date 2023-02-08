@@ -20,6 +20,7 @@ import com.example.busticketreservationsystem.listeners.OnItemClickListener
 import com.example.busticketreservationsystem.ui.adminservice.AdminServicesFragment
 import com.example.busticketreservationsystem.ui.buseslist.BusesListFragment
 import com.example.busticketreservationsystem.ui.partners.PartnerListFragment
+import com.example.busticketreservationsystem.ui.user.UserListFragment
 import com.example.busticketreservationsystem.viewmodel.livedata.AdminViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.AdminViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -101,13 +102,11 @@ class AnalyticsPageFragment : Fragment() {
                         println("TICKETS BOOKED")
                     }
                     Analytics.USERS_REGISTERED -> {
-                        println("USERS REGISTERED")
+                        moveToNextFragment(UserListFragment())
                     }
                 }
             }
         })
-
-
 
     }
 
