@@ -24,10 +24,14 @@ import com.example.busticketreservationsystem.ui.register.RegisterFragment
 import com.example.busticketreservationsystem.ui.welcome.WelcomeFragment
 import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
 import com.example.busticketreservationsystem.viewmodel.NavigationViewModel
+import com.example.busticketreservationsystem.viewmodel.livedata.BookingViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.livedata.UserViewModel
+import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BookingViewModelFactory
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import java.text.SimpleDateFormat
+import java.util.*
 
 class LoginFragment : Fragment() {
 
@@ -46,6 +50,7 @@ class LoginFragment : Fragment() {
 
 
     private lateinit var userViewModel: UserViewModel
+    private lateinit var bookingViewModel: BookingViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +61,9 @@ class LoginFragment : Fragment() {
 
         val userViewModelFactory = UserViewModelFactory(repository)
         userViewModel = ViewModelProvider(requireActivity(), userViewModelFactory)[UserViewModel::class.java]
+
+        val bookingViewModelFactory = BookingViewModelFactory(repository)
+        bookingViewModel = ViewModelProvider(requireActivity(), bookingViewModelFactory)[BookingViewModel::class.java]
 
     }
 
@@ -150,6 +158,14 @@ class LoginFragment : Fragment() {
         }
     }
 
+    private fun updateBookingHistory(userId: Int) {
+        val sdf = SimpleDateFormat("dd/MM/yyyy")
+        val time = Calendar.getInstance().time
+        val current = sdf.format(time)
+        val currentDate = sdf.parse(current)
+        bookingViewModel.updateBookingHistoryList(userId, currentDate)
+    }
+
     private fun checkLogin(){
         userViewModel.isNumberAlreadyExists(mobileInput.text.toString())
 
@@ -157,6 +173,7 @@ class LoginFragment : Fragment() {
             if(userViewModel.isLoggedIn.value == true){
                 editor.putInt("userId", userViewModel.user.userId)
                 editor.commit()
+                updateBookingHistory(userViewModel.user.userId)
                 parentFragmentManager.commit {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                     setCustomAnimations(R.anim.from_right, R.anim.to_left)

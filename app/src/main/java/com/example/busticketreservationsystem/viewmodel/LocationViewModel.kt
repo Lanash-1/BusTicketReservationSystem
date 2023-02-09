@@ -75,5 +75,9 @@ class LocationViewModel: ViewModel() {
         allCities.sorted()
     }
 
+    fun fetchSourceCities(): List<String> {
+        TODO("Not yet implemented")
+    }
+
 
 }

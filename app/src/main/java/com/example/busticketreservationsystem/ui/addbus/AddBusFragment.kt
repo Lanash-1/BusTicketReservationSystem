@@ -42,6 +42,8 @@ import java.util.*
 
 class AddBusFragment : Fragment() {
 
+    private var formEdited = false
+
     private lateinit var binding: FragmentAddBusBinding
     private val helper = Helper()
 
@@ -97,35 +99,92 @@ class AddBusFragment : Fragment() {
     }
 
     private fun backPressOperation() {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setMessage("Bus details will not be saved")
-        builder.setTitle("Discard Registration?")
-        builder.setCancelable(false)
+        if(checkEdited()) {
+
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setMessage("Bus details will not be saved")
+            builder.setTitle("Discard Registration?")
+            builder.setCancelable(false)
 
 
-        builder.setNegativeButton("Cancel"){
-                dialog, _ -> dialog.cancel()
-        }
+            builder.setNegativeButton("Cancel") { dialog, _ ->
+                dialog.cancel()
+            }
 
-        builder.setPositiveButton("Discard"){
-                _, _ ->
-            run {
-                locationViewModel.apply {
-                    selectedSourceState.value = ""
-                    selectedDestinationState.value = ""
-                }
+            builder.setPositiveButton("Discard") { _, _ ->
+                run {
+                    locationViewModel.apply {
+                        selectedSourceState.value = ""
+                        selectedDestinationState.value = ""
+                        selectedSourceCity.value = ""
+                        selectedDestinationCity.value = ""
+                    }
 
-                parentFragmentManager.commit {
-                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
-                    replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
+                    adminViewModel.apply {
+                        reachTime = ""
+                        startTime = ""
+                    }
+
+                    parentFragmentManager.commit {
+                        setCustomAnimations(R.anim.from_left, R.anim.to_right)
+                        replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
+                    }
                 }
             }
+            val alertDialog = builder.create()
+            if (alertDialog.window != null) {
+                alertDialog.window!!.attributes.windowAnimations = R.style.DialogFragmentAnimation
+            }
+            alertDialog.show()
+        }else{
+            parentFragmentManager.commit {
+                setCustomAnimations(R.anim.from_left, R.anim.to_right)
+                replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
+            }
         }
-        val alertDialog = builder.create()
-        if(alertDialog.window != null){
-            alertDialog.window!!.attributes.windowAnimations = R.style.DialogFragmentAnimation
+    }
+
+    private fun checkEdited(): Boolean {
+        if(partnerList.contains(binding.autoCompleteTextView.text.toString())){
+            println("PARTNER NAME")
+            return true
         }
-        alertDialog.show()
+        if(binding.busNameInput.text?.isNotEmpty() == true){
+            println("BUS NAME")
+            return true
+        }
+        if(locationViewModel.selectedSourceCity.value?.isNotEmpty() == true || locationViewModel.selectedSourceState.value?.isNotEmpty() == true || locationViewModel.selectedDestinationCity.value?.isNotEmpty() == true || locationViewModel.selectedDestinationState.value?.isNotEmpty() == true){
+            println("LOCATION DETAILS")
+            return true
+        }
+        if(adminViewModel.startTime.isNotEmpty() || adminViewModel.reachTime.isNotEmpty()){
+            println("TIMING DETAILS")
+
+            return true
+        }
+        if(binding.priceInput.text?.isNotEmpty() == true){
+            println("PRICE DETAILS")
+
+            return true
+        }
+//        if(){
+//            println("BUS TYPE DETAILS")
+//
+//            return true
+//        }
+        for(busType in BusTypes.values()){
+            if(busType.name == binding.busTypeAutoCompleteTextView.text.toString()){
+                println("BUS TYPE DETAILS")
+                return true
+            }
+        }
+        if(validAmenities() && adminViewModel.amenities.isNotEmpty()){
+            println("AMENITIES DETAILS")
+
+            return true
+
+        }
+        return false
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -240,8 +299,8 @@ class AddBusFragment : Fragment() {
         })
 
         binding.sourceCityView.setOnClickListener {
-            val list = locationViewModel.cities
-            openSearchableDialogSource(list)
+            locationViewModel.fetchCities(locationViewModel.selectedSourceState.value.toString())
+            openSearchableDialogSource(locationViewModel.cities)
         }
 
         binding.destinationStateView.setOnClickListener {
@@ -274,8 +333,8 @@ class AddBusFragment : Fragment() {
         })
 
         binding.destinationCityView.setOnClickListener {
-            val list = locationViewModel.cities
-            openSearchableDialogDestination(list)
+            locationViewModel.fetchCities(locationViewModel.selectedDestinationState.value.toString())
+            openSearchableDialogDestination(locationViewModel.cities)
         }
 
         binding.startTimePicker.setOnClickListener {
@@ -482,10 +541,8 @@ class AddBusFragment : Fragment() {
 
         listView.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id -> // when item selected from list
-                // set selected item on textView
                 selectedSourceLocation.value = adapter.getItem(position)!!
 
-                // Dismiss dialog
                 dialog.dismiss()
             }
     }
@@ -530,12 +587,9 @@ class AddBusFragment : Fragment() {
 
         listView.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id -> // when item selected from list
-                // set selected item on textView
                 selectedDestinationLocation.value = adapter.getItem(position)!!
 
-                // Dismiss dialog
                 dialog.dismiss()
             }
-
     }
 }

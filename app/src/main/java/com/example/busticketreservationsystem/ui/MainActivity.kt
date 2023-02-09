@@ -173,7 +173,7 @@ class MainActivity : AppCompatActivity() {
                     loginStatusViewModel.status = LoginStatus.LOGGED_OUT
                     supportFragmentManager.commit {
                         setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        replace(R.id.main_fragment_container, LoginFragment())
+                        replace(R.id.main_fragment_container, WelcomeFragment())
                     }
                 }
                 LoginStatus.ADMIN_LOGGED_IN.name -> {

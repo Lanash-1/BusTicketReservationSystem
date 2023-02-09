@@ -155,11 +155,11 @@ class AddPartnerFragment : Fragment() {
         updateDataToInput()
 
         binding.createPartner.setOnClickListener {
-
             val validPartnerName = validPartnerName()
             val validPartnerEmail = validPartnerEmail()
             val validPartnerMobile = validPartnerMobile()
             if(validPartnerEmail && validPartnerName && validPartnerMobile){
+                println("Valid partner")
                 adminViewModel.partner.apply {
                     partnerName = adminViewModel.partnerName
                     partnerEmailId = adminViewModel.partnerEmail
