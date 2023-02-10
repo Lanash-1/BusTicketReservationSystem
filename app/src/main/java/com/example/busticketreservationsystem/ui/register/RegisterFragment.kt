@@ -168,17 +168,17 @@ class RegisterFragment : Fragment() {
 
         if (validNumber && validNewPassword && validConfirmPassword) {
 
-            userViewModel.isMobileExists.observe(viewLifecycleOwner, Observer{
-                if (it == true) {
-                    mobileLayout.helperText = "Mobile Number already Exists."
-                }else {
-                    registerNewUser()
-                }
-            })
-
             userViewModel.isNumberAlreadyExists(mobileInput.text.toString())
 
-
+            userViewModel.isMobileExists.observe(viewLifecycleOwner, Observer{
+                if(it != null){
+                    if (it) {
+                        mobileLayout.helperText = "Mobile Number already Exists."
+                    }else{
+                        registerNewUser()
+                    }
+                }
+            })
         }
 
     }
@@ -189,7 +189,9 @@ class RegisterFragment : Fragment() {
             mobileInput.text.toString()
         )
         userViewModel.isNewUserInserted.observe(viewLifecycleOwner, Observer{
+//            if(userViewModel.)
             editor.putInt("userId", userViewModel.user.userId)
+            editor.commit()
             editor.putString("status", LoginStatus.LOGGED_IN.name)
             editor.commit()
             loginStatusViewModel.status = LoginStatus.LOGGED_IN
@@ -223,7 +225,6 @@ class RegisterFragment : Fragment() {
         {
             return "Invalid mobile number"
         }
-
 
         return null
     }

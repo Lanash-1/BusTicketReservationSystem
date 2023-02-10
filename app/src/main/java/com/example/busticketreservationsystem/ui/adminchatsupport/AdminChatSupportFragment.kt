@@ -23,6 +23,9 @@ import com.example.busticketreservationsystem.viewmodel.livedata.ChatViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.AdminViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.ChatViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.transition.Hold
+import com.google.android.material.transition.MaterialContainerTransform
+import com.google.android.material.transition.MaterialElevationScale
 
 class AdminChatSupportFragment : Fragment() {
 
@@ -48,6 +51,8 @@ class AdminChatSupportFragment : Fragment() {
         val adminViewModelFactory = AdminViewModelFactory(repository)
         adminViewModel = ViewModelProvider(requireActivity(), adminViewModelFactory)[AdminViewModel::class.java]
 
+        exitTransition = Hold()
+
     }
 
     override fun onCreateView(
@@ -65,6 +70,7 @@ class AdminChatSupportFragment : Fragment() {
     private fun backPressOperation() {
         parentFragmentManager.commit {
             setCustomAnimations(R.anim.from_left, R.anim.to_right)
+//            setCustomAnimations(R.anim.from_right, R.anim.to_left)
             replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
         }
     }
@@ -101,15 +107,34 @@ class AdminChatSupportFragment : Fragment() {
 
         chatUserListAdapter.setOnItemClickListener(object: OnItemClickListener{
             override fun onItemClick(position: Int) {
+                adminViewModel.transitionPosition = position
+                val fragment = ChatFragment()
                 adminViewModel.chatUserId = chatViewModel.usersList.value!![position]
-                moveToChatFragment()
+                parentFragmentManager.commit {
+                    val item = userListRecyclerView.findViewHolderForAdapterPosition(position)?.itemView
+                    item!!.transitionName = "chat_transition${position}"
+                    addSharedElement(item, "chat_transition${position}")
+                    fragment.sharedElementEnterTransition = MaterialContainerTransform()
+                    fragment.apply {
+                        exitTransition = MaterialElevationScale(false)
+                        reenterTransition = MaterialElevationScale(true)
+                    }
+
+//                    binding.adminChatLayout.visibility = View.INVISIBLE
+
+
+//                    sharedElementEnterTransition = MaterialContainerTransform()
+//                    addSharedElement(binding.chatUserListRecyclerView.findViewHolderForAdapterPosition(position)!!.itemView, "chat_transition")
+                    replace(R.id.adminPanelFragmentContainer, fragment)
+                }
             }
         })
     }
 
     private fun moveToChatFragment() {
         parentFragmentManager.commit {
-            setCustomAnimations(R.anim.from_right, R.anim.to_left)
+//            setCustomAnimations(R.anim.from_right, R.anim.to_left)
+
             replace(R.id.adminPanelFragmentContainer, ChatFragment())
         }
     }

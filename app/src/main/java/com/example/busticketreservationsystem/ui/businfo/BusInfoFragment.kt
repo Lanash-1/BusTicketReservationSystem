@@ -1,6 +1,7 @@
 package com.example.busticketreservationsystem.ui.businfo
 
 import android.app.AlertDialog
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -207,7 +208,6 @@ class BusInfoFragment : Fragment() {
                 .setPositiveButton("Submit"){
                         _, _ ->
                     run {
-
                         val feedback: String = dialogView.findViewById<TextInputEditText>(R.id.review_input).text.toString()
                         val rating: Int = dialogView.findViewById<RatingBar>(R.id.ratingBar).rating.toString().toDouble().toInt()
                         if(rating > 0){
@@ -265,11 +265,6 @@ class BusInfoFragment : Fragment() {
             val alertDialog = builder.show()
         }
 
-//        if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
-//        }
-
-
-
 
         binding.readReviewsButton.setOnClickListener {
             when(navigationViewModel.fragment){
@@ -284,11 +279,9 @@ class BusInfoFragment : Fragment() {
                         setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         setCustomAnimations(R.anim.from_right, R.anim.to_left)
                         replace(R.id.homePageFragmentContainer, ReviewsFragment())
-    //                    addToBackStack(null)
                     }
                 }
             }
-
         }
 
 

@@ -5,8 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -18,9 +20,11 @@ import com.example.busticketreservationsystem.databinding.FragmentAnalyticsBindi
 import com.example.busticketreservationsystem.enums.Analytics
 import com.example.busticketreservationsystem.listeners.OnItemClickListener
 import com.example.busticketreservationsystem.ui.adminservice.AdminServicesFragment
+import com.example.busticketreservationsystem.ui.bookinghistory.BookingHistoryFragment
 import com.example.busticketreservationsystem.ui.buseslist.BusesListFragment
 import com.example.busticketreservationsystem.ui.partners.PartnerListFragment
 import com.example.busticketreservationsystem.ui.user.UserListFragment
+import com.example.busticketreservationsystem.viewmodel.NavigationViewModel
 import com.example.busticketreservationsystem.viewmodel.livedata.AdminViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.AdminViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -32,6 +36,7 @@ class AnalyticsPageFragment : Fragment() {
     private val analyticsAdapter = AnalyticsPageAdapter()
 
     private lateinit var adminViewModel: AdminViewModel
+    private val navigationViewModel: NavigationViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,7 +104,8 @@ class AnalyticsPageFragment : Fragment() {
                         moveToNextFragment(BusesListFragment())
                     }
                     Analytics.TICKETS_BOOKED -> {
-                        println("TICKETS BOOKED")
+                        navigationViewModel.fragment = AnalyticsPageFragment()
+                        moveToNextFragment(BookingHistoryFragment())
                     }
                     Analytics.USERS_REGISTERED -> {
                         moveToNextFragment(UserListFragment())

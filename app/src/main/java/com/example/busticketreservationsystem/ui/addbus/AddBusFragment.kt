@@ -167,11 +167,6 @@ class AddBusFragment : Fragment() {
 
             return true
         }
-//        if(){
-//            println("BUS TYPE DETAILS")
-//
-//            return true
-//        }
         for(busType in BusTypes.values()){
             if(busType.name == binding.busTypeAutoCompleteTextView.text.toString()){
                 println("BUS TYPE DETAILS")
@@ -221,7 +216,7 @@ class AddBusFragment : Fragment() {
             val validBusType = validBusType()
             val validAmenities = validAmenities()
             if(validPartner && validBusName && validBoardingDetails && validDestinationDetails && validTimingDetails && validPriceDetail && validBusType && validAmenities){
-                val duration = helper.getDuration(binding.startTimePicker.text.toString(), binding.reachTimePicker.text.toString())
+                val duration = helper.getDuration(binding.startTimePickerInput.text.toString(), binding.reachTimePickerInput.text.toString())
                 adminViewModel.newBus = Bus(
                     0,
                     adminViewModel.partner.partnerId,
@@ -337,12 +332,12 @@ class AddBusFragment : Fragment() {
             openSearchableDialogDestination(locationViewModel.cities)
         }
 
-        binding.startTimePicker.setOnClickListener {
-            openTimePicker(binding.startTimePicker)
+        binding.startTimePickerInput.setOnClickListener {
+            openTimePicker(binding.startTimePickerInput)
         }
 
-        binding.reachTimePicker.setOnClickListener {
-            openTimePicker(binding.reachTimePicker)
+        binding.reachTimePickerInput.setOnClickListener {
+            openTimePicker(binding.reachTimePickerInput)
         }
 
     }
@@ -406,7 +401,12 @@ class AddBusFragment : Fragment() {
             binding.startTimePicker.error = null
             if(adminViewModel.reachTime.isNotEmpty()){
                 binding.reachTimePicker.error = null
-                return true
+                if(helper.validTiming(adminViewModel.startTime, adminViewModel.reachTime)){
+                    binding.reachTimePicker.error = null
+                    return true
+                }else{
+                    binding.reachTimePicker.error = "Should not be ahead of start time"
+                }
             }else{
                 binding.reachTimePicker.error = "Select Time"
             }
@@ -486,10 +486,10 @@ class AddBusFragment : Fragment() {
                 timeText.text = "$hourOfDay: $minute"
             }
 
-            if(timeText == binding.startTimePicker){
-                adminViewModel.startTime = "$hourOfDay.$minute"
+            if(timeText == binding.startTimePickerInput){
+                adminViewModel.startTime = "$hourOfDay:$minute"
             }else{
-                adminViewModel.reachTime = "$hourOfDay.$minute"
+                adminViewModel.reachTime = "$hourOfDay:$minute"
             }
         },
             hour,

@@ -8,6 +8,7 @@ import com.example.busticketreservationsystem.data.entity.Bus
 import com.example.busticketreservationsystem.data.entity.Partners
 import com.example.busticketreservationsystem.data.entity.User
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
+import com.example.busticketreservationsystem.enums.BookedTicketStatus
 import com.example.busticketreservationsystem.ui.buseslist.BusesListFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,6 +21,7 @@ class AdminViewModel(
 //    Analytics related data
 
 
+    var transitionPosition: Int = 0
     var partnerCount = MutableLiveData(0)
     var busCount = 0
     var userCount = 0
@@ -140,6 +142,39 @@ class AdminViewModel(
     }
 
 
+    var upcomingCount = 0
+    var completedCount = 0
+    var cancelledCount = MutableLiveData<Int>()
+    fun fetchUserTicketCount(userId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            var upcoming = 0
+            var completed = 0
+            var cancelled = 0
+            val job = launch {
+                val ticketList = repository.getUserBookings(userId)
+                upcoming = ticketList.filter {
+                    it.bookedTicketStatus == BookedTicketStatus.UPCOMING.name
+                }.size
+                completed = ticketList.filter {
+                    it.bookedTicketStatus == BookedTicketStatus.COMPLETED.name
+                }.size
+                cancelled = ticketList.filter {
+                    it.bookedTicketStatus == BookedTicketStatus.CANCELLED.name
+                }.size
+            }
+            job.join()
+            withContext(Dispatchers.Main){
+                upcomingCount = upcoming
+                completedCount = completed
+                cancelledCount.value = cancelled
+            }
+        }
+
+    }
+
+
+
+
 //    Add bus related operation
 
     var busName = ""
@@ -180,6 +215,25 @@ class AdminViewModel(
 
     var chatUserId: Int = 0
 
+
+//    user
+
+    lateinit var selectedUser: User
+
+    var isUserFetched = MutableLiveData<Boolean>()
+    fun fetchUserDetails(userId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            lateinit var user: User
+            val job = launch {
+                user = repository.getUserAccount(userId)
+            }
+            job.join()
+            withContext(Dispatchers.Main){
+                selectedUser = user
+                isUserFetched.value = true
+            }
+        }
+    }
 
 
 }

@@ -1,11 +1,8 @@
 package com.example.busticketreservationsystem.ui.chat
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
@@ -23,8 +20,10 @@ import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.enums.MessageType
 import com.example.busticketreservationsystem.ui.adminchatsupport.AdminChatSupportFragment
 import com.example.busticketreservationsystem.ui.homepage.HomePageFragment
+import com.example.busticketreservationsystem.ui.user.UserDetailFragment
 import com.example.busticketreservationsystem.utils.Helper
 import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
+import com.example.busticketreservationsystem.viewmodel.NavigationViewModel
 import com.example.busticketreservationsystem.viewmodel.livedata.AdminViewModel
 import com.example.busticketreservationsystem.viewmodel.livedata.ChatViewModel
 import com.example.busticketreservationsystem.viewmodel.livedata.UserViewModel
@@ -43,6 +42,7 @@ class ChatFragment : Fragment() {
 
     private val helper = Helper()
 
+    private val navigationViewModel: NavigationViewModel by activityViewModels()
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
     private lateinit var chatViewModel: ChatViewModel
     private lateinit var userViewModel: UserViewModel
@@ -83,15 +83,39 @@ class ChatFragment : Fragment() {
             setDisplayHomeAsUpEnabled(true)
         }
 
+
         // Inflate the layout for this fragment
         binding = FragmentChatBinding.inflate(inflater, container, false)
+
+
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        if(loginStatusViewModel.status == LoginStatus.ADMIN_LOGGED_IN){
+            inflater.inflate(R.menu.chat_menu, menu)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home -> {
                 backPressOperation()
+            }
+            R.id.info_icon -> {
+                navigationViewModel.adminNavigation = ChatFragment()
+                adminViewModel.fetchUserDetails(adminViewModel.chatUserId)
+
+                adminViewModel.isUserFetched.observe(viewLifecycleOwner, Observer{
+                    if(it != null){
+                        if(it){
+                            parentFragmentManager.commit {
+                                setCustomAnimations(R.anim.from_right, R.anim.to_left)
+                                replace(R.id.adminPanelFragmentContainer, UserDetailFragment())
+                            }
+                        }
+                    }
+                })
             }
         }
         return super.onOptionsItemSelected(item)
@@ -101,7 +125,7 @@ class ChatFragment : Fragment() {
         chatViewModel.userChat.value?.clear()
         if(loginStatusViewModel.status == LoginStatus.ADMIN_LOGGED_IN){
             parentFragmentManager.commit {
-                setCustomAnimations(R.anim.from_left, R.anim.to_right)
+//                setCustomAnimations(R.anim.from_left, R.anim.to_right)
                 replace(R.id.adminPanelFragmentContainer, AdminChatSupportFragment())
             }
         }else{
@@ -116,6 +140,7 @@ class ChatFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.chatLayout.transitionName = "chat_transition${adminViewModel.transitionPosition}"
 
 
         val callback: OnBackPressedCallback =

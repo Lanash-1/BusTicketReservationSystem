@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.adminchatsupport.AdminChatSupportFragment">
+    tools:context=".ui.adminchatsupport.AdminChatSupportFragment"
+    android:id="@+id/admin_chat_layout"
+    >
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

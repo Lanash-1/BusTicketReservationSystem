@@ -1,10 +1,8 @@
 package com.example.busticketreservationsystem.ui.analytics
 
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Recycler
 import com.example.busticketreservationsystem.databinding.ItemAnalyticsBinding
 import com.example.busticketreservationsystem.enums.Analytics
 import com.example.busticketreservationsystem.listeners.OnItemClickListener
@@ -36,7 +34,6 @@ class AnalyticsPageAdapter: RecyclerView.Adapter<AnalyticsPageAdapter.AnalyticsP
             }
         }
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnalyticsPageViewHolder {
         val inflater = LayoutInflater.from(parent.context)

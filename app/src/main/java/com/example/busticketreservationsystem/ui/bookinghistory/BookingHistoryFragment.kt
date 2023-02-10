@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
@@ -18,6 +19,7 @@ import com.example.busticketreservationsystem.databinding.FragmentBookingHistory
 import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
+import com.example.busticketreservationsystem.ui.analytics.AnalyticsPageFragment
 import com.example.busticketreservationsystem.ui.homepage.HomePageFragment
 import com.example.busticketreservationsystem.ui.login.LoginFragment
 import com.example.busticketreservationsystem.ui.myaccount.MyAccountFragment
@@ -108,6 +110,9 @@ class BookingHistoryFragment : Fragment() {
             })
 
 
+        }else if(loginStatusViewModel.status == LoginStatus.ADMIN_LOGGED_IN){
+            requireActivity().findViewById<BottomNavigationView>(R.id.admin_bottomNavigationView).visibility = View.GONE
+            Toast.makeText(requireContext(), "Admin login", Toast.LENGTH_SHORT).show()
         }else{
             binding.loginOrRegisterButton.visibility = View.VISIBLE
             binding.bookingHistoryTabLayout.visibility = View.GONE
@@ -140,6 +145,17 @@ class BookingHistoryFragment : Fragment() {
                             }
                             requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.selectedItemId =
                                 R.id.myAccount
+                        }
+                        is AnalyticsPageFragment -> {
+                            navigationViewModel.fragment = null
+                            parentFragmentManager.commit {
+                                setCustomAnimations(R.anim.from_right, R.anim.to_left)
+                                replace(R.id.adminPanelFragmentContainer, AnalyticsPageFragment())
+                            }
+                            requireActivity().findViewById<BottomNavigationView>(R.id.admin_bottomNavigationView).apply {
+                                visibility = View.VISIBLE
+                                selectedItemId = R.id.analytics
+                            }
                         }
                         else -> {
                             navigationViewModel.fragment = null

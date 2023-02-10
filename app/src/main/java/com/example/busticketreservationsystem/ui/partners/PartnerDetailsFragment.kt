@@ -108,15 +108,13 @@ class PartnerDetailsFragment : Fragment() {
             binding.ticketCountTextView.text = it.toString()
         })
 
-        binding.busOperatedCardView.setOnClickListener {
+        binding.busesOperatedCardView.setOnClickListener {
             navigationViewModel.adminNavigation = PartnerDetailsFragment()
             parentFragmentManager.commit {
                 setCustomAnimations(R.anim.from_right, R.anim.to_left)
                 replace(R.id.adminPanelFragmentContainer, BusesListFragment())
             }
         }
-
-
     }
 
     private fun setDataToView(partner: Partners) {
@@ -124,7 +122,7 @@ class PartnerDetailsFragment : Fragment() {
             partnerNameTextView.text = partner.partnerName
             mobileTextView.text = partner.partnerMobile
             emailTextView.text = partner.partnerEmailId
-            countTextView.text = partner.noOfBusesOperated.toString()
+            busesOperatedCountTextView.text = partner.noOfBusesOperated.toString()
             ticketCountTextView.text = "00"
         }
     }

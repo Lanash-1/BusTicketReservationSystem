@@ -109,7 +109,6 @@ class AdminServicesFragment : Fragment() {
                         adminViewModel.selectedPartner = Partners(0, "", 0, "", "")
                         val fragment = AddPartnerFragment()
                         parentFragmentManager.commit {
-//                            setCustomAnimations(R.anim.from_right, R.anim.to_left)
                             println("POSITION  =  $position")
                             val item = adminServicesRecyclerView.findViewHolderForAdapterPosition(position)?.itemView
                             item!!.transitionName = "service_transition${position}"

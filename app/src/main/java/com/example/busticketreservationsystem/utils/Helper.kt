@@ -93,4 +93,16 @@ open class Helper {
         return false
     }
 
+    fun validTiming(startTime: String, reachTime: String): Boolean {
+        val format = SimpleDateFormat("hh:mm")
+        val date1: Date = format.parse(startTime)
+        val date2: Date = format.parse(reachTime)
+
+        if(date1 > date2){
+            println("WORKING TIME CHECVK")
+            return false
+        }
+        return true
+    }
+
 }

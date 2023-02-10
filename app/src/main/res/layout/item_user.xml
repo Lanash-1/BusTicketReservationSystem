@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="48dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:transitionName="chat_transition"
-    >
+    android:id="@+id/user_layout"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:selectableItemBackground">
+
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="User name or user id"
-        android:id="@+id/userId_textView"
+        android:id="@+id/user_textView"
+        android:text="#00 UserName"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_margin="16dp"
-        style="@style/TitleTextStyle"
+        android:layout_marginLeft="16dp"
+        style="@style/TextDefault"
         />
 
     <com.google.android.material.divider.MaterialDivider
@@ -25,5 +28,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

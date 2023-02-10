@@ -167,13 +167,11 @@ class DashBoardFragment : Fragment() {
         })
 
 
-
         recentlyViewedAdapter.setOnRemoveClickListener(object: OnRemoveClickListener{
             override fun onRemoveClick(position: Int) {
                 userViewModel.removeRecentlyViewedData(userViewModel.recentlyViewedList.value!![position])
             }
         })
-
 
         recentlyViewedAdapter.setOnItemClickListener(object : OnItemClickListener{
             override fun onItemClick(position: Int) {
@@ -184,7 +182,6 @@ class DashBoardFragment : Fragment() {
                 busViewModel.droppingPoints = locationViewModel.fetchAreas(busViewModel.selectedBus.destination)
 
                 navigationViewModel.fragment = DashBoardFragment()
-//
                 parentFragmentManager.commit {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     setCustomAnimations(R.anim.from_right, R.anim.to_left)
@@ -196,12 +193,10 @@ class DashBoardFragment : Fragment() {
         binding.searchBusButton.setOnClickListener {
             if(searchViewModel.sourceLocation.isNotEmpty() && searchViewModel.destinationLocation.isNotEmpty() && searchViewModel.year != 0){
 
-//                mvvm
                 busViewModel.sourceLocation = searchViewModel.sourceLocation
                 busViewModel.destinationLocation = searchViewModel.destinationLocation
 
                 busViewModel.selectedDate = "${searchViewModel.date}/${searchViewModel.month}/${searchViewModel.year}"
-//                mvvm
 
                 parentFragmentManager.commit {
                     setCustomAnimations(R.anim.from_right, R.anim.to_left)
