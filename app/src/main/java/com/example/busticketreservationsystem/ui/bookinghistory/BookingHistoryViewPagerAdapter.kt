@@ -59,7 +59,8 @@ class BookingHistoryViewPagerAdapter(fragmentManager: FragmentManager, lifecycle
                 }
             }
         }
-        val fragment = BookingHistoryListFragment(filteredTickets, filteredBuses, filteredPartner)
+        val fragment = BookingHistoryListFragment()
+        fragment.setBookingHistoryData(filteredTickets, filteredBuses, filteredPartner)
         fragment.arguments = Bundle().apply {
             putInt(ARG_OBJECT, position)
         }

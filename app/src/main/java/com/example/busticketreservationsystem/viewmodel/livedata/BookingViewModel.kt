@@ -7,6 +7,7 @@ import com.example.busticketreservationsystem.enums.BookedTicketStatus
 import com.example.busticketreservationsystem.data.entity.*
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.ui.bookingdetails.PassengerInfoModel
+import com.example.busticketreservationsystem.utils.Helper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -16,6 +17,8 @@ import java.util.*
 class BookingViewModel(
     private val repository: AppRepositoryImpl
 ): ViewModel() {
+
+    private val helper = Helper()
 
 //    Booking History list related data
 
@@ -199,7 +202,18 @@ class BookingViewModel(
         }
     }
 
-
+    fun updateTicketStatus() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val sdf = SimpleDateFormat("dd/MM/yyyy")
+            val bookingsList = repository.getAllUpcomingBookings(BookedTicketStatus.UPCOMING.name)
+            for(booking in bookingsList){
+                val strDate: Date = sdf.parse(booking.date)
+                if(helper.getCurrentDate()!!.compareTo(strDate) > 0){
+                    repository.updateTicketStatus(BookedTicketStatus.COMPLETED.name, booking.bookingId)
+                }
+            }
+        }
+    }
 
 
 //    Tab Layout tab position related

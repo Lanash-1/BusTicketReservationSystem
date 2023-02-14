@@ -49,7 +49,7 @@ class AppRepositoryImpl(
         appDb.userDao().updateUserPassword(password, mobileNumber)
     }
 
-    override fun deleteUserAccount(user: User){
+    override fun deleteUserAccount(user: Int){
         appDb.userDao().deleteUserAccount(user)
     }
 
@@ -68,6 +68,10 @@ class AppRepositoryImpl(
         appDb.busDao().insertBusData(bus)
     }
 
+    override fun insertBusAmenitiesData(amenity: List<BusAmenities>) {
+        appDb.busAmenitiesDao().insert(amenity)
+    }
+
     override fun getPartnerName(partnerId: Int): String{
         return appDb.partnersDao().getPartnerName(partnerId)
     }
@@ -80,12 +84,20 @@ class AppRepositoryImpl(
         return appDb.busAmenitiesDao().getBusAmenities(busId)
     }
 
+    override fun insertBusData(bus: List<Bus>) {
+        appDb.busDao().insertBusData(bus)
+    }
+
     override fun getBusData(): List<Bus>{
         return appDb.busDao().getBusData()
     }
 
     override fun getBus(busId: Int): Bus {
         return appDb.busDao().getBus(busId)
+    }
+
+    override fun insertPartnerData(partner: List<Partners>) {
+        appDb.partnersDao().insertPartnerData(partner)
     }
 
     override fun getBusOfPartner(partnerId: Int): List<Bus> {
@@ -224,6 +236,14 @@ class AppRepositoryImpl(
 
     override fun getTicketCount(partnerId: Int): Int {
         return appDb.bookingsDao().getTicketCount(partnerId)
+    }
+
+    override fun fetchAllTickets(): List<Bookings> {
+        return appDb.bookingsDao().fetchAllTickets()
+    }
+
+    override fun getAllUpcomingBookings(ticketStatus: String): List<Bookings> {
+        return appDb.bookingsDao().getTicketOfParticularStatus(ticketStatus)
     }
 
 

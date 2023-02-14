@@ -13,6 +13,9 @@ interface BusDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertBusData(bus: Bus)
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertBusData(bus: List<Bus>)
+
     @Query("SELECT * FROM bus_table")
     fun getBusData(): List<Bus>
 
@@ -33,6 +36,8 @@ interface BusDao {
 
     @Query("select * from bus_table where partnerId = :partnerId")
     fun getBusOfPartner(partnerId: Int): List<Bus>
+
+
 
 
 }

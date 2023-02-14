@@ -12,6 +12,9 @@ interface PartnersDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertPartnerData(partner: Partners)
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertPartnerData(partner: List<Partners>)
+
     @Query("SELECT * FROM partners_table")
     fun getPartnersData(): List<Partners>
 

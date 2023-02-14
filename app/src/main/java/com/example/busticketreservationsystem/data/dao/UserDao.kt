@@ -30,8 +30,8 @@ interface UserDao {
     @Query("UPDATE user_table SET password=:password WHERE mobileNumber LIKE :mobileNumber")
     fun updateUserPassword(password: String, mobileNumber: String)
 
-    @Delete
-    fun deleteUserAccount(user: User)
+    @Query("delete from user_table where userId like :user")
+    fun deleteUserAccount(user: Int)
 
     @Query("select count(*) from user_table")
     fun getUserCount(): Int

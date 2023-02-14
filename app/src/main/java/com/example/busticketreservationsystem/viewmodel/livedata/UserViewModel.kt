@@ -83,16 +83,15 @@ class UserViewModel(
                         recentlyViewedPartner.add(repository.getPartnerName(recentlyViewedBus[i].partnerId))
                         filteredRecentlyViewed.add(recentlyViewed[i])
                     }
-
                 }
             }
             fetchJob.join()
             withContext(Dispatchers.Main){
                 recentlyViewedBusList = recentlyViewedBus
                 recentlyViewedPartnerList = recentlyViewedPartner
-                if(filteredRecentlyViewed.isNotEmpty()){
+//                if(filteredRecentlyViewed.isNotEmpty()){
                     recentlyViewedList.value = filteredRecentlyViewed
-                }
+//                }
             }
         }
     }
@@ -223,7 +222,7 @@ class UserViewModel(
 
     fun deleteUserAccount() {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteUserAccount(user)
+            repository.deleteUserAccount(user.userId)
         }
     }
 

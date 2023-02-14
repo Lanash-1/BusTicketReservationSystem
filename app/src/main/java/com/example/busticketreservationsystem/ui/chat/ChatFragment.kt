@@ -87,7 +87,6 @@ class ChatFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentChatBinding.inflate(inflater, container, false)
 
-
         return binding.root
     }
 
@@ -125,7 +124,7 @@ class ChatFragment : Fragment() {
         chatViewModel.userChat.value?.clear()
         if(loginStatusViewModel.status == LoginStatus.ADMIN_LOGGED_IN){
             parentFragmentManager.commit {
-//                setCustomAnimations(R.anim.from_left, R.anim.to_right)
+                setCustomAnimations(R.anim.from_left, R.anim.to_right)
                 replace(R.id.adminPanelFragmentContainer, AdminChatSupportFragment())
             }
         }else{
@@ -134,7 +133,6 @@ class ChatFragment : Fragment() {
                 replace(R.id.main_fragment_container, HomePageFragment())
             }
         }
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

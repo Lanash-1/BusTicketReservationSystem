@@ -1,5 +1,6 @@
 package com.example.busticketreservationsystem.ui.dashboard
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Color
@@ -8,6 +9,7 @@ import android.view.*
 import android.view.animation.AnimationUtils
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
@@ -105,8 +107,11 @@ class DashBoardFragment : Fragment() {
     }
 
 
+    @SuppressLint("ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        userViewModel.isLoggedIn.value = null
 
         clearAllValues()
 
@@ -155,17 +160,15 @@ class DashBoardFragment : Fragment() {
 
         userViewModel.recentlyViewedList.observe(viewLifecycleOwner, Observer{
             if(it.isNotEmpty()){
-
                 recentlyViewedAdapter.setRecentlyViewedList(userViewModel.recentlyViewedBusList, userViewModel.recentlyViewedList.value!!, userViewModel.recentlyViewedPartnerList)
                 binding.recentlyViewedText.visibility = View.VISIBLE
                 binding.recentlyViewedRecyclerView.visibility = View.VISIBLE
             }else{
-
+                println("EMPTY RECENTLY VIEWED")
                 binding.recentlyViewedText.visibility = View.GONE
                 binding.recentlyViewedRecyclerView.visibility = View.GONE
             }
         })
-
 
         recentlyViewedAdapter.setOnRemoveClickListener(object: OnRemoveClickListener{
             override fun onRemoveClick(position: Int) {
@@ -190,6 +193,29 @@ class DashBoardFragment : Fragment() {
             }
         })
 
+        binding.sourceText.doOnTextChanged { text, start, before, count ->
+            if(searchViewModel.sourceLocation.isNotEmpty()){
+                binding.sourceText.setTextColor(resources.getColor(R.color.searchColor))
+                binding.enterSourceErrorIcon.visibility = View.GONE
+            }
+        }
+
+        binding.destinationText.doOnTextChanged { text, start, before, count ->
+            if(searchViewModel.destinationLocation.isNotEmpty()){
+                binding.destinationText.setTextColor(resources.getColor(R.color.searchColor))
+
+                binding.enterDestinationErrorIcon.visibility = View.GONE
+            }
+        }
+
+        binding.dateText.doOnTextChanged { text, start, before, count ->
+            if(searchViewModel.year != 0){
+                binding.dateText.setTextColor(resources.getColor(R.color.searchColor))
+
+                binding.enterDateErrorIcon.visibility = View.GONE
+            }
+        }
+
         binding.searchBusButton.setOnClickListener {
             if(searchViewModel.sourceLocation.isNotEmpty() && searchViewModel.destinationLocation.isNotEmpty() && searchViewModel.year != 0){
 
@@ -202,7 +228,6 @@ class DashBoardFragment : Fragment() {
                     setCustomAnimations(R.anim.from_right, R.anim.to_left)
                     replace(R.id.homePageFragmentContainer, BusResultsFragment())
                 }
-
             }else{
                 checkErrorInput()
             }
@@ -253,7 +278,7 @@ class DashBoardFragment : Fragment() {
 
                 binding.enterDateErrorIcon.visibility = View.INVISIBLE
             }else{
-                binding.dateText.text = "DD - MM - YYYY"
+                binding.dateText.text = "Select Date"
                 searchViewModel.apply {
                     year = 0
                     month = 0
@@ -265,18 +290,21 @@ class DashBoardFragment : Fragment() {
 
     private fun checkErrorInput() {
         if(searchViewModel.sourceLocation.isEmpty()){
+            binding.sourceText.setTextColor(Color.RED)
             binding.enterSourceErrorIcon.visibility = View.VISIBLE
         }else{
             binding.enterSourceErrorIcon.visibility = View.INVISIBLE
         }
 
         if(searchViewModel.destinationLocation.isEmpty()){
+            binding.destinationText.setTextColor(Color.RED)
             binding.enterDestinationErrorIcon.visibility = View.VISIBLE
         }else{
             binding.enterDestinationErrorIcon.visibility = View.INVISIBLE
         }
 
         if(searchViewModel.year == 0){
+            binding.dateText.setTextColor(Color.RED)
             binding.enterDateErrorIcon.visibility = View.VISIBLE
         }else{
             binding.enterDateErrorIcon.visibility = View.INVISIBLE
@@ -302,24 +330,20 @@ class DashBoardFragment : Fragment() {
         if(source.isNotEmpty() && destination.isNotEmpty()){
             binding.sourceText.text = source
             binding.destinationText.text = destination
-            binding.sourceText.setTextColor(Color.parseColor("#000000"))
-            binding.destinationText.setTextColor(Color.parseColor("#000000"))
-            checkErrorInput()
+//            binding.sourceText.setTextColor(Color.parseColor("#000000"))
+//            binding.destinationText.setTextColor(Color.parseColor("#000000"))
 
         }else if(source.isNotEmpty() && destination.isEmpty()){
             binding.sourceText.text = source
             binding.destinationText.text = "Enter Destination"
-            binding.sourceText.setTextColor(Color.parseColor("#000000"))
+//            binding.sourceText.setTextColor(Color.parseColor("#000000"))
             binding.destinationText.setTextColor(Color.parseColor("#808080"))
-            checkErrorInput()
-
 
         }else if(source.isEmpty() && destination.isNotEmpty()) {
             binding.sourceText.text = "Enter Source"
             binding.destinationText.text = destination
             binding.sourceText.setTextColor(Color.parseColor("#808080"))
-            binding.destinationText.setTextColor(Color.parseColor("#000000"))
-            checkErrorInput()
+//            binding.destinationText.setTextColor(Color.parseColor("#000000"))
 
         }
     }

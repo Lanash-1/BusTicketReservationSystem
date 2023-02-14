@@ -105,4 +105,13 @@ open class Helper {
         return true
     }
 
+    fun getCurrentDate(): Date? {
+        val sdf = SimpleDateFormat("dd/MM/yyyy")
+        val time = Calendar.getInstance().time
+        val current = sdf.format(time)
+        val currentDate = sdf.parse(current)
+
+        return currentDate
+    }
+
 }

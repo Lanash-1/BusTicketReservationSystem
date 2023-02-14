@@ -12,7 +12,8 @@
     <color name="customRed">#5AB351</color>
     <color name="seatGreen">#5AB351</color>
     <color name="sliderGray">#E0E0E0</color>
-<!--    <color name="customRed">#D84E55</color>-->
+    <color name="searchColor">#000000</color>
+    <!--    <color name="customRed">#D84E55</color>-->
 
     <!--    <color name="redForStatus">#D13140</color>-->
 </resources>

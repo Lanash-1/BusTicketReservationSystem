@@ -165,6 +165,14 @@
             "Peelamedu",
             "Saravanampatti"
           ]
+        },
+        {
+          "name": "Madurai",
+          "areas": [
+            "Simmakal Bus Stand",
+            "Maattuthavani",
+            "Central Periyar Bus Stand"
+          ]
         }
       ]
     },

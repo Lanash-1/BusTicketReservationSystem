@@ -12,7 +12,7 @@ import androidx.room.PrimaryKey
         parentColumns = ["busId"]
     )])
 data class BusAmenities(
-    @PrimaryKey(autoGenerate = true) val busAmenityId: Int,
+    @PrimaryKey(autoGenerate = true) var busAmenityId: Int,
     @ColumnInfo(index = true) var busId: Int,
     var amenity: String
 )

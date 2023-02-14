@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         bookingViewModel = ViewModelProvider(this, bookingViewModelFactory)[BookingViewModel::class.java]
 
 
-        println("App THEME OPeration")
+        println("App THEME Operation")
 
 //      Theme preference start
 
@@ -70,6 +70,14 @@ class MainActivity : AppCompatActivity() {
 
         fetchLocationData()
 
+//        update all ticket status
+
+        updateTicketStatus()
+
+    }
+
+    private fun updateTicketStatus() {
+        bookingViewModel.updateTicketStatus()
     }
 
 //     END OF ON-CREATE
@@ -129,6 +137,7 @@ class MainActivity : AppCompatActivity() {
             when (writeSharedPreferences.getString("status", "")) {
                 "" -> {
                     println("EMPTY")
+                    getBusData()
                     editor.putString("status", LoginStatus.NEW.name)
                     loginStatusViewModel.status = LoginStatus.NEW
                     editor.apply()
@@ -151,7 +160,7 @@ class MainActivity : AppCompatActivity() {
 
                     loginStatusViewModel.status = LoginStatus.LOGGED_IN
 
-                    updateBookingHistory(writeSharedPreferences.getInt("userId", 0))
+//                    updateBookingHistory(writeSharedPreferences.getInt("userId", 0))
 
                     supportFragmentManager.commit {
                         setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
@@ -160,7 +169,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 LoginStatus.NEW.name -> {
                     println("NEW ")
-
+                    getBusData()
                     loginStatusViewModel.status = LoginStatus.NEW
                     supportFragmentManager.commit {
                         setCustomAnimations(R.anim.from_right, R.anim.to_left)
@@ -189,6 +198,8 @@ class MainActivity : AppCompatActivity() {
                     println("ELSE NOT OPENING")
                 }
             }
+        }else{
+            println("SAVED INSTANCE STATE NOT NULL")
         }
     }
 
@@ -227,5 +238,107 @@ class MainActivity : AppCompatActivity() {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
         }
+    }
+
+    private fun getBusData() {
+
+        println("GET BUS DATA FUNCTION")
+
+        val partnersList = mutableListOf<Partners>()
+        val busList = mutableListOf<Bus>()
+        val amenitiesList = mutableListOf<BusAmenities>()
+
+        val pList = mutableListOf<Partners>()
+        val bList = mutableListOf<List<Bus>>()
+        val aList = mutableListOf<List<List<BusAmenities>>>()
+
+
+        val jsonData = applicationContext.resources.openRawResource(
+            applicationContext.resources.getIdentifier(
+                "buses",
+                "raw",
+                applicationContext.packageName
+            )
+        ).bufferedReader().use{it.readText()}
+
+        val jsonString = JSONObject(jsonData)
+
+        println(jsonString)
+
+        val partners = jsonString.getJSONArray("partners") as JSONArray
+
+        for(i in 0 until partners.length()){
+            println("PARTNER INDEX = ${i}")
+            val partnerId: Int = i
+            val partnerName = partners.getJSONObject(i).get("name").toString()
+            val partnerMobile = partners.getJSONObject(i).get("mobileNumber").toString()
+            val partnerEmail = partners.getJSONObject(i).get("emailId").toString()
+            val busesOperated = partners.getJSONObject(i).get("noOfBusOperated").toString().toInt()
+
+            println("PARTNER NAME = ${partnerName}")
+            val partner = Partners(partnerId+1, partnerName, busesOperated, partnerEmail, partnerMobile)
+            partnersList.add(partner)
+            pList.add(partner)
+
+//            println("Name: $partnerName\nMobile: $partnerMobile\n Email: $partnerEmail\nBuses No: $busesOperated")
+
+            val buses = partners.getJSONObject(i).getJSONArray("buses") as JSONArray
+
+            val busSet = mutableListOf<Bus>()
+            val amenitySet = mutableListOf<List<BusAmenities>>()
+
+            for(j in 0 until buses.length()){
+
+                val busId = busList.size
+                val busName = buses.getJSONObject(j).get("busName").toString()
+                val sourceLocation = buses.getJSONObject(j).get("sourceLocation").toString()
+                val destinationLocation = buses.getJSONObject(j).get("destinationLocation").toString()
+                val perTicketCost = buses.getJSONObject(j).get("perTicketCost").toString().toDouble()
+                val busType = buses.getJSONObject(j).get("busType").toString()
+                val totalSeats = buses.getJSONObject(j).get("totalSeats").toString().toInt()
+                val startTime = buses.getJSONObject(j).get("startTime").toString()
+                val reachTime = buses.getJSONObject(j).get("reachTime").toString()
+                val duration = buses.getJSONObject(j).get("duration").toString()
+                val bus = Bus(busId+1, partnerId, busName, sourceLocation, destinationLocation, perTicketCost, busType, totalSeats, totalSeats, startTime, reachTime, duration, 0.0, 0)
+                busList.add(bus)
+                busSet.add(bus)
+
+                val amenities = buses.getJSONObject(j).getJSONArray("amenities") as JSONArray
+
+                val singleBusAmenities = mutableListOf<BusAmenities>()
+
+                for(k in 0 until amenities.length()){
+
+                    println("BUS ID = ${busId+1}")
+                    val amenity = BusAmenities(k+1, busId, amenities[k].toString())
+                    amenitiesList.add(amenity)
+                    singleBusAmenities.add(amenity)
+
+                }
+
+                amenitySet.add(singleBusAmenities)
+            }
+            bList.add(busSet)
+            aList.add(amenitySet)
+        }
+//        insertDataToDb(partnersList, busList, amenitiesList)
+        insertBusDataToDb(pList, bList, aList)
+
+    }
+
+    private fun insertBusDataToDb(
+        pList: MutableList<Partners>,
+        bList: MutableList<List<Bus>>,
+        aList: MutableList<List<List<BusAmenities>>>
+    ) {
+        busViewModel.insertInitialBusData(pList, bList, aList)
+    }
+
+    private fun insertDataToDb(
+        partnersList: MutableList<Partners>,
+        busList: MutableList<Bus>,
+        amenitiesList: MutableList<BusAmenities>
+    ) {
+        busViewModel.insertInitialData(partnersList, busList, amenitiesList)
     }
 }

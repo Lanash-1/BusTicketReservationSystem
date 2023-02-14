@@ -128,7 +128,6 @@ class LoginFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
 
-
         createAccountText = view.findViewById(R.id.create_account_text)
         forgotPasswordText = view.findViewById(R.id.forgot_password_text)
         loginButton = view.findViewById(R.id.login_button)

@@ -98,32 +98,55 @@ class BusInfoFragment : Fragment() {
     }
 
     fun backPressOperation(){
-        when(navigationViewModel.fragment){
-            is BookedTicketFragment -> {
-//                navigationViewModel.fragment = BookingDetailsFragment()
-                navigationViewModel.fragment = navigationViewModel.previousFragment
-                parentFragmentManager.commit {
-                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
-                    replace(R.id.homePageFragmentContainer, BookedTicketFragment())
-                }
-            }
-            is BusesListFragment -> {
-                navigationViewModel.fragment = null
-                parentFragmentManager.commit {
-                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
-                    replace(R.id.adminPanelFragmentContainer, BusesListFragment())
+        when(loginStatusViewModel.status){
+            LoginStatus.ADMIN_LOGGED_IN -> {
+                when(navigationViewModel.fragment){
+                    is BookedTicketFragment -> {
+                        navigationViewModel.fragment = navigationViewModel.previousFragment
+                        parentFragmentManager.commit {
+                            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                            setCustomAnimations(R.anim.from_left, R.anim.to_right)
+                            replace(R.id.adminPanelFragmentContainer, BookedTicketFragment())
+                        }
+                    }
+                    is BusesListFragment -> {
+                        navigationViewModel.fragment = null
+                        parentFragmentManager.commit {
+                            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                            setCustomAnimations(R.anim.from_left, R.anim.to_right)
+                            replace(R.id.adminPanelFragmentContainer, BusesListFragment())
+                        }
+                    }
+                    else -> {
+                        parentFragmentManager.commit {
+                            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                            setCustomAnimations(R.anim.from_left, R.anim.to_right)
+                            replace(R.id.homePageFragmentContainer, SelectedBusFragment())
+                        }
+                    }
                 }
             }
             else -> {
-                parentFragmentManager.commit {
-                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
-                    replace(R.id.homePageFragmentContainer, SelectedBusFragment())
+                when(navigationViewModel.fragment){
+                    is BookedTicketFragment -> {
+                        navigationViewModel.fragment = navigationViewModel.previousFragment
+                        parentFragmentManager.commit {
+                            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                            setCustomAnimations(R.anim.from_left, R.anim.to_right)
+                            replace(R.id.homePageFragmentContainer, BookedTicketFragment())
+                        }
+                    }
+                    else -> {
+                        parentFragmentManager.commit {
+                            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                            setCustomAnimations(R.anim.from_left, R.anim.to_right)
+                            replace(R.id.homePageFragmentContainer, SelectedBusFragment())
+                        }
+                    }
                 }
             }
         }
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -267,21 +290,35 @@ class BusInfoFragment : Fragment() {
 
 
         binding.readReviewsButton.setOnClickListener {
-            when(navigationViewModel.fragment){
-                is BusesListFragment -> {
-                    parentFragmentManager.commit {
-                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        setCustomAnimations(R.anim.from_right, R.anim.to_left)
-                        replace(R.id.adminPanelFragmentContainer, ReviewsFragment())
-                    }
-                }else -> {
-                    parentFragmentManager.commit {
-                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        setCustomAnimations(R.anim.from_right, R.anim.to_left)
-                        replace(R.id.homePageFragmentContainer, ReviewsFragment())
-                    }
+
+            if(loginStatusViewModel.status == LoginStatus.ADMIN_LOGGED_IN){
+                parentFragmentManager.commit {
+                    setCustomAnimations(R.anim.from_right, R.anim.to_left)
+                    replace(R.id.adminPanelFragmentContainer, ReviewsFragment())
+                    addToBackStack(null)
+                }
+            }else{
+                parentFragmentManager.commit {
+                    setCustomAnimations(R.anim.from_right, R.anim.to_left)
+                    replace(R.id.homePageFragmentContainer, ReviewsFragment())
                 }
             }
+
+//            when(navigationViewModel.fragment){
+//                is BusesListFragment -> {
+//                    parentFragmentManager.commit {
+//                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+//                        setCustomAnimations(R.anim.from_right, R.anim.to_left)
+//                        replace(R.id.adminPanelFragmentContainer, ReviewsFragment())
+//                    }
+//                }else -> {
+//                    parentFragmentManager.commit {
+//                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+//                        setCustomAnimations(R.anim.from_right, R.anim.to_left)
+//                        replace(R.id.homePageFragmentContainer, ReviewsFragment())
+//                    }
+//                }
+//            }
         }
 
 

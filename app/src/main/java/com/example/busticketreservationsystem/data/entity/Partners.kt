@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "partners_table")
 data class Partners(
-    @PrimaryKey(autoGenerate = true) val partnerId: Int,
+    @PrimaryKey (autoGenerate = true) val partnerId: Int,
     var partnerName: String,
     var noOfBusesOperated: Int,
     var partnerEmailId: String,

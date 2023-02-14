@@ -169,7 +169,6 @@ class MyAccountFragment : Fragment() {
                         parentFragmentManager.commit {
                             setCustomAnimations(R.anim.from_right, R.anim.to_left)
                             replace(R.id.homePageFragmentContainer, SettingsFragment())
-                            addToBackStack(null)
                         }
                     }
                     MyAccountOptions.CALL_SUPPORT -> {

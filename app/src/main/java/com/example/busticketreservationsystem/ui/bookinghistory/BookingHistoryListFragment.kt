@@ -5,8 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
@@ -18,19 +18,33 @@ import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.entity.Bookings
 import com.example.busticketreservationsystem.data.entity.Bus
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
+import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.ui.bookedticket.BookedTicketFragment
+import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
+import com.example.busticketreservationsystem.viewmodel.livedata.AdminViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BookingViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.livedata.BookingViewModel
 import com.example.busticketreservationsystem.viewmodel.livedata.UserViewModel
-import com.google.android.material.tabs.TabLayout
+import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.AdminViewModelFactory
 
 
 class BookingHistoryListFragment(
-    private val tickets: List<Bookings>,
-    private val buses: List<Bus>,
-    private val partnerName: List<String>
+//    private val tickets: List<Bookings>,
+//    private val buses: List<Bus>,
+//    private val partnerName: List<String>
 ) : Fragment() {
+
+
+    private var tickets: List<Bookings> = listOf()
+    private var buses: List<Bus> = listOf()
+    private var partnerName: List<String> = listOf()
+
+    fun setBookingHistoryData(tickets: List<Bookings>, buses: List<Bus>, partnerName: List<String>){
+        this.tickets = tickets
+        this.buses = buses
+        this.partnerName = partnerName
+    }
 
 
 
@@ -43,6 +57,8 @@ class BookingHistoryListFragment(
 
     private lateinit var bookingViewModel: BookingViewModel
     private lateinit var userViewModel: UserViewModel
+    private lateinit var adminViewModel: AdminViewModel
+    private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,6 +73,9 @@ class BookingHistoryListFragment(
 
         val userViewModelFactory =  UserViewModelFactory(repository)
         userViewModel = ViewModelProvider(requireActivity(), userViewModelFactory)[UserViewModel::class.java]
+
+        val adminViewModelFactory = AdminViewModelFactory(repository)
+        adminViewModel = ViewModelProvider(requireActivity(), adminViewModelFactory)[AdminViewModel::class.java]
 
     }
 
@@ -77,52 +96,94 @@ class BookingHistoryListFragment(
         super.onViewCreated(view, savedInstanceState)
         currentPosition = requireArguments().getInt("object", -1)
 
-        println("TICKETS  = ${tickets.size}")
 
-
-
-        requireActivity().findViewById<ViewPager2>(R.id.booking_history_viewPager).registerOnPageChangeCallback(
+        requireActivity().findViewById<ViewPager2>(R.id.booking_history_viewPager)?.registerOnPageChangeCallback(
             object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
-                    println("ON PAGE SELECTED IS CALLED , PAGE SELECTED = ${position}")
+
                     val filteredTickets = mutableListOf<Bookings>()
                     val filteredBuses = mutableListOf<Bus>()
                     val filteredPartner = mutableListOf<String>()
-                    when(position){
-                        0 -> {
-                            for(i in bookingViewModel.bookingHistoryBookingList.indices){
-                                if(bookingViewModel.bookingHistoryBookingList[i].bookedTicketStatus == BookedTicketStatus.UPCOMING.name){
-                                    filteredTickets.add(bookingViewModel.bookingHistoryBookingList[i])
-                                    filteredBuses.add(bookingViewModel.bookingHistoryBusList[i])
-                                    filteredPartner.add(bookingViewModel.bookingHistoryPartnerList[i])
+
+                    when (loginStatusViewModel.status) {
+                        LoginStatus.ADMIN_LOGGED_IN -> {
+                            when (position) {
+                                0 -> {
+                                    for (i in adminViewModel.bookedTicketList.indices) {
+                                        if (adminViewModel.bookedTicketList[i].bookedTicketStatus == BookedTicketStatus.UPCOMING.name) {
+                                            filteredTickets.add(adminViewModel.bookedTicketList[i])
+                                            filteredBuses.add(adminViewModel.bookedBusList[i])
+                                            filteredPartner.add(adminViewModel.bookedPartnerList.value!![i])
+                                        }
+                                    }
+                                }
+                                1 -> {
+                                    for (i in adminViewModel.bookedTicketList.indices) {
+                                        if (adminViewModel.bookedTicketList[i].bookedTicketStatus == BookedTicketStatus.COMPLETED.name) {
+                                            filteredTickets.add(adminViewModel.bookedTicketList[i])
+                                            filteredBuses.add(adminViewModel.bookedBusList[i])
+                                            filteredPartner.add(adminViewModel.bookedPartnerList.value!![i])
+                                        }
+                                    }
+                                }
+                                2 -> {
+                                    for (i in adminViewModel.bookedTicketList.indices) {
+                                        if (adminViewModel.bookedTicketList[i].bookedTicketStatus == BookedTicketStatus.CANCELLED.name) {
+                                            filteredTickets.add(adminViewModel.bookedTicketList[i])
+                                            filteredBuses.add(adminViewModel.bookedBusList[i])
+                                            filteredPartner.add(adminViewModel.bookedPartnerList.value!![i])
+                                        }
+                                    }
                                 }
                             }
+                            adminViewModel.apply {
+                                this.filteredPartnerList = filteredPartner
+                                this.filteredBookingList = filteredTickets
+                                this.filteredBusList = filteredBuses
+                            }
+                            super.onPageSelected(position)
                         }
-                        1 -> {
-                            for(i in bookingViewModel.bookingHistoryBookingList.indices){
-                                if(bookingViewModel.bookingHistoryBookingList[i].bookedTicketStatus == BookedTicketStatus.COMPLETED.name){
-                                    filteredTickets.add(bookingViewModel.bookingHistoryBookingList[i])
-                                    filteredBuses.add(bookingViewModel.bookingHistoryBusList[i])
-                                    filteredPartner.add(bookingViewModel.bookingHistoryPartnerList[i])
+                        LoginStatus.LOGGED_IN -> {
+                            when (position) {
+                                0 -> {
+                                    for (i in bookingViewModel.bookingHistoryBookingList.indices) {
+                                        if (bookingViewModel.bookingHistoryBookingList[i].bookedTicketStatus == BookedTicketStatus.UPCOMING.name) {
+                                            filteredTickets.add(bookingViewModel.bookingHistoryBookingList[i])
+                                            filteredBuses.add(bookingViewModel.bookingHistoryBusList[i])
+                                            filteredPartner.add(bookingViewModel.bookingHistoryPartnerList[i])
+                                        }
+                                    }
+                                }
+                                1 -> {
+                                    for (i in bookingViewModel.bookingHistoryBookingList.indices) {
+                                        if (bookingViewModel.bookingHistoryBookingList[i].bookedTicketStatus == BookedTicketStatus.COMPLETED.name) {
+                                            filteredTickets.add(bookingViewModel.bookingHistoryBookingList[i])
+                                            filteredBuses.add(bookingViewModel.bookingHistoryBusList[i])
+                                            filteredPartner.add(bookingViewModel.bookingHistoryPartnerList[i])
+                                        }
+                                    }
+                                }
+                                2 -> {
+                                    for (i in bookingViewModel.bookingHistoryBookingList.indices) {
+                                        if (bookingViewModel.bookingHistoryBookingList[i].bookedTicketStatus == BookedTicketStatus.CANCELLED.name) {
+                                            filteredTickets.add(bookingViewModel.bookingHistoryBookingList[i])
+                                            filteredBuses.add(bookingViewModel.bookingHistoryBusList[i])
+                                            filteredPartner.add(bookingViewModel.bookingHistoryPartnerList[i])
+                                        }
+                                    }
                                 }
                             }
+                            bookingViewModel.apply {
+                                this.filteredPartnerList = filteredPartner
+                                this.filteredBookingList = filteredTickets
+                                this.filteredBusList = filteredBuses
+                            }
+                            super.onPageSelected(position)
                         }
-                        2 -> {
-                            for(i in bookingViewModel.bookingHistoryBookingList.indices){
-                                if(bookingViewModel.bookingHistoryBookingList[i].bookedTicketStatus == BookedTicketStatus.CANCELLED.name){
-                                    filteredTickets.add(bookingViewModel.bookingHistoryBookingList[i])
-                                    filteredBuses.add(bookingViewModel.bookingHistoryBusList[i])
-                                    filteredPartner.add(bookingViewModel.bookingHistoryPartnerList[i])
-                                }
-                            }
+                        else -> {
+                            println("OTHER LOGIN - [BOOKING HISTORY LIST FRAGMENT]")
                         }
                     }
-                    bookingViewModel.apply {
-                        this.filteredPartnerList = filteredPartner
-                        this.filteredBookingList = filteredTickets
-                        this.filteredBusList = filteredBuses
-                    }
-                    super.onPageSelected(position)
                 }
             }
         )
@@ -144,16 +205,46 @@ class BookingHistoryListFragment(
         bookingHistoryListAdapter.setOnItemClickListener(object : OnItemClickListener{
             override fun onItemClick(position: Int) {
 
-                bookingViewModel.selectedTicket = position
-                println("FILTERED BUS SIZE = ${bookingViewModel.filteredBusList.size} - SELECTED POSITION  = $position")
-                bookingViewModel.selectedBus = bookingViewModel.filteredBusList[position]
+                handleTicketItemClick(position)
 
-                parentFragmentManager.commit {
-                    setCustomAnimations(R.anim.from_right, R.anim.to_left)
-                    replace(R.id.homePageFragmentContainer, BookedTicketFragment())
-                }
             }
         })
 
+    }
+
+    private fun handleTicketItemClick(position: Int) {
+        when(loginStatusViewModel.status){
+            LoginStatus.ADMIN_LOGGED_IN -> {
+
+                adminViewModel.selectedBookingId = adminViewModel.filteredBookingList[position].bookingId
+                bookingViewModel.selectedBus = adminViewModel.filteredBusList[position]
+
+                moveToNextFragment(R.id.adminPanelFragmentContainer, BookedTicketFragment())
+            }
+            LoginStatus.LOGGED_IN -> {
+
+                bookingViewModel.selectedTicket = position
+                bookingViewModel.selectedBus = bookingViewModel.filteredBusList[position]
+
+                moveToNextFragment(R.id.homePageFragmentContainer, BookedTicketFragment())
+            }
+            else -> {
+                println("OTHER USER LOGGED IN [BOOKING HISTORY LIST FRAGMENT]")
+            }
+        }
+    }
+
+    private fun moveToNextFragment(fragmentContainer: Int, fragment: Fragment) {
+        parentFragmentManager.commit {
+            setCustomAnimations(R.anim.from_right, R.anim.to_left)
+            replace(fragmentContainer, fragment)
+        }
+    }
+
+    private fun moveToPreviousFragment(fragmentContainer:Int, fragment: Fragment){
+        parentFragmentManager.commit {
+            setCustomAnimations(R.anim.to_right, R.anim.from_left)
+            replace(fragmentContainer, fragment)
+        }
     }
 }

@@ -22,15 +22,18 @@ import com.example.busticketreservationsystem.databinding.FragmentBookedTicketBi
 import com.example.busticketreservationsystem.enums.BookedTicketStatus
 import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
+import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.ui.bookingdetails.BookingDetailsFragment
 import com.example.busticketreservationsystem.ui.bookinghistory.BookingHistoryFragment
 import com.example.busticketreservationsystem.ui.businfo.BusInfoFragment
 import com.example.busticketreservationsystem.ui.homepage.HomePageFragment
 import com.example.busticketreservationsystem.viewmodel.*
+import com.example.busticketreservationsystem.viewmodel.livedata.AdminViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BookingViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.livedata.BookingViewModel
 import com.example.busticketreservationsystem.viewmodel.livedata.BusViewModel
+import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.AdminViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.time.Month
 
@@ -41,10 +44,13 @@ class BookedTicketFragment : Fragment() {
     private val navigationViewModel: NavigationViewModel by activityViewModels()
     private val searchViewModel: SearchViewModel by activityViewModels()
     private val dateViewModel: DateViewModel by activityViewModels()
+    private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
 
 
     private lateinit var bookingViewModel: BookingViewModel
     private lateinit var busViewModel: BusViewModel
+    private lateinit var adminViewModel: AdminViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,13 +65,16 @@ class BookedTicketFragment : Fragment() {
         val busViewModelFactory = BusViewModelFactory(repository)
         busViewModel = ViewModelProvider(requireActivity(), busViewModelFactory)[BusViewModel::class.java]
 
+        val adminViewModelFactory = AdminViewModelFactory(repository)
+        adminViewModel = ViewModelProvider(requireActivity(), adminViewModelFactory)[AdminViewModel::class.java]
+
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         (activity as AppCompatActivity).supportActionBar?.apply {
             title = "Ticket Details"
             setDisplayHomeAsUpEnabled(true)
@@ -77,11 +86,69 @@ class BookedTicketFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home -> {
-                backPressLogic()
+                backPressOperation()
             }
         }
         return super.onOptionsItemSelected(item)
     }
+
+    private fun backPressOperation() {
+
+        when(loginStatusViewModel.status){
+            LoginStatus.ADMIN_LOGGED_IN -> {
+
+                moveToPreviousFragment(R.id.adminPanelFragmentContainer, BookingHistoryFragment())
+
+            }
+            LoginStatus.LOGGED_IN -> {
+
+                clearStoredData()
+
+                moveToPreviousFragment(R.id.homePageFragmentContainer, BookingHistoryFragment())
+
+            }
+            else -> {
+                println("OTHER LOGIN - [BOOKED TICKET FRAGMENT]")
+            }
+        }
+
+
+    }
+
+    private fun clearStoredData() {
+        busViewModel.apply {
+            selectedSeats.clear()
+        }
+        bookingViewModel.apply {
+            selectedSeats.clear()
+            passengerInfo.clear()
+            contactEmailId = null
+            contactMobileNumber = null
+        }
+        searchViewModel.apply {
+            this.sourceLocation = ""
+            this.destinationLocation = ""
+            this.year = 0
+            this.currentSearch = ""
+        }
+        dateViewModel.travelYear = 0
+        navigationViewModel.fragment = null
+    }
+
+    private fun moveToNextFragment(fragmentContainer: Int, fragment: Fragment) {
+        parentFragmentManager.commit {
+            setCustomAnimations(R.anim.from_right, R.anim.to_left)
+            replace(fragmentContainer, fragment)
+        }
+    }
+
+    private fun moveToPreviousFragment(fragmentContainer:Int, fragment: Fragment){
+        parentFragmentManager.commit {
+            setCustomAnimations(R.anim.from_left, R.anim.to_right)
+            replace(fragmentContainer, fragment)
+        }
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -91,22 +158,27 @@ class BookedTicketFragment : Fragment() {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true){
                 override fun handleOnBackPressed() {
-                    backPressLogic()
+                    backPressOperation()
                 }
             }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
 
-        // observe booked ticket data fetched
-
-
-        if(navigationViewModel.fragment is BookingDetailsFragment){
-            binding.cancelTicketButton.visibility = View.GONE
-            setTicketDataToView()
+        if(loginStatusViewModel.status == LoginStatus.ADMIN_LOGGED_IN){
+            selectedTicketOperations(adminViewModel.selectedBookingId)
         }else{
-            selectedTicketOperations()
+            // cancel button visibility logic
+
+            if(navigationViewModel.fragment is BookingDetailsFragment){
+                binding.cancelTicketButton.visibility = View.GONE
+                setTicketDataToView()
+            }else{
+                selectedTicketOperations(bookingViewModel.filteredBookingList[bookingViewModel.selectedTicket].bookingId)
+            }
         }
+
+
 
         binding.cancelTicketButton.setOnClickListener {
             cancelTicketAction(bookingViewModel.filteredBookingList[bookingViewModel.selectedTicket].bookingId)
@@ -116,25 +188,36 @@ class BookedTicketFragment : Fragment() {
             navigationViewModel.previousFragment = navigationViewModel.fragment
             navigationViewModel.fragment = BookedTicketFragment()
             busViewModel.selectedBus = bookingViewModel.selectedBus
-            parentFragmentManager.commit {
-                setCustomAnimations(R.anim.from_right, R.anim.to_left)
-                replace(R.id.homePageFragmentContainer, BusInfoFragment())
+
+            if(loginStatusViewModel.status == LoginStatus.ADMIN_LOGGED_IN){
+                moveToNextFragment(R.id.adminPanelFragmentContainer, BusInfoFragment())
+
+            }else{
+                moveToNextFragment(R.id.homePageFragmentContainer, BusInfoFragment())
+
             }
+
+
         }
     }
 
 
-    private fun selectedTicketOperations() {
-        // cancel button visibility logic
-        if(bookingViewModel.filteredBookingList[bookingViewModel.selectedTicket].bookedTicketStatus == BookedTicketStatus.UPCOMING.name){
-            binding.cancelTicketButton.visibility = View.VISIBLE
+    private fun selectedTicketOperations(bookingId: Int) {
+
+
+        if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
+            if(bookingViewModel.filteredBookingList[bookingViewModel.selectedTicket].bookedTicketStatus == BookedTicketStatus.UPCOMING.name){
+                binding.cancelTicketButton.visibility = View.VISIBLE
+            }else{
+                binding.cancelTicketButton.visibility = View.GONE
+            }
         }else{
             binding.cancelTicketButton.visibility = View.GONE
+
         }
 
-
         // fetch booked ticket data
-        bookingViewModel.fetchBookedTicketDetails(bookingViewModel.filteredBookingList[bookingViewModel.selectedTicket].bookingId)
+        bookingViewModel.fetchBookedTicketDetails(bookingId)
 
         bookingViewModel.bookedTicketDataFetched.observe(viewLifecycleOwner, Observer{
             setTicketDataToView()
@@ -142,33 +225,6 @@ class BookedTicketFragment : Fragment() {
 
     }
 
-    private fun backPressLogic() {
-        parentFragmentManager.commit {
-//            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-            setCustomAnimations(R.anim.from_left, R.anim.to_right)
-            replace(R.id.homePageFragmentContainer, BookingHistoryFragment())
-        }
-//        when(navigationViewModel.fragment){
-//            is BookingDetailsFragment -> {
-                busViewModel.apply {
-                    selectedSeats.clear()
-                }
-                bookingViewModel.apply {
-                    selectedSeats.clear()
-                    passengerInfo.clear()
-                    contactEmailId = null
-                    contactMobileNumber = null
-                }
-                searchViewModel.apply {
-                    this.sourceLocation = ""
-                    this.destinationLocation = ""
-                    this.year = 0
-                    this.currentSearch = ""
-                }
-                dateViewModel.travelYear = 0
-                navigationViewModel.fragment = null
-
-    }
 
 
     private fun setTicketDataToView() {

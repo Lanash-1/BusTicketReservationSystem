@@ -1,6 +1,5 @@
 package com.example.busticketreservationsystem.ui.adminservice
 
-import android.graphics.Interpolator
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,10 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
 import androidx.fragment.app.commit
-import androidx.interpolator.view.animation.FastOutLinearInInterpolator
-import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.busticketreservationsystem.R
@@ -24,15 +20,12 @@ import com.example.busticketreservationsystem.enums.AdminServices
 import com.example.busticketreservationsystem.listeners.OnItemClickListener
 import com.example.busticketreservationsystem.ui.addbus.AddBusFragment
 import com.example.busticketreservationsystem.ui.addpartner.AddPartnerFragment
-import com.example.busticketreservationsystem.ui.chat.ChatFragment
 import com.example.busticketreservationsystem.viewmodel.livedata.AdminViewModel
 import com.example.busticketreservationsystem.viewmodel.livedata.BusViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.AdminViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.transition.Hold
 import com.google.android.material.transition.MaterialContainerTransform
-
 
 class AdminServicesFragment : Fragment() {
 
@@ -43,11 +36,9 @@ class AdminServicesFragment : Fragment() {
     private lateinit var busViewModel: BusViewModel
     private lateinit var adminViewModel: AdminViewModel
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-
 
         val database = AppDatabase.getDatabase(requireActivity().applicationContext)
         val repository = AppRepositoryImpl(database)
@@ -57,6 +48,7 @@ class AdminServicesFragment : Fragment() {
         
         val adminViewModelFactory = AdminViewModelFactory(repository)
         adminViewModel = ViewModelProvider(requireActivity(), adminViewModelFactory)[AdminViewModel::class.java]
+
     }
 
     override fun onCreateView(

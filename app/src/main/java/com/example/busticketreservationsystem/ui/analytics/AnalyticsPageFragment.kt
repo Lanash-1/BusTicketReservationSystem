@@ -113,7 +113,6 @@ class AnalyticsPageFragment : Fragment() {
                 }
             }
         })
-
     }
 
     private fun moveToNextFragment(fragment: Fragment) {

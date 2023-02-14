@@ -16,4 +16,7 @@ interface BusAmenitiesDao {
     @Query("select amenity from bus_amenities_table where busId like :busId")
     fun getBusAmenities(busId: Int): List<String>
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insert(amenity: List<BusAmenities>)
+
 }

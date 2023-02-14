@@ -7,8 +7,7 @@
     tools:context=".ui.chat.ChatFragment"
     android:id="@+id/chat_layout"
     android:transitionName="chat_transition"
-    android:background="@color/white"
-    >
+    style="@style/ChatBackground">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chat_recyclerView"
@@ -18,6 +17,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/enter_message_editText"
+        tools:listitem="@layout/item_sent_message"
         />
 
 
@@ -32,6 +32,7 @@
     <EditText
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:minHeight="48dp"
         android:maxHeight="200dp"
         android:id="@+id/enter_message_editText"
         app:layout_constraintLeft_toLeftOf="parent"

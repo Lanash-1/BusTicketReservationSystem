@@ -7,6 +7,7 @@
     tools:context=".ui.addbus.AddBusFragment"
     android:id="@+id/add_bus_layout"
     android:transitionName="service_transition1"
+    android:transitionGroup="true"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout

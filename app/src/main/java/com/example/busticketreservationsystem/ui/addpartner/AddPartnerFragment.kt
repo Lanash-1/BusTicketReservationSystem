@@ -38,11 +38,9 @@ class AddPartnerFragment : Fragment() {
 
     private lateinit var adminViewModel: AdminViewModel
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-
 
 //        sharedElementEnterTransition = MaterialContainerTransform()
 

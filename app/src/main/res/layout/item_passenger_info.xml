@@ -77,6 +77,8 @@
                     android:inputType="textPersonName"
                     android:layout_marginBottom="8dp"
                     android:cursorVisible="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
                     android:textCursorDrawable="@drawable/red_cursor"
                     />
 
@@ -138,6 +140,8 @@
                     android:inputType="number"
                     android:maxLength="2"
                     android:cursorVisible="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
                     android:textCursorDrawable="@drawable/red_cursor"/>
 
             </com.google.android.material.textfield.TextInputLayout>

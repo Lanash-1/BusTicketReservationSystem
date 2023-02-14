@@ -7,9 +7,9 @@
       "noOfBusOperated": 6,
       "buses": [
         {
-          "busName": "orangeBus",
+          "busName": "orangeBus1",
           "sourceLocation": "Chennai",
-          "destinationLocation": "Bangalore",
+          "destinationLocation": "Bengaluru",
           "perTicketCost": 600,
           "busType": "SLEEPER",
           "totalSeats": 30,
@@ -26,7 +26,7 @@
           "duration": "6.45"
         },
         {
-          "busName": "orangeBus",
+          "busName": "orangeBus2",
           "sourceLocation": "Chennai",
           "destinationLocation": "Madurai",
           "perTicketCost": 300,
@@ -43,8 +43,8 @@
           "duration": "9"
         },
         {
-          "busName": "orangeBus",
-          "sourceLocation": "Bangalore",
+          "busName": "orangeBus3",
+          "sourceLocation": "Bengaluru",
           "destinationLocation": "Chennai",
           "perTicketCost": 600,
           "busType": "SLEEPER",
@@ -62,7 +62,7 @@
           "duration": "7"
         },
         {
-          "busName": "orangeBus",
+          "busName": "orangeBus4",
           "sourceLocation": "Madurai",
           "destinationLocation": "Chennai",
           "perTicketCost": 300,
@@ -76,9 +76,9 @@
           "duration": "9"
         },
         {
-          "busName": "orangeBus",
+          "busName": "orangeBus5",
           "sourceLocation": "Madurai",
-          "destinationLocation": "Bangalore",
+          "destinationLocation": "Bengaluru",
           "perTicketCost": 700,
           "busType": "SLEEPER",
           "totalSeats": 30,
@@ -94,8 +94,8 @@
           "duration": "10"
         },
         {
-          "busName": "orangeBus",
-          "sourceLocation": "Bangalore",
+          "busName": "orangeBus6",
+          "sourceLocation": "Bengaluru",
           "destinationLocation": "Madurai",
           "perTicketCost": 700,
           "busType": "SLEEPER",
@@ -120,9 +120,9 @@
       "noOfBusOperated": 3,
       "buses": [
         {
-          "busName": "KPN",
+          "busName": "KPN1",
           "sourceLocation": "Chennai",
-          "destinationLocation": "Bangalore",
+          "destinationLocation": "Bengaluru",
           "perTicketCost": 600,
           "busType": "SLEEPER",
           "totalSeats": 30,
@@ -138,7 +138,7 @@
           "duration": "6.30"
         },
         {
-          "busName": "KPN",
+          "busName": "KPN2",
           "sourceLocation": "Chennai",
           "destinationLocation": "Madurai",
           "perTicketCost": 300,
@@ -155,8 +155,8 @@
           "duration": "9"
         },
         {
-          "busName": "KPN",
-          "sourceLocation": "Bangalore",
+          "busName": "KPN3",
+          "sourceLocation": "Bengaluru",
           "destinationLocation": "Chennai",
           "perTicketCost": 600,
           "busType": "SLEEPER",
@@ -183,9 +183,9 @@
       "noOfBusOperated": 4,
       "buses": [
         {
-          "busName": "YBM",
+          "busName": "YBM1",
           "sourceLocation": "Chennai",
-          "destinationLocation": "Tenkasi",
+          "destinationLocation": "Pune",
           "perTicketCost": 450,
           "busType": "NON_AC_SEATER",
           "totalSeats": 30,
@@ -198,8 +198,8 @@
           "duration": "7"
         },
         {
-          "busName": "YBM",
-          "sourceLocation": "Tenkasi",
+          "busName": "YBM2",
+          "sourceLocation": "Pune",
           "destinationLocation": "Madurai",
           "perTicketCost": 200,
           "busType": "AC_SEATER",
@@ -216,8 +216,8 @@
           "duration": "6.45"
         },
         {
-          "busName": "YBM",
-          "sourceLocation": "Tenkasi",
+          "busName": "YBM3",
+          "sourceLocation": "Pune",
           "destinationLocation": "Chennai",
           "perTicketCost": 450,
           "busType": "NON_AC_SEATER",
@@ -232,9 +232,9 @@
           "duration": "7"
         },
         {
-          "busName": "YBM",
+          "busName": "YBM4",
           "sourceLocation": "Madurai",
-          "destinationLocation": "Tenkasi",
+          "destinationLocation": "Pune",
           "perTicketCost": 200,
           "busType": "AC_SEATER",
           "totalSeats": 30,
@@ -258,9 +258,9 @@
       "noOfBusOperated": 6,
       "buses": [
         {
-          "busName": "parveen",
+          "busName": "parveen1",
           "sourceLocation": "Chennai",
-          "destinationLocation": "Hyderabad",
+          "destinationLocation": "Vijayawada",
           "perTicketCost": 900,
           "busType": "SLEEPER",
           "totalSeats": 30,
@@ -277,8 +277,8 @@
           "duration": "8"
         },
         {
-          "busName": "orangeBus",
-          "sourceLocation": "Hyderabad",
+          "busName": "parveen2",
+          "sourceLocation": "Vijayawada",
           "destinationLocation": "Chennai",
           "perTicketCost": 750,
           "busType": "AC_SEATER",
@@ -294,9 +294,9 @@
           "duration": "7"
         },
         {
-          "busName": "orangeBus",
-          "sourceLocation": "Hyderabad",
-          "destinationLocation": "Bangalore",
+          "busName": "parveen3",
+          "sourceLocation": "Vijayawada",
+          "destinationLocation": "Bengaluru",
           "perTicketCost": 600,
           "busType": "SLEEPER",
           "totalSeats": 30,
@@ -313,22 +313,23 @@
           "duration": "8"
         },
         {
-          "busName": "orangeBus",
-          "sourceLocation": "Bangalore",
-          "destinationLocation": "Hyderabad",
+          "busName": "parveen4",
+          "sourceLocation": "Bengaluru",
+          "destinationLocation": "Vijayawada",
           "perTicketCost": 300,
           "busType": "NON_AC_SEATER",
           "totalSeats": 30,
           "amenities": [
+            "WATER_BOTTLE"
           ],
           "startTime": "16:00",
           "reachTime": "23:00",
           "duration": "7"
         },
         {
-          "busName": "orangeBus",
+          "busName": "parveen5",
           "sourceLocation": "Madurai",
-          "destinationLocation": "Bangalore",
+          "destinationLocation": "Bengaluru",
           "perTicketCost": 700,
           "busType": "SLEEPER",
           "totalSeats": 30,
@@ -345,8 +346,8 @@
           "duration": "6.45"
         },
         {
-          "busName": "orangeBus",
-          "sourceLocation": "Bangalore",
+          "busName": "parveen6",
+          "sourceLocation": "Bengaluru",
           "destinationLocation": "Madurai",
           "perTicketCost": 700,
           "busType": "SLEEPER",
@@ -370,9 +371,9 @@
       "noOfBusOperated": 6,
       "buses": [
         {
-          "busName": "orangeBus",
+          "busName": "intercity1",
           "sourceLocation": "Chennai",
-          "destinationLocation": "Bangalore",
+          "destinationLocation": "Bengaluru",
           "perTicketCost": 1200,
           "busType": "SLEEPER",
           "totalSeats": 30,
@@ -389,7 +390,7 @@
           "duration": "8"
         },
         {
-          "busName": "orangeBus",
+          "busName": "intercity2",
           "sourceLocation": "Chennai",
           "destinationLocation": "Madurai",
           "perTicketCost": 950,
@@ -408,8 +409,8 @@
           "duration": "9"
         },
         {
-          "busName": "orangeBus",
-          "sourceLocation": "Bangalore",
+          "busName": "intercity3",
+          "sourceLocation": "Bengaluru",
           "destinationLocation": "Chennai",
           "perTicketCost": 2000,
           "busType": "SLEEPER",
@@ -427,7 +428,7 @@
           "duration": "7"
         },
         {
-          "busName": "orangeBus",
+          "busName": "intercity4",
           "sourceLocation": "Madurai",
           "destinationLocation": "Chennai",
           "perTicketCost": 700,
@@ -445,9 +446,9 @@
           "duration": "9"
         },
         {
-          "busName": "orangeBus",
+          "busName": "intercity5",
           "sourceLocation": "Madurai",
-          "destinationLocation": "Bangalore",
+          "destinationLocation": "Bengaluru",
           "perTicketCost": 2000,
           "busType": "SLEEPER",
           "totalSeats": 30,
@@ -464,8 +465,8 @@
           "duration": "9"
         },
         {
-          "busName": "orangeBus",
-          "sourceLocation": "Bangalore",
+          "busName": "intercity6",
+          "sourceLocation": "Bengaluru",
           "destinationLocation": "Madurai",
           "perTicketCost": 1750,
           "busType": "SLEEPER",
@@ -491,9 +492,9 @@
       "noOfBusOperated": 6,
       "buses": [
         {
-          "busName": "orangeBus",
+          "busName": "RRR1",
           "sourceLocation": "Coimbatore",
-          "destinationLocation": "Bangalore",
+          "destinationLocation": "Bengaluru",
           "perTicketCost": 800,
           "busType": "SLEEPER",
           "totalSeats": 30,
@@ -507,7 +508,7 @@
           "duration": "7"
         },
         {
-          "busName": "orangeBus",
+          "busName": "RRR2",
           "sourceLocation": "Chennai",
           "destinationLocation": "Coimbatore",
           "perTicketCost": 900,
@@ -524,8 +525,8 @@
           "duration": "6"
         },
         {
-          "busName": "orangeBus",
-          "sourceLocation": "Bangalore",
+          "busName": "RRR3",
+          "sourceLocation": "Bengaluru",
           "destinationLocation": "Chennai",
           "perTicketCost": 500,
           "busType": "SLEEPER",
@@ -538,7 +539,7 @@
           "duration": "6.30"
         },
         {
-          "busName": "orangeBus",
+          "busName": "RRR4",
           "sourceLocation": "Madurai",
           "destinationLocation": "Chennai",
           "perTicketCost": 300,
@@ -553,7 +554,7 @@
           "duration": "7"
         },
         {
-          "busName": "orangeBus",
+          "busName": "RRR5",
           "sourceLocation": "Madurai",
           "destinationLocation": "Coimbatore",
           "perTicketCost": 650,
@@ -570,8 +571,8 @@
           "duration": "5.30"
         },
         {
-          "busName": "orangeBus",
-          "sourceLocation": "Bangalore",
+          "busName": "RRR6",
+          "sourceLocation": "Bengaluru",
           "destinationLocation": "Coimbatore",
           "perTicketCost": 1100,
           "busType": "SLEEPER",
@@ -597,9 +598,9 @@
       "noOfBusOperated": 6,
       "buses": [
         {
-          "busName": "orangeBus",
+          "busName": "asia 1",
           "sourceLocation": "Chennai",
-          "destinationLocation": "Kerala",
+          "destinationLocation": "Kochi",
           "perTicketCost": 1200,
           "busType": "SLEEPER",
           "totalSeats": 30,
@@ -616,8 +617,8 @@
           "duration": "9"
         },
         {
-          "busName": "orangeBus",
-          "sourceLocation": "Kerala",
+          "busName": "asia 2",
+          "sourceLocation": "Kochi",
           "destinationLocation": "Chennai",
           "perTicketCost": 1000,
           "busType": "AC_SEATER",
@@ -633,9 +634,9 @@
           "duration": "10"
         },
         {
-          "busName": "orangeBus",
-          "sourceLocation": "Bangalore",
-          "destinationLocation": "Kerala",
+          "busName": "asia 3",
+          "sourceLocation": "Bengaluru",
+          "destinationLocation": "Kochi",
           "perTicketCost": 1600,
           "busType": "SLEEPER",
           "totalSeats": 30,
@@ -650,9 +651,9 @@
           "duration": "7"
         },
         {
-          "busName": "orangeBus",
-          "sourceLocation": "Kerala",
-          "destinationLocation": "Bangalore",
+          "busName": "asia 4",
+          "sourceLocation": "Kochi",
+          "destinationLocation": "Bengaluru",
           "perTicketCost": 600,
           "busType": "NON_AC_SEATER",
           "totalSeats": 30,
@@ -665,9 +666,9 @@
           "duration": "9"
         },
         {
-          "busName": "orangeBus",
+          "busName": "asia 5",
           "sourceLocation": "Madurai",
-          "destinationLocation": "Bangalore",
+          "destinationLocation": "Bengaluru",
           "perTicketCost": 900,
           "busType": "SLEEPER",
           "totalSeats": 30,
@@ -682,9 +683,9 @@
           "duration": "4.45"
         },
         {
-          "busName": "orangeBus",
-          "sourceLocation": "Bangalore",
-          "destinationLocation": "kerala",
+          "busName": "asia 6",
+          "sourceLocation": "Bengaluru",
+          "destinationLocation": "Kochi",
           "perTicketCost": 1700,
           "busType": "SLEEPER",
           "totalSeats": 30,
@@ -709,9 +710,9 @@
       "noOfBusOperated": 6,
       "buses": [
         {
-          "busName": "orangeBus",
+          "busName": "kgf 1",
           "sourceLocation": "Mumbai",
-          "destinationLocation": "Delhi",
+          "destinationLocation": "Mysuru",
           "perTicketCost": 2000,
           "busType": "SLEEPER",
           "totalSeats": 30,
@@ -728,8 +729,8 @@
           "duration": "12"
         },
         {
-          "busName": "orangeBus",
-          "sourceLocation": "Delhi",
+          "busName": "kgf 2",
+          "sourceLocation": "Mysuru",
           "destinationLocation": "Mumbai",
           "perTicketCost": 1900,
           "busType": "AC_SEATER",
@@ -746,7 +747,7 @@
           "duration": "10"
         },
         {
-          "busName": "orangeBus",
+          "busName": "kgf 3",
           "sourceLocation": "Mumbai",
           "destinationLocation": "Pune",
           "perTicketCost": 750,
@@ -763,7 +764,7 @@
           "duration": "7"
         },
         {
-          "busName": "orangeBus",
+          "busName": "kgf 4",
           "sourceLocation": "Pune",
           "destinationLocation": "Mumbai",
           "perTicketCost": 550,
@@ -778,7 +779,7 @@
           "duration": "9"
         },
         {
-          "busName": "orangeBus",
+          "busName": "kgf 5",
           "sourceLocation": "Chennai",
           "destinationLocation": "Madurai",
           "perTicketCost": 700,
@@ -796,8 +797,8 @@
           "duration": "3.15"
         },
         {
-          "busName": "orangeBus",
-          "sourceLocation": "Bangalore",
+          "busName": "kgf 6",
+          "sourceLocation": "Bengaluru",
           "destinationLocation": "Madurai",
           "perTicketCost": 2000,
           "busType": "SLEEPER",
@@ -823,9 +824,9 @@
       "noOfBusOperated": 6,
       "buses": [
         {
-          "busName": "orangeBus",
+          "busName": "national 1",
           "sourceLocation": "Chennai",
-          "destinationLocation": "Bangalore",
+          "destinationLocation": "Bengaluru",
           "perTicketCost": 1200,
           "busType": "SLEEPER",
           "totalSeats": 30,
@@ -840,7 +841,7 @@
           "duration": "7"
         },
         {
-          "busName": "orangeBus",
+          "busName": "national 2",
           "sourceLocation": "Chennai",
           "destinationLocation": "Madurai",
           "perTicketCost": 300,
@@ -855,8 +856,8 @@
           "duration": "10.45"
         },
         {
-          "busName": "orangeBus",
-          "sourceLocation": "Bangalore",
+          "busName": "national 3",
+          "sourceLocation": "Bengaluru",
           "destinationLocation": "Chennai",
           "perTicketCost": 2500,
           "busType": "SLEEPER",
@@ -874,7 +875,7 @@
           "duration": "4"
         },
         {
-          "busName": "orangeBus",
+          "busName": "national 4",
           "sourceLocation": "Madurai",
           "destinationLocation": "Chennai",
           "perTicketCost": 525,
@@ -888,9 +889,9 @@
           "duration": "7"
         },
         {
-          "busName": "orangeBus",
+          "busName": "national 5",
           "sourceLocation": "Madurai",
-          "destinationLocation": "Bangalore",
+          "destinationLocation": "Bengaluru",
           "perTicketCost": 750,
           "busType": "SLEEPER",
           "totalSeats": 30,
@@ -904,8 +905,8 @@
           "duration": "8"
         },
         {
-          "busName": "orangeBus",
-          "sourceLocation": "Bangalore",
+          "busName": "national 6",
+          "sourceLocation": "Bengaluru",
           "destinationLocation": "Madurai",
           "perTicketCost": 1100,
           "busType": "SLEEPER",
@@ -931,9 +932,9 @@
       "noOfBusOperated": 6,
       "buses": [
         {
-          "busName": "orangeBus",
+          "busName": "sundhara 1",
           "sourceLocation": "Chennai",
-          "destinationLocation": "Bangalore",
+          "destinationLocation": "Bengaluru",
           "perTicketCost": 620,
           "busType": "SLEEPER",
           "totalSeats": 30,
@@ -949,7 +950,7 @@
           "duration": "6.45"
         },
         {
-          "busName": "orangeBus",
+          "busName": "sudhara 2",
           "sourceLocation": "Chennai",
           "destinationLocation": "Madurai",
           "perTicketCost": 350,
@@ -966,8 +967,8 @@
           "duration": "9"
         },
         {
-          "busName": "orangeBus",
-          "sourceLocation": "Bangalore",
+          "busName": "sundhara 3",
+          "sourceLocation": "Bengaluru",
           "destinationLocation": "Chennai",
           "perTicketCost": 555,
           "busType": "SLEEPER",
@@ -982,22 +983,23 @@
           "duration": "8"
         },
         {
-          "busName": "orangeBus",
+          "busName": "sundhara 4",
           "sourceLocation": "Madurai",
           "destinationLocation": "Chennai",
           "perTicketCost": 300,
           "busType": "NON_AC_SEATER",
           "totalSeats": 30,
           "amenities": [
+            "TRACK_MY_BUS"
           ],
           "startTime": "13:00",
           "reachTime": "21:00",
           "duration": "8"
         },
         {
-          "busName": "orangeBus",
+          "busName": "sundhara 5",
           "sourceLocation": "Madurai",
-          "destinationLocation": "Bangalore",
+          "destinationLocation": "Bengaluru",
           "perTicketCost": 770,
           "busType": "SLEEPER",
           "totalSeats": 30,
@@ -1010,8 +1012,8 @@
           "duration": "6.45"
         },
         {
-          "busName": "orangeBus",
-          "sourceLocation": "Bangalore",
+          "busName": "sundhara 6",
+          "sourceLocation": "Bengaluru",
           "destinationLocation": "Madurai",
           "perTicketCost": 710,
           "busType": "SLEEPER",
@@ -1034,9 +1036,9 @@
       "noOfBusOperated": 6,
       "buses": [
         {
-          "busName": "orangeBus",
+          "busName": "jabber 1",
           "sourceLocation": "Chennai",
-          "destinationLocation": "Bangalore",
+          "destinationLocation": "Bengaluru",
           "perTicketCost": 1600,
           "busType": "SLEEPER",
           "totalSeats": 30,
@@ -1053,7 +1055,7 @@
           "duration": "7"
         },
         {
-          "busName": "orangeBus",
+          "busName": "jabber 2",
           "sourceLocation": "Chennai",
           "destinationLocation": "Madurai",
           "perTicketCost": 300,
@@ -1067,8 +1069,8 @@
           "duration": "8.10"
         },
         {
-          "busName": "orangeBus",
-          "sourceLocation": "Bangalore",
+          "busName": "jabber 3",
+          "sourceLocation": "Bengaluru",
           "destinationLocation": "Chennai",
           "perTicketCost": 660,
           "busType": "SLEEPER",
@@ -1084,7 +1086,7 @@
           "duration": "9"
         },
         {
-          "busName": "orangeBus",
+          "busName": "jabber 4",
           "sourceLocation": "Madurai",
           "destinationLocation": "Chennai",
           "perTicketCost": 300,
@@ -1099,9 +1101,9 @@
           "duration": "7"
         },
         {
-          "busName": "orangeBus",
+          "busName": "jabber 5",
           "sourceLocation": "Madurai",
-          "destinationLocation": "Bangalore",
+          "destinationLocation": "Bengaluru",
           "perTicketCost": 1700,
           "busType": "SLEEPER",
           "totalSeats": 30,
@@ -1118,8 +1120,8 @@
           "duration": "9.05"
         },
         {
-          "busName": "orangeBus",
-          "sourceLocation": "Bangalore",
+          "busName": "jabber 6",
+          "sourceLocation": "Bengaluru",
           "destinationLocation": "Madurai",
           "perTicketCost": 700,
           "busType": "SLEEPER",
@@ -1143,9 +1145,9 @@
       "noOfBusOperated": 6,
       "buses": [
         {
-          "busName": "orangeBus",
+          "busName": "pink 1",
           "sourceLocation": "Chennai",
-          "destinationLocation": "Bangalore",
+          "destinationLocation": "Bengaluru",
           "perTicketCost": 1600,
           "busType": "SLEEPER",
           "totalSeats": 30,
@@ -1160,7 +1162,7 @@
           "duration": "5"
         },
         {
-          "busName": "orangeBus",
+          "busName": "pink 2",
           "sourceLocation": "Chennai",
           "destinationLocation": "Madurai",
           "perTicketCost": 1300,
@@ -1176,8 +1178,8 @@
           "duration": "9"
         },
         {
-          "busName": "orangeBus",
-          "sourceLocation": "Bangalore",
+          "busName": "pink 3",
+          "sourceLocation": "Bengaluru",
           "destinationLocation": "Chennai",
           "perTicketCost": 1160,
           "busType": "SLEEPER",
@@ -1193,22 +1195,23 @@
           "duration": "7"
         },
         {
-          "busName": "orangeBus",
+          "busName": "pink 4",
           "sourceLocation": "Madurai",
           "destinationLocation": "Chennai",
           "perTicketCost": 300,
           "busType": "NON_AC_SEATER",
           "totalSeats": 30,
           "amenities": [
+            "EMERGENCY_CONTACT_NUMBER"
           ],
           "startTime": "13:00",
           "reachTime": "22:00",
           "duration": "9"
         },
         {
-          "busName": "orangeBus",
+          "busName": "pink 5",
           "sourceLocation": "Madurai",
-          "destinationLocation": "Bangalore",
+          "destinationLocation": "Bengaluru",
           "perTicketCost": 660,
           "busType": "SLEEPER",
           "totalSeats": 30,
@@ -1220,8 +1223,8 @@
           "duration": "7"
         },
         {
-          "busName": "orangeBus",
-          "sourceLocation": "Bangalore",
+          "busName": "pink 6",
+          "sourceLocation": "Bengaluru",
           "destinationLocation": "Madurai",
           "perTicketCost": 700,
           "busType": "SLEEPER",

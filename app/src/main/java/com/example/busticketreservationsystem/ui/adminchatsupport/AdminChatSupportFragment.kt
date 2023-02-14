@@ -51,7 +51,8 @@ class AdminChatSupportFragment : Fragment() {
         val adminViewModelFactory = AdminViewModelFactory(repository)
         adminViewModel = ViewModelProvider(requireActivity(), adminViewModelFactory)[AdminViewModel::class.java]
 
-        exitTransition = Hold()
+        reenterTransition = MaterialElevationScale(true)
+
 
     }
 
@@ -114,17 +115,19 @@ class AdminChatSupportFragment : Fragment() {
                     val item = userListRecyclerView.findViewHolderForAdapterPosition(position)?.itemView
                     item!!.transitionName = "chat_transition${position}"
                     addSharedElement(item, "chat_transition${position}")
-                    fragment.sharedElementEnterTransition = MaterialContainerTransform()
-                    fragment.apply {
-                        exitTransition = MaterialElevationScale(false)
-                        reenterTransition = MaterialElevationScale(true)
+                    fragment.sharedElementEnterTransition = MaterialContainerTransform().apply {
+                        duration = 500L
                     }
+//                    fragment.sharedElementReturnTransition = MaterialContainerTransform().apply {
+//                        duration = 500L
+//                    }
+//                    fragment.apply {
+//                        exitTransition = MaterialElevationScale(false)
+//                        reenterTransition = MaterialElevationScale(true)
+//                    }
 
 //                    binding.adminChatLayout.visibility = View.INVISIBLE
-
-
-//                    sharedElementEnterTransition = MaterialContainerTransform()
-//                    addSharedElement(binding.chatUserListRecyclerView.findViewHolderForAdapterPosition(position)!!.itemView, "chat_transition")
+//                    addToBackStack(null)
                     replace(R.id.adminPanelFragmentContainer, fragment)
                 }
             }

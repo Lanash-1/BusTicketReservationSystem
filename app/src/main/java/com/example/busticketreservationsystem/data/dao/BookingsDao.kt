@@ -39,4 +39,10 @@ interface BookingsDao {
     @Query("select count(*) from bookings_table join bus_table on bookings_table.busId = bus_table.busId where bus_table.partnerId = :partnerId")
     fun getTicketCount(partnerId: Int): Int
 
+    @Query("select * from bookings_table")
+    fun fetchAllTickets(): List<Bookings>
+
+    @Query("select * from bookings_table where bookedTicketStatus like :ticketStatus")
+    fun getTicketOfParticularStatus(ticketStatus: String): List<Bookings>
+
 }

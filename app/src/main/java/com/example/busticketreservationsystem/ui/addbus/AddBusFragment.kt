@@ -557,10 +557,13 @@ class AddBusFragment : Fragment() {
 
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+
         dialog.show()
 
         val listView = dialog.findViewById<ListView>(R.id.list_view)
         val editText = dialog.findViewById<EditText>(R.id.edit_text)
+//        editText.setTextColor(R.style.TextColor)
+//        listView.findViewById<TextView>(R.id.textView).setTextColor(R.style.TextColor)
 
         val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
             requireContext(),

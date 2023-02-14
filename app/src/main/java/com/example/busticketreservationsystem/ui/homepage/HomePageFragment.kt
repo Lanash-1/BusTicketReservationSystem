@@ -20,12 +20,11 @@ import com.example.busticketreservationsystem.viewmodel.*
 
 class HomePageFragment : Fragment() {
 
-    private lateinit var writeSharedPreferences: SharedPreferences
+//    private lateinit var writeSharedPreferences: SharedPreferences
 
     private lateinit var binding: FragmentHomePageBinding
 
     private val navigationViewModel: NavigationViewModel by activityViewModels()
-    private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,6 +86,5 @@ class HomePageFragment : Fragment() {
             replace(R.id.homePageFragmentContainer, fragment)
         }
     }
-
 
 }

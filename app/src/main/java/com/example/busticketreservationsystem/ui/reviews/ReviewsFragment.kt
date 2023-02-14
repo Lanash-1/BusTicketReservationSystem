@@ -17,8 +17,10 @@ import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.databinding.FragmentReviewsBinding
 import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
+import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.ui.buseslist.BusesListFragment
 import com.example.busticketreservationsystem.ui.businfo.BusInfoFragment
+import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
 import com.example.busticketreservationsystem.viewmodel.NavigationViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.livedata.BusViewModel
@@ -33,6 +35,7 @@ class ReviewsFragment : Fragment() {
 
     private lateinit var busViewModel: BusViewModel
     private val navigationViewModel: NavigationViewModel by activityViewModels()
+    private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,21 +73,34 @@ class ReviewsFragment : Fragment() {
     }
 
     private fun backPressOperation() {
-        when(navigationViewModel.fragment){
-            is BusesListFragment -> {
-                parentFragmentManager.commit {
-                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
-                    replace(R.id.adminPanelFragmentContainer, BusInfoFragment())
-                }
-            }else -> {
+        if(loginStatusViewModel.status == LoginStatus.ADMIN_LOGGED_IN){
+            parentFragmentManager.commit {
+                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                setCustomAnimations(R.anim.from_left, R.anim.to_right)
+                replace(R.id.adminPanelFragmentContainer, BusInfoFragment())
+            }
+        }else{
             parentFragmentManager.commit {
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                 setCustomAnimations(R.anim.from_left, R.anim.to_right)
                 replace(R.id.homePageFragmentContainer, BusInfoFragment())
             }
-            }
         }
+//        when(navigationViewModel.fragment){
+//            is BusesListFragment -> {
+//                parentFragmentManager.commit {
+//                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+//                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
+//                    replace(R.id.adminPanelFragmentContainer, BusInfoFragment())
+//                }
+//            }else -> {
+//            parentFragmentManager.commit {
+//                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+//                setCustomAnimations(R.anim.from_left, R.anim.to_right)
+//                replace(R.id.homePageFragmentContainer, BusInfoFragment())
+//            }
+//            }
+//        }
     }
 
 

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.busticketreservationsystem.data.entity.Bookings
 import com.example.busticketreservationsystem.data.entity.Bus
 import com.example.busticketreservationsystem.data.entity.Partners
 import com.example.busticketreservationsystem.data.entity.User
@@ -19,6 +20,9 @@ class AdminViewModel(
 ): ViewModel() {
 
 //    Analytics related data
+
+
+    var selectedBookingId: Int = 0
 
 
     var transitionPosition: Int = 0
@@ -231,6 +235,63 @@ class AdminViewModel(
             withContext(Dispatchers.Main){
                 selectedUser = user
                 isUserFetched.value = true
+            }
+        }
+    }
+
+//
+//    fun fetchBookingOfUser(userId: Int) {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            val busList = mutableListOf<Bus>()
+//            var bookings = listOf<Bookings>()
+//            val partnerName = mutableListOf<String>()
+//            val fetchJob = launch {
+//                bookings = repository.getUserBookings(userId)
+//                for(i in bookings){
+//                    busList.add(repository.getBus(i.busId))
+//                }
+//                for(i in busList){
+//                    partnerName.add(repository.getPartnerName(i.partnerId))
+//                }
+//            }
+//            fetchJob.join()
+//            withContext(Dispatchers.Main){
+//                bookingHistoryBookingList = bookings
+//                bookingHistoryBusList = busList
+//                bookingHistoryPartnerList = partnerName
+//
+//                bookingDataFetched.value = true
+//            }
+//        }
+//    }
+
+    var bookedTicketList = listOf<Bookings>()
+    var bookedBusList = listOf<Bus>()
+    var bookedPartnerList = MutableLiveData<List<String>>()
+
+    var filteredBookingList = listOf<Bookings>()
+    var filteredBusList = listOf<Bus>()
+    var filteredPartnerList = listOf<String>()
+
+    fun fetchAllTickets() {
+        viewModelScope.launch(Dispatchers.IO) {
+            var bookings = listOf<Bookings>()
+            val busList = mutableListOf<Bus>()
+            val partnerName = mutableListOf<String>()
+            val job = launch {
+                bookings = repository.fetchAllTickets()
+                for(booking in bookings){
+                    busList.add(repository.getBus(booking.busId))
+                }
+                for(bus in busList){
+                    partnerName.add(repository.getPartnerName(bus.partnerId))
+                }
+            }
+            job.join()
+            withContext(Dispatchers.Main){
+                bookedTicketList = bookings
+                bookedBusList = busList
+                bookedPartnerList.value = partnerName
             }
         }
     }

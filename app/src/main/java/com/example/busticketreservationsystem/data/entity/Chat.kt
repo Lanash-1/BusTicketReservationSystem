@@ -3,6 +3,7 @@ package com.example.busticketreservationsystem.data.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
 
 
@@ -12,7 +13,7 @@ import androidx.room.PrimaryKey
         entity = User::class,
         childColumns = ["userId"],
         parentColumns = ["userId"],
-        onDelete = ForeignKey.CASCADE
+        onDelete = CASCADE
     )]
 )
 

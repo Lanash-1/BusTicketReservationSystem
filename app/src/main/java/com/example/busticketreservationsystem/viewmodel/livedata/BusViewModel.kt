@@ -17,17 +17,25 @@ class BusViewModel(
 
 //    Insert bus details fetched from json file
 
-//    fun insertInitialData(
-//        partnersList: MutableList<Partners>,
-//        busList: MutableList<Bus>,
-//        amenitiesList: MutableList<BusAmenities>
-//    ) {
-//        viewModelScope.launch(Dispatchers.IO) {
-////            repository.insertPartnerData(partnersList)
-//            repository.insertBusData(busList)
-//            repository.insertBusAmenitiesData(amenitiesList)
-//        }
-//    }
+    fun insertInitialData(
+        partnersList: MutableList<Partners>,
+        busList: MutableList<Bus>,
+        amenitiesList: MutableList<BusAmenities>
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val partnerJob = launch {
+                repository.insertPartnerData(partnersList)
+            }
+            partnerJob.join()
+            val busJob = launch {
+                repository.insertBusData(busList)
+            }
+            busJob.join()
+//            val amenityJob = launch {
+                repository.insertBusAmenitiesData(amenitiesList)
+//            }
+        }
+    }
 
 
     var selectedPartner = MutableLiveData<Partners>()
@@ -355,9 +363,44 @@ class BusViewModel(
         }
     }
 
+    fun insertInitialBusData(
+        pList: MutableList<Partners>,
+        bList: MutableList<List<Bus>>,
+        aList: MutableList<List<List<BusAmenities>>>
+    ) {
+        var amenity = 1
+        println("AMENITY LIST ALL = ${aList}")
+        println("SIZE = ${aList.size}")
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.insertPartnerData(pList)
+            val partnerList = repository.getPartnerData()
+            for(busSet in bList.indices){
+                println("BUS LIST SIZE = ${bList.size}")
+                for(bus in bList[busSet]){
+                    val newBus = bus
+                    newBus.partnerId = partnerList[busSet].partnerId
+                    repository.insertBusData(newBus)
+                }
+                val busesOfPartner = repository.getBusOfPartner(partnerList[busSet].partnerId)
+                println("PARTNER BUSES SIZE = ${busesOfPartner.size}")
 
+                println("DOUBLE INDEXED = ${aList[busSet][0]}")
 
-
+                for(index in busesOfPartner.indices){
+                    println("BUS NUMBER = $index")
+                    for(amenities in aList[busSet][index]){
+                        println("AMENITY = $amenities")
+                        val newAmenity = amenities
+                        newAmenity.busId = busesOfPartner[index].busId
+                        newAmenity.busAmenityId = amenity
+                        amenity = amenity + 1
+                        println("NEW AMENITY = ${newAmenity}")
+                        repository.insertBusAmenitiesData(newAmenity)
+                    }
+                }
+            }
+        }
+    }
 
 //    Bus boarding and dropping
 

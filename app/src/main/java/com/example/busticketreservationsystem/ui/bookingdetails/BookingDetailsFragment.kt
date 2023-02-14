@@ -199,7 +199,6 @@ class BookingDetailsFragment : Fragment() {
             }
         }
 
-
         passengerInfoAdapter.setPassengerInfoList(bookingViewModel.passengerInfo)
 
         binding.passengerInfoRecyclerView.adapter = passengerInfoAdapter
@@ -238,7 +237,6 @@ class BookingDetailsFragment : Fragment() {
             }
         })
     }
-
 
     private fun validEmail(): String? {
         val emailText = binding.emailInput.text.toString()

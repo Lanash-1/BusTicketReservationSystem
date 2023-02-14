@@ -73,7 +73,6 @@ class SettingsFragment : Fragment() {
 //                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                     setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.homePageFragmentContainer, MyAccountFragment())
-                    parentFragmentManager.popBackStack()
                 }
             }
         }
@@ -99,7 +98,6 @@ class SettingsFragment : Fragment() {
                     parentFragmentManager.commit {
                         setCustomAnimations(R.anim.from_left, R.anim.to_right)
                         replace(R.id.homePageFragmentContainer, MyAccountFragment())
-                        parentFragmentManager.popBackStack()
                     }
 //                    requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).selectedItemId = R.id.dashboard
                 }
@@ -114,11 +112,11 @@ class SettingsFragment : Fragment() {
             editor = writeSharedPreferences.edit()
         }
 
-        if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
-            binding.deleteAccountLayout.visibility = View.VISIBLE
-        }else{
-            binding.deleteAccountLayout.visibility = View.GONE
-        }
+//        if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
+//            binding.deleteAccountLayout.visibility = View.VISIBLE
+//        }else{
+//            binding.deleteAccountLayout.visibility = View.GONE
+//        }
 
         binding.deleteAccountLayout.setOnClickListener {
             deleteAction()
@@ -177,7 +175,6 @@ class SettingsFragment : Fragment() {
             run {
 
                 userViewModel.deleteUserAccount()
-
 
                 editor.putString("status", LoginStatus.NEW.name)
                 loginStatusViewModel.status = LoginStatus.LOGGED_OUT
