@@ -127,6 +127,7 @@ class LoginFragment : Fragment() {
             }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
+        userViewModel.isMobileExists.value = null
 
         createAccountText = view.findViewById(R.id.create_account_text)
         forgotPasswordText = view.findViewById(R.id.forgot_password_text)
@@ -152,7 +153,6 @@ class LoginFragment : Fragment() {
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 setCustomAnimations(R.anim.from_right, R.anim.to_left)
                 replace(R.id.main_fragment_container, ForgotPasswordFragment())
-                addToBackStack(null)
             }
         }
     }

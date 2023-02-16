@@ -187,13 +187,12 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/price_text"
                 android:text="12345"
-                android:textSize="20sp"
-                style="@style/TitleTextStyle"
+                style="@style/DrawableTint"
                 android:drawableStart="@drawable/ic_baseline_currency_rupee_24"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 app:layout_constraintRight_toLeftOf="@id/proceed_text"
                 />
 
@@ -212,6 +211,7 @@
             android:padding="8dp"
             android:textStyle="bold"
             android:drawableEnd="@drawable/ic_baseline_keyboard_double_arrow_right_24"
+            style="@style/DrawableTint"
             android:drawableTint="@color/white"
             android:clickable="true"
             android:focusable="true"

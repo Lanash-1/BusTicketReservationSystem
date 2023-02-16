@@ -21,6 +21,7 @@ import com.example.busticketreservationsystem.ui.chat.ChatFragment
 import com.example.busticketreservationsystem.viewmodel.NavigationViewModel
 import com.example.busticketreservationsystem.viewmodel.livedata.AdminViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.AdminViewModelFactory
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class UserDetailFragment : Fragment() {
@@ -88,6 +89,8 @@ class UserDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().findViewById<BottomNavigationView>(R.id.admin_bottomNavigationView)?.visibility = View.GONE
 
         adminViewModel.isUserFetched.value = null
 

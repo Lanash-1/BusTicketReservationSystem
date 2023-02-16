@@ -29,12 +29,7 @@ import com.example.busticketreservationsystem.viewmodel.livedata.UserViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.AdminViewModelFactory
 
 
-class BookingHistoryListFragment(
-//    private val tickets: List<Bookings>,
-//    private val buses: List<Bus>,
-//    private val partnerName: List<String>
-) : Fragment() {
-
+class BookingHistoryListFragment : Fragment() {
 
     private var tickets: List<Bookings> = listOf()
     private var buses: List<Bus> = listOf()

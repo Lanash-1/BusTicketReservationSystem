@@ -8,4 +8,11 @@
         app:showAsAction="always"
         android:icon="@drawable/ic_baseline_filter_alt_24" />
 
+    <item
+        android:id="@+id/filter_applied_icon"
+        android:title="filter applied"
+        app:showAsAction="always"
+        android:icon="@drawable/filtered"
+        />
+
 </menu>

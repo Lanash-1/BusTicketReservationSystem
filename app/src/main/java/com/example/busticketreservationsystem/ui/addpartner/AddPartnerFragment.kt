@@ -1,5 +1,6 @@
 package com.example.busticketreservationsystem.ui.addpartner
 
+import android.app.ActionBar.LayoutParams
 import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -114,7 +115,7 @@ class AddPartnerFragment : Fragment() {
             }
         }else{
             parentFragmentManager.commit {
-//                setCustomAnimations(R.anim.from_left, R.anim.to_right)
+                setCustomAnimations(R.anim.from_left, R.anim.to_right)
                 replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
             }
         }
@@ -123,7 +124,7 @@ class AddPartnerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.addPartnerLayout.transitionName = "service_transition0"
+//        binding.addPartnerLayout.transitionName = "service_transition0"
 
         (activity as AppCompatActivity).supportActionBar!!.apply {
             setDisplayHomeAsUpEnabled(true)
@@ -157,7 +158,6 @@ class AddPartnerFragment : Fragment() {
             val validPartnerEmail = validPartnerEmail()
             val validPartnerMobile = validPartnerMobile()
             if(validPartnerEmail && validPartnerName && validPartnerMobile){
-                println("Valid partner")
                 adminViewModel.partner.apply {
                     partnerName = adminViewModel.partnerName
                     partnerEmailId = adminViewModel.partnerEmail
@@ -203,10 +203,14 @@ class AddPartnerFragment : Fragment() {
             if(adminViewModel.partnerMobile.length == 10){
                 binding.partnerMobileInputLayout.isErrorEnabled = false
                 return true
+            }else{
+                binding.partnerMobileInputLayout.error = "Invalid mobile number"
             }
+        }else{
+            binding.partnerMobileInputLayout.error = "Should not be empty"
         }
         binding.partnerMobileInputLayout.isErrorEnabled = true
-        binding.partnerMobileInputLayout.error = "Invalid mobile number"
+//        binding.partnerMobileInputLayout.error = "Invalid mobile number"
         return false
     }
 
@@ -238,7 +242,8 @@ class AddPartnerFragment : Fragment() {
     private fun moveToDashboard() {
 
         val snackBar = Snackbar.make(requireView(), "Partner Added Successfully", Snackbar.LENGTH_SHORT)
-//        snackBar.setAnchorView(requireActivity().findViewById(R.id.admin_bottomNavigationView))
+        snackBar.setAnchorView(requireActivity().findViewById(R.id.admin_bottomNavigationView))
+        snackBar.setDuration(1000)
         snackBar.show()
 
         parentFragmentManager.commit {

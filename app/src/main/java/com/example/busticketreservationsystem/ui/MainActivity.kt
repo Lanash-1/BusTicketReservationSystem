@@ -16,7 +16,6 @@ import com.example.busticketreservationsystem.data.entity.*
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.ui.adminpanel.AdminPanelFragment
 import com.example.busticketreservationsystem.ui.homepage.HomePageFragment
-import com.example.busticketreservationsystem.ui.login.LoginFragment
 import com.example.busticketreservationsystem.ui.welcome.WelcomeFragment
 import com.example.busticketreservationsystem.viewmodel.*
 import com.example.busticketreservationsystem.viewmodel.livedata.BookingViewModel
@@ -27,8 +26,6 @@ import com.example.busticketreservationsystem.viewmodel.livedata.UserViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BookingViewModelFactory
 import org.json.JSONArray
 import org.json.JSONObject
-import java.text.SimpleDateFormat
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -56,8 +53,6 @@ class MainActivity : AppCompatActivity() {
         bookingViewModel = ViewModelProvider(this, bookingViewModelFactory)[BookingViewModel::class.java]
 
 
-        println("App THEME Operation")
-
 //      Theme preference start
 
         appThemeOperations()
@@ -79,8 +74,6 @@ class MainActivity : AppCompatActivity() {
     private fun updateTicketStatus() {
         bookingViewModel.updateTicketStatus()
     }
-
-//     END OF ON-CREATE
 
     private fun fetchLocationData() {
         locationViewModel.locationData.clear()
@@ -136,7 +129,6 @@ class MainActivity : AppCompatActivity() {
         if(savedInstanceState == null) {
             when (writeSharedPreferences.getString("status", "")) {
                 "" -> {
-                    println("EMPTY")
                     getBusData()
                     editor.putString("status", LoginStatus.NEW.name)
                     loginStatusViewModel.status = LoginStatus.NEW
@@ -147,8 +139,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 LoginStatus.SKIPPED.name -> {
-                    println("SKIPPED")
-
                     loginStatusViewModel.status = LoginStatus.SKIPPED
                     supportFragmentManager.commit {
                         setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
@@ -156,11 +146,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 LoginStatus.LOGGED_IN.name -> {
-                    println("LOG IN")
-
                     loginStatusViewModel.status = LoginStatus.LOGGED_IN
-
-//                    updateBookingHistory(writeSharedPreferences.getInt("userId", 0))
 
                     supportFragmentManager.commit {
                         setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
@@ -168,8 +154,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 LoginStatus.NEW.name -> {
-                    println("NEW ")
-                    getBusData()
                     loginStatusViewModel.status = LoginStatus.NEW
                     supportFragmentManager.commit {
                         setCustomAnimations(R.anim.from_right, R.anim.to_left)
@@ -177,7 +161,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 LoginStatus.LOGGED_OUT.name -> {
-                    println("LOG OUT")
 
                     loginStatusViewModel.status = LoginStatus.LOGGED_OUT
                     supportFragmentManager.commit {
@@ -186,7 +169,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 LoginStatus.ADMIN_LOGGED_IN.name -> {
-                    println("ADMIN LOG IN")
 
                     loginStatusViewModel.status = LoginStatus.ADMIN_LOGGED_IN
                     supportFragmentManager.commit {
@@ -194,21 +176,8 @@ class MainActivity : AppCompatActivity() {
                         replace(R.id.main_fragment_container, AdminPanelFragment())
                     }
                 }
-                else -> {
-                    println("ELSE NOT OPENING")
-                }
             }
-        }else{
-            println("SAVED INSTANCE STATE NOT NULL")
         }
-    }
-
-    private fun updateBookingHistory(userId: Int) {
-        val sdf = SimpleDateFormat("dd/MM/yyyy")
-        val time = Calendar.getInstance().time
-        val current = sdf.format(time)
-        val currentDate = sdf.parse(current)
-        bookingViewModel.updateBookingHistoryList(userId, currentDate)
     }
 
     private fun appThemeOperations() {
@@ -242,8 +211,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun getBusData() {
 
-        println("GET BUS DATA FUNCTION")
-
         val partnersList = mutableListOf<Partners>()
         val busList = mutableListOf<Bus>()
         val amenitiesList = mutableListOf<BusAmenities>()
@@ -263,24 +230,18 @@ class MainActivity : AppCompatActivity() {
 
         val jsonString = JSONObject(jsonData)
 
-        println(jsonString)
-
         val partners = jsonString.getJSONArray("partners") as JSONArray
 
         for(i in 0 until partners.length()){
-            println("PARTNER INDEX = ${i}")
             val partnerId: Int = i
             val partnerName = partners.getJSONObject(i).get("name").toString()
             val partnerMobile = partners.getJSONObject(i).get("mobileNumber").toString()
             val partnerEmail = partners.getJSONObject(i).get("emailId").toString()
             val busesOperated = partners.getJSONObject(i).get("noOfBusOperated").toString().toInt()
 
-            println("PARTNER NAME = ${partnerName}")
             val partner = Partners(partnerId+1, partnerName, busesOperated, partnerEmail, partnerMobile)
             partnersList.add(partner)
             pList.add(partner)
-
-//            println("Name: $partnerName\nMobile: $partnerMobile\n Email: $partnerEmail\nBuses No: $busesOperated")
 
             val buses = partners.getJSONObject(i).getJSONArray("buses") as JSONArray
 
@@ -309,7 +270,6 @@ class MainActivity : AppCompatActivity() {
 
                 for(k in 0 until amenities.length()){
 
-                    println("BUS ID = ${busId+1}")
                     val amenity = BusAmenities(k+1, busId, amenities[k].toString())
                     amenitiesList.add(amenity)
                     singleBusAmenities.add(amenity)
@@ -321,24 +281,12 @@ class MainActivity : AppCompatActivity() {
             bList.add(busSet)
             aList.add(amenitySet)
         }
-//        insertDataToDb(partnersList, busList, amenitiesList)
         insertBusDataToDb(pList, bList, aList)
 
     }
 
-    private fun insertBusDataToDb(
-        pList: MutableList<Partners>,
-        bList: MutableList<List<Bus>>,
-        aList: MutableList<List<List<BusAmenities>>>
-    ) {
+    private fun insertBusDataToDb(pList: MutableList<Partners>, bList: MutableList<List<Bus>>, aList: MutableList<List<List<BusAmenities>>>) {
         busViewModel.insertInitialBusData(pList, bList, aList)
     }
 
-    private fun insertDataToDb(
-        partnersList: MutableList<Partners>,
-        busList: MutableList<Bus>,
-        amenitiesList: MutableList<BusAmenities>
-    ) {
-        busViewModel.insertInitialData(partnersList, busList, amenitiesList)
-    }
 }

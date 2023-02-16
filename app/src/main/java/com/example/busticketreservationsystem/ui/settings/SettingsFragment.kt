@@ -184,7 +184,6 @@ class SettingsFragment : Fragment() {
                     replace(R.id.main_fragment_container, RegisterFragment())
                     if(parentFragmentManager.backStackEntryCount>0){
                         for(i in 0 until parentFragmentManager.backStackEntryCount){
-                            parentFragmentManager.popBackStack()
                         }
                     }
                 }

@@ -47,7 +47,6 @@ class RegisterFragment : Fragment() {
 
     private lateinit var userViewModel: UserViewModel
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)

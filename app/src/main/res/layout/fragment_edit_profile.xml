@@ -134,8 +134,6 @@
             style="@style/IconTint"
             />
 
-
-
         <Button
             android:id="@+id/save_changes_button"
             android:layout_width="wrap_content"

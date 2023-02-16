@@ -118,6 +118,8 @@ class EditProfileFragment : Fragment() {
                 dateViewModel.birthMonth = dateViewModel.editedMonth
                 dateViewModel.birthYear = dateViewModel.editedYear
 
+                dateViewModel.birthDateEdited.value = null
+
                 moveToMyAccount()
             }
         }
@@ -163,7 +165,9 @@ class EditProfileFragment : Fragment() {
         }
 
         dateViewModel.birthDateEdited.observe(viewLifecycleOwner, Observer{
-            binding.dob.text = "${dateViewModel.birthDate} - ${dateViewModel.birthMonth} - ${dateViewModel.birthYear}"
+            if(it != null){
+                binding.dob.text = "${dateViewModel.birthDate} - ${dateViewModel.birthMonth} - ${dateViewModel.birthYear}"
+            }
         })
 
         when(userViewModel.user.gender){
@@ -179,7 +183,6 @@ class EditProfileFragment : Fragment() {
 
         if(userViewModel.user.dob.isNotEmpty()){
             binding.dob.text = userViewModel.user.dob
-            binding.dob.setTextColor(Color.parseColor("#000000"))
         }
 
 
@@ -214,7 +217,6 @@ class EditProfileFragment : Fragment() {
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 setCustomAnimations(R.anim.from_left, R.anim.to_right)
                 replace(R.id.homePageFragmentContainer, MyAccountFragment())
-                parentFragmentManager.popBackStack()
             }
         }
     }

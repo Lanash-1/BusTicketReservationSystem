@@ -98,10 +98,8 @@ class BookingDetailsFragment : Fragment() {
     private fun backPressOperation() {
         bookingViewModel.passengerInfo.clear()
         parentFragmentManager.commit {
-            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
             setCustomAnimations(R.anim.from_left, R.anim.to_right)
             replace(R.id.homePageFragmentContainer, BoardingAndDroppingFragment())
-            parentFragmentManager.popBackStack()
         }
     }
 
@@ -171,7 +169,7 @@ class BookingDetailsFragment : Fragment() {
                 }
             }else{
                 if(binding.mobileInput.text?.length != 10){
-                    binding.mobileLayout.error = "Enter a valid mobile number 1"
+                    binding.mobileLayout.error = "Enter a valid mobile number"
                 }else if(binding.mobileInput.text?.isEmpty() == true){
                     binding.mobileLayout.error = "Enter mobile number to proceed"
                 }else{
@@ -229,7 +227,7 @@ class BookingDetailsFragment : Fragment() {
         bookingViewModel.insertBookingOperation(booking, busViewModel.selectedDate, userViewModel.user.userId)
 
         bookingViewModel.isTicketBooked.observe(viewLifecycleOwner, Observer{
-            Snackbar.make(requireView(), "Booked ticket successfully", Snackbar.LENGTH_SHORT).show()
+//            Snackbar.make(requireView(), "Booked ticket successfully", Snackbar.LENGTH_SHORT).show()
             navigationViewModel.fragment = BookingDetailsFragment()
             parentFragmentManager.commit {
                 setCustomAnimations(R.anim.from_right, R.anim.to_left)

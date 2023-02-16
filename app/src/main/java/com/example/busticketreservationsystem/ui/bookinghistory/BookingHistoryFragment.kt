@@ -3,6 +3,7 @@ package com.example.busticketreservationsystem.ui.bookinghistory
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -13,7 +14,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.viewpager2.widget.ViewPager2
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.databinding.FragmentBookingHistoryBinding
 import com.example.busticketreservationsystem.enums.LoginStatus
@@ -41,11 +41,9 @@ class BookingHistoryFragment : Fragment() {
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
     private val navigationViewModel: NavigationViewModel by activityViewModels()
 
-
     private lateinit var bookingViewModel: BookingViewModel
     private lateinit var userViewModel: UserViewModel
     private lateinit var adminViewModel: AdminViewModel
-
 
     lateinit var adapter: BookingHistoryViewPagerAdapter
 
@@ -73,11 +71,27 @@ class BookingHistoryFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         (activity as AppCompatActivity).supportActionBar!!.apply {
-            setDisplayHomeAsUpEnabled(false)
+            if(loginStatusViewModel.status == LoginStatus.ADMIN_LOGGED_IN){
+                setDisplayHomeAsUpEnabled(true)
+            }else{
+                setDisplayHomeAsUpEnabled(false)
+            }
             title = "My Bookings"
         }
         binding = FragmentBookingHistoryBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            android.R.id.home -> {
+                parentFragmentManager.commit {
+                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
+                    replace(R.id.adminPanelFragmentContainer, AnalyticsPageFragment())
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -85,11 +99,12 @@ class BookingHistoryFragment : Fragment() {
 
         adapter = BookingHistoryViewPagerAdapter(parentFragmentManager, lifecycle)
 
-
 //        val tabLayout = binding.bookingHistoryTabLayout
 //        val viewPager = binding.bookingHistoryViewPager
 
-        binding.bookingHistoryViewPager.isSaveEnabled = false
+        binding.bookingHistoryViewPager.isSaveEnabled = true
+
+
 
         when (loginStatusViewModel.status) {
             LoginStatus.LOGGED_IN -> {
@@ -101,27 +116,30 @@ class BookingHistoryFragment : Fragment() {
                 bookingViewModel.fetchBookingOfUser(userViewModel.user.userId)
 
                 bookingViewModel.bookingDataFetched.observe(viewLifecycleOwner, Observer{
-                    adapter.setBookingData(bookingViewModel.bookingHistoryBookingList, bookingViewModel.bookingHistoryBusList, bookingViewModel.bookingHistoryPartnerList)
-                    binding.bookingHistoryViewPager.adapter = adapter
+                    if(it != null){
+                        adapter.setBookingData(bookingViewModel.bookingHistoryBookingList, bookingViewModel.bookingHistoryBusList, bookingViewModel.bookingHistoryPartnerList)
+                        binding.bookingHistoryViewPager.adapter = adapter
 
-                    TabLayoutMediator(binding.bookingHistoryTabLayout, binding.bookingHistoryViewPager){tab, position ->
-                        when(position){
-                            0 -> {
-                                tab.text = "Upcoming"
+                        TabLayoutMediator(binding.bookingHistoryTabLayout, binding.bookingHistoryViewPager){tab, position ->
+                            when(position){
+                                0 -> {
+                                    tab.text = "Upcoming"
+                                }
+                                1 -> {
+                                    tab.text = "Completed"
+                                }
+                                2 -> {
+                                    tab.text = "Cancelled"
+                                }
                             }
-                            1 -> {
-                                tab.text = "Completed"
-                            }
-                            2 -> {
-                                tab.text = "Cancelled"
-                            }
-                        }
-                    }.attach()
+                        }.attach()
+                        bookingViewModel.bookingDataFetched.value = null
+                    }
+
                 })
             }
             LoginStatus.ADMIN_LOGGED_IN -> {
                 requireActivity().findViewById<BottomNavigationView>(R.id.admin_bottomNavigationView).visibility = View.GONE
-                Toast.makeText(requireContext(), "Admin login", Toast.LENGTH_SHORT).show()
                 fetchAllBookedTickets()
             }
             else -> {

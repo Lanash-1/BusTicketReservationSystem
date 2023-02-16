@@ -98,8 +98,7 @@ open class Helper {
         val date1: Date = format.parse(startTime)
         val date2: Date = format.parse(reachTime)
 
-        if(date1 > date2){
-            println("WORKING TIME CHECVK")
+        if(date1 >= date2){
             return false
         }
         return true

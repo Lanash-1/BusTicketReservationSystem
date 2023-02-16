@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
@@ -14,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
+import com.example.busticketreservationsystem.databinding.FragmentForgotPasswordBinding
 import com.example.busticketreservationsystem.ui.login.LoginFragment
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.livedata.UserViewModel
@@ -34,6 +36,8 @@ class ForgotPasswordFragment : Fragment() {
 
     private lateinit var userViewModel: UserViewModel
 
+    private lateinit var binding: FragmentForgotPasswordBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,12 +54,15 @@ class ForgotPasswordFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         (activity as AppCompatActivity).supportActionBar?.apply{
             setDisplayHomeAsUpEnabled(true)
         }
-        return inflater.inflate(R.layout.fragment_forgot_password, container, false)
+
+        binding = FragmentForgotPasswordBinding.inflate(inflater, container, false)
+        return binding.root
+//        return inflater.inflate(R.layout.fragment_forgot_password, container, false)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -69,7 +76,6 @@ class ForgotPasswordFragment : Fragment() {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                     setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.main_fragment_container, LoginFragment())
-                    parentFragmentManager.popBackStack()
                 }
             }
         }
@@ -96,7 +102,6 @@ class ForgotPasswordFragment : Fragment() {
                         setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                         setCustomAnimations(R.anim.from_left, R.anim.to_right)
                         replace(R.id.main_fragment_container, LoginFragment())
-                        parentFragmentManager.popBackStack()
                     }
                 }
             }
@@ -104,45 +109,101 @@ class ForgotPasswordFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
 
+        binding.newPasswordInput.addTextChangedListener {
+            if(it != null){
+                if(validPassword() == null){
+                    newPasswordLayout.helperText = null
+                }
+            }
+        }
+
+        confirmPasswordFocusListener()
+
         backToLoginText.setOnClickListener {
             parentFragmentManager.commit {
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                 setCustomAnimations(R.anim.from_left, R.anim.to_right)
                 replace(R.id.main_fragment_container, LoginFragment())
-                parentFragmentManager.popBackStack()
             }
         }
 
         resetPasswordButton.setOnClickListener {
             resetPassword(mobileInput.text.toString(), newPasswordInput.text.toString(), confirmPasswordInput.text.toString())
         }
-
-
     }
+
+//    private fun registerAccount() {
+//        mobileLayout.helperText = validNumber()
+//        newPasswordLayout.helperText = validPassword()
+//        confirmPasswordLayout.helperText = validConfirmPassword()
+//
+//        val validNumber = mobileLayout.helperText == null
+//        val validNewPassword = newPasswordLayout.helperText == null
+//        val validConfirmPassword = confirmPasswordLayout.helperText == null
+//
+//
+//        if (validNumber && validNewPassword && validConfirmPassword) {
+//
+//            userViewModel.isNumberAlreadyExists(mobileInput.text.toString())
+//
+//            userViewModel.isMobileExists.observe(viewLifecycleOwner, Observer{
+//                if(it != null){
+//                    if (it) {
+//                        mobileLayout.helperText = "Mobile Number already Exists."
+//                    }else{
+//                        registerNewUser()
+//                    }
+//                }
+//            })
+//        }
+//
+//    }
 
     private fun resetPassword(mobileNumber: String, password: String, confirmPassword: String) {
 
-        mobileLayout.isHelperTextEnabled = false
-
+        mobileLayout.helperText = validNumber()
         newPasswordLayout.helperText = validPassword()
         confirmPasswordLayout.helperText = validConfirmPassword()
+
+        val validNumber = mobileLayout.helperText == null
         val validNewPassword = newPasswordLayout.helperText == null
         val validConfirmPassword = confirmPasswordLayout.helperText == null
-        if(validNewPassword && validConfirmPassword){
-            userViewModel.updateNewPassword(password, mobileNumber)
+//        mobileLayout.isHelperTextEnabled = false
+
+//        newPasswordLayout.helperText = validPassword()
+//        confirmPasswordLayout.helperText = validConfirmPassword()
+//        val validNewPassword = newPasswordLayout.helperText == null
+//        val validConfirmPassword = confirmPasswordLayout.helperText == null
+        if(validNumber && validNewPassword && validConfirmPassword){
+
+            userViewModel.isNumberAlreadyExists(mobileInput.text.toString())
+
+            userViewModel.isMobileExists.observe(viewLifecycleOwner, Observer{
+                if(it != null){
+                    if (it) {
+                        userViewModel.updateNewPassword(password, mobileNumber)
+                    }else{
+                        mobileLayout.helperText = "Mobile Number does not Exists."
+                    }
+                }
+            })
+
+//            userViewModel.updateNewPassword(password, mobileNumber)
         }
 
         userViewModel.isAccountAvailable.observe(viewLifecycleOwner, Observer{
-            if(userViewModel.isAccountAvailable.value == false){
-                mobileLayout.helperText = "No Account linked with this mobile number"
-            }else{
-                parentFragmentManager.commit {
-                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
-                    replace(R.id.main_fragment_container, LoginFragment())
-                    parentFragmentManager.popBackStack()
+            if(userViewModel.isAccountAvailable != null){
+                if(userViewModel.isAccountAvailable.value == false){
+                    mobileLayout.helperText = "No Account linked with this mobile number"
+                    userViewModel.isAccountAvailable.value = null
+                }else{
+                    parentFragmentManager.commit {
+                        setCustomAnimations(R.anim.from_left, R.anim.to_right)
+                        replace(R.id.main_fragment_container, LoginFragment())
+                    }
                 }
             }
+
         })
 
     }
@@ -159,19 +220,27 @@ class ForgotPasswordFragment : Fragment() {
         val passwordText = newPasswordInput.text.toString()
         if(passwordText.length < 8)
         {
-            return "Minimum 8 Character Password"
+//            return "Minimum 8 Character Password"
+            return "Password must be at least 8 characters long and include at least one upper case letter, one lower case letter, and one special character."
+
         }
         if(!passwordText.matches(".*[A-Z].*".toRegex()))
         {
-            return "Must Contain 1 Upper-case Character"
+            return "Password must be at least 8 characters long and include at least one upper case letter, one lower case letter, and one special character."
+
+//            return "Must Contain 1 Upper-case Character"
         }
         if(!passwordText.matches(".*[a-z].*".toRegex()))
         {
-            return "Must Contain 1 Lower-case Character"
+            return "Password must be at least 8 characters long and include at least one upper case letter, one lower case letter, and one special character."
+
+//            return "Must Contain 1 Lower-case Character"
         }
         if(!passwordText.matches(".*[@#\$%^&+=].*".toRegex()))
         {
-            return "Must Contain 1 Special Character (@#\$%^&+=)"
+            return "Password must be at least 8 characters long and include at least one upper case letter, one lower case letter, and one special character."
+
+//            return "Must Contain 1 Special Character (@#\$%^&+=)"
         }
 
         return null
@@ -179,9 +248,13 @@ class ForgotPasswordFragment : Fragment() {
     }
 
     private fun confirmPasswordFocusListener() {
-        newPasswordInput.setOnFocusChangeListener { _, focused ->
-            if(!focused){
-                confirmPasswordLayout.helperText = validConfirmPassword()
+        newPasswordInput.addTextChangedListener {
+            if (it != null) {
+                if(it.isEmpty()){
+                    confirmPasswordLayout.isHelperTextEnabled = false
+                }else{
+                    confirmPasswordLayout.helperText = validConfirmPassword()
+                }
             }
         }
     }
@@ -193,5 +266,45 @@ class ForgotPasswordFragment : Fragment() {
         }
         return null
     }
+
+    private fun validNumber(): String? {
+        val number = mobileInput.text.toString()
+
+        if(number.isEmpty()){
+            return "Should not be empty"
+        }
+        if(number.length != 10)
+        {
+            return "Must be 10 Digits"
+        }
+        if(!number.matches(".*[0-9].*".toRegex()))
+        {
+            return "Invalid mobile number"
+        }
+
+        return null
+    }
+
+//    private fun confirmPasswordFocusListener() {
+//        confirmPasswordInput.addTextChangedListener {
+//            if (it != null) {
+//                if(it.isEmpty()){
+//                    confirmPasswordLayout.isHelperTextEnabled = false
+//                }else{
+//                    confirmPasswordLayout.helperText = validConfirmPassword()
+//                }
+//            }
+//        }
+//    }
+
+//    private fun validConfirmPassword(): String? {
+//        val passwordText = confirmPasswordInput.text.toString()
+//        if(passwordText != newPasswordInput.text.toString())
+//        {
+//            return "Password not matching"
+//        }
+//        return null
+//
+//    }
 
 }

@@ -29,7 +29,6 @@ class BookingHistoryViewPagerAdapter(fragmentManager: FragmentManager, lifecycle
         val filteredTickets = mutableListOf<Bookings>()
         val filteredBuses = mutableListOf<Bus>()
         val filteredPartner = mutableListOf<String>()
-        println("ADAPTER = ${tickets.size}")
         when(position){
             0 -> {
                 for(i in tickets.indices){

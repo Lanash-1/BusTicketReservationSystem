@@ -189,8 +189,8 @@ class MyAccountFragment : Fragment() {
                         if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
                             logoutAction()
                         }else{
+                            dateViewModel.travelYear = 0
                             parentFragmentManager.commit {
-                                setTransition(TRANSIT_FRAGMENT_OPEN)
                                 setCustomAnimations(R.anim.from_right, R.anim.to_left)
                                 replace(R.id.main_fragment_container, LoginFragment())
                             }
@@ -198,12 +198,9 @@ class MyAccountFragment : Fragment() {
                     }
                 }
             }
-
         })
         myAccountRecyclerView.adapter = myAccountAdapter
     }
-
-   
 
     private fun logoutAction() {
         val builder = AlertDialog.Builder(requireContext())
@@ -228,6 +225,7 @@ class MyAccountFragment : Fragment() {
                     year = 0
                     month = 0
                     date = 0
+                    travelYear = 0
                 }
 
                 userViewModel.recentlyViewedList.value = mutableListOf()

@@ -1,5 +1,7 @@
 package com.example.busticketreservationsystem.ui.busresults
 
+import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import androidx.activity.OnBackPressedCallback
@@ -25,15 +27,14 @@ import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusView
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.livedata.BusViewModel
 import com.example.busticketreservationsystem.viewmodel.livedata.UserViewModel
+import com.google.android.material.badge.BadgeDrawable
+import com.google.android.material.badge.BadgeUtils
 import com.google.android.material.bottomnavigation.BottomNavigationView
-
 
 class BusResultsFragment : Fragment() {
 
-
     private lateinit var binding: FragmentBusResultsBinding
 
-    private val searchViewModel: SearchViewModel by activityViewModels()
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
     private val locationViewModel: LocationViewModel by activityViewModels()
 
@@ -56,48 +57,102 @@ class BusResultsFragment : Fragment() {
         val userViewModelFactory = UserViewModelFactory(repository)
         userViewModel = ViewModelProvider(requireActivity(), userViewModelFactory)[UserViewModel::class.java]
 
-
-
     }
 
+//    @SuppressLint("RestrictedApi")
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        (activity as AppCompatActivity).supportActionBar?.setShowHideAnimationEnabled(true)
+//        (activity as AppCompatActivity).supportActionBar?.show()
+//    }
+
+//    @SuppressLint("RestrictedApi", "UnsafeOptInUsageError")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+//        (activity as AppCompatActivity).supportActionBar?.setShowHideAnimationEnabled(false)
+//        (activity as AppCompatActivity).supportActionBar!!.hide()
+
         (activity as AppCompatActivity).supportActionBar!!.apply {
+            title = "Bus Results"
             setDisplayHomeAsUpEnabled(true)
-            title = "${searchViewModel.sourceLocation} - ${searchViewModel.destinationLocation}"
         }
 
         binding = FragmentBusResultsBinding.inflate(inflater, container, false)
+
+//        val toolBar = binding.filterToolbar
+//        toolBar.title = "Bus Results"
+//        toolBar.inflateMenu(R.menu.bus_results_menu)
+//
+//        toolBar.setNavigationOnClickListener {
+//            backPressOperation()
+//        }
+//
+//        toolBar.setOnMenuItemClickListener {
+//            when(it.itemId){
+//                R.id.filter -> {
+//                    parentFragmentManager.commit {
+//                    setCustomAnimations(R.anim.from_right, R.anim.to_left)
+//                    replace(R.id.homePageFragmentContainer, SortAndFilterFragment())
+//                    }
+//                }
+//            }
+//            true
+//        }
+
+//        val badgeDrawable = BadgeDrawable.create(this).apply {
+//            isVisible = true
+//            backgroundColor = neededBadgeColor
+//            number = neededNumber
+//        }
+//        BadgeUtils.attachBadgeDrawable(badgeDrawable, toolbar, R.id.item_in_toolbar_menu)
+
+//        val badgeDrawable: BadgeDrawable = BadgeDrawable.create(requireContext()).apply {
+//            isVisible = true
+//            backgroundColor = Color.RED
+//        }
+//        BadgeUtils.attachBadgeDrawable(badgeDrawable, toolBar, R.id.filter)
+
         return binding.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.bus_results_menu, menu)
+
+        if(busViewModel.selectedSort != null || busViewModel.checkedList.isNotEmpty()){
+            menu.findItem(R.id.filter).isVisible = false
+        }else{
+            menu.findItem(R.id.filter_applied_icon).isVisible = false
+        }
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home -> {
-                busViewModel.selectedSort = null
-                busViewModel.checkedList = listOf()
-                parentFragmentManager.commit {
-                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
-                    replace(R.id.main_fragment_container, HomePageFragment())
-                }
+                backPressOperation()
             }
-            R.id.filter -> {
+            R.id.filter,
+            R.id.filter_applied_icon-> {
                 parentFragmentManager.commit {
-                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     setCustomAnimations(R.anim.from_right, R.anim.to_left)
                     replace(R.id.homePageFragmentContainer, SortAndFilterFragment())
                 }
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun backPressOperation(){
+        busViewModel.selectedSort = null
+        busViewModel.checkedList = listOf()
+        parentFragmentManager.commit {
+            setCustomAnimations(R.anim.from_left, R.anim.to_right)
+//            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+            replace(R.id.main_fragment_container, HomePageFragment())
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -108,16 +163,11 @@ class BusResultsFragment : Fragment() {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true){
                 override fun handleOnBackPressed() {
-                    parentFragmentManager.commit {
-                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-                        setCustomAnimations(R.anim.from_left, R.anim.to_right)
-                        replace(R.id.main_fragment_container, HomePageFragment())
-                    }
+                    backPressOperation()
                 }
             }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
-
 
         busViewModel.boardingPoints = locationViewModel.fetchAreas(busViewModel.sourceLocation)
         busViewModel.droppingPoints = locationViewModel.fetchAreas(busViewModel.destinationLocation)

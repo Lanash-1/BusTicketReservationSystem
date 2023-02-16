@@ -57,7 +57,7 @@
                 android:id="@+id/source_text"
                 android:text="Chennai"
                 android:textSize="16sp"
-                style="@style/TitleTextStyle"
+                style="@style/RecentlyViewedSourceTextStyle"
                 android:drawableEnd="@drawable/ic_baseline_arrow_forward_24"
                 android:drawablePadding="8dp"
                 app:layout_constraintStart_toStartOf="@id/bus_icon"

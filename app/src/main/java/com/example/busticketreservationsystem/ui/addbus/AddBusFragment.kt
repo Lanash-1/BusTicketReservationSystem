@@ -4,8 +4,6 @@ import android.app.ActionBar.LayoutParams
 import android.app.AlertDialog
 import android.app.Dialog
 import android.app.TimePickerDialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -42,8 +40,6 @@ import java.util.*
 
 class AddBusFragment : Fragment() {
 
-    private var formEdited = false
-
     private lateinit var binding: FragmentAddBusBinding
     private val helper = Helper()
 
@@ -61,7 +57,6 @@ class AddBusFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-
 
         val database = AppDatabase.getDatabase(requireActivity().applicationContext)
         val repository = AppRepositoryImpl(database)
@@ -84,7 +79,6 @@ class AddBusFragment : Fragment() {
             title="Add Bus"
         }
 
-        // Inflate the layout for this fragment
         binding = FragmentAddBusBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -105,7 +99,6 @@ class AddBusFragment : Fragment() {
             builder.setMessage("Bus details will not be saved")
             builder.setTitle("Discard Registration?")
             builder.setCancelable(false)
-
 
             builder.setNegativeButton("Cancel") { dialog, _ ->
                 dialog.cancel()
@@ -146,46 +139,51 @@ class AddBusFragment : Fragment() {
 
     private fun checkEdited(): Boolean {
         if(partnerList.contains(binding.autoCompleteTextView.text.toString())){
-            println("PARTNER NAME")
             return true
         }
         if(binding.busNameInput.text?.isNotEmpty() == true){
-            println("BUS NAME")
             return true
         }
         if(locationViewModel.selectedSourceCity.value?.isNotEmpty() == true || locationViewModel.selectedSourceState.value?.isNotEmpty() == true || locationViewModel.selectedDestinationCity.value?.isNotEmpty() == true || locationViewModel.selectedDestinationState.value?.isNotEmpty() == true){
-            println("LOCATION DETAILS")
             return true
         }
         if(adminViewModel.startTime.isNotEmpty() || adminViewModel.reachTime.isNotEmpty()){
-            println("TIMING DETAILS")
-
             return true
         }
         if(binding.priceInput.text?.isNotEmpty() == true){
-            println("PRICE DETAILS")
-
             return true
         }
         for(busType in BusTypes.values()){
             if(busType.name == binding.busTypeAutoCompleteTextView.text.toString()){
-                println("BUS TYPE DETAILS")
                 return true
             }
         }
         if(validAmenities() && adminViewModel.amenities.isNotEmpty()){
-            println("AMENITIES DETAILS")
-
             return true
-
         }
         return false
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, partnerList)
+        // get reference to the autocomplete text view
+        val autocompleteTV = binding.autoCompleteTextView
+        // set adapter to the autocomplete tv to the arrayAdapter
+        autocompleteTV.setAdapter(arrayAdapter)
+
+        val busTypeList = mutableListOf<String>()
+        for(type in BusTypes.values()){
+            busTypeList.add(type.name)
+        }
+        val busTypeArrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, busTypeList)
+        binding.busTypeAutoCompleteTextView.setAdapter(busTypeArrayAdapter)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.addBusLayout.transitionName = "service_transition1"
+//        binding.addBusLayout.transitionName = "service_transition1"
 
         requireActivity().findViewById<BottomNavigationView>(R.id.admin_bottomNavigationView)?.visibility = View.GONE
 
@@ -243,7 +241,6 @@ class AddBusFragment : Fragment() {
             }
         }
 
-
         binding.autoCompleteTextView.setOnClickListener{
             if(partnerList.isEmpty()){
                 Toast.makeText(requireContext(), "No partners registered!", Toast.LENGTH_SHORT)
@@ -251,19 +248,21 @@ class AddBusFragment : Fragment() {
             }
         }
 
+//        binding.autoCompleteTextView.setFreezesText(false)
+//        binding.busTypeAutoCompleteTextView.freezesText = false
 
-        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, partnerList)
-        // get reference to the autocomplete text view
-        val autocompleteTV = binding.autoCompleteTextView
-        // set adapter to the autocomplete tv to the arrayAdapter
-        autocompleteTV.setAdapter(arrayAdapter)
-
-        val busTypeList = mutableListOf<String>()
-        for(type in BusTypes.values()){
-            busTypeList.add(type.name)
-        }
-        val busTypeArrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, busTypeList)
-        binding.busTypeAutoCompleteTextView.setAdapter(busTypeArrayAdapter)
+//        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, partnerList)
+//        // get reference to the autocomplete text view
+//        val autocompleteTV = binding.autoCompleteTextView
+//        // set adapter to the autocomplete tv to the arrayAdapter
+//        autocompleteTV.setAdapter(arrayAdapter)
+//
+//        val busTypeList = mutableListOf<String>()
+//        for(type in BusTypes.values()){
+//            busTypeList.add(type.name)
+//        }
+//        val busTypeArrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, busTypeList)
+//        binding.busTypeAutoCompleteTextView.setAdapter(busTypeArrayAdapter)
 
         binding.sourceStateView.setOnClickListener {
             locationViewModel.fetchStates()
@@ -405,7 +404,7 @@ class AddBusFragment : Fragment() {
                     binding.reachTimePicker.error = null
                     return true
                 }else{
-                    binding.reachTimePicker.error = "Should not be ahead of start time"
+                    binding.reachTimePicker.error = "Should be greater than start time"
                 }
             }else{
                 binding.reachTimePicker.error = "Select Time"
@@ -509,9 +508,11 @@ class AddBusFragment : Fragment() {
 
         dialog.window?.setLayout(800, LayoutParams.WRAP_CONTENT)
 
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+//        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         dialog.show()
+
+//        dialog.setCanceledOnTouchOutside(true)
 
         val listView = dialog.findViewById<ListView>(R.id.list_view)
         val editText = dialog.findViewById<EditText>(R.id.edit_text)
@@ -542,7 +543,6 @@ class AddBusFragment : Fragment() {
         listView.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id -> // when item selected from list
                 selectedSourceLocation.value = adapter.getItem(position)!!
-
                 dialog.dismiss()
             }
     }
@@ -553,9 +553,9 @@ class AddBusFragment : Fragment() {
         dialog = Dialog(requireContext())
         dialog.setContentView(R.layout.dialog_searchable_spinner)
 
-        dialog.window?.setLayout(800,LayoutParams.WRAP_CONTENT)
+        dialog.window?.setLayout(800, LayoutParams.WRAP_CONTENT)
 
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+//        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
 
         dialog.show()

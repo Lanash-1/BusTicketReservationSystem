@@ -1,6 +1,5 @@
 package com.example.busticketreservationsystem.ui.dashboard
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Color
@@ -25,7 +24,6 @@ import com.example.busticketreservationsystem.listeners.OnItemClickListener
 import com.example.busticketreservationsystem.listeners.OnRemoveClickListener
 import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
-import com.example.busticketreservationsystem.ui.adminservice.AdminServicesFragment
 import com.example.busticketreservationsystem.ui.busresults.BusResultsFragment
 import com.example.busticketreservationsystem.ui.chat.ChatFragment
 import com.example.busticketreservationsystem.ui.locationsearch.SearchFragment
@@ -35,8 +33,9 @@ import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusView
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.livedata.BusViewModel
 import com.example.busticketreservationsystem.viewmodel.livedata.UserViewModel
+import com.google.android.material.badge.BadgeDrawable
+import com.google.android.material.badge.BadgeUtils
 import com.google.android.material.bottomnavigation.BottomNavigationView
-
 
 class DashBoardFragment : Fragment() {
 
@@ -82,6 +81,7 @@ class DashBoardFragment : Fragment() {
             title = "Dashboard"
         }
 
+
         binding = FragmentDashBoardBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -107,7 +107,6 @@ class DashBoardFragment : Fragment() {
     }
 
 
-    @SuppressLint("ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -115,9 +114,9 @@ class DashBoardFragment : Fragment() {
 
         clearAllValues()
 
-        for(i in 0 until parentFragmentManager.backStackEntryCount){
-            parentFragmentManager.popBackStack()
-        }
+//        for(i in 0 until parentFragmentManager.backStackEntryCount){
+//            parentFragmentManager.popBackStack()
+//        }
 
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.visibility = View.VISIBLE
 
@@ -164,7 +163,6 @@ class DashBoardFragment : Fragment() {
                 binding.recentlyViewedText.visibility = View.VISIBLE
                 binding.recentlyViewedRecyclerView.visibility = View.VISIBLE
             }else{
-                println("EMPTY RECENTLY VIEWED")
                 binding.recentlyViewedText.visibility = View.GONE
                 binding.recentlyViewedRecyclerView.visibility = View.GONE
             }
@@ -186,7 +184,6 @@ class DashBoardFragment : Fragment() {
 
                 navigationViewModel.fragment = DashBoardFragment()
                 parentFragmentManager.commit {
-                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     setCustomAnimations(R.anim.from_right, R.anim.to_left)
                     replace(R.id.homePageFragmentContainer, SelectedBusFragment())
                 }
@@ -209,11 +206,12 @@ class DashBoardFragment : Fragment() {
         }
 
         binding.dateText.doOnTextChanged { text, start, before, count ->
-            if(searchViewModel.year != 0){
-                binding.dateText.setTextColor(resources.getColor(R.color.searchColor))
+            binding.dateText.setTextColor(resources.getColor(R.color.searchColor))
+
+//            if(searchViewModel.year != 0){
 
                 binding.enterDateErrorIcon.visibility = View.GONE
-            }
+//            }
         }
 
         binding.searchBusButton.setOnClickListener {
@@ -226,6 +224,7 @@ class DashBoardFragment : Fragment() {
 
                 parentFragmentManager.commit {
                     setCustomAnimations(R.anim.from_right, R.anim.to_left)
+//                    setCustomAnimations(R.anim.slide_up, R.anim.fade_out)
                     replace(R.id.homePageFragmentContainer, BusResultsFragment())
                 }
             }else{
@@ -269,7 +268,6 @@ class DashBoardFragment : Fragment() {
         dateViewModel.travelDateEdited.observe(viewLifecycleOwner, Observer {
             if(dateViewModel.travelYear != 0){
                 binding.dateText.text = "${dateViewModel.travelDate} - ${dateViewModel.travelMonth} - ${dateViewModel.travelYear}"
-                binding.dateText.setTextColor(Color.parseColor("#000000"))
                 searchViewModel.apply {
                     year = dateViewModel.travelYear
                     month = dateViewModel.travelMonth
@@ -278,7 +276,6 @@ class DashBoardFragment : Fragment() {
 
                 binding.enterDateErrorIcon.visibility = View.INVISIBLE
             }else{
-                binding.dateText.text = "Select Date"
                 searchViewModel.apply {
                     year = 0
                     month = 0
@@ -330,8 +327,6 @@ class DashBoardFragment : Fragment() {
         if(source.isNotEmpty() && destination.isNotEmpty()){
             binding.sourceText.text = source
             binding.destinationText.text = destination
-//            binding.sourceText.setTextColor(Color.parseColor("#000000"))
-//            binding.destinationText.setTextColor(Color.parseColor("#000000"))
 
         }else if(source.isNotEmpty() && destination.isEmpty()){
             binding.sourceText.text = source

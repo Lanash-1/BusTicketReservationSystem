@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
@@ -66,10 +67,22 @@ class AdminServicesFragment : Fragment() {
 
     }
 
+    private fun backPressOperation() {
+        requireActivity().finish()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         requireActivity().findViewById<BottomNavigationView>(R.id.admin_bottomNavigationView)?.visibility = View.VISIBLE
+
+        val callback: OnBackPressedCallback = object: OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                backPressOperation()
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
         val adminServicesRecyclerView = binding.adminServicesRecyclerView
         adminServicesRecyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
@@ -77,21 +90,20 @@ class AdminServicesFragment : Fragment() {
 
         busViewModel.fetchPartners()
 
-
         adminServiceAdapter.setOnItemClickListener(object : OnItemClickListener{
             override fun onItemClick(position: Int) {
                 when(AdminServices.values()[position]){
                     AdminServices.ADD_BUS -> {
                         val fragment = AddBusFragment()
                         parentFragmentManager.commit {
-//                            setCustomAnimations(R.anim.from_right, R.anim.to_left)
-                            val item = adminServicesRecyclerView.findViewHolderForAdapterPosition(position)?.itemView
-                            item!!.transitionName = "service_transition${position}"
-                            addSharedElement(item, "service_transition${position}")
-                            fragment.sharedElementEnterTransition = MaterialContainerTransform()
-
-                            item.findViewById<TextView>(R.id.serviceTitle_textView).visibility = View.GONE
-                            item.findViewById<ImageView>(R.id.service_icon).visibility = View.GONE
+                            setCustomAnimations(R.anim.from_right, R.anim.to_left)
+//                            val item = adminServicesRecyclerView.findViewHolderForAdapterPosition(position)?.itemView
+//                            item!!.transitionName = "service_transition${position}"
+//                            addSharedElement(item, "service_transition${position}")
+//                            fragment.sharedElementEnterTransition = MaterialContainerTransform()
+//
+//                            item.findViewById<TextView>(R.id.serviceTitle_textView).visibility = View.GONE
+//                            item.findViewById<ImageView>(R.id.service_icon).visibility = View.GONE
 
                             replace(R.id.adminPanelFragmentContainer, fragment)
 
@@ -101,16 +113,15 @@ class AdminServicesFragment : Fragment() {
                         adminViewModel.selectedPartner = Partners(0, "", 0, "", "")
                         val fragment = AddPartnerFragment()
                         parentFragmentManager.commit {
-                            println("POSITION  =  $position")
-                            val item = adminServicesRecyclerView.findViewHolderForAdapterPosition(position)?.itemView
-                            item!!.transitionName = "service_transition${position}"
-                            addSharedElement(item, "service_transition${position}")
-                            fragment.sharedElementEnterTransition = MaterialContainerTransform()
-                            item.findViewById<TextView>(R.id.serviceTitle_textView).visibility = View.GONE
-                            item.findViewById<ImageView>(R.id.service_icon).visibility = View.GONE
-
+//                            println("POSITION  =  $position")
+//                            val item = adminServicesRecyclerView.findViewHolderForAdapterPosition(position)?.itemView
+//                            item!!.transitionName = "service_transition${position}"
+//                            addSharedElement(item, "service_transition${position}")
+//                            fragment.sharedElementEnterTransition = MaterialContainerTransform()
+//                            item.findViewById<TextView>(R.id.serviceTitle_textView).visibility = View.GONE
+//                            item.findViewById<ImageView>(R.id.service_icon).visibility = View.GONE
+                            setCustomAnimations(R.anim.from_right, R.anim.to_left)
                             replace(R.id.adminPanelFragmentContainer, fragment)
-
                         }
                     }
                 }
@@ -118,4 +129,5 @@ class AdminServicesFragment : Fragment() {
 
         })
     }
+
 }

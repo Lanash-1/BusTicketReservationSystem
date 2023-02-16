@@ -93,7 +93,6 @@ class AnalyticsPageFragment : Fragment() {
             analyticsAdapter.notifyDataSetChanged()
         })
 
-
         analyticsAdapter.setOnItemClickListener(object: OnItemClickListener {
             override fun onItemClick(position: Int) {
                 when(Analytics.values()[position]){

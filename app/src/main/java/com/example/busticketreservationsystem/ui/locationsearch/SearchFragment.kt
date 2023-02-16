@@ -70,7 +70,6 @@ class SearchFragment : Fragment() {
             override fun onMenuItemActionCollapse(p0: MenuItem?): Boolean {
 
                 parentFragmentManager.commit {
-                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                     setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.homePageFragmentContainer, DashBoardFragment())
                 }
@@ -85,7 +84,7 @@ class SearchFragment : Fragment() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 newList = locationViewModel.allCities.filter {
-                    it.lowercase().startsWith(newText?.lowercase()!!)
+                    it.lowercase().contains(newText?.lowercase()!!)
                 }
                 if(newText!!.isEmpty()){
                     searchLocationAdapter.setLocationList(listOf())
@@ -142,7 +141,6 @@ class SearchFragment : Fragment() {
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                 setCustomAnimations(R.anim.from_left, R.anim.to_right)
                 replace(R.id.homePageFragmentContainer, DashBoardFragment())
-                parentFragmentManager.popBackStack()
             }
         }
 
@@ -161,7 +159,6 @@ class SearchFragment : Fragment() {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                     setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.homePageFragmentContainer, DashBoardFragment())
-                    parentFragmentManager.popBackStack()
                 }
             }
         })

@@ -60,11 +60,13 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
+                style="@style/IconTint"
                 android:padding="12dp"
                 android:visibility="visible"
                 android:clickable="true"
                 android:focusable="true"
                 android:background="?android:selectableItemBackgroundBorderless"
+                android:contentDescription="expand_card_action"
                 />
 
             <ImageView
@@ -75,6 +77,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
+                style="@style/IconTint"
                 android:padding="12dp"
                 android:visibility="gone"
                 android:clickable="true"
@@ -110,6 +113,7 @@
                     android:src="@drawable/ic_baseline_local_phone_24"
                     android:layout_gravity="center"
                     android:layout_marginLeft="16dp"
+                    app:tint="#808080"
                     />
 
                 <TextView
@@ -135,6 +139,7 @@
                     android:src="@drawable/ic_baseline_email_24"
                     android:layout_gravity="center"
                     android:layout_marginLeft="16dp"
+                    app:tint="#808080"
                     />
 
                 <TextView

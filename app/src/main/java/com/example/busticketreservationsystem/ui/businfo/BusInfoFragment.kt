@@ -1,7 +1,6 @@
 package com.example.busticketreservationsystem.ui.businfo
 
 import android.app.AlertDialog
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -27,7 +26,6 @@ import com.example.busticketreservationsystem.data.entity.Bus
 import com.example.busticketreservationsystem.data.entity.Partners
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.ui.bookedticket.BookedTicketFragment
-import com.example.busticketreservationsystem.ui.bookingdetails.BookingDetailsFragment
 import com.example.busticketreservationsystem.ui.buseslist.BusesListFragment
 import com.example.busticketreservationsystem.ui.reviews.ReviewsFragment
 import com.example.busticketreservationsystem.ui.selectedbus.SelectedBusFragment
@@ -50,9 +48,7 @@ class BusInfoFragment : Fragment() {
     private var amenitiesAdapter = AmenitiesAdapter()
 
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
-    private val dateViewModel: DateViewModel by activityViewModels()
     private val navigationViewModel: NavigationViewModel by activityViewModels()
-
 
     private lateinit var busViewModel: BusViewModel
     private lateinit var userViewModel: UserViewModel
@@ -149,10 +145,12 @@ class BusInfoFragment : Fragment() {
 
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.visibility = View.GONE
+        requireActivity().findViewById<BottomNavigationView>(R.id.admin_bottomNavigationView)?.visibility = View.GONE
 
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true){
@@ -295,7 +293,6 @@ class BusInfoFragment : Fragment() {
                 parentFragmentManager.commit {
                     setCustomAnimations(R.anim.from_right, R.anim.to_left)
                     replace(R.id.adminPanelFragmentContainer, ReviewsFragment())
-                    addToBackStack(null)
                 }
             }else{
                 parentFragmentManager.commit {
@@ -374,12 +371,15 @@ class BusInfoFragment : Fragment() {
             busViewModel.fetchUserReview(userViewModel.user.userId)
 //                    binding.rateBusButton.visibility = View.VISIBLE
             busViewModel.isUserReviewFetched.observe(viewLifecycleOwner, Observer{
-                if(busViewModel.userReview != null){
-                    binding.rateBusButton.visibility = View.GONE
-                    binding.updateBusRatingButton.visibility = View.VISIBLE
-                }else{
-                    binding.rateBusButton.visibility = View.VISIBLE
-                    binding.updateBusRatingButton.visibility = View.INVISIBLE
+                if(it != null){
+                    if(busViewModel.userReview != null){
+                        binding.rateBusButton.visibility = View.GONE
+                        binding.updateBusRatingButton.visibility = View.VISIBLE
+                    }else{
+                        binding.rateBusButton.visibility = View.VISIBLE
+                        binding.updateBusRatingButton.visibility = View.INVISIBLE
+                    }
+                    busViewModel.isUserReviewFetched.value = null
                 }
             })
         }else{
@@ -400,12 +400,18 @@ class BusInfoFragment : Fragment() {
         busViewModel.updateUserRating(rating, feedback, date)
 
         busViewModel.isBusReviewUpdated.observe(viewLifecycleOwner, Observer{
-            println("BUS REVIEW")
-            busViewModel.fetchBusReviewData(busViewModel.selectedBus.busId, busViewModel.selectedBus)
+            println("BUS REVIEW 1")
+            if(it != null) {
+                busViewModel.fetchBusReviewData(
+                    busViewModel.selectedBus.busId,
+                    busViewModel.selectedBus
+                )
 
-            busViewModel.busReviewsList.observe(viewLifecycleOwner, Observer{
-                ratingBarOperation()
-            })
+                busViewModel.busReviewsList.observe(viewLifecycleOwner, Observer {
+                    ratingBarOperation()
+                    busViewModel.isBusReviewUpdated.value = null
+                })
+            }
         })
 
     }
@@ -414,14 +420,34 @@ class BusInfoFragment : Fragment() {
         busViewModel.insertUserReview(rating, feedback, date, userViewModel.user.userId)
 
         busViewModel.isBusReviewUpdated.observe(viewLifecycleOwner, Observer{
-            busViewModel.fetchBusReviewData(busViewModel.selectedBus.busId, busViewModel.selectedBus)
+            println("BUS REVIEW 2")
+            if(it != null){
+                busViewModel.fetchUserReview(userViewModel.user.userId)
 
-            busViewModel.busReviewsList.observe(viewLifecycleOwner, Observer{
-                ratingBarOperation()
-            })
+                busViewModel.isUserReviewFetched.observe(viewLifecycleOwner, Observer{
+                    if(it != null){
+                        if(busViewModel.userReview != null){
+                            binding.rateBusButton.visibility = View.GONE
+                            binding.updateBusRatingButton.visibility = View.VISIBLE
+                        }else{
+                            binding.rateBusButton.visibility = View.VISIBLE
+                            binding.updateBusRatingButton.visibility = View.INVISIBLE
+                        }
+                        busViewModel.isUserReviewFetched.value = null
+                    }
+                })
+
+                binding.rateBusButton.visibility = View.INVISIBLE
+                binding.updateBusRatingButton.visibility = View.VISIBLE
+                busViewModel.fetchBusReviewData(busViewModel.selectedBus.busId, busViewModel.selectedBus)
+
+                busViewModel.busReviewsList.observe(viewLifecycleOwner, Observer{
+                    ratingBarOperation()
+                    busViewModel.isBusReviewUpdated.value = null
+                })
+            }
         })
     }
-
 
     private fun ratingBarOperation() {
         binding.ratingText.text = "${String.format("%.2f", busViewModel.selectedBus.ratingOverall).toDouble()}"

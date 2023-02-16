@@ -38,9 +38,6 @@
             app:layout_constraintTop_toBottomOf="@id/title_text"
             >
 
-            <!-- Inside text input layout add
-                  an auto complete text view
-                    and make its input type to none-->
             <AutoCompleteTextView
                 android:id="@+id/autoCompleteTextView"
                 android:layout_width="match_parent"
@@ -51,8 +48,6 @@
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
-
-
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/bus_name_input_layout"
@@ -111,7 +106,7 @@
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
-            style="@style/TextColor"
+            style="@style/SearchDialogStyle"
             android:cursorVisible="true"
             android:textCursorDrawable="@drawable/red_cursor"
             />
@@ -131,11 +126,10 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/source_state_view"
             android:visibility="gone"
-            style="@style/TextColor"
             android:cursorVisible="true"
+            style="@style/SearchDialogStyle"
             android:textCursorDrawable="@drawable/red_cursor"
             />
-
 
         <TextView
             android:layout_width="wrap_content"
@@ -163,7 +157,7 @@
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
-            style="@style/TextColor"
+            style="@style/SearchDialogStyle"
             android:cursorVisible="true"
             android:textCursorDrawable="@drawable/red_cursor"
             />
@@ -183,9 +177,9 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/destination_state_view"
             android:visibility="gone"
-            style="@style/TextColor"
             android:cursorVisible="true"
             android:textCursorDrawable="@drawable/red_cursor"
+            style="@style/SearchDialogStyle"
             />
 
         <TextView
@@ -225,8 +219,6 @@
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
-
-
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/reach_time_picker"
@@ -359,7 +351,7 @@
             >
 
             <CheckBox
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/blanket"
                 android:text="Blankets"
@@ -367,7 +359,7 @@
                 />
 
             <CheckBox
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/charging_point"
                 android:text="Charging point"
@@ -375,7 +367,7 @@
                 />
 
             <CheckBox
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/emergency_contact_number"
                 android:text="Emergency contact number"
@@ -383,7 +375,7 @@
                 />
 
             <CheckBox
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/track_my_bus"
                 android:text="Live Bus Tracking"
@@ -391,7 +383,7 @@
                 />
 
             <CheckBox
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/wifi"
                 android:text="Wifi"
@@ -399,7 +391,7 @@
                 />
 
             <CheckBox
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/water_bottle"
                 android:text="Water Bottle"
