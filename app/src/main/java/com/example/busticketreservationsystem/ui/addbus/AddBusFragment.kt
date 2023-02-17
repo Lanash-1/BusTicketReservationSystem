@@ -66,7 +66,6 @@ class AddBusFragment : Fragment() {
 
         val adminViewModelFactory = AdminViewModelFactory(repository)
         adminViewModel = ViewModelProvider(requireActivity(), adminViewModelFactory)[AdminViewModel::class.java]
-
     }
 
     override fun onCreateView(
@@ -167,14 +166,12 @@ class AddBusFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, partnerList)
-        // get reference to the autocomplete text view
-        val autocompleteTV = binding.autoCompleteTextView
-        // set adapter to the autocomplete tv to the arrayAdapter
-        autocompleteTV.setAdapter(arrayAdapter)
+        val partnerAutocompleteTextView = binding.autoCompleteTextView
+        partnerAutocompleteTextView.setAdapter(arrayAdapter)
 
         val busTypeList = mutableListOf<String>()
-        for(type in BusTypes.values()){
-            busTypeList.add(type.name)
+        for(busType in BusTypes.values()){
+            busTypeList.add(busType.name)
         }
         val busTypeArrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, busTypeList)
         binding.busTypeAutoCompleteTextView.setAdapter(busTypeArrayAdapter)
@@ -182,8 +179,6 @@ class AddBusFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        binding.addBusLayout.transitionName = "service_transition1"
 
         requireActivity().findViewById<BottomNavigationView>(R.id.admin_bottomNavigationView)?.visibility = View.GONE
 
@@ -200,11 +195,9 @@ class AddBusFragment : Fragment() {
             partnerList.add(partner.partnerName)
         }
 
+//        add bus operation
         binding.addBusButton.setOnClickListener {
 
-//            validations should be done
-//            After validations,
-//            add bus data to database
             val validPartner = validPartner()
             val validBusName = validBusName()
             val validBoardingDetails = validBoardingDetails()
@@ -248,22 +241,6 @@ class AddBusFragment : Fragment() {
             }
         }
 
-//        binding.autoCompleteTextView.setFreezesText(false)
-//        binding.busTypeAutoCompleteTextView.freezesText = false
-
-//        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, partnerList)
-//        // get reference to the autocomplete text view
-//        val autocompleteTV = binding.autoCompleteTextView
-//        // set adapter to the autocomplete tv to the arrayAdapter
-//        autocompleteTV.setAdapter(arrayAdapter)
-//
-//        val busTypeList = mutableListOf<String>()
-//        for(type in BusTypes.values()){
-//            busTypeList.add(type.name)
-//        }
-//        val busTypeArrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, busTypeList)
-//        binding.busTypeAutoCompleteTextView.setAdapter(busTypeArrayAdapter)
-
         binding.sourceStateView.setOnClickListener {
             locationViewModel.fetchStates()
             val list = locationViewModel.states
@@ -280,7 +257,9 @@ class AddBusFragment : Fragment() {
         }
 
         locationViewModel.selectedSourceCity.observe(viewLifecycleOwner, Observer{
-            binding.sourceCityView.text = it.toString()
+            if(it != null){
+                binding.sourceCityView.text = it.toString()
+            }
         })
 
         locationViewModel.selectedSourceState.observe(viewLifecycleOwner, Observer{
@@ -288,6 +267,7 @@ class AddBusFragment : Fragment() {
             if(locationViewModel.selectedSourceState.value?.isNotEmpty() == true){
                 binding.sourceCityView.visibility = View.VISIBLE
             }
+            locationViewModel.selectedSourceCity.value = null
             binding.sourceCityView.text = "Select City"
             locationViewModel.fetchCities(locationViewModel.selectedSourceState.value!!)
         })
@@ -313,15 +293,17 @@ class AddBusFragment : Fragment() {
         }
 
         locationViewModel.selectedDestinationCity.observe(viewLifecycleOwner, Observer{
-            binding.destinationCityView.text = it.toString()
+            if(it != null){
+                binding.destinationCityView.text = it.toString()
+            }
         })
 
         locationViewModel.selectedDestinationState.observe(viewLifecycleOwner, Observer{
             binding.destinationStateView.text = it.toString()
             if(locationViewModel.selectedDestinationState.value?.isNotEmpty() == true){
                 binding.destinationCityView.visibility = View.VISIBLE
-
             }
+            locationViewModel.selectedDestinationCity.value = null
             binding.destinationCityView.text = "Select City"
             locationViewModel.fetchCities(locationViewModel.selectedDestinationState.value!!)
         })
@@ -498,9 +480,6 @@ class AddBusFragment : Fragment() {
         timePickerDialog.show()
     }
 
-//    END OF ON-VIEW-CREATED
-
-
     private fun openSearchableDialogSource(list: List<String>, ){
 
         dialog = Dialog(requireContext())
@@ -508,11 +487,7 @@ class AddBusFragment : Fragment() {
 
         dialog.window?.setLayout(800, LayoutParams.WRAP_CONTENT)
 
-//        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
         dialog.show()
-
-//        dialog.setCanceledOnTouchOutside(true)
 
         val listView = dialog.findViewById<ListView>(R.id.list_view)
         val editText = dialog.findViewById<EditText>(R.id.edit_text)
@@ -555,15 +530,10 @@ class AddBusFragment : Fragment() {
 
         dialog.window?.setLayout(800, LayoutParams.WRAP_CONTENT)
 
-//        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-
         dialog.show()
 
         val listView = dialog.findViewById<ListView>(R.id.list_view)
         val editText = dialog.findViewById<EditText>(R.id.edit_text)
-//        editText.setTextColor(R.style.TextColor)
-//        listView.findViewById<TextView>(R.id.textView).setTextColor(R.style.TextColor)
 
         val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
             requireContext(),

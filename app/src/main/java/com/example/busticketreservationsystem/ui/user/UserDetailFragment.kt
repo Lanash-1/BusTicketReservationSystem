@@ -23,7 +23,6 @@ import com.example.busticketreservationsystem.viewmodel.livedata.AdminViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.AdminViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-
 class UserDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentUserDetailBinding

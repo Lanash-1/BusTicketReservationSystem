@@ -169,35 +169,43 @@ class LoginFragment : Fragment() {
         userViewModel.isNumberAlreadyExists(mobileInput.text.toString())
 
         userViewModel.isLoggedIn.observe(viewLifecycleOwner, Observer{
-            if(userViewModel.isLoggedIn.value == true){
-                editor.putInt("userId", userViewModel.user.userId)
-                editor.commit()
-                updateBookingHistory(userViewModel.user.userId)
-                parentFragmentManager.commit {
-                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                    setCustomAnimations(R.anim.from_right, R.anim.to_left)
-                    replace(R.id.main_fragment_container, HomePageFragment())
+            if(it != null){
+                if(userViewModel.isLoggedIn.value == true){
+                    editor.putInt("userId", userViewModel.user.userId)
+                    editor.commit()
+                    updateBookingHistory(userViewModel.user.userId)
+                    parentFragmentManager.commit {
+                        setCustomAnimations(R.anim.from_right, R.anim.to_left)
+                        replace(R.id.main_fragment_container, HomePageFragment())
+                    }
                 }
+                userViewModel.isLoggedIn.value = null
             }
         })
 
         userViewModel.isPasswordMatching.observe(viewLifecycleOwner, Observer{
-            if(userViewModel.isPasswordMatching.value == true){
-                editor.putString("status", LoginStatus.LOGGED_IN.name)
-                loginStatusViewModel.status = LoginStatus.LOGGED_IN
-                editor.commit()
-                userViewModel.fetchUserData(mobileInput.text.toString())
-            }else{
-                passwordLayout.helperText = "Invalid password"
+            if(it != null){
+                if(userViewModel.isPasswordMatching.value == true){
+                    editor.putString("status", LoginStatus.LOGGED_IN.name)
+                    loginStatusViewModel.status = LoginStatus.LOGGED_IN
+                    editor.commit()
+                    userViewModel.fetchUserData(mobileInput.text.toString())
+                }else{
+                    passwordLayout.helperText = "Invalid password"
+                }
+                userViewModel.isPasswordMatching.value = null
             }
         })
 
         userViewModel.isMobileExists.observe(viewLifecycleOwner, Observer{
-            if (userViewModel.isMobileExists.value == true){
-                userViewModel.isPasswordMatching(mobileInput.text.toString(), passwordInput.text.toString())
-                mobileLayout.helperText = null
-            }else{
-                mobileLayout.helperText = "No account linked with this mobile number"
+            if(it != null){
+                if (userViewModel.isMobileExists.value == true){
+                    userViewModel.isPasswordMatching(mobileInput.text.toString(), passwordInput.text.toString())
+                    mobileLayout.helperText = null
+                }else{
+                    mobileLayout.helperText = "No account linked with this mobile number"
+                }
+                userViewModel.isMobileExists.value = null
             }
         })
     }

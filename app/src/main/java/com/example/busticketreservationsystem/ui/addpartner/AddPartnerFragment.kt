@@ -1,6 +1,5 @@
 package com.example.busticketreservationsystem.ui.addpartner
 
-import android.app.ActionBar.LayoutParams
 import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -43,8 +42,6 @@ class AddPartnerFragment : Fragment() {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
 
-//        sharedElementEnterTransition = MaterialContainerTransform()
-
         val database = AppDatabase.getDatabase(requireActivity().applicationContext)
         val repository = AppRepositoryImpl(database)
 
@@ -60,8 +57,6 @@ class AddPartnerFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        // Inflate the layout for this fragment
         binding = FragmentAddPartnerBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -81,7 +76,6 @@ class AddPartnerFragment : Fragment() {
             builder.setMessage("Partner details will not be saved")
             builder.setTitle("Discard Registration?")
             builder.setCancelable(false)
-
 
             builder.setNegativeButton("Cancel"){
                     dialog, _ -> dialog.cancel()
@@ -123,8 +117,6 @@ class AddPartnerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        binding.addPartnerLayout.transitionName = "service_transition0"
 
         (activity as AppCompatActivity).supportActionBar!!.apply {
             setDisplayHomeAsUpEnabled(true)

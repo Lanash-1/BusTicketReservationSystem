@@ -68,6 +68,7 @@ class MyAccountFragment : Fragment() {
 
         val database = AppDatabase.getDatabase(requireActivity().applicationContext)
         val repository = AppRepositoryImpl(database)
+
         val userViewModelFactory = UserViewModelFactory(repository)
         userViewModel = ViewModelProvider(requireActivity(), userViewModelFactory)[UserViewModel::class.java]
 
@@ -158,7 +159,6 @@ class MyAccountFragment : Fragment() {
                     MyAccountOptions.MY_BOOKINGS -> {
                         navigationViewModel.fragment = MyAccountFragment()
                         parentFragmentManager.commit {
-                            setTransition(TRANSIT_FRAGMENT_OPEN)
                             setCustomAnimations(R.anim.from_left, R.anim.to_right)
                             replace(R.id.homePageFragmentContainer, BookingHistoryFragment())
                         }
@@ -177,7 +177,6 @@ class MyAccountFragment : Fragment() {
                         startActivity(callIntent)
                     }
                     MyAccountOptions.FEEDBACK -> {
-
                         val intent = Intent(Intent.ACTION_SENDTO).apply {
                             data = Uri.parse("mailto:uei19112@rmd.ac.in")
                             putExtra(Intent.EXTRA_SUBJECT, "App Usage Feedback")
@@ -221,6 +220,8 @@ class MyAccountFragment : Fragment() {
                     sourceLocation = ""
                     destinationLocation = ""
                 }
+
+
                 dateViewModel.apply {
                     year = 0
                     month = 0
