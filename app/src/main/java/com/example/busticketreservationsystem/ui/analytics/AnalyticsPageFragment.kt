@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
@@ -80,13 +79,11 @@ class AnalyticsPageFragment : Fragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
-
         adminViewModel.fetchAnalyticsData()
 
         val analyticsRecyclerView = binding.analyticsRecyclerView
         analyticsRecyclerView.adapter = analyticsAdapter
         analyticsRecyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
-
 
         adminViewModel.partnerCount.observe(viewLifecycleOwner, Observer{
             analyticsAdapter.setAnalyticsData(adminViewModel.partnerCount.value!!, adminViewModel.busCount, adminViewModel.ticketCount, adminViewModel.userCount)

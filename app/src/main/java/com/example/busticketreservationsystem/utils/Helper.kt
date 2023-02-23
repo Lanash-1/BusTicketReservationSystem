@@ -1,7 +1,6 @@
 package com.example.busticketreservationsystem.utils
 
 import android.util.Patterns
-import com.example.busticketreservationsystem.enums.BookedTicketStatus
 import java.text.SimpleDateFormat
 import java.util.*
 

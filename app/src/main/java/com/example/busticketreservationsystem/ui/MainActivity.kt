@@ -147,7 +147,6 @@ class MainActivity : AppCompatActivity() {
                 }
                 LoginStatus.LOGGED_IN.name -> {
                     loginStatusViewModel.status = LoginStatus.LOGGED_IN
-
                     supportFragmentManager.commit {
                         setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         replace(R.id.main_fragment_container, HomePageFragment())
@@ -161,7 +160,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 LoginStatus.LOGGED_OUT.name -> {
-
                     loginStatusViewModel.status = LoginStatus.LOGGED_OUT
                     supportFragmentManager.commit {
                         setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
@@ -169,7 +167,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 LoginStatus.ADMIN_LOGGED_IN.name -> {
-
                     loginStatusViewModel.status = LoginStatus.ADMIN_LOGGED_IN
                     supportFragmentManager.commit {
                         setCustomAnimations(R.anim.from_right, R.anim.to_left)

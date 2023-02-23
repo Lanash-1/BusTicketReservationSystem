@@ -10,11 +10,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentTransaction
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.commit
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.databinding.FragmentAdminSettingsBinding
 import com.example.busticketreservationsystem.enums.LoginStatus
+import com.example.busticketreservationsystem.enums.Themes
 import com.example.busticketreservationsystem.ui.adminservice.AdminServicesFragment
 import com.example.busticketreservationsystem.ui.welcome.WelcomeFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -22,6 +23,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class AdminSettingsFragment : Fragment() {
 
     private lateinit var editor: SharedPreferences.Editor
+    private lateinit var themeEditor: SharedPreferences.Editor
+    private lateinit var themePreferences: SharedPreferences
 
     private lateinit var binding: FragmentAdminSettingsBinding
 
@@ -59,7 +62,10 @@ class AdminSettingsFragment : Fragment() {
             val writeSharedPreferences: SharedPreferences = getSharedPreferences("LoginStatus",
                 Context.MODE_PRIVATE
             )
+            themePreferences = getSharedPreferences("ThemeStatus", Context.MODE_PRIVATE)
+
             editor = writeSharedPreferences.edit()
+            themeEditor = themePreferences.edit()
         }
 
         val callback: OnBackPressedCallback =
@@ -71,11 +77,48 @@ class AdminSettingsFragment : Fragment() {
             }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
-
         binding.logoutLayout.setOnClickListener {
             logoutOperation()
         }
 
+        setSelectedTheme()
+
+        binding.themeRadioGroup.setOnCheckedChangeListener { radioGroup, i ->
+            when(i){
+                R.id.light_radio_button -> {
+                    themeEditor.putString("theme", Themes.LIGHT.name)
+                    themeEditor.apply()
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                }
+                R.id.dark_radio_button -> {
+                    themeEditor.putString("theme", Themes.DARK.name)
+                    themeEditor.apply()
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                }
+                R.id.system_default_radio_button -> {
+                    themeEditor.putString("theme", Themes.SYSTEM_DEFAULT.name)
+                    themeEditor.apply()
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                }
+            }
+        }
+    }
+
+    private fun setSelectedTheme() {
+        when(themePreferences.getString("theme", "")){
+            Themes.LIGHT.name -> {
+                binding.lightRadioButton.isChecked = true
+            }
+            Themes.DARK.name -> {
+                binding.darkRadioButton.isChecked = true
+            }
+            Themes.SYSTEM_DEFAULT.name -> {
+                binding.systemDefaultRadioButton.isChecked = true
+            }
+            "" -> {
+                binding.systemDefaultRadioButton.isChecked = true
+            }
+        }
     }
 
     private fun logoutOperation() {
@@ -97,7 +140,6 @@ class AdminSettingsFragment : Fragment() {
                 editor.commit()
 
                 parentFragmentManager.commit {
-                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                     setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.main_fragment_container, WelcomeFragment())
                 }

@@ -72,7 +72,6 @@ class PartnerListAdapter: RecyclerView.Adapter<PartnerListAdapter.PartnerListVie
         }
     }
 
-    override fun getItemCount(): Int {
-        return partnerList.size
-    }
+    override fun getItemCount() = partnerList.size
+
 }

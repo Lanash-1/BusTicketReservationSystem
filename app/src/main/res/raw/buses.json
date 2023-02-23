@@ -66,7 +66,7 @@
           "sourceLocation": "Madurai",
           "destinationLocation": "Chennai",
           "perTicketCost": 300,
-          "busType": "NON_AC_SEATER",
+          "busType": "AC_SEATER",
           "totalSeats": 30,
           "amenities": [
             "EMERGENCY_CONTACT_NUMBER"
@@ -159,7 +159,7 @@
           "sourceLocation": "Bengaluru",
           "destinationLocation": "Chennai",
           "perTicketCost": 600,
-          "busType": "SLEEPER",
+          "busType": "NON_AC_SEATER",
           "totalSeats": 30,
           "amenities": [
             "BLANKETS",
@@ -350,7 +350,7 @@
           "sourceLocation": "Bengaluru",
           "destinationLocation": "Madurai",
           "perTicketCost": 700,
-          "busType": "SLEEPER",
+          "busType": "AC_SEATER",
           "totalSeats": 30,
           "amenities": [
             "BLANKETS",
@@ -394,7 +394,7 @@
           "sourceLocation": "Chennai",
           "destinationLocation": "Madurai",
           "perTicketCost": 950,
-          "busType": "AC_SEATER",
+          "busType": "NON_AC_SEATER",
           "totalSeats": 30,
           "amenities": [
             "BLANKETS",
@@ -413,7 +413,7 @@
           "sourceLocation": "Bengaluru",
           "destinationLocation": "Chennai",
           "perTicketCost": 2000,
-          "busType": "SLEEPER",
+          "busType": "NON_AC_SEATER",
           "totalSeats": 30,
           "amenities": [
             "BLANKETS",
@@ -432,7 +432,7 @@
           "sourceLocation": "Madurai",
           "destinationLocation": "Chennai",
           "perTicketCost": 700,
-          "busType": "NON_AC_SEATER",
+          "busType": "AC_SEATER",
           "totalSeats": 30,
           "amenities": [
             "CHARGING_POINT",

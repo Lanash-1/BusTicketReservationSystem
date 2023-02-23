@@ -55,9 +55,4 @@ class BoardingDroppingLocationAdapter: RecyclerView.Adapter<BoardingDroppingLoca
         return locationsList.size
     }
 
-
-//    override fun onViewRecycled(holder: BoardingDroppingLocationViewHolder) {
-//        super.onViewRecycled(holder)
-//        holder.binding.radioButton.isChecked = false
-//    }
 }

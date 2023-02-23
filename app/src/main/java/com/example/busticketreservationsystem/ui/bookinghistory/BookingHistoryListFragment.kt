@@ -41,8 +41,6 @@ class BookingHistoryListFragment : Fragment() {
         this.partnerName = partnerName
     }
 
-
-
     private lateinit var binding: FragmentBookingHistoryListBinding
 
     private var currentPosition: Int = -1
@@ -189,8 +187,10 @@ class BookingHistoryListFragment : Fragment() {
 
         if(tickets.isEmpty()){
             binding.emptyListImage.visibility = View.VISIBLE
+            binding.emptyText.visibility = View.VISIBLE
         }else{
             binding.emptyListImage.visibility = View.GONE
+            binding.emptyText.visibility = View.GONE
 
             bookingHistoryListAdapter.setBookedTicketList(tickets, buses, partnerName)
             bookingHistoryListAdapter.notifyDataSetChanged()

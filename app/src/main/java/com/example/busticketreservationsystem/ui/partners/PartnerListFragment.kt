@@ -55,7 +55,6 @@ class PartnerListFragment : Fragment() {
             title = "Partners"
             setDisplayHomeAsUpEnabled(true)
         }
-        // Inflate the layout for this fragment
         binding = FragmentPartnersListBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -118,7 +117,6 @@ class PartnerListFragment : Fragment() {
             override fun onClickExpandMore(position: Int) {
                 expandItemPosition = position
                 partnerListAdapter.setPartnerList(adminViewModel.partnersList.value!!, expandItemPosition)
-//                partnerListAdapter.notifyDataSetChanged()
                 partnerListAdapter.notifyItemChanged(position)
 
             }
@@ -126,13 +124,10 @@ class PartnerListFragment : Fragment() {
             override fun onClickExpandLess(position: Int) {
                 expandItemPosition = -1
                 partnerListAdapter.setPartnerList(adminViewModel.partnersList.value!!, expandItemPosition)
-//                partnerListAdapter.notifyDataSetChanged()
                 partnerListAdapter.notifyItemChanged(position)
 
             }
-
         })
-
     }
 
     private fun moveToPartnerDetailsFragment() {

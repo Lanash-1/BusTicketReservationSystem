@@ -35,9 +35,7 @@ class DatePickerFragment: DialogFragment(), DatePickerDialog.OnDateSetListener {
         calendar.set(year-13, month, date)
         dialog.datePicker.maxDate = calendar.timeInMillis
         return dialog
-//        return DatePickerDialog(requireContext(), this,year, month, date)
     }
-
 
     override fun onDateSet(p0: DatePicker?, year: Int, month: Int, date: Int) {
         dateViewModel.birthDate = date

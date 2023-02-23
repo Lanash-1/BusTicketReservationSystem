@@ -15,7 +15,6 @@ class BusListAdapter: RecyclerView.Adapter<BusListAdapter.BusListViewHolder>() {
         this.busList = busList
     }
 
-
     private lateinit var listener: OnItemClickListener
 
     fun setOnItemClickListener(listener: OnItemClickListener){

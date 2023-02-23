@@ -33,8 +33,6 @@ import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusView
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.livedata.BusViewModel
 import com.example.busticketreservationsystem.viewmodel.livedata.UserViewModel
-import com.google.android.material.badge.BadgeDrawable
-import com.google.android.material.badge.BadgeUtils
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class DashBoardFragment : Fragment() {
@@ -51,7 +49,6 @@ class DashBoardFragment : Fragment() {
     lateinit var writeSharedPreferences: SharedPreferences
 
     private var recentlyViewedAdapter = RecentlyViewedAdapter()
-
 
     private lateinit var userViewModel: UserViewModel
     private lateinit var busViewModel: BusViewModel
@@ -78,9 +75,8 @@ class DashBoardFragment : Fragment() {
         // Inflate the layout for this fragment
         (activity as AppCompatActivity).supportActionBar!!.apply {
             setDisplayHomeAsUpEnabled(false)
-            title = "Dashboard"
+            title = resources.getString(R.string.dashboard_title)
         }
-
 
         binding = FragmentDashBoardBinding.inflate(inflater, container, false)
         return binding.root
@@ -114,12 +110,7 @@ class DashBoardFragment : Fragment() {
 
         clearAllValues()
 
-//        for(i in 0 until parentFragmentManager.backStackEntryCount){
-//            parentFragmentManager.popBackStack()
-//        }
-
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.visibility = View.VISIBLE
-
 
         binding.recentlyViewedRecyclerView.adapter = recentlyViewedAdapter
         binding.recentlyViewedRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -208,10 +199,7 @@ class DashBoardFragment : Fragment() {
         binding.dateText.doOnTextChanged { text, start, before, count ->
             binding.dateText.setTextColor(resources.getColor(R.color.searchColor))
 
-//            if(searchViewModel.year != 0){
-
                 binding.enterDateErrorIcon.visibility = View.GONE
-//            }
         }
 
         binding.searchBusButton.setOnClickListener {
@@ -224,7 +212,6 @@ class DashBoardFragment : Fragment() {
 
                 parentFragmentManager.commit {
                     setCustomAnimations(R.anim.from_right, R.anim.to_left)
-//                    setCustomAnimations(R.anim.slide_up, R.anim.fade_out)
                     replace(R.id.homePageFragmentContainer, BusResultsFragment())
                 }
             }else{

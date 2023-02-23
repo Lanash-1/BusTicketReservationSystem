@@ -1,7 +1,5 @@
 package com.example.busticketreservationsystem.ui.welcome
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,10 +12,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.databinding.FragmentWelcomeBinding
 import com.example.busticketreservationsystem.ui.adminlogin.AdminLoginFragment
-import com.example.busticketreservationsystem.ui.adminpanel.AdminPanelFragment
-import com.example.busticketreservationsystem.ui.adminservice.AdminServicesFragment
 import com.example.busticketreservationsystem.ui.register.RegisterFragment
-
 
 class WelcomeFragment : Fragment() {
 
@@ -82,9 +77,6 @@ class WelcomeFragment : Fragment() {
         val adapter = WelcomeViewPagerAdapter()
         sliderViewPager.adapter = adapter
 
-
-
-
         binding.userBtn.setOnClickListener {
             parentFragmentManager.commit {
                 setCustomAnimations(R.anim.from_right, R.anim.to_left)
@@ -98,7 +90,6 @@ class WelcomeFragment : Fragment() {
                 replace(R.id.main_fragment_container, AdminLoginFragment())
             }
         }
-
 
     }
 

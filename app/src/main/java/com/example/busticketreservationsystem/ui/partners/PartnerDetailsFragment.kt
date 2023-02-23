@@ -18,9 +18,7 @@ import com.example.busticketreservationsystem.ui.addpartner.AddPartnerFragment
 import com.example.busticketreservationsystem.ui.buseslist.BusesListFragment
 import com.example.busticketreservationsystem.viewmodel.NavigationViewModel
 import com.example.busticketreservationsystem.viewmodel.livedata.AdminViewModel
-import com.example.busticketreservationsystem.viewmodel.livedata.BusViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.AdminViewModelFactory
-import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class PartnerDetailsFragment : Fragment() {
@@ -36,9 +34,6 @@ class PartnerDetailsFragment : Fragment() {
 
         val database = AppDatabase.getDatabase(requireActivity().applicationContext)
         val repository = AppRepositoryImpl(database)
-
-//        val busViewModelFactory = BusViewModelFactory(repository)
-//        busViewModel = ViewModelProvider(requireActivity(), busViewModelFactory)[BusViewModel::class.java]
 
         val adminViewModelFactory = AdminViewModelFactory(repository)
         adminViewModel = ViewModelProvider(requireActivity(), adminViewModelFactory)[AdminViewModel::class.java]

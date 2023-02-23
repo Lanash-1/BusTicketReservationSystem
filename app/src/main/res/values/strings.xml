@@ -1,5 +1,18 @@
 <resources>
+
     <string name="app_name">Book Bus</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="dashboard_title">Dashboard</string>
+    <string name="search_bus_button">Search Buses</string>
+    <string name="recently_viewed_title">Recently Viewed</string>
+    <string name="booking_history_title">Booking History</string>
+    <string name="my_account_title">My Account</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="completed">Completed</string>
+    <string name="cancelled">Cancelled</string>
+    <string name="my_bookings">My Bookings</string>
+    <string name="settings">Settings</string>
+    <string name="edit_profile">Edit Profile</string>
+
 </resources>

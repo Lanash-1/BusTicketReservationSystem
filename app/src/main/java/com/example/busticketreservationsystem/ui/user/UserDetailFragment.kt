@@ -39,7 +39,6 @@ class UserDetailFragment : Fragment() {
 
         val adminViewModelFactory = AdminViewModelFactory(repository)
         adminViewModel = ViewModelProvider(requireActivity(), adminViewModelFactory)[AdminViewModel::class.java]
-
     }
 
     override fun onCreateView(

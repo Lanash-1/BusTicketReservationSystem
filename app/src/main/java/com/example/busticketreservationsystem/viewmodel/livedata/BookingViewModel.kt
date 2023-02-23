@@ -216,9 +216,6 @@ class BookingViewModel(
     }
 
 
-//    Tab Layout tab position related
-
-    var tabPosition = MutableLiveData<Int>()
 
 
 

@@ -32,9 +32,6 @@ class WelcomeViewPagerAdapter: RecyclerView.Adapter<WelcomeViewPagerAdapter.Welc
         }
     }
 
-    override fun getItemCount(): Int {
-        return 3
-    }
-
+    override fun getItemCount() = 3
 
 }

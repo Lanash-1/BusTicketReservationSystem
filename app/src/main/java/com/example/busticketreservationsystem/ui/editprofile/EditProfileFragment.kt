@@ -1,7 +1,6 @@
 package com.example.busticketreservationsystem.ui.editprofile
 
 import android.app.AlertDialog
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Patterns
 import android.view.*

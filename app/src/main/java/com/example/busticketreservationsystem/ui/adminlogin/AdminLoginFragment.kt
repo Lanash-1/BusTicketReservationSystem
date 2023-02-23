@@ -100,7 +100,6 @@ class AdminLoginFragment : Fragment() {
 
         notificationManager = requireActivity().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-
         binding.verifyEmailButton.setOnClickListener {
             val inputEmail = binding.emailInput.text.toString()
             val validEmail = helper.validEmail(inputEmail)
@@ -165,6 +164,7 @@ class AdminLoginFragment : Fragment() {
         }
     }
 
+//    send otp through notification
     private fun sendNotification() {
         generatedOtp = (100000..999999).random()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -188,4 +188,5 @@ class AdminLoginFragment : Fragment() {
         }
         notificationManager.notify(1234, builder.build())
     }
+
 }

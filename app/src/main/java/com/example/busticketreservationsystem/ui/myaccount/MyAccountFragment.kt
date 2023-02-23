@@ -30,7 +30,6 @@ import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.enums.Gender
 import com.example.busticketreservationsystem.ui.bookinghistory.BookingHistoryFragment
-import com.example.busticketreservationsystem.ui.chat.ChatFragment
 import com.example.busticketreservationsystem.ui.dashboard.DashBoardFragment
 import com.example.busticketreservationsystem.ui.editprofile.EditProfileFragment
 import com.example.busticketreservationsystem.ui.login.LoginFragment
@@ -40,7 +39,6 @@ import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserVie
 import com.example.busticketreservationsystem.viewmodel.livedata.UserViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.chip.Chip
-import com.google.android.material.transition.Hold
 
 class MyAccountFragment : Fragment() {
 
@@ -119,7 +117,6 @@ class MyAccountFragment : Fragment() {
             binding.username.text = userViewModel.user.username
             binding.email.text = userViewModel.user.emailId
             binding.mobile.text = userViewModel.user.mobileNumber
-//            binding.gender.text = userViewModel.user.gender
             if(userViewModel.user.gender == Gender.MALE.name){
                 binding.gender.text = "Male"
             }else if(userViewModel.user.gender == Gender.FEMALE.name){

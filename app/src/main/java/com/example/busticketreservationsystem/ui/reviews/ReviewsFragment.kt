@@ -18,7 +18,6 @@ import com.example.busticketreservationsystem.databinding.FragmentReviewsBinding
 import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.enums.LoginStatus
-import com.example.busticketreservationsystem.ui.buseslist.BusesListFragment
 import com.example.busticketreservationsystem.ui.businfo.BusInfoFragment
 import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
 import com.example.busticketreservationsystem.viewmodel.NavigationViewModel
@@ -35,7 +34,6 @@ class ReviewsFragment : Fragment() {
 
 
     private lateinit var busViewModel: BusViewModel
-    private val navigationViewModel: NavigationViewModel by activityViewModels()
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,8 +52,6 @@ class ReviewsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_reviews, container, false)
         (activity as AppCompatActivity).supportActionBar?.apply {
             title ="Ratings & Reviews"
             setDisplayHomeAsUpEnabled(true)
@@ -87,21 +83,6 @@ class ReviewsFragment : Fragment() {
                 replace(R.id.homePageFragmentContainer, BusInfoFragment())
             }
         }
-//        when(navigationViewModel.fragment){
-//            is BusesListFragment -> {
-//                parentFragmentManager.commit {
-//                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-//                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
-//                    replace(R.id.adminPanelFragmentContainer, BusInfoFragment())
-//                }
-//            }else -> {
-//            parentFragmentManager.commit {
-//                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-//                setCustomAnimations(R.anim.from_left, R.anim.to_right)
-//                replace(R.id.homePageFragmentContainer, BusInfoFragment())
-//            }
-//            }
-//        }
     }
 
 
@@ -123,7 +104,6 @@ class ReviewsFragment : Fragment() {
         busViewModel.busReviewsList.value?.let { reviewsAdapter.setReviewsList(it) }
         binding.reviewsRecyclerView.adapter = reviewsAdapter
         binding.reviewsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-
 
         if(busViewModel.busReviewsList.value?.isEmpty() == true){
             binding.emptyListLayout.visibility = View.VISIBLE

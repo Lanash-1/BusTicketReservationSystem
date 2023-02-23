@@ -23,7 +23,6 @@ import com.example.busticketreservationsystem.viewmodel.livedata.ChatViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.AdminViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.ChatViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.transition.Hold
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialElevationScale
 
@@ -34,9 +33,7 @@ class AdminChatSupportFragment : Fragment() {
     private lateinit var adminViewModel: AdminViewModel
     private lateinit var chatViewModel: ChatViewModel
 
-
     private val chatUserListAdapter = AdminChatSupportUserListAdapter()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,9 +47,6 @@ class AdminChatSupportFragment : Fragment() {
 
         val adminViewModelFactory = AdminViewModelFactory(repository)
         adminViewModel = ViewModelProvider(requireActivity(), adminViewModelFactory)[AdminViewModel::class.java]
-
-        reenterTransition = MaterialElevationScale(true)
-
 
     }
 
@@ -71,7 +65,6 @@ class AdminChatSupportFragment : Fragment() {
     private fun backPressOperation() {
         parentFragmentManager.commit {
             setCustomAnimations(R.anim.from_left, R.anim.to_right)
-//            setCustomAnimations(R.anim.from_right, R.anim.to_left)
             replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
         }
     }
@@ -118,27 +111,9 @@ class AdminChatSupportFragment : Fragment() {
                     fragment.sharedElementEnterTransition = MaterialContainerTransform().apply {
                         duration = 500L
                     }
-//                    fragment.sharedElementReturnTransition = MaterialContainerTransform().apply {
-//                        duration = 500L
-//                    }
-//                    fragment.apply {
-//                        exitTransition = MaterialElevationScale(false)
-//                        reenterTransition = MaterialElevationScale(true)
-//                    }
-
-//                    binding.adminChatLayout.visibility = View.INVISIBLE
-//                    addToBackStack(null)
                     replace(R.id.adminPanelFragmentContainer, fragment)
                 }
             }
         })
-    }
-
-    private fun moveToChatFragment() {
-        parentFragmentManager.commit {
-//            setCustomAnimations(R.anim.from_right, R.anim.to_left)
-
-            replace(R.id.adminPanelFragmentContainer, ChatFragment())
-        }
     }
 }

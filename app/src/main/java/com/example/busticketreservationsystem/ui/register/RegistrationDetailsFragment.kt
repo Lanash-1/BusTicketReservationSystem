@@ -27,7 +27,6 @@ import com.example.busticketreservationsystem.viewmodel.livedata.UserViewModel
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
-
 class RegistrationDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentRegistrationDetailsBinding
@@ -71,7 +70,6 @@ class RegistrationDetailsFragment : Fragment() {
 
         binding = FragmentRegistrationDetailsBinding.inflate(inflater, container, false)
         return binding.root
-//        return inflater.inflate(R.layout.fragment_registration_details, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -82,13 +80,10 @@ class RegistrationDetailsFragment : Fragment() {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true){
                 override fun handleOnBackPressed() {
-//                    Toast.makeText(requireContext(), "back presses", Toast.LENGTH_SHORT).show()
                     parentFragmentManager.commit {
-                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         setCustomAnimations(R.anim.from_right, R.anim.to_left)
                         replace(R.id.main_fragment_container, HomePageFragment())
                     }
-//                    requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).selectedItemId = R.id.dashboard
                 }
             }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
@@ -123,7 +118,6 @@ class RegistrationDetailsFragment : Fragment() {
 
         skipText.setOnClickListener {
             parentFragmentManager.commit {
-                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 setCustomAnimations(R.anim.from_right, R.anim.to_left)
                 replace(R.id.main_fragment_container, HomePageFragment())
             }
@@ -138,7 +132,6 @@ class RegistrationDetailsFragment : Fragment() {
 
     private fun updateUserProfile() {
         emailLayout.helperText = validEmail()
-//        usernameLayout.helperText = validUsername()
 
         val validEmail = emailLayout.helperText == null
 
@@ -169,7 +162,6 @@ class RegistrationDetailsFragment : Fragment() {
             userViewModel.updateUserDetails()
 
             parentFragmentManager.commit {
-                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 setCustomAnimations(R.anim.from_right, R.anim.to_left)
                 replace(R.id.main_fragment_container, HomePageFragment())
             }

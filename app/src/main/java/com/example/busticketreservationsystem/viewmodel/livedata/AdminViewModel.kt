@@ -1,6 +1,5 @@
 package com.example.busticketreservationsystem.viewmodel.livedata
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,7 +9,6 @@ import com.example.busticketreservationsystem.data.entity.Partners
 import com.example.busticketreservationsystem.data.entity.User
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.enums.BookedTicketStatus
-import com.example.busticketreservationsystem.ui.buseslist.BusesListFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -238,32 +236,6 @@ class AdminViewModel(
             }
         }
     }
-
-//
-//    fun fetchBookingOfUser(userId: Int) {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            val busList = mutableListOf<Bus>()
-//            var bookings = listOf<Bookings>()
-//            val partnerName = mutableListOf<String>()
-//            val fetchJob = launch {
-//                bookings = repository.getUserBookings(userId)
-//                for(i in bookings){
-//                    busList.add(repository.getBus(i.busId))
-//                }
-//                for(i in busList){
-//                    partnerName.add(repository.getPartnerName(i.partnerId))
-//                }
-//            }
-//            fetchJob.join()
-//            withContext(Dispatchers.Main){
-//                bookingHistoryBookingList = bookings
-//                bookingHistoryBusList = busList
-//                bookingHistoryPartnerList = partnerName
-//
-//                bookingDataFetched.value = true
-//            }
-//        }
-//    }
 
     var bookedTicketList = listOf<Bookings>()
     var bookedBusList = listOf<Bus>()

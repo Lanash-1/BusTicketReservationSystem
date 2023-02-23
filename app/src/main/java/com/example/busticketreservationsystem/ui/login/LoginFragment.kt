@@ -18,6 +18,7 @@ import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
+import com.example.busticketreservationsystem.ui.bookingdetails.BookingDetailsFragment
 import com.example.busticketreservationsystem.ui.forgotpassword.ForgotPasswordFragment
 import com.example.busticketreservationsystem.ui.homepage.HomePageFragment
 import com.example.busticketreservationsystem.ui.register.RegisterFragment
@@ -47,7 +48,6 @@ class LoginFragment : Fragment() {
     private val navigationViewModel: NavigationViewModel by activityViewModels()
 
     private lateinit var editor: SharedPreferences.Editor
-
 
     private lateinit var userViewModel: UserViewModel
     private lateinit var bookingViewModel: BookingViewModel
@@ -95,7 +95,6 @@ class LoginFragment : Fragment() {
                 loginStatusViewModel.status = LoginStatus.SKIPPED
                 editor.commit()
                 parentFragmentManager.commit {
-                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     setCustomAnimations(R.anim.from_right, R.anim.to_left)
                     replace(R.id.main_fragment_container, HomePageFragment())
                 }
@@ -105,9 +104,19 @@ class LoginFragment : Fragment() {
     }
 
     private fun backPressOperation() {
-        parentFragmentManager.commit {
-            setCustomAnimations(R.anim.from_right, R.anim.to_left)
-            replace(R.id.main_fragment_container, WelcomeFragment())
+        when(navigationViewModel.fragment){
+            is BookingDetailsFragment -> {
+                parentFragmentManager.commit {
+                    setCustomAnimations(R.anim.from_right, R.anim.to_left)
+                    replace(R.id.main_fragment_container, HomePageFragment())
+                }
+            }
+            else -> {
+                parentFragmentManager.commit {
+                    setCustomAnimations(R.anim.from_right, R.anim.to_left)
+                    replace(R.id.main_fragment_container, WelcomeFragment())
+                }
+            }
         }
     }
 

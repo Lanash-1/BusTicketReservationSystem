@@ -46,7 +46,5 @@ class SearchLocationAdapter: RecyclerView.Adapter<SearchLocationAdapter.SearchLo
         }
     }
 
-    override fun getItemCount(): Int {
-        return locationList.size
-    }
+    override fun getItemCount() = locationList.size
 }

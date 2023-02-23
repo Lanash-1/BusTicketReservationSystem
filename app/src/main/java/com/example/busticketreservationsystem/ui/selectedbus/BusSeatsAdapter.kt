@@ -60,21 +60,4 @@ class BusSeatsAdapter: RecyclerView.Adapter<BusSeatsAdapter.BusSeatsViewHolder>(
         holder.binding.notAvailableSeatIcon.visibility = View.INVISIBLE
     }
 
-//    override fun getItemId(position: Int): Long {
-//        println("ITEM ID - $position")
-//        return position.toLong()
-//    }
-
-//    override fun getItemId(position: Int): Long {
-//        return super.getItemId(position)
-//    }
-
-//    override fun getItemViewType(position: Int): Int {
-//        println("ITEM VIEW TYPE - $position")
-//        return position
-//    }
-
-//    override fun getItemViewType(position: Int): Int {
-//        return super.getItemViewType(position)
-//    }
 }

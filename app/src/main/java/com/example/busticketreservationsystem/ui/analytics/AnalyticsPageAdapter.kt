@@ -64,8 +64,6 @@ class AnalyticsPageAdapter: RecyclerView.Adapter<AnalyticsPageAdapter.AnalyticsP
         }
     }
 
-    override fun getItemCount(): Int {
-        return Analytics.values().size
-    }
+    override fun getItemCount() = Analytics.values().size
 
 }

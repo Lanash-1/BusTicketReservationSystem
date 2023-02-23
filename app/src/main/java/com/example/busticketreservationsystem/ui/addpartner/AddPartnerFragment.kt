@@ -25,8 +25,6 @@ import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.AdminVi
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.transition.MaterialContainerTransform
-
 
 class AddPartnerFragment : Fragment() {
 
@@ -97,6 +95,7 @@ class AddPartnerFragment : Fragment() {
         }
     }
 
+//    check value in input field changed
     private fun checkChanged(): Boolean {
         return binding.partnerEmailInput.text.toString() != adminViewModel.selectedPartner.partnerEmailId ||  binding.partnerName.text.toString() != adminViewModel.selectedPartner.partnerName || binding.partnerMobileInput.text.toString() != adminViewModel.selectedPartner.partnerMobile
     }
@@ -162,25 +161,37 @@ class AddPartnerFragment : Fragment() {
         }
 
         binding.updatePartnerButton.setOnClickListener {
-            val validPartnerName = validPartnerName()
-            val validPartnerEmail = validPartnerEmail()
-            val validPartnerMobile = validPartnerMobile()
-            if(validPartnerEmail && validPartnerName && validPartnerMobile){
-                adminViewModel.selectedPartner.apply {
-                    partnerName = adminViewModel.partnerName
-                    partnerEmailId = adminViewModel.partnerEmail
-                    partnerMobile = adminViewModel.partnerMobile
-                }
-                updatePartnerData(adminViewModel.selectedPartner)
-                moveToPreviousFragment()
-            }
+            updatePartnerOperation()
         }
     }
 
+    //    insert partner data to DB
+    private fun addPartnerData() {
+        busViewModel.insertPartnerData(adminViewModel.partner)
+    }
+
+//    validate partner details and do needed operation
+    private fun updatePartnerOperation() {
+        val validPartnerName = validPartnerName()
+        val validPartnerEmail = validPartnerEmail()
+        val validPartnerMobile = validPartnerMobile()
+        if(validPartnerEmail && validPartnerName && validPartnerMobile){
+            adminViewModel.selectedPartner.apply {
+                partnerName = adminViewModel.partnerName
+                partnerEmailId = adminViewModel.partnerEmail
+                partnerMobile = adminViewModel.partnerMobile
+            }
+            updatePartnerData(adminViewModel.selectedPartner)
+            moveToPreviousFragment()
+        }
+    }
+
+//    update partner data in DB
     private fun updatePartnerData(partner: Partners) {
         adminViewModel.updatePartnerDetails(partner)
     }
 
+//    set the partner details in the input fields
     private fun updateDataToInput() {
         if(adminViewModel.selectedPartner.partnerName.isNotEmpty()){
             binding.partnerName.setText(adminViewModel.selectedPartner.partnerName)
@@ -202,7 +213,6 @@ class AddPartnerFragment : Fragment() {
             binding.partnerMobileInputLayout.error = "Should not be empty"
         }
         binding.partnerMobileInputLayout.isErrorEnabled = true
-//        binding.partnerMobileInputLayout.error = "Invalid mobile number"
         return false
     }
 
@@ -234,8 +244,6 @@ class AddPartnerFragment : Fragment() {
     private fun moveToDashboard() {
 
         val snackBar = Snackbar.make(requireView(), "Partner Added Successfully", Snackbar.LENGTH_SHORT)
-        snackBar.setAnchorView(requireActivity().findViewById(R.id.admin_bottomNavigationView))
-        snackBar.setDuration(1000)
         snackBar.show()
 
         parentFragmentManager.commit {
@@ -244,7 +252,4 @@ class AddPartnerFragment : Fragment() {
         }
     }
 
-    private fun addPartnerData() {
-        busViewModel.insertPartnerData(adminViewModel.partner)
-    }
 }

@@ -58,7 +58,5 @@ class BookingHistoryListAdapter: RecyclerView.Adapter<BookingHistoryListAdapter.
         }
     }
 
-    override fun getItemCount(): Int {
-        return bookedTicketList.size
-    }
+    override fun getItemCount() = bookedTicketList.size
 }

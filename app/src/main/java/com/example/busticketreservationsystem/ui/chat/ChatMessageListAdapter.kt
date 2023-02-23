@@ -32,7 +32,6 @@ class ChatMessageListAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     class ReceivedMessageViewHolder(val binding: ItemReceivedMessageBinding): RecyclerView.ViewHolder(binding.root)
 
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
 

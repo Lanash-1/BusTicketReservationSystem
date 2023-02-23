@@ -19,15 +19,16 @@ import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
+import com.example.busticketreservationsystem.ui.bookingdetails.BookingDetailsFragment
 import com.example.busticketreservationsystem.ui.login.LoginFragment
 import com.example.busticketreservationsystem.ui.homepage.HomePageFragment
 import com.example.busticketreservationsystem.ui.welcome.WelcomeFragment
 import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
+import com.example.busticketreservationsystem.viewmodel.NavigationViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.livedata.UserViewModel
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-
 
 class RegisterFragment : Fragment() {
 
@@ -43,7 +44,7 @@ class RegisterFragment : Fragment() {
     private lateinit var editor: SharedPreferences.Editor
 
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
-
+    private val navigationViewModel: NavigationViewModel by activityViewModels()
 
     private lateinit var userViewModel: UserViewModel
 
@@ -90,7 +91,6 @@ class RegisterFragment : Fragment() {
                 loginStatusViewModel.status = LoginStatus.SKIPPED
                 editor.commit()
                 parentFragmentManager.commit {
-                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     setCustomAnimations(R.anim.from_right, R.anim.to_left)
                     replace(R.id.main_fragment_container, HomePageFragment())
                 }
@@ -100,10 +100,24 @@ class RegisterFragment : Fragment() {
     }
 
     private fun backPressOperation() {
-        parentFragmentManager.commit {
-            setCustomAnimations(R.anim.from_right, R.anim.to_left)
-            setCustomAnimations(R.anim.from_left, R.anim.to_right)
-            replace(R.id.main_fragment_container, WelcomeFragment())
+//        parentFragmentManager.commit {
+////            setCustomAnimations(R.anim.from_right, R.anim.to_left)
+//            setCustomAnimations(R.anim.from_left, R.anim.to_right)
+//            replace(R.id.main_fragment_container, WelcomeFragment())
+//        }
+        when(navigationViewModel.fragment){
+            is BookingDetailsFragment -> {
+                parentFragmentManager.commit {
+                    setCustomAnimations(R.anim.from_right, R.anim.to_left)
+                    replace(R.id.main_fragment_container, HomePageFragment())
+                }
+            }
+            else -> {
+                parentFragmentManager.commit {
+                    setCustomAnimations(R.anim.from_right, R.anim.to_left)
+                    replace(R.id.main_fragment_container, WelcomeFragment())
+                }
+            }
         }
     }
 
@@ -119,7 +133,6 @@ class RegisterFragment : Fragment() {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-//                    requireActivity().finish()
                     backPressOperation()
                 }
             }
@@ -140,7 +153,6 @@ class RegisterFragment : Fragment() {
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 setCustomAnimations(R.anim.from_right, R.anim.to_left)
                 replace(R.id.main_fragment_container, LoginFragment())
-//                parentFragmentManager.popBackStack()
             }
         }
 
@@ -188,14 +200,12 @@ class RegisterFragment : Fragment() {
             mobileInput.text.toString()
         )
         userViewModel.isNewUserInserted.observe(viewLifecycleOwner, Observer{
-//            if(userViewModel.)
             editor.putInt("userId", userViewModel.user.userId)
             editor.commit()
             editor.putString("status", LoginStatus.LOGGED_IN.name)
             editor.commit()
             loginStatusViewModel.status = LoginStatus.LOGGED_IN
             parentFragmentManager.commit {
-                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 setCustomAnimations(R.anim.from_right, R.anim.to_left)
                 replace(R.id.main_fragment_container, RegistrationDetailsFragment())
             }

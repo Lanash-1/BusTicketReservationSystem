@@ -25,11 +25,9 @@ import com.example.busticketreservationsystem.viewmodel.livedata.BusViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayoutMediator
 
-
 class BoardingAndDroppingFragment : Fragment() {
 
     private lateinit var binding: FragmentBoardingAndDroppingBinding
-
 
     private lateinit var busViewModel: BusViewModel
 
@@ -40,7 +38,6 @@ class BoardingAndDroppingFragment : Fragment() {
         val database = AppDatabase.getDatabase(requireActivity().applicationContext)
         val repository = AppRepositoryImpl(database)
 
-
         val busViewModelFactory = BusViewModelFactory(repository)
         busViewModel = ViewModelProvider(requireActivity(), busViewModelFactory)[BusViewModel::class.java]
     }
@@ -49,8 +46,6 @@ class BoardingAndDroppingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
-
         (activity as AppCompatActivity).supportActionBar?.apply {
             title = "Boarding and Dropping Points"
             setDisplayHomeAsUpEnabled(true)
@@ -67,7 +62,6 @@ class BoardingAndDroppingFragment : Fragment() {
                     setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.homePageFragmentContainer, SelectedBusFragment())
                 }
-
             }
         }
         return super.onOptionsItemSelected(item)
@@ -112,14 +106,6 @@ class BoardingAndDroppingFragment : Fragment() {
 
         }
 
-        viewPager.registerOnPageChangeCallback(
-            object: ViewPager2.OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) {
-                    super.onPageSelected(position)
-                }
-            }
-        )
-
         val adapter = BoardingAndDroppingViewPagerAdapter(childFragmentManager, lifecycle)
 
         viewPager.adapter = adapter
@@ -135,8 +121,6 @@ class BoardingAndDroppingFragment : Fragment() {
                 }
             }
         }.attach()
-
-
     }
 
 

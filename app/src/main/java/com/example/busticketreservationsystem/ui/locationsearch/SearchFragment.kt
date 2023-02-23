@@ -41,14 +41,12 @@ class SearchFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         (activity as AppCompatActivity).supportActionBar!!.apply {
             setDisplayHomeAsUpEnabled(true)
             title = "search location"
         }
         binding = FragmentSearchBinding.inflate(inflater, container, false)
         return binding.root
-//        return inflater.inflate(R.layout.fragment_search, container, false)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -101,9 +99,7 @@ class SearchFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home -> {
-                Toast.makeText(requireContext(), "search up button", Toast.LENGTH_SHORT).show()
                 parentFragmentManager.commit {
-                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                     setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.homePageFragmentContainer, DashBoardFragment())
                 }
@@ -118,7 +114,6 @@ class SearchFragment : Fragment() {
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.visibility = View.GONE
 
         locationViewModel.fetchAllCities()
-
 
         binding.searchResultsLayout.layoutManager = LinearLayoutManager(requireContext())
         binding.searchResultsLayout.adapter = searchLocationAdapter

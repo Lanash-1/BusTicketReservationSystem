@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
@@ -69,7 +68,6 @@ class BookingHistoryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         (activity as AppCompatActivity).supportActionBar!!.apply {
             if(loginStatusViewModel.status == LoginStatus.ADMIN_LOGGED_IN){
                 setDisplayHomeAsUpEnabled(true)
@@ -99,12 +97,7 @@ class BookingHistoryFragment : Fragment() {
 
         adapter = BookingHistoryViewPagerAdapter(parentFragmentManager, lifecycle)
 
-//        val tabLayout = binding.bookingHistoryTabLayout
-//        val viewPager = binding.bookingHistoryViewPager
-
-        binding.bookingHistoryViewPager.isSaveEnabled = true
-
-
+        binding.bookingHistoryViewPager.isSaveEnabled = false
 
         when (loginStatusViewModel.status) {
             LoginStatus.LOGGED_IN -> {

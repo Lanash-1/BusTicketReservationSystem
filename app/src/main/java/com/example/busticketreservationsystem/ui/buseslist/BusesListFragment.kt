@@ -17,7 +17,6 @@ import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.databinding.FragmentBusesListBinding
-import com.example.busticketreservationsystem.enums.Analytics
 import com.example.busticketreservationsystem.listeners.OnItemClickListener
 import com.example.busticketreservationsystem.ui.analytics.AnalyticsPageFragment
 import com.example.busticketreservationsystem.ui.businfo.BusInfoFragment
@@ -109,15 +108,6 @@ class BusesListFragment : Fragment() {
             }
             else -> {
                 adminViewModel.fetchAllBuses()
-//                adminViewModel.allBuses.observe(viewLifecycleOwner, Observer{
-//                    if(it.isNotEmpty()){
-//                        binding.emptyListLayout.visibility = View.GONE
-//                        busListAdapter.setBusList(it)
-//                        busListAdapter.notifyDataSetChanged()
-//                    }else{
-//                        binding.emptyListLayout.visibility = View.VISIBLE
-//                    }
-//                })
             }
         }
 
@@ -132,8 +122,6 @@ class BusesListFragment : Fragment() {
                 busListAdapter.notifyDataSetChanged()
             }
         })
-
-
 
         busListAdapter.setOnItemClickListener(object: OnItemClickListener{
             override fun onItemClick(position: Int) {

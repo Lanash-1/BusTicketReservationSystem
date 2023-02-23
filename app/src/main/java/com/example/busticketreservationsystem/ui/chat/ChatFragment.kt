@@ -31,8 +31,6 @@ import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.AdminVi
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.ChatViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.coroutines.delay
-
 
 class ChatFragment : Fragment() {
 

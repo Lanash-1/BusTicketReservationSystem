@@ -21,15 +21,6 @@
         android:textSize="20sp"
         />
 
-
-<!--    <ImageView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:id="@+id/light_icon"-->
-<!--        android:src="@drawable/ic_baseline_light_mode_24"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf=""-->
-
     <RadioGroup
         android:id="@+id/theme_radio_group"
         android:layout_width="match_parent"
@@ -77,69 +68,6 @@
             android:drawablePadding="16dp"
             android:paddingHorizontal="16dp"
             />
-
-
-
-        <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent">-->
-
-
-<!--        <ImageView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:id="@+id/light_icon"-->
-<!--            android:src="@drawable/ic_baseline_light_mode_24"-->
-<!--            app:layout_constraintLeft_toLeftOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--        <RadioButton-->
-<!--            android:id="@+id/light_radio_button"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Light"-->
-<!--            android:layoutDirection="rtl"-->
-<!--            android:textAlignment="textStart"-->
-<!--            android:layout_gravity="start"-->
-<!--            android:layout_marginLeft="16dp"-->
-<!--            />-->
-
-<!--            <ImageView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:id="@+id/dark_icon"-->
-<!--                android:src="@drawable/ic_baseline_dark_mode_24"-->
-<!--                app:layout_constraintStart_toStartOf="@id/light_icon"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/light_icon" />-->
-
-<!--        <RadioButton-->
-<!--            android:id="@+id/dark_radio_button"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layoutDirection="rtl"-->
-<!--            android:text="Dark"-->
-
-<!--            />-->
-
-<!--            <ImageView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:id="@+id/system_default_icon"-->
-<!--                android:src="@drawable/ic_baseline_auto_mode_24"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/dark_icon"-->
-<!--                app:layout_constraintStart_toStartOf="@id/dark_icon" />-->
-
-<!--        <RadioButton-->
-<!--            android:id="@+id/system_default_radio_button"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layoutDirection="rtl"-->
-<!--            android:text="System Default"-->
-
-<!--            />-->
-
-<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
-
 
     </RadioGroup>
 

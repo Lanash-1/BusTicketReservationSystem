@@ -37,7 +37,6 @@ import com.example.busticketreservationsystem.viewmodel.livedata.BookingViewMode
 import com.example.busticketreservationsystem.viewmodel.livedata.BusViewModel
 import com.example.busticketreservationsystem.viewmodel.livedata.UserViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.snackbar.Snackbar
 
 class BookingDetailsFragment : Fragment() {
 
@@ -45,10 +44,8 @@ class BookingDetailsFragment : Fragment() {
 
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
     private val navigationViewModel: NavigationViewModel by activityViewModels()
-    private val searchViewModel: SearchViewModel by activityViewModels()
 
     private var passengerInfoAdapter = PassengerInfoAdapter()
-
 
     private lateinit var bookingViewModel: BookingViewModel
     private lateinit var busViewModel: BusViewModel
@@ -80,7 +77,6 @@ class BookingDetailsFragment : Fragment() {
             setDisplayHomeAsUpEnabled(true)
             title = "Booking details"
         }
-        // Inflate the layout for this fragment
 
         binding = FragmentBookingDetailsBinding.inflate(inflater, container, false)
         return binding.root
@@ -115,7 +111,6 @@ class BookingDetailsFragment : Fragment() {
         binding.loginRegisterButton.setOnClickListener {
             navigationViewModel.fragment = BookingDetailsFragment()
             parentFragmentManager.commit {
-                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 setCustomAnimations(R.anim.from_right, R.anim.to_left)
                 replace(R.id.main_fragment_container, LoginFragment())
             }
@@ -152,12 +147,10 @@ class BookingDetailsFragment : Fragment() {
                 for(i in 0 until bookingViewModel.passengerInfo.size){
                     if(bookingViewModel.passengerInfo[i].name != null && bookingViewModel.passengerInfo[i].age != null && bookingViewModel.passengerInfo[i].gender != null){
                         if(bookingViewModel.passengerInfo[i].name!!.isEmpty() || bookingViewModel.passengerInfo[i].age.toString().isEmpty()){
-                            Toast.makeText(requireContext(), "Fields cannot be empty", Toast.LENGTH_SHORT).show()
                             result = false
                             break
                         }
                     }else{
-                        Toast.makeText(requireContext(), "Fields cannot be empty", Toast.LENGTH_SHORT).show()
                         result = false
                         break
                     }
@@ -183,7 +176,6 @@ class BookingDetailsFragment : Fragment() {
                 bookingViewModel.passengerInfo.add(PassengerInfoModel(null, null, null))
             }
         }
-
 
         if(bookingViewModel.contactEmailId != null){
             if(bookingViewModel.contactEmailId!!.isNotEmpty()){
@@ -216,7 +208,6 @@ class BookingDetailsFragment : Fragment() {
             override fun onPassengerGenderSelected(position: Int, gender: Gender) {
                 bookingViewModel.passengerInfo[position].gender = gender
             }
-
         })
     }
 
@@ -227,7 +218,6 @@ class BookingDetailsFragment : Fragment() {
         bookingViewModel.insertBookingOperation(booking, busViewModel.selectedDate, userViewModel.user.userId)
 
         bookingViewModel.isTicketBooked.observe(viewLifecycleOwner, Observer{
-//            Snackbar.make(requireView(), "Booked ticket successfully", Snackbar.LENGTH_SHORT).show()
             navigationViewModel.fragment = BookingDetailsFragment()
             parentFragmentManager.commit {
                 setCustomAnimations(R.anim.from_right, R.anim.to_left)

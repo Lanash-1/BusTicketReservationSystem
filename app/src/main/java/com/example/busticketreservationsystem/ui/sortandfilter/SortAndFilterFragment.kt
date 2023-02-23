@@ -14,7 +14,6 @@ import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.databinding.FragmentSortAndFilterBinding
 import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
-import com.example.busticketreservationsystem.ui.adminservice.AdminServicesFragment
 import com.example.busticketreservationsystem.ui.busresults.BusResultsFragment
 import com.example.busticketreservationsystem.viewmodel.*
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
@@ -25,8 +24,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class SortAndFilterFragment : Fragment() {
 
     private lateinit var binding: FragmentSortAndFilterBinding
-
-    private val searchViewModel: SearchViewModel by activityViewModels()
 
     private var selectedSortRadioButton: RadioButton? = null
 
@@ -47,8 +44,6 @@ class SortAndFilterFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_sort_and_filter, container, false)
         (activity as AppCompatActivity).supportActionBar?.apply {
             title = "Sort and Filter"
             setDisplayHomeAsUpEnabled(true)
@@ -68,10 +63,8 @@ class SortAndFilterFragment : Fragment() {
 
     private fun backPressOperation() {
         parentFragmentManager.commit {
-//            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
             setCustomAnimations(R.anim.from_left, R.anim.to_right)
             replace(R.id.homePageFragmentContainer, BusResultsFragment())
-//            parentFragmentManager.popBackStack()
         }
     }
 

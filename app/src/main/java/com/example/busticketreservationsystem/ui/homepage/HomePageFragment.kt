@@ -1,6 +1,5 @@
 package com.example.busticketreservationsystem.ui.homepage
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -20,7 +19,6 @@ import com.example.busticketreservationsystem.viewmodel.*
 
 class HomePageFragment : Fragment() {
 
-//    private lateinit var writeSharedPreferences: SharedPreferences
 
     private lateinit var binding: FragmentHomePageBinding
 

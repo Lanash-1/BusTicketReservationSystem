@@ -7,19 +7,14 @@
     android:padding="16dp"
     >
 
-    <!-- Text view to show the text Select course-->
     <TextView
         android:id="@+id/select_title_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Select Location"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        style="@style/TextDefault"
+        style="@style/TitleTextStyle"
         />
 
-    <!-- Edit text to allow user to type name
-           of item he/she wants to search-->
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,7 +28,6 @@
         android:textColorHint="#808080"
         />
 
-    <!-- List view to insert list of items-->
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

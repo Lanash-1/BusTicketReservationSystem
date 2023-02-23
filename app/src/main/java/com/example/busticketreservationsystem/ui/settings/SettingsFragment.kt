@@ -9,7 +9,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
@@ -25,7 +24,6 @@ import com.example.busticketreservationsystem.viewmodel.*
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.livedata.UserViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.transition.MaterialContainerTransform
 
 class SettingsFragment : Fragment() {
 
@@ -34,7 +32,6 @@ class SettingsFragment : Fragment() {
     private lateinit var editor: SharedPreferences.Editor
 
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
-    private val searchViewModel: SearchViewModel by activityViewModels()
 
     private lateinit var userViewModel: UserViewModel
 
@@ -42,7 +39,6 @@ class SettingsFragment : Fragment() {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
 
-//        sharedElementEnterTransition = MaterialContainerTransform()
 
         val database = AppDatabase.getDatabase(requireActivity().applicationContext)
         val repository = AppRepositoryImpl(database)
@@ -82,8 +78,6 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
         var preferences: SharedPreferences
         (activity as AppCompatActivity).apply {
             preferences = getSharedPreferences("ThemeStatus", Context.MODE_PRIVATE)
@@ -99,7 +93,6 @@ class SettingsFragment : Fragment() {
                         setCustomAnimations(R.anim.from_left, R.anim.to_right)
                         replace(R.id.homePageFragmentContainer, MyAccountFragment())
                     }
-//                    requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).selectedItemId = R.id.dashboard
                 }
             }
 
@@ -112,11 +105,6 @@ class SettingsFragment : Fragment() {
             editor = writeSharedPreferences.edit()
         }
 
-//        if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
-//            binding.deleteAccountLayout.visibility = View.VISIBLE
-//        }else{
-//            binding.deleteAccountLayout.visibility = View.GONE
-//        }
 
         binding.deleteAccountLayout.setOnClickListener {
             deleteAction()
@@ -157,7 +145,6 @@ class SettingsFragment : Fragment() {
                 }
             }
         }
-
     }
 
     private fun deleteAction() {

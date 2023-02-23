@@ -60,7 +60,6 @@ class SelectedBusFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         (activity as AppCompatActivity).supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             title = "${busViewModel.selectedBus.sourceLocation} - ${busViewModel.selectedBus.destination}"
@@ -73,7 +72,6 @@ class SelectedBusFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.selected_bus_menu, menu)
-//        menu.findItem(R.id.info_icon).setVisible(false)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -129,10 +127,6 @@ class SelectedBusFragment : Fragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
-
-
-
-//        ratingAndReviewOperations(busViewModel.selectedBus.busId)
 
         binding.selectAndContinueText.setOnClickListener {
             bookingViewModel.selectedSeats = busViewModel.selectedSeats

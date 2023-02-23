@@ -9,6 +9,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/location_radio_recyclerView"
+            android:layout_marginHorizontal="16dp"
             />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

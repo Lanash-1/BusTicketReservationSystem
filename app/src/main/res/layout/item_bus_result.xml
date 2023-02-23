@@ -15,7 +15,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_margin="16dp"
-        style="@style/TitleTextStyle"/>
+        style="@style/TitleTextStyle"
+        android:textSize="24sp"
+        />
 
     <androidx.cardview.widget.CardView
         android:layout_width="56dp"
@@ -81,7 +83,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/travels_text"
         android:text="Orange Travels"
-        android:textStyle="italic|bold"
+        android:textStyle="bold"
         android:textColor="#EE0256"
         android:textSize="20sp"
         app:layout_constraintLeft_toRightOf="@id/bus_icon"

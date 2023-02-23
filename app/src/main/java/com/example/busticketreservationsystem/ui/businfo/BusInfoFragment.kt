@@ -201,11 +201,6 @@ class BusInfoFragment : Fragment() {
             ratingBarOperation()
         })
 
-//        if user logged in check if user booked the bus before
-//        if user booked check whether user given review for the bus
-//        if review not given display rate bus button
-//        else display update rating button
-
 
         if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
             busViewModel.checkUserBookedBus(userViewModel.user.userId,busViewModel.selectedBus.busId)
@@ -300,57 +295,10 @@ class BusInfoFragment : Fragment() {
                     replace(R.id.homePageFragmentContainer, ReviewsFragment())
                 }
             }
-
-//            when(navigationViewModel.fragment){
-//                is BusesListFragment -> {
-//                    parentFragmentManager.commit {
-//                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-//                        setCustomAnimations(R.anim.from_right, R.anim.to_left)
-//                        replace(R.id.adminPanelFragmentContainer, ReviewsFragment())
-//                    }
-//                }else -> {
-//                    parentFragmentManager.commit {
-//                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-//                        setCustomAnimations(R.anim.from_right, R.anim.to_left)
-//                        replace(R.id.homePageFragmentContainer, ReviewsFragment())
-//                    }
-//                }
-//            }
         }
 
 
 
-//        binding.rateBusButton.setOnClickListener {
-
-//                val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.rating_dialog, null)
-//
-//                val builder = AlertDialog.Builder(requireContext())
-//                    .setView(dialogView)
-//                    .setTitle("Rating and Review")
-//                    .setPositiveButton("Submit"){
-//                            _, _ ->
-//                        run {
-//
-//                            val feedback: String = dialogView.findViewById<TextInputEditText>(R.id.review_input).text.toString()
-//                            val rating: Int = dialogView.findViewById<RatingBar>(R.id.ratingBar).rating.toString().toDouble().toInt()
-//                            if(rating > 0){
-//                                Toast.makeText(requireContext(), "$rating - $feedback", Toast.LENGTH_SHORT).show()
-//                                val sdf = SimpleDateFormat("dd/MM/yyyy")
-//                                val time = Calendar.getInstance().time
-//                                val current = sdf.format(time)
-//                                rateBusOperation(rating, feedback, current)
-//                            }else{
-//                                Toast.makeText(requireContext(), "Rating should be selected", Toast.LENGTH_SHORT).show()
-//                            }
-//                        }
-//                    }
-//                    .setNegativeButton("Cancel"){
-//                            dialog, _ -> dialog.cancel()
-//                    }
-//
-//                val alertDialog = builder.show()
-
-//        }
     }
 
     private fun setDataToView(bus: Bus, partner: Partners) {
@@ -369,7 +317,6 @@ class BusInfoFragment : Fragment() {
     private fun ratingButtonOperation() {
         if(busViewModel.isUserBooked.value == true){
             busViewModel.fetchUserReview(userViewModel.user.userId)
-//                    binding.rateBusButton.visibility = View.VISIBLE
             busViewModel.isUserReviewFetched.observe(viewLifecycleOwner, Observer{
                 if(it != null){
                     if(busViewModel.userReview != null){
@@ -389,18 +336,13 @@ class BusInfoFragment : Fragment() {
     }
 
     private fun rateBusOperation(rating: Int, feedback: String, date: String) {
-//        if(busViewModel.userReview != null){
-//            updateUserRating(rating, feedback, date)
-//        }else{
             insertUserRating(rating, feedback, date)
-//        }
     }
 
     private fun updateUserRating(rating: Int, feedback: String, date: String) {
         busViewModel.updateUserRating(rating, feedback, date)
 
         busViewModel.isBusReviewUpdated.observe(viewLifecycleOwner, Observer{
-            println("BUS REVIEW 1")
             if(it != null) {
                 busViewModel.fetchBusReviewData(
                     busViewModel.selectedBus.busId,
@@ -420,7 +362,6 @@ class BusInfoFragment : Fragment() {
         busViewModel.insertUserReview(rating, feedback, date, userViewModel.user.userId)
 
         busViewModel.isBusReviewUpdated.observe(viewLifecycleOwner, Observer{
-            println("BUS REVIEW 2")
             if(it != null){
                 busViewModel.fetchUserReview(userViewModel.user.userId)
 
@@ -491,8 +432,5 @@ class BusInfoFragment : Fragment() {
             }
         }
     }
-
-
-
 
 }

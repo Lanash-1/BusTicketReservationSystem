@@ -24,7 +24,7 @@
     </style>
 
     <style name="TextDefault">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
@@ -38,7 +38,7 @@
     </style>
 
     <style name="TitleTextStyle">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
     </style>
@@ -79,7 +79,7 @@
     </style>
 
     <style name="HeadingText">
-        <item name="android:textSize">34sp</item>
+        <item name="android:textSize">32sp</item>
         <item name="android:textColor">@color/black</item>
         `<item name="android:textStyle">bold</item>
     </style>
@@ -91,7 +91,7 @@
     </style>
 
     <style name="AnalyticsCardTitleStyle">
-        <item name="android:textSize">36sp</item>
+        <item name="android:textSize">32sp</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
     </style>
@@ -119,9 +119,15 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="DrawableTintConfirmButton">
+        <item name="drawableTint">@color/white</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="SearchableDialogTheme">
         <item name="android:backgroundTint">@color/white</item>
-
     </style>
 
 

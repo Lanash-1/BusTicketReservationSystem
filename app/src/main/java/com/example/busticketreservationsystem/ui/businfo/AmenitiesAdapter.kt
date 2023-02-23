@@ -54,7 +54,5 @@ class AmenitiesAdapter: RecyclerView.Adapter<AmenitiesAdapter.AmenitiesViewHolde
         }
     }
 
-    override fun getItemCount(): Int {
-        return amenitiesList.size
-    }
+    override fun getItemCount() = amenitiesList.size
 }

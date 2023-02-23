@@ -133,7 +133,6 @@ class BookedTicketFragment : Fragment() {
         }
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -154,13 +153,9 @@ class BookedTicketFragment : Fragment() {
             }
         }
 
-//        binding.bookedTicketScrollView.visibility = View.INVISIBLE
-
         if(loginStatusViewModel.status == LoginStatus.ADMIN_LOGGED_IN){
             selectedTicketOperations(adminViewModel.selectedBookingId)
         }else{
-            // cancel button visibility logic
-
             if(navigationViewModel.fragment is BookingDetailsFragment){
                 binding.cancelTicketButton.visibility = View.GONE
                 setTicketDataToView()
@@ -296,7 +291,6 @@ class BookedTicketFragment : Fragment() {
                     parentFragmentManager.commit {
                         setCustomAnimations(R.anim.from_left, R.anim.to_right)
                         replace(R.id.homePageFragmentContainer, BookingHistoryFragment())
-//                            parentFragmentManager.popBackStack()
                     }
                 })
 

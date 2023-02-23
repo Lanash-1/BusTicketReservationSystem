@@ -11,7 +11,6 @@ import com.example.busticketreservationsystem.enums.BookedTicketStatus
 
 class BookingHistoryViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle): FragmentStateAdapter(fragmentManager, lifecycle) {
 
-
     var tickets = listOf<Bookings>()
     var buses = listOf<Bus>()
     var partnerName = listOf<String>()
@@ -21,7 +20,6 @@ class BookingHistoryViewPagerAdapter(fragmentManager: FragmentManager, lifecycle
         this.buses = buses
         this.partnerName = partnerName
     }
-
 
     override fun getItemCount() = 3
 

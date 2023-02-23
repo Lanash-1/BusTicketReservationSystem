@@ -45,7 +45,5 @@ class AdminServicesAdapter: RecyclerView.Adapter<AdminServicesAdapter.AdminServi
         }
     }
 
-    override fun getItemCount(): Int {
-        return AdminServices.values().size
-    }
+    override fun getItemCount() = AdminServices.values().size
 }

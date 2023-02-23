@@ -40,8 +40,6 @@ class AdminChatSupportUserListAdapter: RecyclerView.Adapter<AdminChatSupportUser
         }
     }
 
-    override fun getItemCount(): Int {
-        return userList.size
-    }
+    override fun getItemCount() = userList.size
 
 }

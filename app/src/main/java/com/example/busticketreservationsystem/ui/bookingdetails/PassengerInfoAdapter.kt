@@ -1,5 +1,6 @@
 package com.example.busticketreservationsystem.ui.bookingdetails
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.RadioButton
@@ -45,7 +46,7 @@ class PassengerInfoAdapter: RecyclerView.Adapter<PassengerInfoAdapter.PassengerI
                 try {
                     passengerInfoChangeListener.onPassengerAgeChanged(absoluteAdapterPosition, it.toString().toInt())
                 }catch (error: Exception){
-                    println("Error type")
+                    Log.d("PASSENGER_INFO_ADAPTER", "passenger age changed method in booking details page")
                 }
             }
             binding.genderRadioGroup.setOnCheckedChangeListener { _, id ->

@@ -8,7 +8,9 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 
 class BoardingAndDroppingViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle): FragmentStateAdapter(fragmentManager, lifecycle) {
 
-    override fun getItemCount() = 2
+    override fun getItemCount(): Int {
+        return 2
+    }
 
     override fun createFragment(position: Int): Fragment {
         val fragment = BoardingAndDroppingLocationFragment()

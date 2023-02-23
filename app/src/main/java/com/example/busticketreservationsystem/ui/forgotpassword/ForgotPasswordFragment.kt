@@ -62,11 +62,6 @@ class ForgotPasswordFragment : Fragment() {
 
         binding = FragmentForgotPasswordBinding.inflate(inflater, container, false)
         return binding.root
-//        return inflater.inflate(R.layout.fragment_forgot_password, container, false)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -132,33 +127,6 @@ class ForgotPasswordFragment : Fragment() {
         }
     }
 
-//    private fun registerAccount() {
-//        mobileLayout.helperText = validNumber()
-//        newPasswordLayout.helperText = validPassword()
-//        confirmPasswordLayout.helperText = validConfirmPassword()
-//
-//        val validNumber = mobileLayout.helperText == null
-//        val validNewPassword = newPasswordLayout.helperText == null
-//        val validConfirmPassword = confirmPasswordLayout.helperText == null
-//
-//
-//        if (validNumber && validNewPassword && validConfirmPassword) {
-//
-//            userViewModel.isNumberAlreadyExists(mobileInput.text.toString())
-//
-//            userViewModel.isMobileExists.observe(viewLifecycleOwner, Observer{
-//                if(it != null){
-//                    if (it) {
-//                        mobileLayout.helperText = "Mobile Number already Exists."
-//                    }else{
-//                        registerNewUser()
-//                    }
-//                }
-//            })
-//        }
-//
-//    }
-
     private fun resetPassword(mobileNumber: String, password: String, confirmPassword: String) {
 
         mobileLayout.helperText = validNumber()
@@ -168,12 +136,7 @@ class ForgotPasswordFragment : Fragment() {
         val validNumber = mobileLayout.helperText == null
         val validNewPassword = newPasswordLayout.helperText == null
         val validConfirmPassword = confirmPasswordLayout.helperText == null
-//        mobileLayout.isHelperTextEnabled = false
 
-//        newPasswordLayout.helperText = validPassword()
-//        confirmPasswordLayout.helperText = validConfirmPassword()
-//        val validNewPassword = newPasswordLayout.helperText == null
-//        val validConfirmPassword = confirmPasswordLayout.helperText == null
         if(validNumber && validNewPassword && validConfirmPassword){
 
             userViewModel.isNumberAlreadyExists(mobileInput.text.toString())
@@ -188,7 +151,6 @@ class ForgotPasswordFragment : Fragment() {
                 }
             })
 
-//            userViewModel.updateNewPassword(password, mobileNumber)
         }
 
         userViewModel.isAccountAvailable.observe(viewLifecycleOwner, Observer{
@@ -285,26 +247,5 @@ class ForgotPasswordFragment : Fragment() {
         return null
     }
 
-//    private fun confirmPasswordFocusListener() {
-//        confirmPasswordInput.addTextChangedListener {
-//            if (it != null) {
-//                if(it.isEmpty()){
-//                    confirmPasswordLayout.isHelperTextEnabled = false
-//                }else{
-//                    confirmPasswordLayout.helperText = validConfirmPassword()
-//                }
-//            }
-//        }
-//    }
-
-//    private fun validConfirmPassword(): String? {
-//        val passwordText = confirmPasswordInput.text.toString()
-//        if(passwordText != newPasswordInput.text.toString())
-//        {
-//            return "Password not matching"
-//        }
-//        return null
-//
-//    }
 
 }

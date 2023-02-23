@@ -195,43 +195,8 @@ class AddBusFragment : Fragment() {
             partnerList.add(partner.partnerName)
         }
 
-//        add bus operation
         binding.addBusButton.setOnClickListener {
-
-            val validPartner = validPartner()
-            val validBusName = validBusName()
-            val validBoardingDetails = validBoardingDetails()
-            val validDestinationDetails = validDestinationDetails()
-            val validTimingDetails = validTimingDetails()
-            val validPriceDetail = validPriceDetail()
-            val validBusType = validBusType()
-            val validAmenities = validAmenities()
-            if(validPartner && validBusName && validBoardingDetails && validDestinationDetails && validTimingDetails && validPriceDetail && validBusType && validAmenities){
-                val duration = helper.getDuration(binding.startTimePickerInput.text.toString(), binding.reachTimePickerInput.text.toString())
-                adminViewModel.newBus = Bus(
-                    0,
-                    adminViewModel.partner.partnerId,
-                    adminViewModel.busName,
-                    adminViewModel.sourceCity,
-                    adminViewModel.destinationCity,
-                    adminViewModel.perTicketCost.toDouble(),
-                    adminViewModel.busType,
-                    30,
-                    30,
-                    adminViewModel.startTime,
-                    adminViewModel.reachTime,
-                    duration,
-                    0.0,
-                    0
-                )
-                busViewModel.registerNewBus(adminViewModel.newBus, adminViewModel.amenities)
-                Snackbar.make(requireView(), "Bus Added Successfully", Snackbar.LENGTH_SHORT).show()
-
-                parentFragmentManager.commit {
-                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
-                    replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
-                }
-            }
+            addBusOperation()
         }
 
         binding.autoCompleteTextView.setOnClickListener{
@@ -321,6 +286,43 @@ class AddBusFragment : Fragment() {
             openTimePicker(binding.reachTimePickerInput)
         }
 
+    }
+
+    private fun addBusOperation() {
+        val validPartner = validPartner()
+        val validBusName = validBusName()
+        val validBoardingDetails = validBoardingDetails()
+        val validDestinationDetails = validDestinationDetails()
+        val validTimingDetails = validTimingDetails()
+        val validPriceDetail = validPriceDetail()
+        val validBusType = validBusType()
+        val validAmenities = validAmenities()
+        if(validPartner && validBusName && validBoardingDetails && validDestinationDetails && validTimingDetails && validPriceDetail && validBusType && validAmenities){
+            val duration = helper.getDuration(binding.startTimePickerInput.text.toString(), binding.reachTimePickerInput.text.toString())
+            adminViewModel.newBus = Bus(
+                0,
+                adminViewModel.partner.partnerId,
+                adminViewModel.busName,
+                adminViewModel.sourceCity,
+                adminViewModel.destinationCity,
+                adminViewModel.perTicketCost.toDouble(),
+                adminViewModel.busType,
+                30,
+                30,
+                adminViewModel.startTime,
+                adminViewModel.reachTime,
+                duration,
+                0.0,
+                0
+            )
+            busViewModel.registerNewBus(adminViewModel.newBus, adminViewModel.amenities)
+            Snackbar.make(requireView(), "Bus Added Successfully", Snackbar.LENGTH_SHORT).show()
+
+            parentFragmentManager.commit {
+                setCustomAnimations(R.anim.from_left, R.anim.to_right)
+                replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
+            }
+        }
     }
 
     private fun validAmenities(): Boolean {

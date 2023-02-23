@@ -17,12 +17,9 @@ import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.databinding.FragmentUserListBinding
 import com.example.busticketreservationsystem.listeners.OnItemClickListener
-import com.example.busticketreservationsystem.ui.adminservice.AdminServicesFragment
 import com.example.busticketreservationsystem.ui.analytics.AnalyticsPageFragment
 import com.example.busticketreservationsystem.viewmodel.livedata.AdminViewModel
-import com.example.busticketreservationsystem.viewmodel.livedata.ChatViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.AdminViewModelFactory
-import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.ChatViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
@@ -33,7 +30,6 @@ class UserListFragment : Fragment() {
     private lateinit var adminViewModel: AdminViewModel
 
     private val userListAdapter = UserListAdapter()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +52,6 @@ class UserListFragment : Fragment() {
             setDisplayHomeAsUpEnabled(true)
         }
 
-        // Inflate the layout for this fragment
         binding = FragmentUserListBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -119,13 +114,5 @@ class UserListFragment : Fragment() {
                 }
             }
         })
-
-
-
-
-
-
-
-
     }
 }

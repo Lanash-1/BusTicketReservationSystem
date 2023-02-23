@@ -1,7 +1,5 @@
 package com.example.busticketreservationsystem.ui.busresults
 
-import android.annotation.SuppressLint
-import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import androidx.activity.OnBackPressedCallback
@@ -27,8 +25,6 @@ import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusView
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.livedata.BusViewModel
 import com.example.busticketreservationsystem.viewmodel.livedata.UserViewModel
-import com.google.android.material.badge.BadgeDrawable
-import com.google.android.material.badge.BadgeUtils
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class BusResultsFragment : Fragment() {
@@ -59,21 +55,11 @@ class BusResultsFragment : Fragment() {
 
     }
 
-//    @SuppressLint("RestrictedApi")
-//    override fun onDestroy() {
-//        super.onDestroy()
-//        (activity as AppCompatActivity).supportActionBar?.setShowHideAnimationEnabled(true)
-//        (activity as AppCompatActivity).supportActionBar?.show()
-//    }
-
-//    @SuppressLint("RestrictedApi", "UnsafeOptInUsageError")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
-//        (activity as AppCompatActivity).supportActionBar?.setShowHideAnimationEnabled(false)
-//        (activity as AppCompatActivity).supportActionBar!!.hide()
 
         (activity as AppCompatActivity).supportActionBar!!.apply {
             title = "Bus Results"
@@ -81,39 +67,6 @@ class BusResultsFragment : Fragment() {
         }
 
         binding = FragmentBusResultsBinding.inflate(inflater, container, false)
-
-//        val toolBar = binding.filterToolbar
-//        toolBar.title = "Bus Results"
-//        toolBar.inflateMenu(R.menu.bus_results_menu)
-//
-//        toolBar.setNavigationOnClickListener {
-//            backPressOperation()
-//        }
-//
-//        toolBar.setOnMenuItemClickListener {
-//            when(it.itemId){
-//                R.id.filter -> {
-//                    parentFragmentManager.commit {
-//                    setCustomAnimations(R.anim.from_right, R.anim.to_left)
-//                    replace(R.id.homePageFragmentContainer, SortAndFilterFragment())
-//                    }
-//                }
-//            }
-//            true
-//        }
-
-//        val badgeDrawable = BadgeDrawable.create(this).apply {
-//            isVisible = true
-//            backgroundColor = neededBadgeColor
-//            number = neededNumber
-//        }
-//        BadgeUtils.attachBadgeDrawable(badgeDrawable, toolbar, R.id.item_in_toolbar_menu)
-
-//        val badgeDrawable: BadgeDrawable = BadgeDrawable.create(requireContext()).apply {
-//            isVisible = true
-//            backgroundColor = Color.RED
-//        }
-//        BadgeUtils.attachBadgeDrawable(badgeDrawable, toolBar, R.id.filter)
 
         return binding.root
     }
@@ -175,7 +128,6 @@ class BusResultsFragment : Fragment() {
         binding.busResultsRv.layoutManager = LinearLayoutManager(requireContext())
         binding.busResultsRv.adapter = busResultAdapter
 
-//mvvm
         busViewModel.busResultDataFetched.observe(viewLifecycleOwner, Observer{
             checkResultIsEmpty()
             busResultAdapter.setBusList(busViewModel.resultBusList)
@@ -184,8 +136,6 @@ class BusResultsFragment : Fragment() {
         })
 
         busViewModel.fetchBusResultsDetails()
-
-//        mvvm
 
 
         busResultAdapter.setOnItemClickListener(object : OnItemClickListener{

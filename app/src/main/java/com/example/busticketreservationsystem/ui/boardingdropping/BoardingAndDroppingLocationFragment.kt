@@ -17,7 +17,6 @@ import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusView
 import com.example.busticketreservationsystem.viewmodel.livedata.BusViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-
 class BoardingAndDroppingLocationFragment : Fragment() {
 
     private lateinit var binding: FragmentBoardingAndDroppingLocationBinding
@@ -35,7 +34,6 @@ class BoardingAndDroppingLocationFragment : Fragment() {
 
         val database = AppDatabase.getDatabase(requireActivity().applicationContext)
         val repository = AppRepositoryImpl(database)
-
 
         val busViewModelFactory = BusViewModelFactory(repository)
         busViewModel = ViewModelProvider(requireActivity(), busViewModelFactory)[BusViewModel::class.java]
@@ -59,10 +57,8 @@ class BoardingAndDroppingLocationFragment : Fragment() {
 
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.visibility = View.GONE
 
-
         binding.locationRadioRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.locationRadioRecyclerView.adapter = boardingDroppingLocationsAdapter
-
 
         if(currentPosition == 0){
             boardingDroppingLocationsAdapter.setLocationsList(busViewModel.boardingPoints)
@@ -87,6 +83,5 @@ class BoardingAndDroppingLocationFragment : Fragment() {
 
             }
         })
-
     }
 }

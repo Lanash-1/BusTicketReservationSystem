@@ -28,7 +28,6 @@ class UserViewModel(
 
     fun fetchUserData(userId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            println("USER ID = $userId")
             lateinit var userData: User
             val fetchJob = launch {
                 userData = repository.getUserAccount(userId)
@@ -226,10 +225,6 @@ class UserViewModel(
         }
     }
 
-
-//    fun checkAccountAvailable(mobile: String) {
-//        viewModelScope
-//    }
 
 
 }
