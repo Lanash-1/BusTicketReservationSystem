@@ -11,10 +11,11 @@
         android:id="@+id/ratingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:stepSize="1"
+        android:stepSize="1.0"
         android:theme="@style/Widget.AppCompat.RatingBar"
         android:background="@color/white"
         android:numStars="5"
+        android:contentDescription="@string/rating_bar"
         />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -22,7 +23,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Feedback"
+        android:hint="@string/feedback"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"

@@ -1,5 +1,6 @@
 package com.example.busticketreservationsystem.ui.businfo
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -10,6 +11,12 @@ import com.example.busticketreservationsystem.enums.BusAmenities.*
 class AmenitiesAdapter: RecyclerView.Adapter<AmenitiesAdapter.AmenitiesViewHolder>() {
 
     private var amenitiesList = listOf<String>()
+
+    private lateinit var context: Context
+
+    fun setContext(context: Context){
+        this.context = context
+    }
 
     fun setAmenitiesList(amenitiesList: List<String>){
         this.amenitiesList = amenitiesList
@@ -28,27 +35,27 @@ class AmenitiesAdapter: RecyclerView.Adapter<AmenitiesAdapter.AmenitiesViewHolde
             when(amenitiesList[position]){
                 BLANKETS.name -> {
                     amenityIcon.setImageResource(R.drawable.bed_sheets)
-                    amenityText.text = "Blankets"
+                    amenityText.text = context.getString(R.string.blankets)
                 }
                 CHARGING_POINT.name -> {
                     amenityIcon.setImageResource(R.drawable.ic_baseline_charging_station_24)
-                    amenityText.text = "Charging Point"
+                    amenityText.text = context.getString(R.string.charging_point)
                 }
                 EMERGENCY_CONTACT_NUMBER.name -> {
                     amenityIcon.setImageResource(R.drawable.ic_baseline_local_phone_24)
-                    amenityText.text = "Emergency Contact Number"
+                    amenityText.text = context.getString(R.string.emergency_contact_number)
                 }
                 TRACK_MY_BUS.name -> {
                     amenityIcon.setImageResource(R.drawable.ic_baseline_directions_bus_24)
-                    amenityText.text = "Bus Tracking"
+                    amenityText.text = context.getString(R.string.bus_tracking)
                 }
                 WIFI.name -> {
                     amenityIcon.setImageResource(R.drawable.ic_baseline_wifi_24)
-                    amenityText.text = "WIFI"
+                    amenityText.text = context.getString(R.string.wifi)
                 }
                 WATER_BOTTLE.name -> {
                     amenityIcon.setImageResource(R.drawable.plastic_bottle)
-                    amenityText.text = "Water Bottle"
+                    amenityText.text = context.getString(R.string.water_bottle)
                 }
             }
         }

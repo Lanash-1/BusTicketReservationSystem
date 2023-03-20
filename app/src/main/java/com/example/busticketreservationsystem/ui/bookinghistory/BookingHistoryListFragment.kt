@@ -27,6 +27,9 @@ import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserVie
 import com.example.busticketreservationsystem.viewmodel.livedata.BookingViewModel
 import com.example.busticketreservationsystem.viewmodel.livedata.UserViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.AdminViewModelFactory
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import com.google.android.material.tabs.TabLayout.Tab
 
 
 class BookingHistoryListFragment : Fragment() {
@@ -47,11 +50,12 @@ class BookingHistoryListFragment : Fragment() {
 
     private var bookingHistoryListAdapter = BookingHistoryListAdapter()
 
-
     private lateinit var bookingViewModel: BookingViewModel
     private lateinit var userViewModel: UserViewModel
     private lateinit var adminViewModel: AdminViewModel
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
+
+    var selectedPosition: Int? = -1
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,7 +81,6 @@ class BookingHistoryListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        // Inflate the layout for this fragment
         binding = FragmentBookingHistoryListBinding.inflate(inflater, container, false)
         currentPosition = requireArguments().getInt("object", -1)
 
@@ -89,100 +92,167 @@ class BookingHistoryListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         currentPosition = requireArguments().getInt("object", -1)
 
+//        println("CURRENT POSITION ON VIEW CREATED = $currentPosition")
+
+        println("GET FUNCTION CURRENT POSITION = $currentPosition")
+        getFilteredData(bookingViewModel.currentScreenPosition)
+
+//        bookingViewModel.currentScreenPosition = currentPosition
+
+        requireActivity().findViewById<TabLayout>(R.id.booking_history_tabLayout)?.addOnTabSelectedListener(object : OnTabSelectedListener{
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                if (tab != null) {
+                    selectedPosition = tab.position
+                    bookingViewModel.currentScreenPosition = tab.position
+                    println("GET FUNCTION TAB POSITION = ${bookingViewModel.currentScreenPosition}")
+                    getFilteredData(tab.position)
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+
+        })
 
         requireActivity().findViewById<ViewPager2>(R.id.booking_history_viewPager)?.registerOnPageChangeCallback(
             object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
 
-                    val filteredTickets = mutableListOf<Bookings>()
-                    val filteredBuses = mutableListOf<Bus>()
-                    val filteredPartner = mutableListOf<String>()
+//                    println("ON PAGE SELECTED = $position")
 
-                    when (loginStatusViewModel.status) {
-                        LoginStatus.ADMIN_LOGGED_IN -> {
-                            when (position) {
-                                0 -> {
-                                    for (i in adminViewModel.bookedTicketList.indices) {
-                                        if (adminViewModel.bookedTicketList[i].bookedTicketStatus == BookedTicketStatus.UPCOMING.name) {
-                                            filteredTickets.add(adminViewModel.bookedTicketList[i])
-                                            filteredBuses.add(adminViewModel.bookedBusList[i])
-                                            filteredPartner.add(adminViewModel.bookedPartnerList.value!![i])
-                                        }
-                                    }
-                                }
-                                1 -> {
-                                    for (i in adminViewModel.bookedTicketList.indices) {
-                                        if (adminViewModel.bookedTicketList[i].bookedTicketStatus == BookedTicketStatus.COMPLETED.name) {
-                                            filteredTickets.add(adminViewModel.bookedTicketList[i])
-                                            filteredBuses.add(adminViewModel.bookedBusList[i])
-                                            filteredPartner.add(adminViewModel.bookedPartnerList.value!![i])
-                                        }
-                                    }
-                                }
-                                2 -> {
-                                    for (i in adminViewModel.bookedTicketList.indices) {
-                                        if (adminViewModel.bookedTicketList[i].bookedTicketStatus == BookedTicketStatus.CANCELLED.name) {
-                                            filteredTickets.add(adminViewModel.bookedTicketList[i])
-                                            filteredBuses.add(adminViewModel.bookedBusList[i])
-                                            filteredPartner.add(adminViewModel.bookedPartnerList.value!![i])
-                                        }
-                                    }
-                                }
-                            }
-                            adminViewModel.apply {
-                                this.filteredPartnerList = filteredPartner
-                                this.filteredBookingList = filteredTickets
-                                this.filteredBusList = filteredBuses
-                            }
-                            super.onPageSelected(position)
-                        }
-                        LoginStatus.LOGGED_IN -> {
-                            when (position) {
-                                0 -> {
-                                    for (i in bookingViewModel.bookingHistoryBookingList.indices) {
-                                        if (bookingViewModel.bookingHistoryBookingList[i].bookedTicketStatus == BookedTicketStatus.UPCOMING.name) {
-                                            filteredTickets.add(bookingViewModel.bookingHistoryBookingList[i])
-                                            filteredBuses.add(bookingViewModel.bookingHistoryBusList[i])
-                                            filteredPartner.add(bookingViewModel.bookingHistoryPartnerList[i])
-                                        }
-                                    }
-                                }
-                                1 -> {
-                                    for (i in bookingViewModel.bookingHistoryBookingList.indices) {
-                                        if (bookingViewModel.bookingHistoryBookingList[i].bookedTicketStatus == BookedTicketStatus.COMPLETED.name) {
-                                            filteredTickets.add(bookingViewModel.bookingHistoryBookingList[i])
-                                            filteredBuses.add(bookingViewModel.bookingHistoryBusList[i])
-                                            filteredPartner.add(bookingViewModel.bookingHistoryPartnerList[i])
-                                        }
-                                    }
-                                }
-                                2 -> {
-                                    for (i in bookingViewModel.bookingHistoryBookingList.indices) {
-                                        if (bookingViewModel.bookingHistoryBookingList[i].bookedTicketStatus == BookedTicketStatus.CANCELLED.name) {
-                                            filteredTickets.add(bookingViewModel.bookingHistoryBookingList[i])
-                                            filteredBuses.add(bookingViewModel.bookingHistoryBusList[i])
-                                            filteredPartner.add(bookingViewModel.bookingHistoryPartnerList[i])
-                                        }
-                                    }
-                                }
-                            }
-                            bookingViewModel.apply {
-                                this.filteredPartnerList = filteredPartner
-                                this.filteredBookingList = filteredTickets
-                                this.filteredBusList = filteredBuses
-                            }
-                            super.onPageSelected(position)
-                        }
-                        else -> {
-                            println("OTHER LOGIN - [BOOKING HISTORY LIST FRAGMENT]")
-                        }
-                    }
+                    bookingViewModel.currentScreenPosition = position
+                    println("GET FUNCTION VIEW PAGER SELECTED = $position")
+                    getFilteredData(position)
+
+//                    val filteredTickets = mutableListOf<Bookings>()
+//                    val filteredBuses = mutableListOf<Bus>()
+//                    val filteredPartner = mutableListOf<String>()
+
+//                    when (loginStatusViewModel.status) {
+//                        LoginStatus.ADMIN_LOGGED_IN -> {
+//                            when (position) {
+//                                0 -> {
+////                                    for (i in adminViewModel.bookedTicketList.indices) {
+////                                        if (adminViewModel.bookedTicketList[i].bookedTicketStatus == BookedTicketStatus.UPCOMING.name) {
+////                                            filteredTickets.add(adminViewModel.bookedTicketList[i])
+////                                            filteredBuses.add(adminViewModel.bookedBusList[i])
+////                                            filteredPartner.add(adminViewModel.bookedPartnerList.value!![i])
+////                                        }
+////                                    }
+//                                    adminViewModel.apply {
+//                                        this.filteredPartnerList = bookingViewModel.upcomingPartner
+//                                        this.filteredBookingList = bookingViewModel.upcomingBooking
+//                                        this.filteredBusList = bookingViewModel.upcomingBus
+//                                        this.filteredTicketStatus = BookedTicketStatus.UPCOMING
+//                                    }
+//                                }
+//                                1 -> {
+////                                    for (i in adminViewModel.bookedTicketList.indices) {
+////                                        if (adminViewModel.bookedTicketList[i].bookedTicketStatus == BookedTicketStatus.COMPLETED.name) {
+////                                            filteredTickets.add(adminViewModel.bookedTicketList[i])
+////                                            filteredBuses.add(adminViewModel.bookedBusList[i])
+////                                            filteredPartner.add(adminViewModel.bookedPartnerList.value!![i])
+////                                        }
+////                                    }
+//                                    adminViewModel.apply {
+//                                        this.filteredPartnerList = completedPartner
+//                                        this.filteredBookingList = completedBooking
+//                                        this.filteredBusList = completedBus
+//                                        this.filteredTicketStatus = BookedTicketStatus.COMPLETED
+//                                    }
+//                                }
+//                                2 -> {
+////                                    for (i in adminViewModel.bookedTicketList.indices) {
+////                                        if (adminViewModel.bookedTicketList[i].bookedTicketStatus == BookedTicketStatus.CANCELLED.name) {
+////                                            filteredTickets.add(adminViewModel.bookedTicketList[i])
+////                                            filteredBuses.add(adminViewModel.bookedBusList[i])
+////                                            filteredPartner.add(adminViewModel.bookedPartnerList.value!![i])
+////                                        }
+////                                    }
+//                                    adminViewModel.apply {
+//                                        this.filteredPartnerList = cancelledPartner
+//                                        this.filteredBookingList = cancelledBooking
+//                                        this.filteredBusList = cancelledBus
+//                                        this.filteredTicketStatus = BookedTicketStatus.CANCELLED
+//                                    }
+//                                }
+//                            }
+////                            adminViewModel.apply {
+////                                this.filteredPartnerList = filteredPartner
+////                                this.filteredBookingList = filteredTickets
+////                                this.filteredBusList = filteredBuses
+////                            }
+////                            super.onPageSelected(position)
+//                        }
+//                        LoginStatus.LOGGED_IN -> {
+//                            when (position) {
+//                                0 -> {
+////                                    for (i in bookingViewModel.bookingHistoryBookingList.indices) {
+////                                        if (bookingViewModel.bookingHistoryBookingList[i].bookedTicketStatus == BookedTicketStatus.UPCOMING.name) {
+////                                            filteredTickets.add(bookingViewModel.bookingHistoryBookingList[i])
+////                                            filteredBuses.add(bookingViewModel.bookingHistoryBusList[i])
+////                                            filteredPartner.add(bookingViewModel.bookingHistoryPartnerList[i])
+////                                        }
+////                                    }
+//                                    bookingViewModel.apply {
+//                                        this.filteredPartnerList = bookingViewModel.upcomingPartner
+//                                        this.filteredBookingList = bookingViewModel.upcomingBooking
+//                                        this.filteredBusList = bookingViewModel.upcomingBus
+//                                        this.filteredTicketStatus = BookedTicketStatus.UPCOMING
+//                                    }
+//                                }
+//                                1 -> {
+////                                    for (i in bookingViewModel.bookingHistoryBookingList.indices) {
+////                                        if (bookingViewModel.bookingHistoryBookingList[i].bookedTicketStatus == BookedTicketStatus.COMPLETED.name) {
+////                                            filteredTickets.add(bookingViewModel.bookingHistoryBookingList[i])
+////                                            filteredBuses.add(bookingViewModel.bookingHistoryBusList[i])
+////                                            filteredPartner.add(bookingViewModel.bookingHistoryPartnerList[i])
+////                                        }
+////                                    }
+//                                    bookingViewModel.apply {
+//                                        this.filteredPartnerList = completedPartner
+//                                        this.filteredBookingList = completedBooking
+//                                        this.filteredBusList = completedBus
+//                                        this.filteredTicketStatus = BookedTicketStatus.COMPLETED
+//                                    }
+//                                }
+//                                2 -> {
+////                                    for (i in bookingViewModel.bookingHistoryBookingList.indices) {
+////                                        if (bookingViewModel.bookingHistoryBookingList[i].bookedTicketStatus == BookedTicketStatus.CANCELLED.name) {
+////                                            filteredTickets.add(bookingViewModel.bookingHistoryBookingList[i])
+////                                            filteredBuses.add(bookingViewModel.bookingHistoryBusList[i])
+////                                            filteredPartner.add(bookingViewModel.bookingHistoryPartnerList[i])
+////                                        }
+////                                    }
+//                                    bookingViewModel.apply {
+//                                        this.filteredPartnerList = cancelledPartner
+//                                        this.filteredBookingList = cancelledBooking
+//                                        this.filteredBusList = cancelledBus
+//                                        this.filteredTicketStatus = BookedTicketStatus.CANCELLED
+//                                    }
+//                                }
+//                            }
+////                            bookingViewModel.apply {
+////                                this.filteredPartnerList = filteredPartner
+////                                this.filteredBookingList = filteredTickets
+////                                this.filteredBusList = filteredBuses
+////                            }
+////                            super.onPageSelected(position)
+//                        }
+//                        else -> {
+//                            println("OTHER LOGIN - [BOOKING HISTORY LIST FRAGMENT]")
+//                        }
+//                    }
                 }
             }
         )
 
-        binding.bookingHistoryRecyclerView.adapter = bookingHistoryListAdapter
         binding.bookingHistoryRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.bookingHistoryRecyclerView.adapter = bookingHistoryListAdapter
 
 
         if(tickets.isEmpty()){
@@ -207,6 +277,84 @@ class BookingHistoryListFragment : Fragment() {
 
     }
 
+    private fun getFilteredData(position: Int) {
+        println("INSIDE FUNCTION POSITION = $position")
+//        var selectedTabPosition: Int? = -1
+//        selectedTabPosition = requireActivity().findViewById<TabLayout>(R.id.booking_history_tabLayout)?.selectedTabPosition
+//        if(position == selectedPosition){
+            when (loginStatusViewModel.status) {
+                LoginStatus.ADMIN_LOGGED_IN -> {
+                    when (position) {
+                        0 -> {
+
+                            adminViewModel.apply {
+                                this.filteredPartnerList = bookingViewModel.upcomingPartner
+                                this.filteredBookingList = bookingViewModel.upcomingBooking
+                                this.filteredBusList = bookingViewModel.upcomingBus
+                                this.filteredTicketStatus = BookedTicketStatus.UPCOMING
+                            }
+                        }
+                        1 -> {
+
+                            adminViewModel.apply {
+                                this.filteredPartnerList = completedPartner
+                                this.filteredBookingList = completedBooking
+                                this.filteredBusList = completedBus
+                                this.filteredTicketStatus = BookedTicketStatus.COMPLETED
+                            }
+                        }
+                        2 -> {
+
+                            adminViewModel.apply {
+                                this.filteredPartnerList = cancelledPartner
+                                this.filteredBookingList = cancelledBooking
+                                this.filteredBusList = cancelledBus
+                                this.filteredTicketStatus = BookedTicketStatus.CANCELLED
+                            }
+                        }
+                    }
+
+                }
+                LoginStatus.LOGGED_IN -> {
+                    when (position) {
+                        0 -> {
+
+                            bookingViewModel.apply {
+                                this.filteredPartnerList = bookingViewModel.upcomingPartner
+                                this.filteredBookingList = bookingViewModel.upcomingBooking
+                                this.filteredBusList = bookingViewModel.upcomingBus
+                                this.filteredTicketStatus = BookedTicketStatus.UPCOMING
+                            }
+                        }
+                        1 -> {
+
+                            bookingViewModel.apply {
+                                this.filteredPartnerList = completedPartner
+                                this.filteredBookingList = completedBooking
+                                this.filteredBusList = completedBus
+                                this.filteredTicketStatus = BookedTicketStatus.COMPLETED
+                            }
+                        }
+                        2 -> {
+
+                            bookingViewModel.apply {
+                                this.filteredPartnerList = cancelledPartner
+                                this.filteredBookingList = cancelledBooking
+                                this.filteredBusList = cancelledBus
+                                this.filteredTicketStatus = BookedTicketStatus.CANCELLED
+                            }
+                        }
+                    }
+
+                }
+                else -> {
+                    println("OTHER LOGIN - [BOOKING HISTORY LIST FRAGMENT]")
+                }
+            }
+//        }
+
+    }
+
     private fun handleTicketItemClick(position: Int) {
         when(loginStatusViewModel.status){
             LoginStatus.ADMIN_LOGGED_IN -> {
@@ -217,6 +365,9 @@ class BookingHistoryListFragment : Fragment() {
                 moveToNextFragment(R.id.adminPanelFragmentContainer, BookedTicketFragment())
             }
             LoginStatus.LOGGED_IN -> {
+
+                println("LIST SIZE TAB POSITION = ${bookingViewModel.currentScreenPosition}")
+                println("LIST SIZE = ${bookingViewModel.filteredBusList.size}")
 
                 bookingViewModel.selectedTicket = position
                 bookingViewModel.selectedBus = bookingViewModel.filteredBusList[position]

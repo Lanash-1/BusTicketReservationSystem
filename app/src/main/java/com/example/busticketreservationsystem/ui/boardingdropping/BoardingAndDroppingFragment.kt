@@ -8,18 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_CLOSE
-import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_OPEN
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.viewpager2.widget.ViewPager2
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.databinding.FragmentBoardingAndDroppingBinding
 import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.ui.bookingdetails.BookingDetailsFragment
-import com.example.busticketreservationsystem.ui.selectedbus.SelectedBusFragment
+import com.example.busticketreservationsystem.ui.seatselection.SeatSelectionFragment
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.livedata.BusViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -47,7 +44,7 @@ class BoardingAndDroppingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         (activity as AppCompatActivity).supportActionBar?.apply {
-            title = "Boarding and Dropping Points"
+            title = getString(R.string.boarding_and_dropping_point)
             setDisplayHomeAsUpEnabled(true)
         }
         binding = FragmentBoardingAndDroppingBinding.inflate(inflater, container, false)
@@ -57,14 +54,26 @@ class BoardingAndDroppingFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home -> {
-                parentFragmentManager.commit {
-                    setTransition(TRANSIT_FRAGMENT_CLOSE)
-                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
-                    replace(R.id.homePageFragmentContainer, SelectedBusFragment())
-                }
+//                parentFragmentManager.commit {
+//                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
+////                    replace(R.id.homePageFragmentContainer, SelectedBusFragment())
+//                    replace(R.id.homePageFragmentContainer, SeatSelectionFragment())
+//                }
+                backPressOperation()
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun backPressOperation(){
+
+        busViewModel.boardingPoint.value = ""
+        busViewModel.droppingPoint.value = ""
+
+        parentFragmentManager.commit {
+            setCustomAnimations(R.anim.from_left, R.anim.to_right)
+            replace(R.id.homePageFragmentContainer, SeatSelectionFragment())
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -75,11 +84,12 @@ class BoardingAndDroppingFragment : Fragment() {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true){
                 override fun handleOnBackPressed() {
-                    parentFragmentManager.commit {
-                        setTransition(TRANSIT_FRAGMENT_CLOSE)
-                        setCustomAnimations(R.anim.from_left, R.anim.to_right)
-                        replace(R.id.homePageFragmentContainer, SelectedBusFragment())
-                    }
+                    backPressOperation()
+//                    parentFragmentManager.commit {
+//                        setCustomAnimations(R.anim.from_left, R.anim.to_right)
+////                        replace(R.id.homePageFragmentContainer, SelectedBusFragment())
+//                        replace(R.id.homePageFragmentContainer, SeatSelectionFragment())
+//                    }
                 }
             }
 
@@ -98,12 +108,10 @@ class BoardingAndDroppingFragment : Fragment() {
         val viewPager = binding.boardingDroppingViewPager
 
         binding.nextButton.setOnClickListener{
-                parentFragmentManager.commit {
-                    setTransition(TRANSIT_FRAGMENT_OPEN)
-                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
-                    replace(R.id.homePageFragmentContainer, BookingDetailsFragment())
-                }
-
+            parentFragmentManager.commit {
+                setCustomAnimations(R.anim.from_right, R.anim.to_left)
+                replace(R.id.homePageFragmentContainer, BookingDetailsFragment())
+            }
         }
 
         val adapter = BoardingAndDroppingViewPagerAdapter(childFragmentManager, lifecycle)
@@ -114,10 +122,10 @@ class BoardingAndDroppingFragment : Fragment() {
         TabLayoutMediator(tabLayout, viewPager){tab, position ->
             when(position){
                 0 -> {
-                    tab.text = "Boarding Point"
+                    tab.text = getString(R.string.boarding_point)
                 }
                 1 -> {
-                    tab.text = "Dropping Point"
+                    tab.text = getString(R.string.dropping_point)
                 }
             }
         }.attach()

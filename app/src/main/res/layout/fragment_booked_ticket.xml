@@ -11,11 +11,11 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/cancel_ticket_button"
         android:id="@+id/bookedTicketScrollView"
         >
 
@@ -27,604 +27,994 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/success_cardView"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
+                android:id="@+id/booked_ticket_card_view"
                 app:layout_constraintTop_toTopOf="parent"
-                app:cardCornerRadius="10dp"
-                android:elevation="1dp"
-                android:layout_margin="16dp"
-                android:visibility="gone"
-                >
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/success_textView"
-                    android:text="Ticket Booked Successfully"
-                    style="@style/TitleTextStyle"
-                    android:textColor="@color/customRed"
-                    android:layout_margin="16dp"
-                    android:textAlignment="center"
-                    />
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/travel_details_layout"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/success_cardView"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_margin="16dp"
-                app:cardCornerRadius="10dp"
-                android:elevation="1dp"
+                app:cardCornerRadius="8dp"
                 >
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/booked_ticket_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="8dp">
+                    android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/source_location_text"
+                        android:id="@+id/confirmed_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:drawablePadding="8dp"
+                        android:text="@string/your_booking_is_confirmed"
+                        android:textColor="@color/successColor"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        app:drawableStartCompat="@drawable/ic_baseline_verified_24"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:id="@+id/confirmed_divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:visibility="gone"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/confirmed_text" />
+
+
+                    <TextView
+                        android:id="@+id/partner_name_text"
                         style="@style/TitleTextStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Chennai"
-                        android:textSize="24sp"
+                        android:layout_margin="16dp"
+                        android:text="@string/example_partner_name"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@id/confirmed_divider" />
+
+                    <TextView
+                        android:id="@+id/bus_type_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/a_c_seater_sleeper"
+                        app:layout_constraintLeft_toLeftOf="@id/partner_name_text"
+                        app:layout_constraintTop_toBottomOf="@id/partner_name_text" />
+
+                    <TextView
+                        android:id="@+id/price_text"
+                        style="@style/TitleTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:text="@string/_1400"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/partner_name_text" />
+
+                    <TextView
+                        android:id="@+id/per_person_price_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:text="@string/each_700"
+                        android:textSize="14sp"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/price_text" />
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:id="@+id/bus_name_divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/bus_type_text" />
+
+                    <TextView
+                        android:id="@+id/source_city_text"
+                        style="@style/TextDefault"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:text="@string/enter_source"
+                        android:textSize="16sp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/bus_name_divider"
+                        app:layout_constraintRight_toLeftOf="@id/ticket_guideline"
+                        />
+
+                    <TextView
+                        android:id="@+id/source_boarding_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/boarding_point"
+                        android:textSize="14sp"
+                        app:layout_constraintLeft_toLeftOf="@id/source_city_text"
+                        app:layout_constraintTop_toBottomOf="@id/source_city_text"
+                        app:layout_constraintRight_toLeftOf="@id/ticket_guideline"
+                        />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/start_time_text"
-                        android:text="(9:00 AM)"
+                        android:text="@string/time_format"
+                        app:layout_constraintTop_toBottomOf="@id/source_boarding_text"
+                        app:layout_constraintLeft_toLeftOf="@id/source_boarding_text"
+                        android:layout_marginTop="8dp"
                         style="@style/TitleTextStyle"
-                        app:layout_constraintLeft_toRightOf="@id/source_location_text"
-                        app:layout_constraintTop_toTopOf="@id/source_location_text"
-                        app:layout_constraintBottom_toBottomOf="@id/source_location_text"
-                        android:layout_marginLeft="16dp" />
+                        />
 
-                    <ImageView
-                        android:id="@+id/swap_icon"
-                        style="@style/IconTint"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:layout_marginVertical="8dp"
-                        android:src="@drawable/ic_baseline_swap_vert_24"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/source_location_text" />
-
-                    <TextView
-                        android:id="@+id/destination_text"
-                        style="@style/TitleTextStyle"
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/ticket_guideline"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="Hyderabad"
-                        android:textSize="24sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/swap_icon" />
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.5"
+                        />
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/arrow_icon"
+                        android:src="@drawable/baseline_arrow_forward_24"
+                        style="@style/IconTint"
+                        app:layout_constraintLeft_toLeftOf="@id/ticket_guideline"
+                        app:layout_constraintRight_toRightOf="@id/ticket_guideline"
+                        app:layout_constraintTop_toTopOf="@id/source_city_text"
+                        app:layout_constraintBottom_toBottomOf="@id/start_time_text"
+                        />
+
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/destination_city_text"
+                            android:text="@string/enter_destination"
+                            android:textSize="16sp"
+                            style="@style/TextColor"
+                            android:maxLines="1"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/bus_name_divider"
+                            app:layout_constraintLeft_toRightOf="@id/ticket_guideline"
+                            android:layout_margin="16dp"
+                            android:textAlignment="viewEnd"
+                            />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/dropping_point_text"
+                            android:text="@string/dropping_point"
+                            android:textSize="14sp"
+                            android:maxLines="1"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/destination_city_text"
+                            app:layout_constraintLeft_toRightOf="@id/ticket_guideline"
+                            android:layout_marginRight="16dp"
+                            android:textAlignment="viewEnd"
+                            />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:id="@+id/reach_time_text"
-                        android:text="(23:45 PM)"
-                        style="@style/TitleTextStyle"
-                        app:layout_constraintLeft_toRightOf="@id/destination_text"
-                        app:layout_constraintTop_toTopOf="@id/destination_text"
-                        app:layout_constraintBottom_toBottomOf="@id/destination_text"
-                        android:layout_marginLeft="16dp" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/date_layout"
-                        android:orientation="vertical"
-                        app:layout_constraintTop_toTopOf="@id/swap_icon"
-                        app:layout_constraintBottom_toBottomOf="@id/swap_icon"
+                        android:text="@string/time_format"
+                        android:maxLines="1"
                         app:layout_constraintRight_toRightOf="parent"
-                        >
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/day_text"
-                            android:text="28"
-                            style="@style/TitleTextStyle"
-                            android:textAlignment="center"
-                            />
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/month_text"
-                            android:text="DEC"
-                            android:textSize="24sp"
-                            style="@style/TitleTextStyle"
-                            android:textAlignment="center"
-
-                            />
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/year_text"
-                            android:text="2022"
-                            style="@style/TitleTextStyle"
-                            android:textAlignment="center"
-
-                            />
-
-                    </LinearLayout>
-
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/passenger_details_layout"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/travel_details_layout"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="16dp"
-                app:cardCornerRadius="10dp"
-                >
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/ticket_count_text"
-                    android:text="Tickets: 5"
-                    style="@style/TitleTextStyle"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    android:layout_margin="8dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/price_text"
-                        android:text="₹ 2500"
-                        android:textSize="24sp"
+                        app:layout_constraintTop_toBottomOf="@id/dropping_point_text"
+                        app:layout_constraintLeft_toRightOf="@id/ticket_guideline"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginTop="8dp"
+                        android:textAlignment="viewEnd"
                         style="@style/TitleTextStyle"
-                        app:layout_constraintTop_toTopOf="@id/ticket_count_text"
-                        app:layout_constraintBottom_toBottomOf="@id/ticket_count_text"
-                        app:layout_constraintRight_toRightOf="parent"
-                        android:layout_marginRight="8dp"/>
+                        />
 
                     <com.google.android.material.divider.MaterialDivider
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/divider1"
+                        android:id="@+id/location_divider"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/price_text"
+                        app:layout_constraintTop_toBottomOf="@id/start_time_text"
+                        android:layout_marginTop="16dp"
                         />
-                    
-                    <TableLayout
-                        android:id="@+id/tableLayout"
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/passenger_information_title"
+                        android:text="@string/passenger_details"
+                        style="@style/TitleTextStyle"
+                        app:layout_constraintTop_toBottomOf="@id/location_divider"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_margin="16dp"
+                    />
+
+
+                    <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:id="@+id/passenger_list_recycler_view"
+                        app:layout_constraintTop_toBottomOf="@id/passenger_information_title"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/divider1"
-                        android:paddingHorizontal="8dp"
-                        android:paddingVertical="8dp">
-
-                        <TextView
-                            android:id="@+id/txt"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Passenger Details:"
-                            style="@style/TitleTextStyle">
-
-                        </TextView>
-
-                        <TableRow android:background="@color/customRed" android:padding="10dp"
-                            android:layout_marginTop="10dp">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="S.No"
-                                android:textColor="@color/white"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Passenger Name"
-                                android:textColor="@color/white"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:textColor="@color/white"
-                                android:text="Seat" />
-
-                        </TableRow>
-
-                        <TableRow android:id="@+id/row1"
-                            android:background="@color/white" android:padding="10dp">
-                            <TextView
-                                android:id="@+id/row1no"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="1."
-                                android:textColor="@color/black"
-                                />
-                            <TextView
-                                android:id="@+id/row1name"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Lanash"
-                                android:textColor="@color/black"
-                                />
-                            <TextView
-                                android:id="@+id/row1seat"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:textColor="@color/black"
-                                android:text="LW1" />
-
-                        </TableRow>
-
-                        <TableRow
-                            android:id="@+id/row2"
-                            android:visibility="gone"
-                            android:background="@color/white" android:padding="10dp">
-                            <TextView
-                                android:id="@+id/row2no"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="1."
-                                android:textColor="@color/black"
-                                />
-                            <TextView
-                                android:id="@+id/row2name"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Lanash"
-                                android:textColor="@color/black"
-                                />
-                            <TextView
-                                android:id="@+id/row2seat"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:textColor="@color/black"
-                                android:text="LW1" />
-
-                        </TableRow>
-
-                        <TableRow
-                            android:visibility="gone"
-                            android:id="@+id/row3" android:background="@color/white" android:padding="10dp">
-                            <TextView
-                                android:id="@+id/row3no"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="1."
-                                android:textColor="@color/black"
-                                />
-                            <TextView
-                                android:id="@+id/row3name"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Lanash"
-                                android:textColor="@color/black"
-                                />
-                            <TextView
-                                android:id="@+id/row3seat"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:textColor="@color/black"
-                                android:text="LW1" />
-
-                        </TableRow>
-
-                        <TableRow
-                            android:visibility="gone"
-                            android:id="@+id/row4" android:background="@color/white" android:padding="10dp">
-                            <TextView
-                                android:id="@+id/row4no"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:textColor="@color/black"
-                                android:text="1."
-                                />
-                            <TextView
-                                android:id="@+id/row4name"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:textColor="@color/black"
-                                android:text="Lanash"
-                                />
-                            <TextView
-                                android:id="@+id/row4seat"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:textColor="@color/black"
-                                android:text="LW1" />
-
-                        </TableRow>
-
-                        <TableRow
-                            android:visibility="gone"
-                            android:id="@+id/row5" android:background="@color/white" android:padding="10dp">
-                            <TextView
-                                android:id="@+id/row5no"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:textColor="@color/black"
-                                android:text="1."
-                                />
-                            <TextView
-                                android:id="@+id/row5name"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:textColor="@color/black"
-                                android:text="Lanash"
-                                />
-                            <TextView
-                                android:id="@+id/row5seat"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:textColor="@color/black"
-                                android:text="LW1" />
-
-                        </TableRow>
-
-                        <TableRow
-                            android:visibility="gone"
-                            android:id="@+id/row6" android:background="@color/white" android:padding="10dp">
-                            <TextView
-                                android:id="@+id/row6no"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:textColor="@color/black"
-                                android:text="1."
-                                />
-                            <TextView
-                                android:id="@+id/row6name"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:textColor="@color/black"
-                                android:text="Lanash"
-                                />
-                            <TextView
-                                android:id="@+id/row6seat"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:textColor="@color/black"
-                                android:text="LW1" />
-
-                        </TableRow>
-
-
-                    </TableLayout>
+                        tools:listitem="@layout/item_passenger"
+                        tools:itemCount="6"
+                        android:overScrollMode="never"
+                        />
 
                     <com.google.android.material.divider.MaterialDivider
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/divider2"
-                        app:layout_constraintTop_toBottomOf="@id/tableLayout"
+                        android:id="@+id/passenger_list_divider"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/passenger_list_recycler_view"
+                        android:layout_marginTop="16dp"
                         />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/email_text"
-                        app:layout_constraintTop_toBottomOf="@id/divider2"
-                        android:layout_marginTop="8dp"
-                        android:text="Email: "
+                        android:id="@+id/contact_information_title"
+                        android:text="@string/passenger_contact_details"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/passenger_list_divider"
+                        android:layout_margin="16dp"
                         style="@style/TitleTextStyle"
-                        app:layout_constraintLeft_toLeftOf="@id/ticket_count_text"
                         />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/email"
-                        android:text="lanash@zohocorp.com"
-                        app:layout_constraintTop_toTopOf="@id/email_text"
-                        app:layout_constraintBottom_toBottomOf="@id/email_text"
-                        app:layout_constraintLeft_toRightOf="@id/email_text"
-                        style="@style/TextDefault"
-                        android:layout_marginLeft="8dp" />
+                        android:id="@+id/mail_title_textView"
+                        android:text="@string/email_address"
+                        android:textSize="14sp"
+                        app:layout_constraintTop_toBottomOf="@id/contact_information_title"
+                        app:layout_constraintLeft_toLeftOf="@id/contact_information_title"
+                        android:layout_marginTop="16dp"
+                        />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/mobile_text"
-                        app:layout_constraintTop_toBottomOf="@id/email_text"
-                        android:text="Mobile Number: "
+                        android:id="@+id/mail_input_textView"
+                        android:text="lanash@zoho.com"
+                        app:layout_constraintTop_toBottomOf="@id/mail_title_textView"
+                        app:layout_constraintLeft_toLeftOf="@id/mail_title_textView"
                         style="@style/TitleTextStyle"
-                        app:layout_constraintLeft_toLeftOf="@id/ticket_count_text"
-                        android:layout_marginTop="8dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_marginBottom="8dp"
+                        android:textStyle="normal"
+                        android:layout_marginTop="4dp"
                         />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/mobile"
-                        android:text="0987654321"
-                        app:layout_constraintTop_toTopOf="@id/mobile_text"
-                        app:layout_constraintBottom_toBottomOf="@id/mobile_text"
-                        app:layout_constraintLeft_toRightOf="@id/mobile_text"
-                        style="@style/TextDefault"
-                        android:layout_marginLeft="8dp" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/bus_details_card_view"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/passenger_details_layout"
-                android:layout_marginTop="16dp"
-                android:layout_marginHorizontal="16dp"
-                app:cardCornerRadius="10dp"
-                android:elevation="1dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginBottom="64dp"
-                >
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:id="@+id/bus_details_layout"
-                    >
+                        android:id="@+id/mobile_title_textView"
+                        android:text="@string/mobile_number"
+                        android:textSize="14sp"
+                        app:layout_constraintTop_toBottomOf="@id/mail_input_textView"
+                        app:layout_constraintLeft_toLeftOf="@id/mail_input_textView"
+                        android:layout_marginTop="16dp"
+                        />
 
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/mobile_input_textView"
+                        android:text="9876543210"
+                        app:layout_constraintTop_toBottomOf="@id/mobile_title_textView"
+                        app:layout_constraintLeft_toLeftOf="@id/mobile_title_textView"
+                        style="@style/TitleTextStyle"
+                        android:layout_marginTop="4dp"
+                        android:textIsSelectable="true"
+                        android:textStyle="normal"
+                        />
+
+                    <com.google.android.material.divider.MaterialDivider
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/partner_name_text"
-                        android:text="KGF TOURS AND TRAVELS"
-                        android:textAlignment="center"
-                        style="@style/TitleTextStyle"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
-                        app:layout_constraintTop_toTopOf="parent"
+                        android:id="@+id/contact_information_divider"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        />
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:id="@+id/email_icon"
-                        android:src="@drawable/ic_baseline_email_24"
-                        style="@style/IconTint"
-                        android:paddingLeft="8dp"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
-                        android:layout_marginTop="8dp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/partner_name_text"
+                        app:layout_constraintTop_toBottomOf="@id/mobile_input_textView"
+                        android:layout_marginTop="16dp"
                         />
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="40dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/bus_contact_title"
+                        android:text="@string/bus_contact_details"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/contact_information_divider"
+                        android:layout_margin="16dp"
+                        style="@style/TitleTextStyle"
+                        />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/bus_email_title"
+                        android:text="@string/email_address"
+                        android:textSize="14sp"
+                        app:layout_constraintTop_toBottomOf="@id/bus_contact_title"
+                        app:layout_constraintLeft_toLeftOf="@id/bus_contact_title"
+                        android:layout_marginTop="16dp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:id="@+id/bus_email_text"
-                        android:text="qwerty@skjdnc.cikmnd"
-                        android:gravity="center"
+                        android:text="@string/sample_mail"
+                        app:layout_constraintTop_toBottomOf="@id/bus_email_title"
+                        app:layout_constraintLeft_toLeftOf="@id/bus_email_title"
+                        style="@style/TitleTextStyle"
+                        android:textStyle="normal"
+                        android:layout_marginTop="4dp"
                         android:autoLink="email"
-                        app:layout_constraintTop_toTopOf="@id/email_icon"
-                        app:layout_constraintBottom_toBottomOf="@id/email_icon"
-                        app:layout_constraintLeft_toRightOf="@id/email_icon"
-                        android:paddingStart="8dp"
-                        />
-
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:id="@+id/phone_icon"
-                        android:src="@drawable/ic_baseline_local_phone_24"
-                        style="@style/IconTint"
-                        android:paddingLeft="8dp"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/email_icon"
                         />
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:id="@+id/bus_mobile_text"
-                        android:text="9098765432"
-                        android:gravity="center"
-                        android:autoLink="phone"
-                        app:layout_constraintTop_toTopOf="@id/phone_icon"
-                        app:layout_constraintBottom_toBottomOf="@id/phone_icon"
-                        app:layout_constraintLeft_toRightOf="@id/phone_icon"
-                        android:paddingLeft="8dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/bus_mobile_title"
+                        android:text="@string/mobile_number"
+                        android:textSize="14sp"
+                        app:layout_constraintTop_toBottomOf="@id/bus_email_text"
+                        app:layout_constraintLeft_toLeftOf="@id/bus_email_text"
+                        android:layout_marginTop="16dp"
                         />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/bus_mobile_text"
+                        android:text="@string/sample_mobile"
+                        app:layout_constraintTop_toBottomOf="@id/bus_mobile_title"
+                        app:layout_constraintLeft_toLeftOf="@id/bus_mobile_title"
+                        style="@style/TitleTextStyle"
+                        android:layout_marginTop="4dp"
+                        android:autoLink="phone"
+                        android:textIsSelectable="true"
+                        android:textStyle="normal"
+                        />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/more_info_button"
-                        android:text="More Info"
-                        app:layout_constraintTop_toBottomOf="@id/bus_mobile_text"
+                        android:text="@string/bus_info"
                         android:clickable="true"
                         android:foreground="?android:selectableItemBackground"
+                        android:textSize="16sp"
+                        android:padding="12dp"
+                        android:drawablePadding="8dp"
+                        style="@style/linkTextStyle"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:textSize="16sp"
-                        android:padding="8dp"
-                        android:drawableRight="@drawable/baseline_arrow_forward_24"
-                        android:drawablePadding="8dp"
-                        android:drawableTint="@color/seatGreen"
-                        android:textColor="@color/seatGreen"
-                        />
+                        app:layout_constraintTop_toBottomOf="@id/bus_mobile_text"
+                        android:layout_margin="4dp"
+                        android:focusable="true"
+                        app:drawableRightCompat="@drawable/baseline_arrow_forward_24"
+                        app:drawableTint="@color/appMainColor" />
 
-<!--                    <Button-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:id="@+id/more_info_button"-->
-<!--                        android:text="More info"-->
-<!--                        app:layout_constraintTop_toBottomOf="@id/bus_mobile_text"-->
-<!--                        android:background="@color/white"-->
-<!--                        android:foreground="?android:selectableItemBackground"-->
-<!--                        android:layout_marginTop="8dp"-->
-<!--                        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--                        app:layout_constraintRight_toRightOf="parent"-->
-<!--                        app:layout_constraintBottom_toBottomOf="parent" />-->
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
             </androidx.cardview.widget.CardView>
 
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:id="@+id/success_cardView"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                app:layout_constraintRight_toRightOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/booked_ticket_card_view"-->
+<!--                app:cardCornerRadius="10dp"-->
+<!--                android:elevation="1dp"-->
+<!--                android:layout_margin="16dp"-->
+<!--                android:visibility="gone"-->
+<!--                >-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:id="@+id/success_textView"-->
+<!--                    android:text="Ticket Booked Successfully"-->
+<!--                    style="@style/TitleTextStyle"-->
+<!--                    android:textColor="@color/appMainColor"-->
+<!--                    android:layout_margin="16dp"-->
+<!--                    android:textAlignment="center"-->
+<!--                    />-->
+
+<!--            </androidx.cardview.widget.CardView>-->
+
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:id="@+id/travel_details_layout"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                app:layout_constraintRight_toRightOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/success_cardView"-->
+<!--                android:layout_margin="16dp"-->
+<!--                app:cardCornerRadius="10dp"-->
+<!--                android:elevation="1dp"-->
+<!--                >-->
+
+<!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_margin="8dp">-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/source_location_text"-->
+<!--                        style="@style/TitleTextStyle"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Chennai"-->
+<!--                        android:textSize="24sp"-->
+<!--                        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:id="@+id/start_time_text"-->
+<!--                        android:text="(9:00 AM)"-->
+<!--                        style="@style/TitleTextStyle"-->
+<!--                        app:layout_constraintLeft_toRightOf="@id/source_location_text"-->
+<!--                        app:layout_constraintTop_toTopOf="@id/source_location_text"-->
+<!--                        app:layout_constraintBottom_toBottomOf="@id/source_location_text"-->
+<!--                        android:layout_marginLeft="16dp" />-->
+
+<!--                    <ImageView-->
+<!--                        android:id="@+id/swap_icon"-->
+<!--                        style="@style/IconTint"-->
+<!--                        android:layout_width="36dp"-->
+<!--                        android:layout_height="36dp"-->
+<!--                        android:layout_marginVertical="8dp"-->
+<!--                        android:src="@drawable/ic_baseline_swap_vert_24"-->
+<!--                        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                        app:layout_constraintTop_toBottomOf="@id/source_location_text" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/destination_text"-->
+<!--                        style="@style/TitleTextStyle"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="8dp"-->
+<!--                        android:text="Hyderabad"-->
+<!--                        android:textSize="24sp"-->
+<!--                        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                        app:layout_constraintTop_toBottomOf="@id/swap_icon" />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:id="@+id/reach_time_text"-->
+<!--                        android:text="(23:45 PM)"-->
+<!--                        style="@style/TitleTextStyle"-->
+<!--                        app:layout_constraintLeft_toRightOf="@id/destination_text"-->
+<!--                        app:layout_constraintTop_toTopOf="@id/destination_text"-->
+<!--                        app:layout_constraintBottom_toBottomOf="@id/destination_text"-->
+<!--                        android:layout_marginLeft="16dp" />-->
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:id="@+id/date_layout"-->
+<!--                        android:orientation="vertical"-->
+<!--                        app:layout_constraintTop_toTopOf="@id/swap_icon"-->
+<!--                        app:layout_constraintBottom_toBottomOf="@id/swap_icon"-->
+<!--                        app:layout_constraintRight_toRightOf="parent"-->
+<!--                        >-->
+
+<!--                        <TextView-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:id="@+id/day_text"-->
+<!--                            android:text="28"-->
+<!--                            style="@style/TitleTextStyle"-->
+<!--                            android:textAlignment="center"-->
+<!--                            />-->
+<!--                        <TextView-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:id="@+id/month_text"-->
+<!--                            android:text="DEC"-->
+<!--                            android:textSize="24sp"-->
+<!--                            style="@style/TitleTextStyle"-->
+<!--                            android:textAlignment="center"-->
+
+<!--                            />-->
+<!--                        <TextView-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:id="@+id/year_text"-->
+<!--                            android:text="2022"-->
+<!--                            style="@style/TitleTextStyle"-->
+<!--                            android:textAlignment="center"-->
+
+<!--                            />-->
+
+<!--                    </LinearLayout>-->
+
+
+
+<!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+
+
+<!--            </androidx.cardview.widget.CardView>-->
+
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:id="@+id/passenger_details_layout"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                app:layout_constraintRight_toRightOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/travel_details_layout"-->
+<!--                android:layout_marginHorizontal="16dp"-->
+<!--                android:layout_marginTop="16dp"-->
+<!--                app:cardCornerRadius="10dp"-->
+<!--                >-->
+
+<!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent">-->
+
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:id="@+id/ticket_count_text"-->
+<!--                    android:text="Tickets: 5"-->
+<!--                    style="@style/TitleTextStyle"-->
+<!--                    app:layout_constraintTop_toTopOf="parent"-->
+<!--                    app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                    android:layout_margin="8dp" />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:id="@+id/price_text"-->
+<!--                        android:text="₹ 2500"-->
+<!--                        android:textSize="24sp"-->
+<!--                        style="@style/TitleTextStyle"-->
+<!--                        app:layout_constraintTop_toTopOf="@id/ticket_count_text"-->
+<!--                        app:layout_constraintBottom_toBottomOf="@id/ticket_count_text"-->
+<!--                        app:layout_constraintRight_toRightOf="parent"-->
+<!--                        android:layout_marginRight="8dp"/>-->
+
+<!--                    <com.google.android.material.divider.MaterialDivider-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:id="@+id/divider1"-->
+<!--                        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                        app:layout_constraintRight_toRightOf="parent"-->
+<!--                        app:layout_constraintTop_toBottomOf="@id/price_text"-->
+<!--                        />-->
+<!--                    -->
+<!--                    <TableLayout-->
+<!--                        android:id="@+id/tableLayout"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                        app:layout_constraintRight_toRightOf="parent"-->
+<!--                        app:layout_constraintTop_toBottomOf="@id/divider1"-->
+<!--                        android:paddingHorizontal="8dp"-->
+<!--                        android:paddingVertical="8dp">-->
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/txt"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="Passenger Details:"-->
+<!--                            style="@style/TitleTextStyle">-->
+
+<!--                        </TextView>-->
+
+<!--                        <TableRow android:background="@color/appMainColor" android:padding="10dp"-->
+<!--                            android:layout_marginTop="10dp">-->
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:text="S.No"-->
+<!--                                android:textColor="@color/white"/>-->
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:text="Passenger Name"-->
+<!--                                android:textColor="@color/white"/>-->
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:textColor="@color/white"-->
+<!--                                android:text="Seat" />-->
+
+<!--                        </TableRow>-->
+
+<!--                        <TableRow android:id="@+id/row1"-->
+<!--                            android:background="@color/white" android:padding="10dp">-->
+<!--                            <TextView-->
+<!--                                android:id="@+id/row1no"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:text="1."-->
+<!--                                android:textColor="@color/black"-->
+<!--                                />-->
+<!--                            <TextView-->
+<!--                                android:id="@+id/row1name"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:text="Lanash"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                />-->
+<!--                            <TextView-->
+<!--                                android:id="@+id/row1seat"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:text="LW1" />-->
+
+<!--                        </TableRow>-->
+
+<!--                        <TableRow-->
+<!--                            android:id="@+id/row2"-->
+<!--                            android:visibility="gone"-->
+<!--                            android:background="@color/white" android:padding="10dp">-->
+<!--                            <TextView-->
+<!--                                android:id="@+id/row2no"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:text="1."-->
+<!--                                android:textColor="@color/black"-->
+<!--                                />-->
+<!--                            <TextView-->
+<!--                                android:id="@+id/row2name"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:text="Lanash"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                />-->
+<!--                            <TextView-->
+<!--                                android:id="@+id/row2seat"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:text="LW1" />-->
+
+<!--                        </TableRow>-->
+
+<!--                        <TableRow-->
+<!--                            android:visibility="gone"-->
+<!--                            android:id="@+id/row3" android:background="@color/white" android:padding="10dp">-->
+<!--                            <TextView-->
+<!--                                android:id="@+id/row3no"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:text="1."-->
+<!--                                android:textColor="@color/black"-->
+<!--                                />-->
+<!--                            <TextView-->
+<!--                                android:id="@+id/row3name"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:text="Lanash"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                />-->
+<!--                            <TextView-->
+<!--                                android:id="@+id/row3seat"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:text="LW1" />-->
+
+<!--                        </TableRow>-->
+
+<!--                        <TableRow-->
+<!--                            android:visibility="gone"-->
+<!--                            android:id="@+id/row4" android:background="@color/white" android:padding="10dp">-->
+<!--                            <TextView-->
+<!--                                android:id="@+id/row4no"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:text="1."-->
+<!--                                />-->
+<!--                            <TextView-->
+<!--                                android:id="@+id/row4name"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:text="Lanash"-->
+<!--                                />-->
+<!--                            <TextView-->
+<!--                                android:id="@+id/row4seat"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:text="LW1" />-->
+
+<!--                        </TableRow>-->
+
+<!--                        <TableRow-->
+<!--                            android:visibility="gone"-->
+<!--                            android:id="@+id/row5" android:background="@color/white" android:padding="10dp">-->
+<!--                            <TextView-->
+<!--                                android:id="@+id/row5no"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:text="1."-->
+<!--                                />-->
+<!--                            <TextView-->
+<!--                                android:id="@+id/row5name"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:text="Lanash"-->
+<!--                                />-->
+<!--                            <TextView-->
+<!--                                android:id="@+id/row5seat"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:text="LW1" />-->
+
+<!--                        </TableRow>-->
+
+<!--                        <TableRow-->
+<!--                            android:visibility="gone"-->
+<!--                            android:id="@+id/row6" android:background="@color/white" android:padding="10dp">-->
+<!--                            <TextView-->
+<!--                                android:id="@+id/row6no"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:text="1."-->
+<!--                                />-->
+<!--                            <TextView-->
+<!--                                android:id="@+id/row6name"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:text="Lanash"-->
+<!--                                />-->
+<!--                            <TextView-->
+<!--                                android:id="@+id/row6seat"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:text="LW1" />-->
+
+<!--                        </TableRow>-->
+
+
+<!--                    </TableLayout>-->
+
+<!--                    <com.google.android.material.divider.MaterialDivider-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:id="@+id/divider2"-->
+<!--                        app:layout_constraintTop_toBottomOf="@id/tableLayout"-->
+<!--                        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                        app:layout_constraintRight_toRightOf="parent"-->
+<!--                        />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:id="@+id/email_text"-->
+<!--                        app:layout_constraintTop_toBottomOf="@id/divider2"-->
+<!--                        android:layout_marginTop="8dp"-->
+<!--                        android:text="Email: "-->
+<!--                        style="@style/TitleTextStyle"-->
+<!--                        app:layout_constraintLeft_toLeftOf="@id/ticket_count_text"-->
+<!--                        />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:id="@+id/email"-->
+<!--                        android:text="lanash@zohocorp.com"-->
+<!--                        app:layout_constraintTop_toTopOf="@id/email_text"-->
+<!--                        app:layout_constraintBottom_toBottomOf="@id/email_text"-->
+<!--                        app:layout_constraintLeft_toRightOf="@id/email_text"-->
+<!--                        style="@style/TextDefault"-->
+<!--                        android:layout_marginLeft="8dp" />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:id="@+id/mobile_text"-->
+<!--                        app:layout_constraintTop_toBottomOf="@id/email_text"-->
+<!--                        android:text="Mobile Number: "-->
+<!--                        style="@style/TitleTextStyle"-->
+<!--                        app:layout_constraintLeft_toLeftOf="@id/ticket_count_text"-->
+<!--                        android:layout_marginTop="8dp"-->
+<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                        android:layout_marginBottom="8dp"-->
+<!--                        />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:id="@+id/mobile"-->
+<!--                        android:text="0987654321"-->
+<!--                        app:layout_constraintTop_toTopOf="@id/mobile_text"-->
+<!--                        app:layout_constraintBottom_toBottomOf="@id/mobile_text"-->
+<!--                        app:layout_constraintLeft_toRightOf="@id/mobile_text"-->
+<!--                        style="@style/TextDefault"-->
+<!--                        android:layout_marginLeft="8dp" />-->
+
+<!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+
+<!--            </androidx.cardview.widget.CardView>-->
+
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:id="@+id/bus_details_card_view"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                app:layout_constraintRight_toRightOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/passenger_details_layout"-->
+<!--                android:layout_marginTop="16dp"-->
+<!--                android:layout_marginHorizontal="16dp"-->
+<!--                app:cardCornerRadius="10dp"-->
+<!--                android:elevation="1dp"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                android:layout_marginBottom="64dp"-->
+<!--                >-->
+
+<!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="vertical"-->
+<!--                    android:id="@+id/bus_details_layout"-->
+<!--                    >-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:id="@+id/partner_name_text"-->
+<!--                        android:text="KGF TOURS AND TRAVELS"-->
+<!--                        android:textAlignment="center"-->
+<!--                        style="@style/TitleTextStyle"-->
+<!--                        android:layout_marginTop="8dp"-->
+<!--                        android:layout_marginBottom="8dp"-->
+<!--                        app:layout_constraintTop_toTopOf="parent"-->
+<!--                        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                        app:layout_constraintRight_toRightOf="parent"-->
+<!--                        />-->
+
+<!--                    <ImageView-->
+<!--                        android:layout_width="40dp"-->
+<!--                        android:layout_height="40dp"-->
+<!--                        android:id="@+id/email_icon"-->
+<!--                        android:src="@drawable/ic_baseline_email_24"-->
+<!--                        style="@style/IconTint"-->
+<!--                        android:paddingLeft="8dp"-->
+<!--                        android:paddingTop="8dp"-->
+<!--                        android:paddingBottom="8dp"-->
+<!--                        android:layout_marginTop="8dp"-->
+<!--                        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                        app:layout_constraintTop_toBottomOf="@id/partner_name_text"-->
+<!--                        />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="40dp"-->
+<!--                        android:id="@+id/bus_email_text"-->
+<!--                        android:text="qwerty@skjdnc.cikmnd"-->
+<!--                        android:gravity="center"-->
+<!--                        android:autoLink="email"-->
+<!--                        app:layout_constraintTop_toTopOf="@id/email_icon"-->
+<!--                        app:layout_constraintBottom_toBottomOf="@id/email_icon"-->
+<!--                        app:layout_constraintLeft_toRightOf="@id/email_icon"-->
+<!--                        android:paddingStart="8dp"-->
+<!--                        />-->
+
+
+<!--                    <ImageView-->
+<!--                        android:layout_width="40dp"-->
+<!--                        android:layout_height="40dp"-->
+<!--                        android:id="@+id/phone_icon"-->
+<!--                        android:src="@drawable/ic_baseline_local_phone_24"-->
+<!--                        style="@style/IconTint"-->
+<!--                        android:paddingLeft="8dp"-->
+<!--                        android:paddingTop="8dp"-->
+<!--                        android:paddingBottom="8dp"-->
+<!--                        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                        app:layout_constraintTop_toBottomOf="@id/email_icon"-->
+<!--                        />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="40dp"-->
+<!--                        android:id="@+id/bus_mobile_text"-->
+<!--                        android:text="9098765432"-->
+<!--                        android:gravity="center"-->
+<!--                        android:autoLink="phone"-->
+<!--                        app:layout_constraintTop_toTopOf="@id/phone_icon"-->
+<!--                        app:layout_constraintBottom_toBottomOf="@id/phone_icon"-->
+<!--                        app:layout_constraintLeft_toRightOf="@id/phone_icon"-->
+<!--                        android:paddingLeft="8dp"-->
+<!--                        />-->
+
+
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:id="@+id/more_info_button"-->
+<!--                        android:text="More Info"-->
+<!--                        app:layout_constraintTop_toBottomOf="@id/bus_mobile_text"-->
+<!--                        android:clickable="true"-->
+<!--                        android:foreground="?android:selectableItemBackground"-->
+<!--                        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                        app:layout_constraintRight_toRightOf="parent"-->
+<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                        android:textSize="16sp"-->
+<!--                        android:padding="8dp"-->
+<!--                        android:drawableRight="@drawable/baseline_arrow_forward_24"-->
+<!--                        android:drawablePadding="8dp"-->
+<!--                        android:drawableTint="@color/seatGreen"-->
+<!--                        style="@style/linkTextStyle"-->
+<!--                        />-->
+
+<!--&lt;!&ndash;                    <Button&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:id="@+id/more_info_button"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:text="More info"&ndash;&gt;-->
+<!--&lt;!&ndash;                        app:layout_constraintTop_toBottomOf="@id/bus_mobile_text"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:background="@color/white"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:foreground="?android:selectableItemBackground"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_marginTop="8dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                        app:layout_constraintLeft_toLeftOf="parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                        app:layout_constraintRight_toRightOf="parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                        app:layout_constraintBottom_toBottomOf="parent" />&ndash;&gt;-->
+
+
+<!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+
+
+<!--            </androidx.cardview.widget.CardView>-->
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -635,8 +1025,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/cancel_ticket_button"
-        android:text="Cancel Ticket"
-        android:background="@color/customRed"
+        android:text="@string/cancel_ticket"
+        android:background="@color/appMainColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

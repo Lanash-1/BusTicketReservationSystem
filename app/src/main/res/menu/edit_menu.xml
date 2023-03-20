@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:title="chat support"
+        android:title="@string/edit_profile"
         android:id="@+id/edit_icon"
         app:showAsAction="always"
         android:icon="@drawable/baseline_white_edit_24"

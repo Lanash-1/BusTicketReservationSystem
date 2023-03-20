@@ -215,6 +215,7 @@ class MainActivity : AppCompatActivity() {
         val pList = mutableListOf<Partners>()
         val bList = mutableListOf<List<Bus>>()
         val aList = mutableListOf<List<List<BusAmenities>>>()
+        val bLayoutList = mutableListOf<List<BusLayout>>()
 
 
         val jsonData = applicationContext.resources.openRawResource(
@@ -243,6 +244,7 @@ class MainActivity : AppCompatActivity() {
             val buses = partners.getJSONObject(i).getJSONArray("buses") as JSONArray
 
             val busSet = mutableListOf<Bus>()
+            val busLayoutSet = mutableListOf<BusLayout>()
             val amenitySet = mutableListOf<List<BusAmenities>>()
 
             for(j in 0 until buses.length()){
@@ -253,13 +255,28 @@ class MainActivity : AppCompatActivity() {
                 val destinationLocation = buses.getJSONObject(j).get("destinationLocation").toString()
                 val perTicketCost = buses.getJSONObject(j).get("perTicketCost").toString().toDouble()
                 val busType = buses.getJSONObject(j).get("busType").toString()
-                val totalSeats = buses.getJSONObject(j).get("totalSeats").toString().toInt()
+//                val totalSeats = buses.getJSONObject(j).get("totalSeats").toString().toInt()
                 val startTime = buses.getJSONObject(j).get("startTime").toString()
                 val reachTime = buses.getJSONObject(j).get("reachTime").toString()
                 val duration = buses.getJSONObject(j).get("duration").toString()
+                var totalSeats = 0
+                val numberOfDecks = buses.getJSONObject(j).get("numberOfDecks").toString().toInt()
+                val lowerDeckSeatType = buses.getJSONObject(j).get("lowerDeckSeatType").toString()
+                val lowerLeftColumnCount = buses.getJSONObject(j).get("lowerLeftColumnCount").toString().toInt()
+                val lowerRightColumnCount = buses.getJSONObject(j).get("lowerRightColumnCount").toString().toInt()
+                val upperLeftColumnCount = buses.getJSONObject(j).get("upperLeftColumnCount").toString().toInt()
+                val upperRightColumnCount = buses.getJSONObject(j).get("upperRightColumnCount").toString().toInt()
+                val lowerLeftSeatCount = buses.getJSONObject(j).get("lowerLeftSeatCount").toString().toInt()
+                val lowerRightSeatCount= buses.getJSONObject(j).get("lowerRightSeatCount").toString().toInt()
+                val upperLeftSeatCount = buses.getJSONObject(j).get("upperLeftSeatCount").toString().toInt()
+                val upperRightSeatCount = buses.getJSONObject(j).get("upperRightSeatCount").toString().toInt()
+                totalSeats = lowerLeftSeatCount + lowerRightSeatCount + upperLeftSeatCount + upperRightSeatCount
+
                 val bus = Bus(busId+1, partnerId, busName, sourceLocation, destinationLocation, perTicketCost, busType, totalSeats, totalSeats, startTime, reachTime, duration, 0.0, 0)
+                val busLayout = BusLayout(busId+1, bus.busId, numberOfDecks, lowerDeckSeatType, lowerLeftColumnCount, lowerRightColumnCount, upperLeftColumnCount, upperRightColumnCount, lowerLeftSeatCount, lowerRightSeatCount, upperLeftSeatCount, upperRightSeatCount)
                 busList.add(bus)
                 busSet.add(bus)
+                busLayoutSet.add(busLayout)
 
                 val amenities = buses.getJSONObject(j).getJSONArray("amenities") as JSONArray
 
@@ -276,14 +293,20 @@ class MainActivity : AppCompatActivity() {
                 amenitySet.add(singleBusAmenities)
             }
             bList.add(busSet)
+            bLayoutList.add(busLayoutSet)
             aList.add(amenitySet)
         }
-        insertBusDataToDb(pList, bList, aList)
+        insertBusDataToDb(pList, bList, aList, bLayoutList)
 
     }
 
-    private fun insertBusDataToDb(pList: MutableList<Partners>, bList: MutableList<List<Bus>>, aList: MutableList<List<List<BusAmenities>>>) {
-        busViewModel.insertInitialBusData(pList, bList, aList)
+    private fun insertBusDataToDb(
+        pList: MutableList<Partners>,
+        bList: MutableList<List<Bus>>,
+        aList: MutableList<List<List<BusAmenities>>>,
+        bLayoutList: MutableList<List<BusLayout>>
+    ) {
+        busViewModel.insertInitialBusData(pList, bList, aList, bLayoutList)
     }
 
 }

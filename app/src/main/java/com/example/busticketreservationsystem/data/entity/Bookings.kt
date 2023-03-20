@@ -27,7 +27,9 @@ data class Bookings(
     var boardingPoint: String,
     var droppingPoint: String,
     var totalCost: Double,
-    var bookedTicketStatus: String,
     var noOfTicketsBooked: Int,
     var date: String
 )
+
+//var bookedTicketStatus: String,
+

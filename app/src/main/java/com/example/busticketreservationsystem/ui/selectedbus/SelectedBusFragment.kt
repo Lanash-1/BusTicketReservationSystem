@@ -81,7 +81,6 @@ class SelectedBusFragment : Fragment() {
             }
             R.id.info_icon -> {
                 parentFragmentManager.commit {
-                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     setCustomAnimations(R.anim.from_right, R.anim.to_left)
                     replace(R.id.homePageFragmentContainer, BusInfoFragment())
                 }
@@ -92,19 +91,16 @@ class SelectedBusFragment : Fragment() {
 
     private fun backPressLogic() {
         busViewModel.selectedSeats.clear()
-        busViewModel.selectedSeats.clear()
         when(navigationViewModel.fragment){
             is DashBoardFragment -> {
                 navigationViewModel.fragment = null
                 parentFragmentManager.commit {
-                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                     setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.homePageFragmentContainer, DashBoardFragment())
                 }
             }
             else -> {
                 parentFragmentManager.commit {
-                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                     setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.homePageFragmentContainer, BusResultsFragment())
                 }
@@ -131,7 +127,6 @@ class SelectedBusFragment : Fragment() {
         binding.selectAndContinueText.setOnClickListener {
             bookingViewModel.selectedSeats = busViewModel.selectedSeats
             parentFragmentManager.commit {
-                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 setCustomAnimations(R.anim.from_right, R.anim.to_left)
                 replace(R.id.homePageFragmentContainer, BoardingAndDroppingFragment())
             }
@@ -139,7 +134,6 @@ class SelectedBusFragment : Fragment() {
 
         binding.aboutBusButton.setOnClickListener {
             parentFragmentManager.commit {
-                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 setCustomAnimations(R.anim.from_right, R.anim.to_left)
                 replace(R.id.homePageFragmentContainer, BusInfoFragment())
             }

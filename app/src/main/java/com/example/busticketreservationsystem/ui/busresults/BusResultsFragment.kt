@@ -18,6 +18,7 @@ import com.example.busticketreservationsystem.listeners.OnItemClickListener
 import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.ui.homepage.HomePageFragment
+import com.example.busticketreservationsystem.ui.seatselection.SeatSelectionFragment
 import com.example.busticketreservationsystem.ui.selectedbus.SelectedBusFragment
 import com.example.busticketreservationsystem.ui.sortandfilter.SortAndFilterFragment
 import com.example.busticketreservationsystem.viewmodel.*
@@ -62,7 +63,7 @@ class BusResultsFragment : Fragment() {
 
 
         (activity as AppCompatActivity).supportActionBar!!.apply {
-            title = "Bus Results"
+            title = getString(R.string.bus_results)
             setDisplayHomeAsUpEnabled(true)
         }
 
@@ -103,7 +104,6 @@ class BusResultsFragment : Fragment() {
         busViewModel.checkedList = listOf()
         parentFragmentManager.commit {
             setCustomAnimations(R.anim.from_left, R.anim.to_right)
-//            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
             replace(R.id.main_fragment_container, HomePageFragment())
         }
     }
@@ -129,14 +129,17 @@ class BusResultsFragment : Fragment() {
         binding.busResultsRv.adapter = busResultAdapter
 
         busViewModel.busResultDataFetched.observe(viewLifecycleOwner, Observer{
-            checkResultIsEmpty()
-            busResultAdapter.setBusList(busViewModel.resultBusList)
-            busResultAdapter.setPartnerList(busViewModel.resultPartnerList)
-            busResultAdapter.notifyDataSetChanged()
+            if(it != null){
+                checkResultIsEmpty()
+                busResultAdapter.setBusList(busViewModel.resultBusList)
+                busResultAdapter.setPartnerList(busViewModel.resultPartnerList)
+                busResultAdapter.notifyDataSetChanged()
+                busViewModel.busResultDataFetched.value = null
+            }
+
         })
 
         busViewModel.fetchBusResultsDetails()
-
 
         busResultAdapter.setOnItemClickListener(object : OnItemClickListener{
             override fun onItemClick(position: Int) {
@@ -148,11 +151,22 @@ class BusResultsFragment : Fragment() {
                     userViewModel.addRecentlyViewed(busViewModel.selectedBusId, busViewModel.selectedDate)
                 }
 
-                parentFragmentManager.commit {
-                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    setCustomAnimations(R.anim.from_right, R.anim.to_left)
-                    replace(R.id.homePageFragmentContainer, SelectedBusFragment())
-                }
+                busViewModel.fetchBusLayoutData(busViewModel.selectedBusId, busViewModel.selectedDate)
+
+                busViewModel.isBusLayoutDataFetched.observe(viewLifecycleOwner, Observer{
+                    if(it != null){
+                        parentFragmentManager.commit {
+                            setCustomAnimations(R.anim.from_right, R.anim.to_left)
+                            replace(R.id.homePageFragmentContainer, SeatSelectionFragment())
+                        }
+                        busViewModel.isBusLayoutDataFetched.value = null
+                    }
+                })
+
+//                parentFragmentManager.commit {
+//                    setCustomAnimations(R.anim.from_right, R.anim.to_left)
+//                    replace(R.id.homePageFragmentContainer, SelectedBusFragment())
+//                }
             }
         })
     }

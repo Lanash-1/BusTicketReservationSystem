@@ -4,14 +4,15 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.busticketreservationsystem.databinding.ItemBusBinding
 import com.example.busticketreservationsystem.data.entity.Bus
 import com.example.busticketreservationsystem.data.entity.Partners
 import com.example.busticketreservationsystem.databinding.ItemBusResultBinding
-import com.example.busticketreservationsystem.enums.BusTypes
 import com.example.busticketreservationsystem.listeners.OnItemClickListener
+import com.example.busticketreservationsystem.utils.Helper
 
 class BusResultAdapter: RecyclerView.Adapter<BusResultAdapter.BusResultViewHolder>() {
+
+    private val helper = Helper()
 
     private var busList = listOf<Bus>()
 
@@ -74,22 +75,23 @@ class BusResultAdapter: RecyclerView.Adapter<BusResultAdapter.BusResultViewHolde
                 ratingText.setBackgroundColor(Color.parseColor("#D13140"))
             }
 
-            val busType = busList[position].busType
+            busTypeText.text = helper.getBusTypeText(busList[position].busType)
 
-            busTypeText.apply {
-                when(busType){
-                    BusTypes.AC_SEATER.name -> {
-                        text = "A/C Seater"
-                    }
-                    BusTypes.NON_AC_SEATER.name -> {
-                        text = "Non A/C Seater"
-                    }
-                    BusTypes.SLEEPER.name -> {
-                        text = "Sleeper"
-                    }
-                }
-            }
-        }
+//            busTypeText.apply {
+//                when(busType){
+//                    BusTypes.AC_SEATER.name -> {
+//                        text = "A/C Seater"
+//                    }
+//                    BusTypes.NON_AC_SEATER.name -> {
+//                        text = "Non A/C Seater"
+//                    }
+//                    BusTypes.SLEEPER.name -> {
+//                        text = "Sleeper"
+//                    }
+//                }
+//            }
+//        }
+    }
     }
 
     override fun getItemCount(): Int {

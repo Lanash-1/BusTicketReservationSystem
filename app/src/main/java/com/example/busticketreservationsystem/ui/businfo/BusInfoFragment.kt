@@ -11,7 +11,6 @@ import android.widget.RatingBar
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
@@ -28,7 +27,7 @@ import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.ui.bookedticket.BookedTicketFragment
 import com.example.busticketreservationsystem.ui.buseslist.BusesListFragment
 import com.example.busticketreservationsystem.ui.reviews.ReviewsFragment
-import com.example.busticketreservationsystem.ui.selectedbus.SelectedBusFragment
+import com.example.busticketreservationsystem.ui.seatselection.SeatSelectionFragment
 import com.example.busticketreservationsystem.viewmodel.*
 import com.example.busticketreservationsystem.viewmodel.livedata.AdminViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
@@ -72,12 +71,14 @@ class BusInfoFragment : Fragment() {
 
     }
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         (activity as AppCompatActivity).supportActionBar?.apply{
-            title = "Bus Info"
+            title = getString(R.string.bus_info)
             setDisplayHomeAsUpEnabled(true)
         }
         binding = FragmentBusInfoBinding.inflate(inflater, container, false)
@@ -100,7 +101,6 @@ class BusInfoFragment : Fragment() {
                     is BookedTicketFragment -> {
                         navigationViewModel.fragment = navigationViewModel.previousFragment
                         parentFragmentManager.commit {
-                            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                             setCustomAnimations(R.anim.from_left, R.anim.to_right)
                             replace(R.id.adminPanelFragmentContainer, BookedTicketFragment())
                         }
@@ -108,16 +108,16 @@ class BusInfoFragment : Fragment() {
                     is BusesListFragment -> {
                         navigationViewModel.fragment = null
                         parentFragmentManager.commit {
-                            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                             setCustomAnimations(R.anim.from_left, R.anim.to_right)
                             replace(R.id.adminPanelFragmentContainer, BusesListFragment())
                         }
                     }
                     else -> {
                         parentFragmentManager.commit {
-                            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                             setCustomAnimations(R.anim.from_left, R.anim.to_right)
-                            replace(R.id.homePageFragmentContainer, SelectedBusFragment())
+//                            replace(R.id.homePageFragmentContainer, SelectedBusFragment())
+                            replace(R.id.homePageFragmentContainer, SeatSelectionFragment())
+
                         }
                     }
                 }
@@ -127,16 +127,15 @@ class BusInfoFragment : Fragment() {
                     is BookedTicketFragment -> {
                         navigationViewModel.fragment = navigationViewModel.previousFragment
                         parentFragmentManager.commit {
-                            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                             setCustomAnimations(R.anim.from_left, R.anim.to_right)
                             replace(R.id.homePageFragmentContainer, BookedTicketFragment())
                         }
                     }
                     else -> {
                         parentFragmentManager.commit {
-                            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                             setCustomAnimations(R.anim.from_left, R.anim.to_right)
-                            replace(R.id.homePageFragmentContainer, SelectedBusFragment())
+//                            replace(R.id.homePageFragmentContainer, SelectedBusFragment())
+                            replace(R.id.homePageFragmentContainer, SeatSelectionFragment())
                         }
                     }
                 }
@@ -160,6 +159,8 @@ class BusInfoFragment : Fragment() {
             }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
+        amenitiesAdapter.setContext(requireContext())
 
         when(navigationViewModel.fragment){
             is BusesListFragment -> {
@@ -206,7 +207,10 @@ class BusInfoFragment : Fragment() {
             busViewModel.checkUserBookedBus(userViewModel.user.userId,busViewModel.selectedBus.busId)
 
             busViewModel.isUserBooked.observe(viewLifecycleOwner, Observer{
-                ratingButtonOperation()
+                if(it != null){
+                    ratingButtonOperation()
+                    busViewModel.isUserBooked.value = null
+                }
             })
         }
 
@@ -250,6 +254,10 @@ class BusInfoFragment : Fragment() {
         binding.updateBusRatingButton.setOnClickListener {
 
             val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.rating_dialog, null)
+            val ratingBar = dialogView.findViewById<RatingBar>(R.id.ratingBar)
+            ratingBar.rating = busViewModel.userReview!!.rating.toFloat()
+            val feedBackField = dialogView.findViewById<TextInputEditText>(R.id.review_input)
+            feedBackField.setText(busViewModel.userReview!!.feedback)
 
             val builder = AlertDialog.Builder(requireContext())
                 .setView(dialogView)
@@ -257,10 +265,6 @@ class BusInfoFragment : Fragment() {
                 .setPositiveButton("Submit"){
                         _, _ ->
                     run {
-//                        val ratingBar = dialogView.findViewById<RatingBar>(R.id.ratingBar)
-//                        ratingBar.setRating(busViewModel.userReview!!.rating.toFloat());
-//                        val feedBackField = dialogView.findViewById<TextInputEditText>(R.id.review_input)
-//                        feedBackField.setText(busViewModel.userReview!!.feedback)
                         val feedback: String = dialogView.findViewById<TextInputEditText>(R.id.review_input).text.toString()
                         val rating: Int = dialogView.findViewById<RatingBar>(R.id.ratingBar).rating.toString().toDouble().toInt()
                         if(rating > 0){

@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
@@ -18,11 +17,13 @@ import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
+import com.example.busticketreservationsystem.databinding.FragmentLoginBinding
 import com.example.busticketreservationsystem.ui.bookingdetails.BookingDetailsFragment
 import com.example.busticketreservationsystem.ui.forgotpassword.ForgotPasswordFragment
 import com.example.busticketreservationsystem.ui.homepage.HomePageFragment
 import com.example.busticketreservationsystem.ui.register.RegisterFragment
 import com.example.busticketreservationsystem.ui.welcome.WelcomeFragment
+import com.example.busticketreservationsystem.utils.Helper
 import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
 import com.example.busticketreservationsystem.viewmodel.NavigationViewModel
 import com.example.busticketreservationsystem.viewmodel.livedata.BookingViewModel
@@ -31,10 +32,12 @@ import com.example.busticketreservationsystem.viewmodel.livedata.UserViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BookingViewModelFactory
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import java.text.SimpleDateFormat
-import java.util.*
 
 class LoginFragment : Fragment() {
+
+    private lateinit var binding: FragmentLoginBinding
+
+    private val helper = Helper()
 
     private lateinit var createAccountText: TextView
     private lateinit var forgotPasswordText: TextView
@@ -70,13 +73,15 @@ class LoginFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    ): View {
         (activity as AppCompatActivity).supportActionBar?.apply{
             setDisplayHomeAsUpEnabled(true)
-            title = "Login"
+            title = resources.getString(R.string.login)
         }
-        return inflater.inflate(R.layout.fragment_login, container, false)
+
+        binding = FragmentLoginBinding.inflate(inflater, container, false)
+        return binding.root
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -106,16 +111,10 @@ class LoginFragment : Fragment() {
     private fun backPressOperation() {
         when(navigationViewModel.fragment){
             is BookingDetailsFragment -> {
-                parentFragmentManager.commit {
-                    setCustomAnimations(R.anim.from_right, R.anim.to_left)
-                    replace(R.id.main_fragment_container, HomePageFragment())
-                }
+                moveToPreviousFragment(R.id.main_fragment_container, HomePageFragment())
             }
             else -> {
-                parentFragmentManager.commit {
-                    setCustomAnimations(R.anim.from_right, R.anim.to_left)
-                    replace(R.id.main_fragment_container, WelcomeFragment())
-                }
+                moveToPreviousFragment(R.id.main_fragment_container, WelcomeFragment())
             }
         }
     }
@@ -146,32 +145,27 @@ class LoginFragment : Fragment() {
         passwordInput = view.findViewById(R.id.password_input)
         passwordLayout = view.findViewById(R.id.password_input_layout)
 
-        loginButton.setOnClickListener {
-            checkLogin()
-        }
+//        New Codes
 
         createAccountText.setOnClickListener {
-            parentFragmentManager.commit {
-                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                replace(R.id.main_fragment_container, RegisterFragment())
-            }
+            loginStatusViewModel.isUserEnteredPassword = false
+            moveToNextFragment(R.id.main_fragment_container, RegisterFragment())
         }
 
         forgotPasswordText.setOnClickListener {
-            parentFragmentManager.commit {
-                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                setCustomAnimations(R.anim.from_right, R.anim.to_left)
-                replace(R.id.main_fragment_container, ForgotPasswordFragment())
-            }
+            loginStatusViewModel.isUserEnteredPassword = false
+            moveToNextFragment(R.id.main_fragment_container, ForgotPasswordFragment())
         }
+
+        binding.loginButton.setOnClickListener {
+            checkLogin()
+        }
+
     }
 
     private fun updateBookingHistory(userId: Int) {
-        val sdf = SimpleDateFormat("dd/MM/yyyy")
-        val time = Calendar.getInstance().time
-        val current = sdf.format(time)
-        val currentDate = sdf.parse(current)
-        bookingViewModel.updateBookingHistoryList(userId, currentDate)
+        val currentDate = helper.getCurrentDate()
+        bookingViewModel.updateBookingHistoryList(userId, currentDate!!)
     }
 
     private fun checkLogin(){
@@ -183,10 +177,7 @@ class LoginFragment : Fragment() {
                     editor.putInt("userId", userViewModel.user.userId)
                     editor.commit()
                     updateBookingHistory(userViewModel.user.userId)
-                    parentFragmentManager.commit {
-                        setCustomAnimations(R.anim.from_right, R.anim.to_left)
-                        replace(R.id.main_fragment_container, HomePageFragment())
-                    }
+                    moveToNextFragment(R.id.main_fragment_container, HomePageFragment())
                 }
                 userViewModel.isLoggedIn.value = null
             }
@@ -200,7 +191,7 @@ class LoginFragment : Fragment() {
                     editor.commit()
                     userViewModel.fetchUserData(mobileInput.text.toString())
                 }else{
-                    passwordLayout.helperText = "Invalid password"
+                    passwordLayout.helperText = getString(R.string.password_not_matching)
                 }
                 userViewModel.isPasswordMatching.value = null
             }
@@ -212,10 +203,25 @@ class LoginFragment : Fragment() {
                     userViewModel.isPasswordMatching(mobileInput.text.toString(), passwordInput.text.toString())
                     mobileLayout.helperText = null
                 }else{
-                    mobileLayout.helperText = "No account linked with this mobile number"
+                    mobileLayout.helperText = getString(R.string.mobile_not_linked)
                 }
                 userViewModel.isMobileExists.value = null
             }
         })
     }
+
+    private fun moveToPreviousFragment(fragmentContainer: Int, fragment: Fragment){
+        parentFragmentManager.commit {
+            setCustomAnimations(R.anim.from_left, R.anim.to_right)
+            replace(fragmentContainer, fragment)
+        }
+    }
+
+    private fun moveToNextFragment(fragmentContainer: Int, fragment: Fragment){
+        parentFragmentManager.commit {
+            setCustomAnimations(R.anim.from_right, R.anim.to_left)
+            replace(fragmentContainer, fragment)
+        }
+    }
+
 }

@@ -3,6 +3,7 @@ package com.example.busticketreservationsystem.ui.register
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.text.Editable
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Button
@@ -10,7 +11,6 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
@@ -19,10 +19,12 @@ import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
+import com.example.busticketreservationsystem.databinding.FragmentRegisterBinding
 import com.example.busticketreservationsystem.ui.bookingdetails.BookingDetailsFragment
 import com.example.busticketreservationsystem.ui.login.LoginFragment
 import com.example.busticketreservationsystem.ui.homepage.HomePageFragment
 import com.example.busticketreservationsystem.ui.welcome.WelcomeFragment
+import com.example.busticketreservationsystem.utils.Helper
 import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
 import com.example.busticketreservationsystem.viewmodel.NavigationViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
@@ -32,14 +34,16 @@ import com.google.android.material.textfield.TextInputLayout
 
 class RegisterFragment : Fragment() {
 
+    private val helper = Helper()
+
+    private lateinit var binding: FragmentRegisterBinding
+
     private lateinit var alreadyUserLoginText: TextView
     private lateinit var registerButton: Button
     private lateinit var mobileInput: TextInputEditText
     private lateinit var newPasswordInput: TextInputEditText
-    private lateinit var confirmPasswordInput: TextInputEditText
     private lateinit var mobileLayout: TextInputLayout
     private lateinit var newPasswordLayout: TextInputLayout
-    private lateinit var confirmPasswordLayout: TextInputLayout
 
     private lateinit var editor: SharedPreferences.Editor
 
@@ -47,6 +51,7 @@ class RegisterFragment : Fragment() {
     private val navigationViewModel: NavigationViewModel by activityViewModels()
 
     private lateinit var userViewModel: UserViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,13 +71,13 @@ class RegisterFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    ): View {
         (activity as AppCompatActivity).supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
-            title = "Register"
+            title = resources.getString(R.string.register)
         }
-        return inflater.inflate(R.layout.fragment_register, container, false)
+        binding = FragmentRegisterBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -90,33 +95,19 @@ class RegisterFragment : Fragment() {
                 editor.putString("status", LoginStatus.SKIPPED.name)
                 loginStatusViewModel.status = LoginStatus.SKIPPED
                 editor.commit()
-                parentFragmentManager.commit {
-                    setCustomAnimations(R.anim.from_right, R.anim.to_left)
-                    replace(R.id.main_fragment_container, HomePageFragment())
-                }
+                moveToNextFragment(R.id.main_fragment_container, HomePageFragment())
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
     private fun backPressOperation() {
-//        parentFragmentManager.commit {
-////            setCustomAnimations(R.anim.from_right, R.anim.to_left)
-//            setCustomAnimations(R.anim.from_left, R.anim.to_right)
-//            replace(R.id.main_fragment_container, WelcomeFragment())
-//        }
         when(navigationViewModel.fragment){
             is BookingDetailsFragment -> {
-                parentFragmentManager.commit {
-                    setCustomAnimations(R.anim.from_right, R.anim.to_left)
-                    replace(R.id.main_fragment_container, HomePageFragment())
-                }
+                moveToPreviousFragment(R.id.main_fragment_container, HomePageFragment())
             }
             else -> {
-                parentFragmentManager.commit {
-                    setCustomAnimations(R.anim.from_right, R.anim.to_left)
-                    replace(R.id.main_fragment_container, WelcomeFragment())
-                }
+                moveToPreviousFragment(R.id.main_fragment_container, WelcomeFragment())
             }
         }
     }
@@ -143,51 +134,160 @@ class RegisterFragment : Fragment() {
         registerButton = view.findViewById(R.id.register_button)
         mobileInput = view.findViewById(R.id.mobile_input)
         newPasswordInput = view.findViewById(R.id.newPassword_input)
-        confirmPasswordInput = view.findViewById(R.id.confirmPassword_input)
         mobileLayout = view.findViewById(R.id.mobile_input_layout)
         newPasswordLayout = view.findViewById(R.id.password_input_layout)
-        confirmPasswordLayout = view.findViewById(R.id.confirm_password_input_layout)
 
         alreadyUserLoginText.setOnClickListener {
-            parentFragmentManager.commit {
-                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                setCustomAnimations(R.anim.from_right, R.anim.to_left)
-                replace(R.id.main_fragment_container, LoginFragment())
-            }
+            moveToNextFragment(R.id.main_fragment_container, LoginFragment())
         }
 
-
-        numberFocusListener()
-        newPasswordFocusListener()
-        confirmPasswordFocusListener()
-
-        registerButton.setOnClickListener {
+        binding.registerButton.setOnClickListener {
             registerAccount()
+        }
+
+        if(loginStatusViewModel.isUserEnteredPassword){
+            validatePasswordText(binding.newPasswordInput.text)
+        }
+
+        binding.newPasswordInput.addTextChangedListener{
+            if(it?.isNotEmpty() == true){
+                loginStatusViewModel.isUserEnteredPassword = true
+            }
+            if(loginStatusViewModel.isUserEnteredPassword){
+                validatePasswordText(it)
+            }
         }
 
     }
 
+    private fun validatePasswordText(it: Editable?) {
+        if (it != null) {
+            if (it.length >= 8) {
+                binding.passwordConditionMinimum.setTextColor(resources.getColor(R.color.successColor))
+                binding.passwordConditionMinimum.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.baseline_check_circle_24_success,
+                    0,
+                    0,
+                    0
+                )
+            } else {
+                binding.passwordConditionMinimum.setTextColor(resources.getColor(R.color.errorColor))
+                binding.passwordConditionMinimum.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.baseline_check_circle_24_red,
+                    0,
+                    0,
+                    0
+                )
+            }
+
+            if (it.matches(".*[A-Z].*".toRegex())) {
+                binding.passwordConditionUppercase.setTextColor(resources.getColor(R.color.successColor))
+                binding.passwordConditionUppercase.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.baseline_check_circle_24_success,
+                    0,
+                    0,
+                    0
+                )
+            } else {
+                binding.passwordConditionUppercase.setTextColor(resources.getColor(R.color.errorColor))
+                binding.passwordConditionUppercase.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.baseline_check_circle_24_red,
+                    0,
+                    0,
+                    0
+                )
+            }
+
+            if (it.matches(".*[a-z].*".toRegex())) {
+                binding.passwordConditionLowercase.setTextColor(resources.getColor(R.color.successColor))
+                binding.passwordConditionLowercase.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.baseline_check_circle_24_success,
+                    0,
+                    0,
+                    0
+                )
+            } else {
+                binding.passwordConditionLowercase.setTextColor(resources.getColor(R.color.errorColor))
+                binding.passwordConditionLowercase.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.baseline_check_circle_24_red,
+                    0,
+                    0,
+                    0
+                )
+            }
+
+            if (it.matches(".*[@#\$%^&+=].*".toRegex())) {
+                binding.passwordConditionSpecial.setTextColor(resources.getColor(R.color.successColor))
+                binding.passwordConditionSpecial.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.baseline_check_circle_24_success,
+                    0,
+                    0,
+                    0
+                )
+            } else {
+                binding.passwordConditionSpecial.setTextColor(resources.getColor(R.color.errorColor))
+                binding.passwordConditionSpecial.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.baseline_check_circle_24_red,
+                    0,
+                    0,
+                    0
+                )
+            }
+
+        }
+        else {
+            binding.passwordConditionLowercase.setTextColor(resources.getColor(R.color.errorColor))
+            binding.passwordConditionLowercase.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.baseline_check_circle_24_red,
+                0,
+                0,
+                0
+            )
+            binding.passwordConditionUppercase.setTextColor(resources.getColor(R.color.errorColor))
+            binding.passwordConditionUppercase.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.baseline_check_circle_24_red,
+                0,
+                0,
+                0
+            )
+            binding.passwordConditionSpecial.setTextColor(resources.getColor(R.color.errorColor))
+            binding.passwordConditionSpecial.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.baseline_check_circle_24_red,
+                0,
+                0,
+                0
+            )
+            binding.passwordConditionMinimum.setTextColor(resources.getColor(R.color.errorColor))
+            binding.passwordConditionMinimum.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.baseline_check_circle_24_red,
+                0,
+                0,
+                0
+            )
+        }
+    }
+
     private fun registerAccount() {
         mobileLayout.helperText = validNumber()
-        newPasswordLayout.helperText = validPassword()
-        confirmPasswordLayout.helperText = validConfirmPassword()
 
         val validNumber = mobileLayout.helperText == null
-        val validNewPassword = newPasswordLayout.helperText == null
-        val validConfirmPassword = confirmPasswordLayout.helperText == null
 
-
-        if (validNumber && validNewPassword && validConfirmPassword) {
-
+        if(validNumber){
             userViewModel.isNumberAlreadyExists(mobileInput.text.toString())
 
             userViewModel.isMobileExists.observe(viewLifecycleOwner, Observer{
                 if(it != null){
                     if (it) {
-                        mobileLayout.helperText = "Mobile Number already Exists."
+                        mobileLayout.helperText = resources.getString(R.string.mobile_exists_text)
                     }else{
-                        registerNewUser()
+                        if(helper.validPassword(binding.newPasswordInput.text)){
+                            registerNewUser()
+                        }else{
+                            validatePasswordText(binding.newPasswordInput.text)
+                        }
                     }
+                    userViewModel.isMobileExists.value = null
+
                 }
             })
         }
@@ -205,98 +305,46 @@ class RegisterFragment : Fragment() {
             editor.putString("status", LoginStatus.LOGGED_IN.name)
             editor.commit()
             loginStatusViewModel.status = LoginStatus.LOGGED_IN
-            parentFragmentManager.commit {
-                setCustomAnimations(R.anim.from_right, R.anim.to_left)
-                replace(R.id.main_fragment_container, RegistrationDetailsFragment())
-            }
+            loginStatusViewModel.isUserEnteredPassword = false
+            moveToNextFragment(R.id.main_fragment_container, RegistrationDetailsFragment())
         })
-    }
-
-    private fun numberFocusListener() {
-        mobileInput.setOnFocusChangeListener { _, focused ->
-            if(!focused){
-                mobileLayout.helperText = validNumber()
-            }
-        }
     }
 
     private fun validNumber(): String? {
         val number = mobileInput.text.toString()
 
-        if(number.isEmpty()){
-            return "Should not be empty"
+        if (number.isEmpty()) {
+            return getString(R.string.should_not_be_empty)
         }
-        if(number.length != 10)
-        {
-            return "Must be 10 Digits"
+        if (number.length != 10) {
+            return getString(R.string.invalid_mobile_number)
         }
-        if(!number.matches(".*[0-9].*".toRegex()))
-        {
-            return "Invalid mobile number"
+        if (!number.matches(".*\\d.*".toRegex())) {
+            return getString(R.string.invalid_mobile_number)
         }
 
         return null
     }
 
-    private fun newPasswordFocusListener() {
-        newPasswordInput.setOnFocusChangeListener { _, focused ->
-            if(!focused){
-                newPasswordLayout.helperText = validPassword()
+        private fun moveToNextFragment(fragmentContainer: Int, fragment: Fragment) {
+
+            loginStatusViewModel.isUserEnteredPassword = false
+
+            parentFragmentManager.commit {
+                setCustomAnimations(R.anim.from_right, R.anim.to_left)
+                replace(fragmentContainer, fragment)
             }
         }
-    }
 
-    private fun validPassword(): String? {
-        val passwordText = newPasswordInput.text.toString()
-        if(passwordText.length < 8)
-        {
-            return "Password must be at least 8 characters long and include at least one upper case letter, one lower case letter, and one special character."
-        }
-        if(!passwordText.matches(".*[A-Z].*".toRegex()))
-        {
-//            return "Must Contain 1 Upper-case Character"
-            return "Password must be at least 8 characters long and include at least one upper case letter, one lower case letter, and one special character."
+        private fun moveToPreviousFragment(fragmentContainer: Int, fragment: Fragment) {
 
-        }
-        if(!passwordText.matches(".*[a-z].*".toRegex()))
-        {
-            return "Password must be at least 8 characters long and include at least one upper case letter, one lower case letter, and one special character."
+            loginStatusViewModel.isUserEnteredPassword = false
 
-//            return "Must Contain 1 Lower-case Character"
-        }
-        if(!passwordText.matches(".*[@#\$%^&+=].*".toRegex()))
-        {
-            return "Password must be at least 8 characters long and include at least one upper case letter, one lower case letter, and one special character."
-
-//            return "Must Contain 1 Special Character (@#\$%^&+=)"
-        }
-
-        return null
-
-    }
-
-    private fun confirmPasswordFocusListener() {
-        confirmPasswordInput.addTextChangedListener {
-            if (it != null) {
-                if(it.isEmpty()){
-                    confirmPasswordLayout.isHelperTextEnabled = false
-                }else{
-                    confirmPasswordLayout.helperText = validConfirmPassword()
-                }
+            parentFragmentManager.commit {
+                setCustomAnimations(R.anim.from_left, R.anim.to_right)
+                replace(fragmentContainer, fragment)
             }
         }
-    }
-
-    private fun validConfirmPassword(): String? {
-        val passwordText = confirmPasswordInput.text.toString()
-        if(passwordText != newPasswordInput.text.toString())
-        {
-            return "Password not matching"
-        }
-        return null
-
-    }
-
 
 
 }

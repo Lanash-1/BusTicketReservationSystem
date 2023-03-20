@@ -8,6 +8,7 @@ import com.example.busticketreservationsystem.data.entity.Reviews
 
 @Dao
 interface ReviewsDao {
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(reviews: Reviews)
 

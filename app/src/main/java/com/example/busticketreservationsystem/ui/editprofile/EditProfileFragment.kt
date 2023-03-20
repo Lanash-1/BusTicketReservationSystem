@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Patterns
 import android.view.*
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +19,8 @@ import com.example.busticketreservationsystem.enums.Gender
 import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.ui.myaccount.MyAccountFragment
+import com.example.busticketreservationsystem.ui.user.UserDetailFragment
+import com.example.busticketreservationsystem.utils.Helper
 import com.example.busticketreservationsystem.viewmodel.DateViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.livedata.UserViewModel
@@ -27,6 +30,7 @@ import com.google.android.material.snackbar.Snackbar
 
 class EditProfileFragment : Fragment() {
 
+    private val helper = Helper()
 
     private val dateViewModel: DateViewModel by activityViewModels()
 
@@ -48,10 +52,9 @@ class EditProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         (activity as AppCompatActivity).supportActionBar!!.apply {
             setDisplayHomeAsUpEnabled(true)
-            title = "Edit Profile"
+            title = getString(R.string.edit_profile)
         }
         binding = FragmentEditProfileBinding.inflate(inflater, container, false)
         return binding.root
@@ -79,10 +82,10 @@ class EditProfileFragment : Fragment() {
                 ""
             }
         }
-        val birthDate = if(binding.dob.text.toString() == "DD - MM - YYYY"){
+        val birthDate = if(binding.dobInput.text.toString() == "DD / MM / YYYY"){
             ""
         }else{
-            binding.dob.text.toString()
+            binding.dobInput.text.toString()
         }
 
         if(
@@ -100,7 +103,7 @@ class EditProfileFragment : Fragment() {
 
     private fun backPressAlert() {
         val builder = AlertDialog.Builder(requireContext())
-        builder.setMessage("Changes will not be updated")
+        builder.setMessage("Profile changes will not be updated")
         builder.setTitle("Discard changes?")
         builder.setCancelable(false)
 
@@ -132,7 +135,7 @@ class EditProfileFragment : Fragment() {
     private fun moveToMyAccount() {
         parentFragmentManager.commit {
             setCustomAnimations(R.anim.from_left, R.anim.to_right)
-            replace(R.id.homePageFragmentContainer, MyAccountFragment())
+            replace(R.id.homePageFragmentContainer, UserDetailFragment())
         }
     }
 
@@ -153,21 +156,9 @@ class EditProfileFragment : Fragment() {
         binding.emailInputLayout.editText?.setText(userViewModel.user.emailId)
         binding.usernameInputLayout.editText?.setText(userViewModel.user.username)
 
-        binding.calenderIcon.setOnClickListener {
-            val datePickerFragment = DatePickerFragment()
-            datePickerFragment.show(parentFragmentManager, "datePicker")
-        }
 
-        binding.dob.setOnClickListener {
-            val datePickerFragment = DatePickerFragment()
-            datePickerFragment.show(parentFragmentManager, "datePicker")
-        }
-
-        dateViewModel.birthDateEdited.observe(viewLifecycleOwner, Observer{
-            if(it != null){
-                binding.dob.text = "${dateViewModel.birthDate} - ${dateViewModel.birthMonth} - ${dateViewModel.birthYear}"
-            }
-        })
+        binding.emailInput.setText(userViewModel.user.emailId)
+        binding.usernameInput.setText(userViewModel.user.username)
 
         when(userViewModel.user.gender){
             Gender.MALE.name -> {
@@ -181,66 +172,153 @@ class EditProfileFragment : Fragment() {
         }
 
         if(userViewModel.user.dob.isNotEmpty()){
-            binding.dob.text = userViewModel.user.dob
+            binding.dobInput.setText(userViewModel.user.dob)
         }
 
+        binding.dobInput.setOnClickListener{
+            val datePickerFragment = DatePickerFragment()
+            datePickerFragment.show(parentFragmentManager, "datePicker")
+        }
+
+        dateViewModel.birthDateEdited.observe(viewLifecycleOwner, Observer{
+            if(it != null){
+                binding.dobInput.setText("${helper.getNumberFormat(dateViewModel.birthDate)} / ${helper.getNumberFormat(dateViewModel.birthMonth)} / ${dateViewModel.birthYear}")
+            }
+        })
 
         binding.saveChangesButton.setOnClickListener {
-            updateUserProfile()
-        }
-    }
 
-    private fun updateUserProfile() {
-        binding.emailInputLayout.helperText = validEmail()
 
-        val validEmail = binding.emailInputLayout.helperText == null
-
-        if(validEmail){
-            userViewModel.user.apply {
-                emailId = binding.emailInput.text.toString()
-
-                if(dateViewModel.birthDateEdited.value == true){
-                    dob = "${dateViewModel.birthDate} - ${dateViewModel.birthMonth} - ${dateViewModel.birthYear}"
-                }
-
-                if(binding.maleRadioButton.isChecked){
-                    gender = Gender.MALE.name
-                }else if(binding.femaleRadioButton.isChecked){
-                    gender = Gender.FEMALE.name
-                }
-                username = binding.usernameInput.text.toString()
+            if(dateViewModel.birthDateEdited.value == true){
+                userViewModel.user.dob = "${helper.getNumberFormat(dateViewModel.birthDate)} / ${helper.getNumberFormat(dateViewModel.birthMonth)} / ${dateViewModel.birthYear}"
             }
-            userViewModel.updateUserDetails()
-            Snackbar.make(requireView(), "Saved changes successfully", Snackbar.LENGTH_SHORT).show()
-            parentFragmentManager.commit {
-                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                setCustomAnimations(R.anim.from_left, R.anim.to_right)
-                replace(R.id.homePageFragmentContainer, MyAccountFragment())
+
+            userViewModel.user.username = binding.usernameInput.text.toString()
+
+            if(binding.maleRadioButton.isChecked){
+                userViewModel.user.gender = Gender.MALE.name
+            }else if(binding.femaleRadioButton.isChecked){
+                userViewModel.user.gender = Gender.FEMALE.name
             }
-        }
-    }
 
-    private fun validEmail(): String? {
-        val emailText = binding.emailInput.text.toString()
+            var validEmail = ""
 
-        if(emailText.isEmpty() || emailText == userViewModel.user.emailId){
-            return null
-        }
-        if(emailText.isNotEmpty()) {
-            userViewModel.isEmailExists(emailText)
+            if(binding.emailInput.text.toString().isNotEmpty()){
+                validEmail = helper.validEmail(binding.emailInput.text.toString())
+            }
 
-            userViewModel.isEmailExists.observe(viewLifecycleOwner, Observer{
-                if(userViewModel.isEmailExists.value == true){
-                    binding.emailInputLayout.helperText = "Email Already Exists"
+            if(validEmail.isNotEmpty()){
+                binding.emailInputLayout.helperText = validEmail
+            }else{
+                userViewModel.user.emailId = binding.emailInput.text.toString()
+                userViewModel.updateUserDetails()
+                Toast.makeText(
+                    requireActivity(),
+                    getString(R.string.profile_updated_successfully),
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                parentFragmentManager.commit {
+                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
+                    replace(R.id.homePageFragmentContainer, UserDetailFragment())
                 }
-            })
-
-            if(Patterns.EMAIL_ADDRESS.matcher(emailText).matches()) {
-                return null
             }
+
+
         }
 
-        return "Invalid Email Address"
-    }
 
+
+//
+//        binding.calenderIcon.setOnClickListener {
+//            val datePickerFragment = DatePickerFragment()
+//            datePickerFragment.show(parentFragmentManager, "datePicker")
+//        }
+//
+//        binding.dob.setOnClickListener {
+//            val datePickerFragment = DatePickerFragment()
+//            datePickerFragment.show(parentFragmentManager, "datePicker")
+//        }
+//
+//        dateViewModel.birthDateEdited.observe(viewLifecycleOwner, Observer{
+//            if(it != null){
+//                binding.dob.text = "${dateViewModel.birthDate} - ${dateViewModel.birthMonth} - ${dateViewModel.birthYear}"
+//            }
+//        })
+
+//        when(userViewModel.user.gender){
+//            Gender.MALE.name -> {
+//                binding.maleRadioButton.isChecked = true
+//                binding.femaleRadioButton.isChecked = false
+//            }
+//            Gender.FEMALE.name -> {
+//                binding.maleRadioButton.isChecked = false
+//                binding.femaleRadioButton.isChecked = true
+//            }
+//        }
+//
+//        if(userViewModel.user.dob.isNotEmpty()){
+//            binding.dob.text = userViewModel.user.dob
+//        }
+//
+//
+//        binding.saveChangesButton.setOnClickListener {
+//            updateUserProfile()
+//        }
+//    }
+
+//    private fun updateUserProfile() {
+//        binding.emailInputLayout.helperText = validEmail()
+//
+//        val validEmail = binding.emailInputLayout.helperText == null
+//
+//        if(validEmail){
+//            userViewModel.user.apply {
+//                emailId = binding.emailInput.text.toString()
+//
+//                if(dateViewModel.birthDateEdited.value == true){
+//                    dob = "${dateViewModel.birthDate} - ${dateViewModel.birthMonth} - ${dateViewModel.birthYear}"
+//                }
+//
+//                if(binding.maleRadioButton.isChecked){
+//                    gender = Gender.MALE.name
+//                }else if(binding.femaleRadioButton.isChecked){
+//                    gender = Gender.FEMALE.name
+//                }
+//                username = binding.usernameInput.text.toString()
+//            }
+//            userViewModel.updateUserDetails()
+//            Snackbar.make(requireView(), "Saved changes successfully", Snackbar.LENGTH_SHORT).show()
+//            parentFragmentManager.commit {
+//                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+//                setCustomAnimations(R.anim.from_left, R.anim.to_right)
+//                replace(R.id.homePageFragmentContainer, MyAccountFragment())
+//            }
+//        }
+//    }
+
+//    private fun validEmail(): String? {
+//        val emailText = binding.emailInput.text.toString()
+//
+//        if(emailText.isEmpty() || emailText == userViewModel.user.emailId){
+//            return null
+//        }
+//        if(emailText.isNotEmpty()) {
+//            userViewModel.isEmailExists(emailText)
+//
+//            userViewModel.isEmailExists.observe(viewLifecycleOwner, Observer{
+//                if(userViewModel.isEmailExists.value == true){
+//                    binding.emailInputLayout.helperText = "Email Already Exists"
+//                }
+//            })
+//
+//            if(Patterns.EMAIL_ADDRESS.matcher(emailText).matches()) {
+//                return null
+//            }
+//        }
+//
+//        return "Invalid Email Address"
+//    }
+
+    }
 }

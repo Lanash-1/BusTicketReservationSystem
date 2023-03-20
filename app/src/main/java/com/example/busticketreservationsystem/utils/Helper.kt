@@ -1,6 +1,12 @@
 package com.example.busticketreservationsystem.utils
 
+import android.text.Editable
 import android.util.Patterns
+import com.example.busticketreservationsystem.enums.BusSeatType
+import com.example.busticketreservationsystem.enums.BusTypes
+import com.example.busticketreservationsystem.enums.Gender
+import com.example.busticketreservationsystem.enums.SeatPosition
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -28,9 +34,7 @@ open class Helper {
         val hours = (millis / (1000 * 60 * 60)).toInt()
         val mins = (millis / (1000 * 60) % 60).toInt()
 
-        val diff = "$hours.$mins"
-
-        println("Duration : $diff")
+        val diff = "${getNumberFormat(hours)}:${getNumberFormat(mins)}"
 
         return diff
     }
@@ -92,8 +96,20 @@ open class Helper {
         return false
     }
 
+    fun greaterThanCurrentDate(date: String): Boolean{
+        val sdf = SimpleDateFormat("dd/MM/yyyy")
+        val time = Calendar.getInstance().time
+        val current = sdf.format(time)
+        val currentDate = sdf.parse(current)
+        val strDate: Date = sdf.parse(date)
+        if(strDate > currentDate){
+            return true
+        }
+        return false
+    }
+
     fun validTiming(startTime: String, reachTime: String): Boolean {
-        val format = SimpleDateFormat("hh:mm")
+        val format = SimpleDateFormat("HH:mm")
         val date1: Date = format.parse(startTime)
         val date2: Date = format.parse(reachTime)
 
@@ -103,13 +119,117 @@ open class Helper {
         return true
     }
 
+    fun checkBusTimingIsGreater(time: String, date: String): Boolean{
+        val current = Calendar.getInstance().time
+        val timeFormat: DateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+        val formattedTime: String = timeFormat.format(current)
+        val format = SimpleDateFormat("HH:mm")
+
+        val busTime: Date = format.parse(time)
+        val currentTime: Date = format.parse(formattedTime)
+
+        return if(greaterThanCurrentDate(date)){
+            true
+        }else{
+            busTime >= currentTime
+        }
+    }
+
     fun getCurrentDate(): Date? {
         val sdf = SimpleDateFormat("dd/MM/yyyy")
         val time = Calendar.getInstance().time
         val current = sdf.format(time)
-        val currentDate = sdf.parse(current)
 
-        return currentDate
+        return sdf.parse(current)
+    }
+
+    fun validPassword(passwordText: Editable?): Boolean {
+        if(passwordText != null){
+            if(passwordText.length < 8)
+            {
+                return false
+            }
+            if(!passwordText.matches(".*[A-Z].*".toRegex()))
+            {
+                return false
+            }
+            if(!passwordText.matches(".*[a-z].*".toRegex()))
+            {
+                return false
+            }
+            if(!passwordText.matches(".*[@#\$%^&+=].*".toRegex()))
+            {
+                return false
+            }
+        }else{
+            return false
+        }
+        return true
+    }
+
+
+    fun getSeatNumber(seatCode: String): Int{
+        return seatCode.substring(2).toInt()
+    }
+
+    fun getSeatPosition(seatCode: String): String{
+        return seatCode.take(2)
+    }
+
+    fun getNumberFormat(number: Int): String {
+        if(number < 10){
+            return "0$number"
+        }
+        return number.toString()
+    }
+
+    fun getDeck(seat: String): String {
+        return when(getSeatPosition(seat)){
+            SeatPosition.LL.name,
+            SeatPosition.LR.name -> {
+                ", Lower deck"
+            }
+            SeatPosition.UL.name,
+            SeatPosition.UR.name -> {
+                ", Upper deck"
+            }
+            else -> {
+                ""
+            }
+        }
+
+    }
+
+    fun getGenderText(gender: String): String {
+        when(gender){
+            Gender.FEMALE.name -> {
+                return "Female"
+            }
+            Gender.MALE.name -> {
+                return "Male"
+            }
+        }
+        return ""
+    }
+
+    fun getBusTypeText(busType: String): String {
+        return when(busType){
+            BusTypes.AC_SEATER.name -> {
+                "A/C Seater"
+            }
+            BusTypes.NON_AC_SEATER.name -> {
+                "Non A/C Seater"
+            }
+            BusTypes.SLEEPER.name -> {
+                "Sleeper"
+            }
+            BusTypes.SEATER_SLEEPER.name -> {
+                "Seater/Sleeper"
+            }
+            else -> {
+                ""
+            }
+        }
     }
 
 }

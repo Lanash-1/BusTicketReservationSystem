@@ -2,6 +2,7 @@ package com.example.busticketreservationsystem.data.repository
 
 import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.entity.*
+import com.example.busticketreservationsystem.enums.BookedTicketStatus
 
 class AppRepositoryImpl(
     private val appDb: AppDatabase
@@ -148,11 +149,10 @@ class AppRepositoryImpl(
     }
 
 
-
 //    Seats related data
 
     override fun getBookedSeats(busId: Int, date: String): List<String>{
-        return appDb.seatInformationDao().getBookedSeats(busId, date)
+        return appDb.seatInformationDao().getBookedSeats(busId, date, BookedTicketStatus.UPCOMING.name)
     }
 
     override fun deleteSeatsOfBus(bookingId: Int){
@@ -214,12 +214,18 @@ class AppRepositoryImpl(
         return appDb.bookingsDao().getUserBookings(userId)
     }
 
+
+
+//    override fun getUserBookings(userId: Int, ticketStatus: String): List<Bookings> {
+//        return appDb.bookingsDao().getUserBookings(userId, ticketStatus)
+//    }
+
     override fun getUserBookings(userId: Int, ticketStatus: String): List<Bookings> {
-        return appDb.bookingsDao().getUserBookings(userId, ticketStatus)
+        return appDb.bookingsDao().getUserBookings(userId)
     }
 
     override fun updateTicketStatus(status: String, bookingId: Int){
-        appDb.bookingsDao().updateTicketStatus(status, bookingId)
+//        appDb.bookingsDao().updateTicketStatus(status, bookingId)
     }
 
     override fun getPassengerInfo(): List<PassengerInformation> {
@@ -230,8 +236,12 @@ class AppRepositoryImpl(
         return appDb.bookingsDao().getSingleBooking(bookingId)
     }
 
-    override fun getBookedTicketPassengerInfo(bookingId: Int): List<PassengerInformation> {
-        return appDb.passengerInformationDao().getPassengerInfo(bookingId)
+//    override fun getBookedTicketPassengerInfo(bookingId: Int): List<PassengerInformation> {
+//        return appDb.passengerInformationDao().getPassengerInfo(bookingId)
+//    }
+
+    override fun getBookedTicketPassengerInformation(bookingId: Int, ticketStatus: String): List<PassengerInformation>{
+        return appDb.passengerInformationDao().getPassengerInfo(bookingId, ticketStatus)
     }
 
     override fun getTicketCount(partnerId: Int): Int {
@@ -242,9 +252,13 @@ class AppRepositoryImpl(
         return appDb.bookingsDao().fetchAllTickets()
     }
 
-    override fun getAllUpcomingBookings(ticketStatus: String): List<Bookings> {
-        return appDb.bookingsDao().getTicketOfParticularStatus(ticketStatus)
+    override fun getAllUpcomingBookings(name: String): List<Bookings> {
+        TODO("Not yet implemented")
     }
+
+//    override fun getAllUpcomingBookings(ticketStatus: String): List<Bookings> {
+//        return appDb.bookingsDao().getTicketOfParticularStatus(ticketStatus)
+//    }
 
 
 //    chat related functions
@@ -265,5 +279,39 @@ class AppRepositoryImpl(
         appDb.partnersDao().updatePartnerDetails(partner.partnerId, partner.partnerName, partner.partnerEmailId, partner.partnerMobile)
     }
 
+//    seat layout feature related
+
+    override fun insertBusLayoutData(newBusLayout: BusLayout) {
+        appDb.busLayoutDao().insertBusLayout(newBusLayout)
+    }
+
+    override fun getLayoutOfBus(busId: Int): BusLayout {
+        return appDb.busLayoutDao().getLayoutOfBus(busId)
+    }
+
+    override fun getAllBookings(): List<Bookings> {
+        return appDb.bookingsDao().getAllBookings()
+    }
+
+    override fun updatePassengerTicketStatus(ticketStatus: String, bookingId: Int) {
+        appDb.passengerInformationDao().updatePassengerTicketStatus(ticketStatus, bookingId ,BookedTicketStatus.COMPLETED.name)
+    }
+
+    override fun checkPassengerTicketStatus(ticketStatus: String, bookingId: Int): Int {
+        return appDb.passengerInformationDao().getTicketStatusCount(ticketStatus, bookingId)
+    }
+
+
+    override fun cancelPassengerTicket(passengerId: Int) {
+        appDb.passengerInformationDao().cancelPassengerTicket(passengerId, BookedTicketStatus.CANCELLED.name)
+    }
+
+    override fun removeBookedSeats(bookingId: Int, seatCode: String) {
+        appDb.seatInformationDao().removeSeatFromBus(bookingId, seatCode)
+    }
+
+    override fun updateBookingData(bookingId: Int, totalCost: Double, noOfTicketsBooked: Int) {
+        appDb.bookingsDao().updateBookingData(bookingId, totalCost, noOfTicketsBooked)
+    }
 
 }

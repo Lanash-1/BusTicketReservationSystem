@@ -12,7 +12,10 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.databinding.FragmentWelcomeBinding
 import com.example.busticketreservationsystem.ui.adminlogin.AdminLoginFragment
+import com.example.busticketreservationsystem.ui.login.LoginFragment
 import com.example.busticketreservationsystem.ui.register.RegisterFragment
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class WelcomeFragment : Fragment() {
 
@@ -31,9 +34,9 @@ class WelcomeFragment : Fragment() {
 
         (activity as AppCompatActivity).supportActionBar!!.apply {
             setDisplayHomeAsUpEnabled(false)
-            title = "Book Bus"
+            title = getString(R.string.app_name)
+//            elevation = 0F
         }
-        // Inflate the layout for this fragment
         binding = FragmentWelcomeBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -55,19 +58,19 @@ class WelcomeFragment : Fragment() {
             override fun onPageSelected(position: Int) {
                 when (position) {
                     0 -> {
-                        binding.dot1.setImageResource(R.color.black)
+                        binding.dot1.setImageResource(R.color.defaultModeColor)
                         binding.dot2.setImageResource(R.color.sliderGray)
                         binding.dot3.setImageResource(R.color.sliderGray)
                     }
                     1 -> {
                         binding.dot1.setImageResource(R.color.sliderGray)
-                        binding.dot2.setImageResource(R.color.black)
+                        binding.dot2.setImageResource(R.color.defaultModeColor)
                         binding.dot3.setImageResource(R.color.sliderGray)
                     }
                     2 -> {
                         binding.dot1.setImageResource(R.color.sliderGray)
                         binding.dot2.setImageResource(R.color.sliderGray)
-                        binding.dot3.setImageResource(R.color.black)
+                        binding.dot3.setImageResource(R.color.defaultModeColor)
                     }
                 }
                 super.onPageSelected(position)
@@ -80,7 +83,7 @@ class WelcomeFragment : Fragment() {
         binding.userBtn.setOnClickListener {
             parentFragmentManager.commit {
                 setCustomAnimations(R.anim.from_right, R.anim.to_left)
-                replace(R.id.main_fragment_container, RegisterFragment())
+                replace(R.id.main_fragment_container, LoginFragment())
             }
         }
 
@@ -90,6 +93,8 @@ class WelcomeFragment : Fragment() {
                 replace(R.id.main_fragment_container, AdminLoginFragment())
             }
         }
+
+
 
     }
 

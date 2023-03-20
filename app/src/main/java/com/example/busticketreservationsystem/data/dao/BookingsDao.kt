@@ -15,14 +15,14 @@ interface BookingsDao {
     @Query("SELECT * from bookings_table where userId like :userId")
     fun getUserBookings(userId: Int): List<Bookings>
 
-    @Query("select * from bookings_table where userId like :userId and bookedTicketStatus like :ticketStatus")
-    fun getUserBookings(userId: Int, ticketStatus: String): List<Bookings>
+//    @Query("select * from bookings_table where userId like :userId and bookedTicketStatus like :ticketStatus")
+//    fun getUserBookings(userId: Int, ticketStatus: String): List<Bookings>
 
     @Query("select * from bookings_table where bookingId like :bookingId")
     fun getSingleBooking(bookingId: Int): Bookings
 
-    @Query("update bookings_table set bookedTicketStatus=:status where bookingId like :bookingId")
-    fun updateTicketStatus(status: String, bookingId: Int)
+//    @Query("update bookings_table set bookedTicketStatus=:status where bookingId like :bookingId")
+//    fun updateTicketStatus(status: String, bookingId: Int)
 
     @Delete
     fun deleteBooking(bookings: Bookings)
@@ -42,7 +42,13 @@ interface BookingsDao {
     @Query("select * from bookings_table")
     fun fetchAllTickets(): List<Bookings>
 
-    @Query("select * from bookings_table where bookedTicketStatus like :ticketStatus")
-    fun getTicketOfParticularStatus(ticketStatus: String): List<Bookings>
+//    @Query("select * from bookings_table where bookedTicketStatus like :ticketStatus")
+//    fun getTicketOfParticularStatus(ticketStatus: String): List<Bookings>
+
+    @Query("select * from bookings_table")
+    fun getAllBookings(): List<Bookings>
+
+    @Query("update bookings_table set totalCost =:totalCost, noOfTicketsBooked =:noOfTicketsBooked where bookingId like :bookingId")
+    fun updateBookingData(bookingId: Int, totalCost: Double, noOfTicketsBooked: Int)
 
 }

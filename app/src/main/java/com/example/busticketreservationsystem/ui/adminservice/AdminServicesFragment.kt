@@ -56,7 +56,7 @@ class AdminServicesFragment : Fragment() {
         // Inflate the layout for this fragment
         (activity as AppCompatActivity).supportActionBar!!.apply {
             setDisplayHomeAsUpEnabled(false)
-            title="Services"
+            title=getString(R.string.services)
         }
 
         binding = FragmentAdminServicesBinding.inflate(inflater, container, false)

@@ -23,8 +23,6 @@ class RecentlyViewedAdapter: RecyclerView.Adapter<RecentlyViewedAdapter.Recently
         this.recentlyViewedList = recentlyViewedList
         this.recentlyViewedBusList = recentlyViewedBusList
         this.partnerList = partnerList
-        println(partnerList)
-        println(recentlyViewedBusList)
         diffResults.dispatchUpdatesTo(this)
 
     }
@@ -63,7 +61,7 @@ class RecentlyViewedAdapter: RecyclerView.Adapter<RecentlyViewedAdapter.Recently
             sourceText.text = recentlyViewedBusList[position].sourceLocation
             destinationText.text = recentlyViewedBusList[position].destination
             dateText.text = recentlyViewedList[position].date
-            partnerNameText.text = partnerList[position]
+            partnerNameText.text = recentlyViewedBusList[position].busName
         }
     }
 

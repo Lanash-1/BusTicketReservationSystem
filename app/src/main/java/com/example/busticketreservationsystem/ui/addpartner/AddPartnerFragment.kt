@@ -70,26 +70,26 @@ class AddPartnerFragment : Fragment() {
 
     fun backPressOperation(){
         if(checkChanged()){
-            val builder = AlertDialog.Builder(requireContext())
-            builder.setMessage("Partner details will not be saved")
-            builder.setTitle("Discard Registration?")
-            builder.setCancelable(false)
+            AlertDialog.Builder(requireContext())
+            .setMessage("Partner details will not be saved")
+            .setTitle("Discard Registration?")
+            .setCancelable(false)
 
-            builder.setNegativeButton("Cancel"){
+            .setNegativeButton("Cancel"){
                     dialog, _ -> dialog.cancel()
             }
 
-            builder.setPositiveButton("Discard"){
+            .setPositiveButton("Discard"){
                     _, _ ->
                 run {
                     moveToPreviousFragment()
                 }
             }
-            val alertDialog = builder.create()
-            if(alertDialog.window != null){
-                alertDialog.window!!.attributes.windowAnimations = R.style.DialogFragmentAnimation
-            }
-            alertDialog.show()
+            .create()
+//            if(alertDialog.window != null){
+//                alertDialog.window!!.attributes.windowAnimations = R.style.DialogFragmentAnimation
+//            }
+                .show()
         }else{
             moveToPreviousFragment()
         }
@@ -120,12 +120,12 @@ class AddPartnerFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar!!.apply {
             setDisplayHomeAsUpEnabled(true)
             if(adminViewModel.selectedPartner.partnerName.isNotEmpty()){
-                title = "Update Partner Details"
+                title = getString(R.string.update_partner_details)
                 binding.titleText.visibility = View.GONE
                 binding.updatePartnerButton.visibility = View.VISIBLE
                 binding.createPartner.visibility = View.GONE
             }else{
-                title="Add Partner"
+                title=getString(R.string.add_partner)
                 binding.updatePartnerButton.visibility = View.GONE
                 binding.createPartner.visibility = View.VISIBLE
             }

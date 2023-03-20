@@ -57,7 +57,7 @@ class AdminLoginFragment : Fragment() {
 
         (activity as AppCompatActivity).supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
-            title = "Admin Login"
+            title = getString(R.string.admin_login)
         }
         binding = FragmentAdminLoginBinding.inflate(inflater, container, false)
         return binding.root

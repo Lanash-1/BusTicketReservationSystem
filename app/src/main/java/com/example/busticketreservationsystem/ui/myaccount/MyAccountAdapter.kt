@@ -1,6 +1,7 @@
 package com.example.busticketreservationsystem.ui.myaccount
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.busticketreservationsystem.R
@@ -41,7 +42,7 @@ class MyAccountAdapter: RecyclerView.Adapter<MyAccountAdapter.MyAccountViewHolde
         holder.binding.apply {
             when(MyAccountOptions.values()[position]){
                 MyAccountOptions.MY_BOOKINGS -> {
-                    optionText.text = "My Bookings"
+                    optionText.setText(R.string.my_bookings)
                     optionIcon.setImageResource(R.drawable.ic_baseline_history_24)
                 }
                 MyAccountOptions.SETTINGS -> {
@@ -63,6 +64,15 @@ class MyAccountAdapter: RecyclerView.Adapter<MyAccountAdapter.MyAccountViewHolde
                     }else{
                         optionText.text = "Login / Register"
                         optionIcon.setImageResource(R.drawable.ic_baseline_login_24)
+                    }
+                }
+                MyAccountOptions.VIEW_PROFILE -> {
+                    if(loginStatus == LoginStatus.LOGGED_IN){
+                        optionText.text = "View Profile"
+                        optionIcon.setImageResource(R.drawable.view_profile)
+                    }else{
+                        optionText.visibility = View.GONE
+                        optionIcon.visibility = View.GONE
                     }
                 }
             }

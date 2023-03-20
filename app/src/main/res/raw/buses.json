@@ -3,16 +3,15 @@
     {
       "name": "OrangeTravels",
       "emailId": "orangetravels@gmail.com",
-      "mobileNumber": 1111111111,
-      "noOfBusOperated": 6,
+      "mobileNumber": 9111111111,
+      "noOfBusOperated": 5,
       "buses": [
         {
-          "busName": "orangeBus1",
+          "busName": "Orange Bus 1",
           "sourceLocation": "Chennai",
           "destinationLocation": "Bengaluru",
           "perTicketCost": 600,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
+          "busType": "AC_SEATER",
           "amenities": [
             "BLANKETS",
             "CHARGING_POINT",
@@ -23,15 +22,24 @@
           ],
           "startTime": "8:15",
           "reachTime": "15:00",
-          "duration": "6.45"
+          "duration": "6.45",
+          "numberOfDecks": 1,
+          "lowerDeckSeatType": "SEATER",
+          "lowerLeftColumnCount": 2,
+          "lowerRightColumnCount": 2,
+          "upperLeftColumnCount": 0,
+          "upperRightColumnCount": 0,
+          "lowerLeftSeatCount": 20,
+          "lowerRightSeatCount": 20,
+          "upperLeftSeatCount": 0,
+          "upperRightSeatCount": 0
         },
         {
-          "busName": "orangeBus2",
+          "busName": "Orange Bus 2",
           "sourceLocation": "Chennai",
-          "destinationLocation": "Madurai",
+          "destinationLocation": "Bengaluru",
           "perTicketCost": 300,
-          "busType": "AC_SEATER",
-          "totalSeats": 30,
+          "busType": "NON_AC_SEATER",
           "amenities": [
             "BLANKETS",
             "WATER_BOTTLE",
@@ -40,15 +48,24 @@
           ],
           "startTime": "8:00",
           "reachTime": "17:00",
-          "duration": "9"
+          "duration": "9",
+          "numberOfDecks": 1,
+          "lowerDeckSeatType": "SEATER",
+          "lowerLeftColumnCount": 2,
+          "lowerRightColumnCount": 3,
+          "upperLeftColumnCount": 0,
+          "upperRightColumnCount": 0,
+          "lowerLeftSeatCount": 20,
+          "lowerRightSeatCount": 30,
+          "upperLeftSeatCount": 0,
+          "upperRightSeatCount": 0
         },
         {
-          "busName": "orangeBus3",
-          "sourceLocation": "Bengaluru",
-          "destinationLocation": "Chennai",
-          "perTicketCost": 600,
+          "busName": "Orange Bus 3",
+          "sourceLocation": "Chennai",
+          "destinationLocation": "Bengaluru",
+          "perTicketCost": 650,
           "busType": "SLEEPER",
-          "totalSeats": 30,
           "amenities": [
             "BLANKETS",
             "CHARGING_POINT",
@@ -59,29 +76,47 @@
           ],
           "startTime": "16:00",
           "reachTime": "23:00",
-          "duration": "7"
+          "duration": "7",
+          "numberOfDecks": 1,
+          "lowerDeckSeatType": "SLEEPER",
+          "lowerLeftColumnCount": 1,
+          "lowerRightColumnCount": 2,
+          "upperLeftColumnCount": 0,
+          "upperRightColumnCount": 0,
+          "lowerLeftSeatCount": 6,
+          "lowerRightSeatCount": 12,
+          "upperLeftSeatCount": 0,
+          "upperRightSeatCount": 0
         },
         {
-          "busName": "orangeBus4",
-          "sourceLocation": "Madurai",
-          "destinationLocation": "Chennai",
+          "busName": "Orange Bus 4",
+          "sourceLocation": "Chennai",
+          "destinationLocation": "Bengaluru",
           "perTicketCost": 300,
-          "busType": "AC_SEATER",
-          "totalSeats": 30,
+          "busType": "SLEEPER",
           "amenities": [
             "EMERGENCY_CONTACT_NUMBER"
           ],
-          "startTime": "3:00",
+          "startTime": "3:30",
           "reachTime": "12:00",
-          "duration": "9"
+          "duration": "8.30",
+          "numberOfDecks": 2,
+          "lowerDeckSeatType": "SLEEPER",
+          "lowerLeftColumnCount": 1,
+          "lowerRightColumnCount": 2,
+          "upperLeftColumnCount": 1,
+          "upperRightColumnCount": 2,
+          "lowerLeftSeatCount": 6,
+          "lowerRightSeatCount": 12,
+          "upperLeftSeatCount": 6,
+          "upperRightSeatCount": 12
         },
         {
-          "busName": "orangeBus5",
-          "sourceLocation": "Madurai",
+          "busName": "Orange Bus 5",
+          "sourceLocation": "Chennai",
           "destinationLocation": "Bengaluru",
           "perTicketCost": 700,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
+          "busType": "SEATER_SLEEPER",
           "amenities": [
             "BLANKETS",
             "WIFI",
@@ -91,41 +126,32 @@
           ],
           "startTime": "10:00",
           "reachTime": "20:00",
-          "duration": "10"
-        },
-        {
-          "busName": "orangeBus6",
-          "sourceLocation": "Bengaluru",
-          "destinationLocation": "Madurai",
-          "perTicketCost": 700,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
-          "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER"
-          ],
-          "startTime": "13:00",
-          "reachTime": "21:30",
-          "duration": "8.30"
+          "duration": "10",
+          "numberOfDecks": 2,
+          "lowerDeckSeatType": "SEATER",
+          "lowerLeftColumnCount": 2,
+          "lowerRightColumnCount": 2,
+          "upperLeftColumnCount": 1,
+          "upperRightColumnCount": 2,
+          "lowerLeftSeatCount": 20,
+          "lowerRightSeatCount": 20,
+          "upperLeftSeatCount": 5,
+          "upperRightSeatCount": 10
         }
       ]
     },
     {
       "name": "KPN Buses",
       "emailId": "support@kpnbuses.com",
-      "mobileNumber": 2222222222,
-      "noOfBusOperated": 3,
+      "mobileNumber": 9222222222,
+      "noOfBusOperated": 5,
       "buses": [
         {
-          "busName": "KPN1",
-          "sourceLocation": "Chennai",
-          "destinationLocation": "Bengaluru",
+          "busName": "KPN 1",
+          "sourceLocation": "Bengaluru",
+          "destinationLocation": "Chennai",
           "perTicketCost": 600,
           "busType": "SLEEPER",
-          "totalSeats": 30,
           "amenities": [
             "BLANKETS",
             "CHARGING_POINT",
@@ -135,15 +161,24 @@
           ],
           "startTime": "9:15",
           "reachTime": "15:45",
-          "duration": "6.30"
+          "duration": "6.30",
+          "numberOfDecks": 2,
+          "lowerDeckSeatType": "SLEEPER",
+          "lowerLeftColumnCount": 2,
+          "lowerRightColumnCount": 2,
+          "upperLeftColumnCount": 1,
+          "upperRightColumnCount": 2,
+          "lowerLeftSeatCount": 20,
+          "lowerRightSeatCount": 20,
+          "upperLeftSeatCount": 5,
+          "upperRightSeatCount": 10
         },
         {
-          "busName": "KPN2",
-          "sourceLocation": "Chennai",
-          "destinationLocation": "Madurai",
+          "busName": "KPN 2",
+          "sourceLocation": "Bengaluru",
+          "destinationLocation": "Chennai",
           "perTicketCost": 300,
           "busType": "AC_SEATER",
-          "totalSeats": 30,
           "amenities": [
             "BLANKETS",
             "CHARGING_POINT",
@@ -152,15 +187,24 @@
           ],
           "startTime": "6:00",
           "reachTime": "15:00",
-          "duration": "9"
+          "duration": "9",
+          "numberOfDecks": 1,
+          "lowerDeckSeatType": "SEATER",
+          "lowerLeftColumnCount": 2,
+          "lowerRightColumnCount": 2,
+          "upperLeftColumnCount": 0,
+          "upperRightColumnCount": 0,
+          "lowerLeftSeatCount": 40,
+          "lowerRightSeatCount": 40,
+          "upperLeftSeatCount": 0,
+          "upperRightSeatCount": 0
         },
         {
-          "busName": "KPN3",
+          "busName": "KPN 3",
           "sourceLocation": "Bengaluru",
           "destinationLocation": "Chennai",
-          "perTicketCost": 600,
+          "perTicketCost": 1200,
           "busType": "NON_AC_SEATER",
-          "totalSeats": 30,
           "amenities": [
             "BLANKETS",
             "CHARGING_POINT",
@@ -172,1071 +216,75 @@
           ],
           "startTime": "08:15",
           "reachTime": "15:00",
-          "duration": "6.45"
-        }
-      ]
-    },
-    {
-      "name": "YBM Travels",
-      "emailId": "ybmtravels@yahoo.com",
-      "mobileNumber": 3333333333,
-      "noOfBusOperated": 4,
-      "buses": [
-        {
-          "busName": "YBM1",
-          "sourceLocation": "Chennai",
-          "destinationLocation": "Pune",
-          "perTicketCost": 450,
-          "busType": "NON_AC_SEATER",
-          "totalSeats": 30,
-          "amenities": [
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "10:00",
-          "reachTime": "15:00",
-          "duration": "7"
+          "duration": "6.45",
+          "numberOfDecks": 1,
+          "lowerDeckSeatType": "SEATER",
+          "lowerLeftColumnCount": 2,
+          "lowerRightColumnCount": 2,
+          "upperLeftColumnCount": 0,
+          "upperRightColumnCount": 0,
+          "lowerLeftSeatCount": 30,
+          "lowerRightSeatCount": 30,
+          "upperLeftSeatCount": 0,
+          "upperRightSeatCount": 0
         },
         {
-          "busName": "YBM2",
-          "sourceLocation": "Pune",
-          "destinationLocation": "Madurai",
-          "perTicketCost": 200,
-          "busType": "AC_SEATER",
-          "totalSeats": 30,
-          "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER"
-          ],
-          "startTime": "8:15",
-          "reachTime": "15:00",
-          "duration": "6.45"
-        },
-        {
-          "busName": "YBM3",
-          "sourceLocation": "Pune",
-          "destinationLocation": "Chennai",
-          "perTicketCost": 450,
-          "busType": "NON_AC_SEATER",
-          "totalSeats": 30,
-          "amenities": [
-            "CHARGING_POINT",
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "13:00",
-          "reachTime": "20:00",
-          "duration": "7"
-        },
-        {
-          "busName": "YBM4",
-          "sourceLocation": "Madurai",
-          "destinationLocation": "Pune",
-          "perTicketCost": 200,
-          "busType": "AC_SEATER",
-          "totalSeats": 30,
-          "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "3:30",
-          "reachTime": "9:00",
-          "duration": "6"
-        }
-      ]
-    },
-    {
-      "name": "Parveen Travels",
-      "emailId": "parveentravels@buses.com",
-      "mobileNumber": 4444444444,
-      "noOfBusOperated": 6,
-      "buses": [
-        {
-          "busName": "parveen1",
-          "sourceLocation": "Chennai",
-          "destinationLocation": "Vijayawada",
-          "perTicketCost": 900,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
-          "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "8:00",
-          "reachTime": "16:00",
-          "duration": "8"
-        },
-        {
-          "busName": "parveen2",
-          "sourceLocation": "Vijayawada",
-          "destinationLocation": "Chennai",
-          "perTicketCost": 750,
-          "busType": "AC_SEATER",
-          "totalSeats": 30,
-          "amenities": [
-            "CHARGING_POINT",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "10:00",
-          "reachTime": "17:00",
-          "duration": "7"
-        },
-        {
-          "busName": "parveen3",
-          "sourceLocation": "Vijayawada",
-          "destinationLocation": "Bengaluru",
-          "perTicketCost": 600,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
-          "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "4:00",
-          "reachTime": "12:00",
-          "duration": "8"
-        },
-        {
-          "busName": "parveen4",
+          "busName": "KPN 4",
           "sourceLocation": "Bengaluru",
-          "destinationLocation": "Vijayawada",
-          "perTicketCost": 300,
-          "busType": "NON_AC_SEATER",
-          "totalSeats": 30,
-          "amenities": [
-            "WATER_BOTTLE"
-          ],
-          "startTime": "16:00",
-          "reachTime": "23:00",
-          "duration": "7"
-        },
-        {
-          "busName": "parveen5",
-          "sourceLocation": "Madurai",
-          "destinationLocation": "Bengaluru",
-          "perTicketCost": 700,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
+          "destinationLocation": "Chennai",
+          "perTicketCost": 900,
+          "busType": "SEATER_SLEEPER",
           "amenities": [
             "BLANKETS",
             "CHARGING_POINT",
             "WIFI",
             "WATER_BOTTLE",
             "EMERGENCY_CONTACT_NUMBER",
+            "MOVIE",
             "TRACK_MY_BUS"
           ],
           "startTime": "08:15",
           "reachTime": "15:00",
-          "duration": "6.45"
+          "duration": "6.45",
+          "numberOfDecks": 2,
+          "lowerDeckSeatType": "SEATER",
+          "lowerLeftColumnCount": 2,
+          "lowerRightColumnCount": 2,
+          "upperLeftColumnCount": 1,
+          "upperRightColumnCount": 2,
+          "lowerLeftSeatCount": 20,
+          "lowerRightSeatCount": 20,
+          "upperLeftSeatCount": 5,
+          "upperRightSeatCount": 10
         },
         {
-          "busName": "parveen6",
-          "sourceLocation": "Bengaluru",
-          "destinationLocation": "Madurai",
-          "perTicketCost": 700,
-          "busType": "AC_SEATER",
-          "totalSeats": 30,
-          "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER"
-          ],
-          "startTime": "15:30",
-          "reachTime": "22:00",
-          "duration": "6.30"
-        }
-      ]
-    },
-    {
-      "name": "InterCity Buses",
-      "emailId": "intr@citybuses.com",
-      "mobileNumber": 5555555555,
-      "noOfBusOperated": 6,
-      "buses": [
-        {
-          "busName": "intercity1",
-          "sourceLocation": "Chennai",
-          "destinationLocation": "Bengaluru",
-          "perTicketCost": 1200,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
-          "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "9:00",
-          "reachTime": "5:00",
-          "duration": "8"
-        },
-        {
-          "busName": "intercity2",
-          "sourceLocation": "Chennai",
-          "destinationLocation": "Madurai",
-          "perTicketCost": 950,
-          "busType": "NON_AC_SEATER",
-          "totalSeats": 30,
-          "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "8:00",
-          "reachTime": "17:00",
-          "duration": "9"
-        },
-        {
-          "busName": "intercity3",
+          "busName": "KPN 5",
           "sourceLocation": "Bengaluru",
           "destinationLocation": "Chennai",
-          "perTicketCost": 2000,
-          "busType": "NON_AC_SEATER",
-          "totalSeats": 30,
-          "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "16:00",
-          "reachTime": "23:00",
-          "duration": "7"
-        },
-        {
-          "busName": "intercity4",
-          "sourceLocation": "Madurai",
-          "destinationLocation": "Chennai",
-          "perTicketCost": 700,
-          "busType": "AC_SEATER",
-          "totalSeats": 30,
-          "amenities": [
-            "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "3:00",
-          "reachTime": "12:00",
-          "duration": "9"
-        },
-        {
-          "busName": "intercity5",
-          "sourceLocation": "Madurai",
-          "destinationLocation": "Bengaluru",
-          "perTicketCost": 2000,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
-          "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "13:30",
-          "reachTime": "22:30",
-          "duration": "9"
-        },
-        {
-          "busName": "intercity6",
-          "sourceLocation": "Bengaluru",
-          "destinationLocation": "Madurai",
-          "perTicketCost": 1750,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
-          "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "14:00",
-          "reachTime": "22:00",
-          "duration": "8"
-        }
-      ]
-    },
-    {
-      "name": "RRR Buses",
-      "emailId": "help@rrrbuses.com",
-      "mobileNumber": 6666666666,
-      "noOfBusOperated": 6,
-      "buses": [
-        {
-          "busName": "RRR1",
-          "sourceLocation": "Coimbatore",
-          "destinationLocation": "Bengaluru",
-          "perTicketCost": 800,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
-          "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "WATER_BOTTLE"
-          ],
-          "startTime": "9:00",
-          "reachTime": "16:00",
-          "duration": "7"
-        },
-        {
-          "busName": "RRR2",
-          "sourceLocation": "Chennai",
-          "destinationLocation": "Coimbatore",
-          "perTicketCost": 900,
-          "busType": "AC_SEATER",
-          "totalSeats": 30,
-          "amenities": [
-            "CHARGING_POINT",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "8:00",
-          "reachTime": "14:00",
-          "duration": "6"
-        },
-        {
-          "busName": "RRR3",
-          "sourceLocation": "Bengaluru",
-          "destinationLocation": "Chennai",
-          "perTicketCost": 500,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
-          "amenities": [
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "16:00",
-          "reachTime": "22:30",
-          "duration": "6.30"
-        },
-        {
-          "busName": "RRR4",
-          "sourceLocation": "Madurai",
-          "destinationLocation": "Chennai",
-          "perTicketCost": 300,
-          "busType": "NON_AC_SEATER",
-          "totalSeats": 30,
-          "amenities": [
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "13:00",
-          "reachTime": "20:00",
-          "duration": "7"
-        },
-        {
-          "busName": "RRR5",
-          "sourceLocation": "Madurai",
-          "destinationLocation": "Coimbatore",
-          "perTicketCost": 650,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
-          "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "WATER_BOTTLE",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "18:15",
-          "reachTime": "23:45",
-          "duration": "5.30"
-        },
-        {
-          "busName": "RRR6",
-          "sourceLocation": "Bengaluru",
-          "destinationLocation": "Coimbatore",
-          "perTicketCost": 1100,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
-          "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "1:00",
-          "reachTime": "7:00",
-          "duration": "6"
-        }
-      ]
-    },
-    {
-      "name": "Asian Express",
-      "emailId": "asianexpress@support.com",
-      "mobileNumber": 7777777777,
-      "noOfBusOperated": 6,
-      "buses": [
-        {
-          "busName": "asia 1",
-          "sourceLocation": "Chennai",
-          "destinationLocation": "Kochi",
-          "perTicketCost": 1200,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
-          "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "6:00",
-          "reachTime": "15:00",
-          "duration": "9"
-        },
-        {
-          "busName": "asia 2",
-          "sourceLocation": "Kochi",
-          "destinationLocation": "Chennai",
-          "perTicketCost": 1000,
-          "busType": "AC_SEATER",
-          "totalSeats": 30,
-          "amenities": [
-            "CHARGING_POINT",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "12:00",
-          "reachTime": "22:00",
-          "duration": "10"
-        },
-        {
-          "busName": "asia 3",
-          "sourceLocation": "Bengaluru",
-          "destinationLocation": "Kochi",
-          "perTicketCost": 1600,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
-          "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE"
-          ],
-          "startTime": "16:00",
-          "reachTime": "23:00",
-          "duration": "7"
-        },
-        {
-          "busName": "asia 4",
-          "sourceLocation": "Kochi",
-          "destinationLocation": "Bengaluru",
           "perTicketCost": 600,
-          "busType": "NON_AC_SEATER",
-          "totalSeats": 30,
-          "amenities": [
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "3:00",
-          "reachTime": "12:00",
-          "duration": "9"
-        },
-        {
-          "busName": "asia 5",
-          "sourceLocation": "Madurai",
-          "destinationLocation": "Bengaluru",
-          "perTicketCost": 900,
           "busType": "SLEEPER",
-          "totalSeats": 30,
-          "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "WATER_BOTTLE",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "18:15",
-          "reachTime": "23:00",
-          "duration": "4.45"
-        },
-        {
-          "busName": "asia 6",
-          "sourceLocation": "Bengaluru",
-          "destinationLocation": "Kochi",
-          "perTicketCost": 1700,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
           "amenities": [
             "BLANKETS",
             "CHARGING_POINT",
             "WIFI",
             "WATER_BOTTLE",
             "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "8:00",
-          "reachTime": "16:00",
-          "duration": "8"
-        }
-      ]
-    },
-    {
-      "name": "KGF Tours and Travels",
-      "emailId": "rocky@kgfbuses.kgf",
-      "mobileNumber": 8888888888,
-      "noOfBusOperated": 6,
-      "buses": [
-        {
-          "busName": "kgf 1",
-          "sourceLocation": "Mumbai",
-          "destinationLocation": "Mysuru",
-          "perTicketCost": 2000,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
-          "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "6:00",
-          "reachTime": "18:00",
-          "duration": "12"
-        },
-        {
-          "busName": "kgf 2",
-          "sourceLocation": "Mysuru",
-          "destinationLocation": "Mumbai",
-          "perTicketCost": 1900,
-          "busType": "AC_SEATER",
-          "totalSeats": 30,
-          "amenities": [
-            "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "12:00",
-          "reachTime": "22:00",
-          "duration": "10"
-        },
-        {
-          "busName": "kgf 3",
-          "sourceLocation": "Mumbai",
-          "destinationLocation": "Pune",
-          "perTicketCost": 750,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
-          "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "WATER_BOTTLE",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "16:00",
-          "reachTime": "23:00",
-          "duration": "7"
-        },
-        {
-          "busName": "kgf 4",
-          "sourceLocation": "Pune",
-          "destinationLocation": "Mumbai",
-          "perTicketCost": 550,
-          "busType": "NON_AC_SEATER",
-          "totalSeats": 30,
-          "amenities": [
-            "CHARGING_POINT",
-            "WATER_BOTTLE"
-          ],
-          "startTime": "3:00",
-          "reachTime": "12:00",
-          "duration": "9"
-        },
-        {
-          "busName": "kgf 5",
-          "sourceLocation": "Chennai",
-          "destinationLocation": "Madurai",
-          "perTicketCost": 700,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
-          "amenities": [
-            "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "8:45",
-          "reachTime": "12:00",
-          "duration": "3.15"
-        },
-        {
-          "busName": "kgf 6",
-          "sourceLocation": "Bengaluru",
-          "destinationLocation": "Madurai",
-          "perTicketCost": 2000,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
-          "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
+            "MOVIE",
             "TRACK_MY_BUS"
           ],
           "startTime": "08:15",
           "reachTime": "15:00",
-          "duration": "6:45"
-        }
-      ]
-    },
-    {
-      "name": "National Travels",
-      "emailId": "nationaltravels@buses.city",
-      "mobileNumber": 9999999999,
-      "noOfBusOperated": 6,
-      "buses": [
-        {
-          "busName": "national 1",
-          "sourceLocation": "Chennai",
-          "destinationLocation": "Bengaluru",
-          "perTicketCost": 1200,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
-          "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "WATER_BOTTLE",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "13:00",
-          "reachTime": "20:00",
-          "duration": "7"
-        },
-        {
-          "busName": "national 2",
-          "sourceLocation": "Chennai",
-          "destinationLocation": "Madurai",
-          "perTicketCost": 300,
-          "busType": "AC_SEATER",
-          "totalSeats": 30,
-          "amenities": [
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "13:00",
-          "reachTime": "23:45",
-          "duration": "10.45"
-        },
-        {
-          "busName": "national 3",
-          "sourceLocation": "Bengaluru",
-          "destinationLocation": "Chennai",
-          "perTicketCost": 2500,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
-          "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "16:00",
-          "reachTime": "20:00",
-          "duration": "4"
-        },
-        {
-          "busName": "national 4",
-          "sourceLocation": "Madurai",
-          "destinationLocation": "Chennai",
-          "perTicketCost": 525,
-          "busType": "NON_AC_SEATER",
-          "totalSeats": 30,
-          "amenities": [
-            "EMERGENCY_CONTACT_NUMBER"
-          ],
-          "startTime": "9:00",
-          "reachTime": "16:00",
-          "duration": "7"
-        },
-        {
-          "busName": "national 5",
-          "sourceLocation": "Madurai",
-          "destinationLocation": "Bengaluru",
-          "perTicketCost": 750,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
-          "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "14:00",
-          "reachTime": "22:00",
-          "duration": "8"
-        },
-        {
-          "busName": "national 6",
-          "sourceLocation": "Bengaluru",
-          "destinationLocation": "Madurai",
-          "perTicketCost": 1100,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
-          "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "13:15",
-          "reachTime": "19:15",
-          "duration": "6"
-        }
-      ]
-    },
-    {
-      "name": "Sundhara Travels",
-      "emailId": "sundharatravels@mail.com",
-      "mobileNumber": 1010101010,
-      "noOfBusOperated": 6,
-      "buses": [
-        {
-          "busName": "sundhara 1",
-          "sourceLocation": "Chennai",
-          "destinationLocation": "Bengaluru",
-          "perTicketCost": 620,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
-          "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "8:15",
-          "reachTime": "15:00",
-          "duration": "6.45"
-        },
-        {
-          "busName": "sudhara 2",
-          "sourceLocation": "Chennai",
-          "destinationLocation": "Madurai",
-          "perTicketCost": 350,
-          "busType": "AC_SEATER",
-          "totalSeats": 30,
-          "amenities": [
-            "CHARGING_POINT",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "8:00",
-          "reachTime": "17:00",
-          "duration": "9"
-        },
-        {
-          "busName": "sundhara 3",
-          "sourceLocation": "Bengaluru",
-          "destinationLocation": "Chennai",
-          "perTicketCost": 555,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
-          "amenities": [
-            "CHARGING_POINT",
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "15:00",
-          "reachTime": "23:00",
-          "duration": "8"
-        },
-        {
-          "busName": "sundhara 4",
-          "sourceLocation": "Madurai",
-          "destinationLocation": "Chennai",
-          "perTicketCost": 300,
-          "busType": "NON_AC_SEATER",
-          "totalSeats": 30,
-          "amenities": [
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "13:00",
-          "reachTime": "21:00",
-          "duration": "8"
-        },
-        {
-          "busName": "sundhara 5",
-          "sourceLocation": "Madurai",
-          "destinationLocation": "Bengaluru",
-          "perTicketCost": 770,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
-          "amenities": [
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "10:15",
-          "reachTime": "17:00",
-          "duration": "6.45"
-        },
-        {
-          "busName": "sundhara 6",
-          "sourceLocation": "Bengaluru",
-          "destinationLocation": "Madurai",
-          "perTicketCost": 710,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
-          "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "15:00",
-          "reachTime": "22:00",
-          "duration": "7"
-        }
-      ]
-    },
-    {
-      "name": "Jabber Travels",
-      "emailId": "jabbertravels@mail.com",
-      "mobileNumber": 2020202020,
-      "noOfBusOperated": 6,
-      "buses": [
-        {
-          "busName": "jabber 1",
-          "sourceLocation": "Chennai",
-          "destinationLocation": "Bengaluru",
-          "perTicketCost": 1600,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
-          "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "8:00",
-          "reachTime": "15:00",
-          "duration": "7"
-        },
-        {
-          "busName": "jabber 2",
-          "sourceLocation": "Chennai",
-          "destinationLocation": "Madurai",
-          "perTicketCost": 300,
-          "busType": "AC_SEATER",
-          "totalSeats": 30,
-          "amenities": [
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "8:50",
-          "reachTime": "17:00",
-          "duration": "8.10"
-        },
-        {
-          "busName": "jabber 3",
-          "sourceLocation": "Bengaluru",
-          "destinationLocation": "Chennai",
-          "perTicketCost": 660,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
-          "amenities": [
-            "CHARGING_POINT",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "14:00",
-          "reachTime": "23:00",
-          "duration": "9"
-        },
-        {
-          "busName": "jabber 4",
-          "sourceLocation": "Madurai",
-          "destinationLocation": "Chennai",
-          "perTicketCost": 300,
-          "busType": "NON_AC_SEATER",
-          "totalSeats": 30,
-          "amenities": [
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "5:00",
-          "reachTime": "12:00",
-          "duration": "7"
-        },
-        {
-          "busName": "jabber 5",
-          "sourceLocation": "Madurai",
-          "destinationLocation": "Bengaluru",
-          "perTicketCost": 1700,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
-          "amenities": [
-            "BLANKETS",
-            "CHARGING_POINT",
-            "WIFI",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "5:55",
-          "reachTime": "15:00",
-          "duration": "9.05"
-        },
-        {
-          "busName": "jabber 6",
-          "sourceLocation": "Bengaluru",
-          "destinationLocation": "Madurai",
-          "perTicketCost": 700,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
-          "amenities": [
-            "CHARGING_POINT",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "11:00",
-          "reachTime": "15:00",
-          "duration": "4"
-        }
-      ]
-    },
-    {
-      "name": "Pink Buses",
-      "emailId": "pinkbuses@support.com",
-      "mobileNumber": 3030303030,
-      "noOfBusOperated": 6,
-      "buses": [
-        {
-          "busName": "pink 1",
-          "sourceLocation": "Chennai",
-          "destinationLocation": "Bengaluru",
-          "perTicketCost": 1600,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
-          "amenities": [
-            "CHARGING_POINT",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "10:00",
-          "reachTime": "15:00",
-          "duration": "5"
-        },
-        {
-          "busName": "pink 2",
-          "sourceLocation": "Chennai",
-          "destinationLocation": "Madurai",
-          "perTicketCost": 1300,
-          "busType": "AC_SEATER",
-          "totalSeats": 30,
-          "amenities": [
-            "BLANKETS",
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "8:00",
-          "reachTime": "17:00",
-          "duration": "9"
-        },
-        {
-          "busName": "pink 3",
-          "sourceLocation": "Bengaluru",
-          "destinationLocation": "Chennai",
-          "perTicketCost": 1160,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
-          "amenities": [
-            "CHARGING_POINT",
-            "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "16:00",
-          "reachTime": "23:00",
-          "duration": "7"
-        },
-        {
-          "busName": "pink 4",
-          "sourceLocation": "Madurai",
-          "destinationLocation": "Chennai",
-          "perTicketCost": 300,
-          "busType": "NON_AC_SEATER",
-          "totalSeats": 30,
-          "amenities": [
-            "EMERGENCY_CONTACT_NUMBER"
-          ],
-          "startTime": "13:00",
-          "reachTime": "22:00",
-          "duration": "9"
-        },
-        {
-          "busName": "pink 5",
-          "sourceLocation": "Madurai",
-          "destinationLocation": "Bengaluru",
-          "perTicketCost": 660,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
-          "amenities": [
-            "EMERGENCY_CONTACT_NUMBER"
-          ],
-          "startTime": "8:00",
-          "reachTime": "15:00",
-          "duration": "7"
-        },
-        {
-          "busName": "pink 6",
-          "sourceLocation": "Bengaluru",
-          "destinationLocation": "Madurai",
-          "perTicketCost": 700,
-          "busType": "SLEEPER",
-          "totalSeats": 30,
-          "amenities": [
-            "CHARGING_POINT",
-            "EMERGENCY_CONTACT_NUMBER",
-            "TRACK_MY_BUS"
-          ],
-          "startTime": "16:00",
-          "reachTime": "23:00",
-          "duration": "7"
+          "duration": "6.45",
+          "numberOfDecks": 1,
+          "lowerDeckSeatType": "SLEEPER",
+          "lowerLeftColumnCount": 2,
+          "lowerRightColumnCount": 2,
+          "upperLeftColumnCount": 0,
+          "upperRightColumnCount": 0,
+          "lowerLeftSeatCount": 20,
+          "lowerRightSeatCount": 20,
+          "upperLeftSeatCount": 0,
+          "upperRightSeatCount": 0
         }
       ]
     }

@@ -146,33 +146,33 @@ class AdminViewModel(
 
     var upcomingCount = 0
     var completedCount = 0
-    var cancelledCount = MutableLiveData<Int>()
-    fun fetchUserTicketCount(userId: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
-            var upcoming = 0
-            var completed = 0
-            var cancelled = 0
-            val job = launch {
-                val ticketList = repository.getUserBookings(userId)
-                upcoming = ticketList.filter {
-                    it.bookedTicketStatus == BookedTicketStatus.UPCOMING.name
-                }.size
-                completed = ticketList.filter {
-                    it.bookedTicketStatus == BookedTicketStatus.COMPLETED.name
-                }.size
-                cancelled = ticketList.filter {
-                    it.bookedTicketStatus == BookedTicketStatus.CANCELLED.name
-                }.size
-            }
-            job.join()
-            withContext(Dispatchers.Main){
-                upcomingCount = upcoming
-                completedCount = completed
-                cancelledCount.value = cancelled
-            }
-        }
-
-    }
+    var cancelledCount = MutableLiveData<Int>(0)
+//    fun fetchUserTicketCount(userId: Int) {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            var upcoming = 0
+//            var completed = 0
+//            var cancelled = 0
+//            val job = launch {
+//                val ticketList = repository.getUserBookings(userId)
+//                upcoming = ticketList.filter {
+//                    it.bookedTicketStatus == BookedTicketStatus.UPCOMING.name
+//                }.size
+//                completed = ticketList.filter {
+//                    it.bookedTicketStatus == BookedTicketStatus.COMPLETED.name
+//                }.size
+//                cancelled = ticketList.filter {
+//                    it.bookedTicketStatus == BookedTicketStatus.CANCELLED.name
+//                }.size
+//            }
+//            job.join()
+//            withContext(Dispatchers.Main){
+//                upcomingCount = upcoming
+//                completedCount = completed
+//                cancelledCount.value = cancelled
+//            }
+//        }
+//
+//    }
 
 
 
@@ -244,6 +244,7 @@ class AdminViewModel(
     var filteredBookingList = listOf<Bookings>()
     var filteredBusList = listOf<Bus>()
     var filteredPartnerList = listOf<String>()
+//    var filteredTicketStatus:
 
     fun fetchAllTickets() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -267,6 +268,92 @@ class AdminViewModel(
             }
         }
     }
+
+    var upcomingBooking = mutableListOf<Bookings>()
+    var completedBooking = mutableListOf<Bookings>()
+    var cancelledBooking = mutableListOf<Bookings>()
+
+    var upcomingPartner = mutableListOf<String>()
+    var completedPartner = mutableListOf<String>()
+    var cancelledPartner = mutableListOf<String>()
+
+    var upcomingBus = mutableListOf<Bus>()
+    var completedBus = mutableListOf<Bus>()
+    var cancelledBus = mutableListOf<Bus>()
+
+    lateinit var filteredTicketStatus: BookedTicketStatus
+
+
+    val isBookingFetched = MutableLiveData<Boolean>(null)
+
+
+    fun fetchAllBookings(){
+        viewModelScope.launch(Dispatchers.IO) {
+            val upcomingBookings = mutableListOf<Bookings>()
+            val completedBookings = mutableListOf<Bookings>()
+            val cancelledBookings = mutableListOf<Bookings>()
+
+            val upcomingPartners = mutableListOf<String>()
+            val completedPartners = mutableListOf<String>()
+            val cancelledPartners = mutableListOf<String>()
+
+            val upcomingBuses = mutableListOf<Bus>()
+            val completedBuses = mutableListOf<Bus>()
+            val cancelledBuses = mutableListOf<Bus>()
+
+            var userBookings = listOf<Bookings>()
+            val job = launch {
+                userBookings = repository.getAllBookings()
+                for(booking in userBookings){
+                    if(repository.checkPassengerTicketStatus(BookedTicketStatus.UPCOMING.name, booking.bookingId) > 0){
+                        upcomingBookings.add(booking)
+                    }
+                    if(repository.checkPassengerTicketStatus(BookedTicketStatus.COMPLETED.name, booking.bookingId) > 0){
+                        completedBookings.add(booking)
+                    }
+                    if(repository.checkPassengerTicketStatus(BookedTicketStatus.CANCELLED.name, booking.bookingId) > 0){
+                        cancelledBookings.add(booking)
+                    }
+                }
+                for(booking in upcomingBookings){
+                    upcomingBuses.add(repository.getBus(booking.busId))
+                }
+                for(booking in completedBookings){
+                    completedBuses.add(repository.getBus(booking.busId))
+                }
+                for(booking in cancelledBookings){
+                    cancelledBuses.add(repository.getBus(booking.busId))
+                }
+
+                for(bus in upcomingBuses){
+                    upcomingPartners.add(repository.getPartnerName(bus.partnerId))
+                }
+                for(bus in completedBuses){
+                    completedPartners.add(repository.getPartnerName(bus.partnerId))
+                }
+                for(bus in cancelledBuses){
+                    cancelledPartners.add(repository.getPartnerName(bus.partnerId))
+                }
+            }
+            job.join()
+            withContext(Dispatchers.Main){
+                upcomingBooking = upcomingBookings
+                upcomingBus = upcomingBuses
+                upcomingPartner = upcomingPartners
+
+                completedBooking = completedBookings
+                completedBus = completedBuses
+                completedPartner = completedPartners
+
+                cancelledBooking = cancelledBookings
+                cancelledBus = cancelledBuses
+                cancelledPartner = cancelledPartners
+
+                isBookingFetched.value = true
+            }
+        }
+    }
+
 
 
 }

@@ -5,118 +5,240 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fillViewport="true"
+
     tools:context=".ui.login.LoginFragment">
+
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content">-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/app_icon"-->
+<!--        android:layout_width="200dp"-->
+<!--        android:layout_height="200dp"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        android:src="@drawable/book_bus_logo"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        />-->
+
+<!--    <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:id="@+id/mobile_input_layout"-->
+<!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:hint="Enter Mobile Number"-->
+<!--        app:endIconMode="custom"-->
+<!--        app:helperTextTextColor="#AA0000"-->
+<!--        app:endIconDrawable="@drawable/ic_baseline_local_phone_24"-->
+<!--        app:counterEnabled="true"-->
+<!--        app:counterMaxLength="10"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginEnd="16dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/app_icon"-->
+<!--        app:shapeAppearance="@style/Rounded"-->
+<!--        >-->
+
+<!--        <com.google.android.material.textfield.TextInputEditText-->
+<!--            android:id="@+id/mobile_input"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:inputType="phone"-->
+<!--            android:cursorVisible="true"-->
+<!--            android:textCursorDrawable="@drawable/red_cursor"-->
+<!--            android:maxLength="10"/>-->
+
+<!--    </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--    <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:id="@+id/password_input_layout"-->
+<!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:hint="Enter password"-->
+<!--        app:endIconMode="password_toggle"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginEnd="16dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        app:helperTextTextColor="#AA0000"-->
+
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/mobile_input_layout"-->
+<!--        app:shapeAppearance="@style/Rounded"-->
+
+<!--        >-->
+
+<!--        <com.google.android.material.textfield.TextInputEditText-->
+<!--            android:id="@+id/password_input"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:inputType="textPassword"-->
+<!--            android:cursorVisible="true"-->
+<!--            android:textCursorDrawable="@drawable/red_cursor"/>-->
+
+<!--    </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/forgot_password_text"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Forgot Password?"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        style="@style/LinkTextAppearance"-->
+<!--        app:layout_constraintStart_toStartOf="@id/password_input_layout"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/password_input_layout" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/login_button"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/forgot_password_text"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:text="Login"-->
+<!--        />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/create_account_text"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="New User? Create Account"-->
+<!--        style="@style/LinkTextAppearance"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/login_button"-->
+<!--        android:layout_marginTop="8dp" />-->
+
+
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    <ImageView
-        android:id="@+id/app_icon"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/bookbus_logo"
-        android:layout_marginTop="16dp"
-        />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/mobile_input_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Mobile Number"
-        app:endIconMode="custom"
-        app:helperTextTextColor="#AA0000"
-        app:endIconDrawable="@drawable/ic_baseline_local_phone_24"
-        app:counterEnabled="true"
-        app:counterMaxLength="10"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/app_icon"
-        app:shapeAppearance="@style/Rounded"
+        android:id="@+id/user_login_layout"
         >
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/mobile_input"
-            android:layout_width="match_parent"
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/app_logo"
+            android:src="@drawable/book_bus_logo"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="16dp"
+            android:contentDescription="@string/logo_content_description"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="phone"
-            android:cursorVisible="true"
-            android:textCursorDrawable="@drawable/red_cursor"
-            android:maxLength="10"/>
+            android:id="@+id/welcome_title"
+            android:text="@string/welcome_title"
+            app:layout_constraintTop_toBottomOf="@id/app_logo"
+            app:layout_constraintLeft_toLeftOf="@id/app_logo"
+            app:layout_constraintRight_toRightOf="@id/app_logo"
+            android:layout_marginTop="16dp"
+            style="@style/LargeTitleText"
+            />
 
-    </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/password_input_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter password"
-        app:endIconMode="password_toggle"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        app:helperTextTextColor="#AA0000"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/mobile_input_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/mobile_number"
+                app:layout_constraintTop_toBottomOf="@id/welcome_title"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_margin="16dp"
+                app:endIconDrawable="@drawable/ic_baseline_local_phone_24"
+                app:endIconMode="custom"
+                app:shapeAppearance="@style/Rounded"
+                app:helperTextTextColor="@color/errorColor"
+                >
 
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mobile_input_layout"
-        app:shapeAppearance="@style/Rounded"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/mobile_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:cursorVisible="true"
+                    android:textCursorDrawable="@drawable/red_cursor"
+                    android:maxLength="10"/>
 
-        >
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/password_input"
-            android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/password_input_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/password"
+                app:endIconMode="password_toggle"
+                app:layout_constraintTop_toBottomOf="@id/mobile_input_layout"
+                app:layout_constraintLeft_toLeftOf="@id/mobile_input_layout"
+                app:layout_constraintRight_toRightOf="@id/mobile_input_layout"
+                android:layout_marginTop="16dp"
+                app:shapeAppearance="@style/Rounded"
+                app:helperTextTextColor="@color/errorColor"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/password_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:cursorVisible="true"
+                    android:textCursorDrawable="@drawable/red_cursor"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        <Button
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:cursorVisible="true"
-            android:textCursorDrawable="@drawable/red_cursor"/>
+            android:id="@+id/login_button"
+            android:text="@string/login"
+            app:layout_constraintTop_toBottomOf="@id/forgot_password_text"
+            app:layout_constraintLeft_toLeftOf="@id/password_input_layout"
+            app:layout_constraintRight_toRightOf="@id/password_input_layout"
+            app:cornerRadius="5dp"
+            android:minWidth="64dp"
+            />
 
-    </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/forgot_password_text"
+            android:text="@string/forgot_password"
+            app:layout_constraintTop_toBottomOf="@id/password_input_layout"
+            app:layout_constraintLeft_toLeftOf="@id/password_input_layout"
+            style="@style/linkTextStyle"
+            android:paddingVertical="12dp"
+            />
 
-    <TextView
-        android:id="@+id/forgot_password_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Forgot Password?"
-        android:layout_marginTop="8dp"
-        style="@style/LinkTextAppearance"
-        app:layout_constraintStart_toStartOf="@id/password_input_layout"
-        app:layout_constraintTop_toBottomOf="@id/password_input_layout" />
-
-    <Button
-        android:id="@+id/login_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/forgot_password_text"
-        android:layout_marginTop="8dp"
-        android:text="Login"
-        />
-
-    <TextView
-        android:id="@+id/create_account_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New User? Create Account"
-        style="@style/LinkTextAppearance"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_button"
-        android:layout_marginTop="8dp" />
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/create_account_text"
+            android:text="@string/do_not_have_account"
+            style="@style/linkTextStyle"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/login_button"
+            android:paddingVertical="12dp"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
 </ScrollView>

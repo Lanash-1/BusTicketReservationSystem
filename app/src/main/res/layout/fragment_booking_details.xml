@@ -22,15 +22,151 @@
             android:layout_height="wrap_content"
             >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/contact_information_text"
-            android:text="Contact Information"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_margin="16dp"
-            style="@style/TitleTextStyle"/>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/bus_details_card_view"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginVertical="16dp"
+                android:backgroundTint="@color/whiteAndBlack"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/bus_details_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/bus_name_text"
+                        style="@style/TitleTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:text="@string/example_bus_name"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/date_text"
+                        android:text="@string/date_format"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/bus_name_text"
+                        app:layout_constraintBottom_toBottomOf="@id/bus_name_text"
+                        android:layout_marginEnd="16dp"
+                        style="@style/TextDefault"
+                        />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.5"
+                         />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/source_city_text"
+                        android:text="@string/enter_source"
+                        android:textSize="16sp"
+                        app:layout_constraintTop_toBottomOf="@id/bus_name_text"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_margin="16dp"
+                        app:layout_constraintRight_toLeftOf="@id/guideline2"
+                        android:maxLines="1"
+                        />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/source_point_text"
+                        android:text="@string/boarding_point"
+                        android:textSize="14sp"
+                        app:layout_constraintTop_toBottomOf="@id/source_city_text"
+                        app:layout_constraintLeft_toLeftOf="@id/source_city_text"
+                        app:layout_constraintRight_toLeftOf="@id/guideline2"
+                        android:maxLines="1"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/starting_time_text"
+                        android:text="@string/time_format"
+                        style="@style/TitleTextStyle"
+                        app:layout_constraintTop_toBottomOf="@id/source_point_text"
+                        app:layout_constraintLeft_toLeftOf="@id/source_point_text"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginBottom="16dp"
+                        />
+
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:id="@+id/next_arrow_icon"
+                        android:src="@drawable/baseline_arrow_forward_24"
+                        style="@style/IconTint"
+                        app:layout_constraintLeft_toLeftOf="@id/guideline2"
+                        app:layout_constraintRight_toRightOf="@id/guideline2"
+                        app:layout_constraintTop_toTopOf="@id/source_city_text"
+                        app:layout_constraintBottom_toBottomOf="@id/starting_time_text"
+                        />
+
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintTop_toTopOf="@id/source_city_text"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:layout_marginEnd="16dp"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/destination_city_text"
+                            android:text="@string/enter_source"
+                            android:textSize="16sp"
+                            android:maxLines="1"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/destination_point_text"
+                            android:text="@string/dropping_point"
+                            android:textSize="14sp"
+                            android:maxLines="1"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/reach_time_text"
+                            android:text="@string/time_format"
+                            style="@style/TitleTextStyle"
+                            android:layout_marginTop="8dp"
+                            />
+
+                    </LinearLayout>
+
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
 
 
         <androidx.cardview.widget.CardView
@@ -39,51 +175,51 @@
             android:id="@+id/contact_information_card_view"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/contact_information_text"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/bus_details_card_view"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/whiteAndBlack"
            >
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/contact_information_text"
+                    android:text="@string/contact_details"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_margin="16dp"
+                    style="@style/TitleTextStyle"
+                    />
 
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:id="@+id/name_text"-->
-<!--                android:text="Name: " -->
-<!--                app:layout_constraintLeft_toLeftOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
-<!--                android:layout_margin="16dp"-->
-<!--                android:textSize="16sp"-->
-<!--                android:textColor="@color/black"-->
-<!--                />-->
-<!--                -->
-<!--                <EditText-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:id="@+id/name_edit_text"-->
-<!--                    app:layout_constraintLeft_toRightOf="@id/name_text"-->
-<!--                    app:layout_constraintRight_toRightOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="@id/name_text"-->
-<!--                    android:textSize="16sp"-->
-<!--                    android:layout_marginEnd="16dp" />-->
-
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/email_title"
+                    android:text="@string/email"
+                    app:layout_constraintTop_toBottomOf="@id/contact_information_text"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_margin="16dp"
+                    style="@style/TextDefault"
+                    android:textSize="16sp"
+                    />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/email_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:hint="Email ID"
-                    app:startIconDrawable="@drawable/ic_baseline_email_24"
-                    app:boxBackgroundColor="@color/white"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    app:shapeAppearance="@style/Rounded"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    style="@style/TextInputEditLayoutAppearance"
+                    app:layout_constraintTop_toBottomOf="@id/email_title"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="8dp"
+                    app:hintEnabled="false"
+                    app:helperTextTextColor="@color/errorColor"
                     >
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -91,42 +227,51 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textEmailAddress"
-                        android:layout_marginBottom="8dp"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/black"
                         android:cursorVisible="true"
                         android:textCursorDrawable="@drawable/red_cursor"
+                        android:hint="@string/sample_mail"
                         />
 
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/mobile_title"
+                    android:text="@string/mobile_number"
+                    style="@style/TextDefault"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toBottomOf="@id/email_layout"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_margin="16dp"
+                    />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/mobile_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:hint="Mobile Number"
-                    app:boxBackgroundColor="@color/white"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    app:shapeAppearance="@style/Rounded"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/email_layout"
-                    app:startIconDrawable="@drawable/ic_baseline_local_phone_24"
+                    app:layout_constraintTop_toBottomOf="@id/mobile_title"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:counterEnabled="true"
-                    app:counterMaxLength="10"
-                    style="@style/TextInputEditLayoutAppearance"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    app:helperTextTextColor="@color/errorColor"
+                    app:hintEnabled="false"
                     >
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/mobile_input"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="phone"
+                        android:inputType="number"
                         android:maxLength="10"
                         android:cursorVisible="true"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/black"
                         android:textCursorDrawable="@drawable/red_cursor"
+                        android:hint="@string/mobile_number"
                         />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -135,32 +280,56 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
-
         </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/passenger_information_text"
-            android:text="Passenger Information"
-            app:layout_constraintStart_toStartOf="@id/contact_information_card_view"
-            app:layout_constraintTop_toBottomOf="@id/contact_information_card_view"
-            android:layout_marginTop="16dp"
-            style="@style/TitleTextStyle"/>
 
-            <androidx.recyclerview.widget.RecyclerView
+
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/passenger_info_recycler_view"
-                app:layout_constraintTop_toBottomOf="@id/passenger_information_text"
+                android:layout_height="wrap_content"
+                android:id="@+id/passenger_information_card_view"
+                app:layout_constraintTop_toBottomOf="@id/contact_information_card_view"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginBottom="32dp"
-                android:layout_marginTop="8dp"
-                />
+                android:layout_marginTop="16dp"
+                >
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/passenger_information_layout"
+                    android:background="@color/whiteAndBlack"
+                    >
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/passenger_information_text"
+                        android:text="@string/passenger_information"
+                        android:layout_marginTop="16dp"
+                        style="@style/TitleTextStyle"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_margin="16dp"
+                        />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/passenger_info_recycler_view"
+                        app:layout_constraintTop_toBottomOf="@id/passenger_information_text"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:layout_marginTop="8dp"
+                        tools:listitem="@layout/item_passenger_info"
+                        android:overScrollMode="never"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.cardview.widget.CardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -175,34 +344,45 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/booking_details_scrollView"
+        app:cardElevation="4dp"
         >
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/login_register_button"
+            android:text="@string/login_register"
+            android:background="@color/appMainColor"
+            android:visibility="gone"
+            />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:id="@+id/proceed_layout"
+            android:visibility="visible"
+            >
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/price_text"
-                android:text="12345"
+                android:text="@string/_12345"
                 style="@style/DrawableTint"
-                android:drawableStart="@drawable/ic_baseline_currency_rupee_24"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_marginStart="16dp"
                 app:layout_constraintRight_toLeftOf="@id/proceed_text"
-                />
-
+                app:drawableStartCompat="@drawable/ic_baseline_currency_rupee_24" />
 
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/proceed_text"
-            android:text="Confirm Booking"
-            android:background="@color/customRed"
+            android:text="@string/confirm_booking"
+            android:background="@color/appMainColor"
             android:textColor="@color/white"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -220,17 +400,7 @@
 
     </androidx.cardview.widget.CardView>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/login_register_button"
-        android:text="Login / Register"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:background="@color/customRed"
-        android:visibility="gone"
-        />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

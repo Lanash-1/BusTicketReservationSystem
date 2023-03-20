@@ -3,13 +3,13 @@
     <style name="Theme.BusTicketReservationSystem" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
 <!--        <item name="colorPrimary">#D0191D</item>-->
-        <item name="colorPrimary">@color/seatGreen</item>
-        <item name="colorPrimaryVariant">@color/seatGreen</item>
+        <item name="colorPrimary">@color/appMainColor</item>
+        <item name="colorPrimaryVariant">#008f68</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="android:textCursorDrawable" parent="androidx.appcompat.widget.SearchView">@drawable/white_cursor</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/customRed</item>
-        <item name="colorSecondaryVariant">@color/customRed</item>
+        <item name="colorSecondary">@color/appMainColor</item>
+        <item name="colorSecondaryVariant">@color/appMainColor</item>
         <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
@@ -97,7 +97,7 @@
     </style>
 
     <style name="AppbarBackground">
-        <item name="android:background">@color/customRed</item>
+        <item name="android:background">@color/appMainColor</item>
     </style>
 
     <style name="RecentlyViewedSourceTextStyle">
@@ -128,6 +128,39 @@
 
     <style name="SearchableDialogTheme">
         <item name="android:backgroundTint">@color/white</item>
+    </style>
+
+    <style name="LargeTitleText">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="linkTextStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/appMainColor</item>
+        <item name="android:clickable">true</item>
+        <item name="android:background">?android:selectableItemBackground</item>
+    </style>
+
+    <style name="WelcomeScreenTitleTextStyle">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/appMainColor</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="WelcomeScreenSubtitleStyle">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="radio_selected">
+        <item name="backgroundTint">@color/appMainColor</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/selected_radio_button</item>
+    </style>
+
+    <style name="radio_unselected">
+        <item name="android:background">@drawable/unselected_radio_button</item>
     </style>
 
 

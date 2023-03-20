@@ -7,6 +7,8 @@ import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.enums.BusTypes
 import com.example.busticketreservationsystem.data.entity.*
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
+import com.example.busticketreservationsystem.enums.BusSeatType
+import com.example.busticketreservationsystem.utils.Helper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -14,6 +16,8 @@ import kotlinx.coroutines.withContext
 class BusViewModel(
     private val repository: AppRepositoryImpl
 ): ViewModel() {
+
+    private val helper = Helper()
 
 //    Insert bus details fetched from json file
 
@@ -49,6 +53,8 @@ class BusViewModel(
             val job = launch {
                 repository.insertBusData(newBus)
                 val bus = repository.getBusData().last()
+                newBusLayout.busId = bus.busId
+                repository.insertBusLayoutData(newBusLayout)
                 for(amenity in amenities){
                     repository.insertBusAmenitiesData(BusAmenities(0, bus.busId, amenity))
                 }
@@ -83,7 +89,7 @@ class BusViewModel(
     var checkedList = listOf<Int>()
     var selectedSort: Int? = null
 
-    var busResultDataFetched = MutableLiveData<Boolean>()
+    var busResultDataFetched = MutableLiveData<Boolean>(null)
 
     var sourceLocation = ""
     var destinationLocation = ""
@@ -96,7 +102,8 @@ class BusViewModel(
             var busList = listOf<Bus>()
             val partnerList = mutableListOf<Partners>()
             val fetchJob = launch {
-                busList = repository.getBusOfRoute(sourceLocation, destinationLocation)
+                val resultBusList = repository.getBusOfRoute(sourceLocation, destinationLocation)
+                busList = filterBusByTime(resultBusList)
                 if(checkedList.isNotEmpty() || selectedSort != null){
                     busList = sortAndFilterOperation(busList)
                 }
@@ -110,10 +117,19 @@ class BusViewModel(
             withContext(Dispatchers.Main){
                 resultBusList = busList
                 resultPartnerList = partnerList
-
                 busResultDataFetched.value = true
             }
         }
+    }
+
+    private fun filterBusByTime(resultBusList: List<Bus>): List<Bus> {
+        val result = mutableListOf<Bus>()
+        for(bus in resultBusList){
+            if(helper.checkBusTimingIsGreater(bus.startTime, selectedDate)){
+                result.add(bus)
+            }
+        }
+        return result
     }
 
 
@@ -144,7 +160,7 @@ class BusViewModel(
                     R.id.seater_checkbox -> {
                         for (bus in list) {
                             if (!newList.contains(bus)) {
-                                if (bus.busType == BusTypes.AC_SEATER.name || bus.busType == BusTypes.NON_AC_SEATER.name) {
+                                if (bus.busType == BusTypes.AC_SEATER.name || bus.busType == BusTypes.NON_AC_SEATER.name || bus.busType == BusTypes.SEATER_SLEEPER.name) {
                                     newList.add(bus)
                                 }
                             }
@@ -153,7 +169,7 @@ class BusViewModel(
                     R.id.sleeper_checkbox -> {
                         for (bus in list) {
                             if (!newList.contains(bus)) {
-                                if (bus.busType == BusTypes.SLEEPER.name) {
+                                if (bus.busType == BusTypes.SLEEPER.name || bus.busType == BusTypes.SEATER_SLEEPER.name) {
                                     newList.add(bus)
                                 }
                             }
@@ -219,9 +235,9 @@ class BusViewModel(
             }
             fetchJob.join()
             withContext(Dispatchers.Main){
-                bookedSeatsList = seatsList
-
-                seatDataFetched.value = true
+//                bookedSeatsList = seatsList
+                bookedSeatsNumber = seatsList
+//                seatDataFetched.value = true
             }
         }
     }
@@ -327,7 +343,7 @@ class BusViewModel(
         }
     }
 
-    var isUserBooked = MutableLiveData<Boolean>()
+    var isUserBooked = MutableLiveData<Boolean>(null)
 
     fun checkUserBookedBus(userId: Int, busId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -345,33 +361,37 @@ class BusViewModel(
     fun insertInitialBusData(
         pList: MutableList<Partners>,
         bList: MutableList<List<Bus>>,
-        aList: MutableList<List<List<BusAmenities>>>
+        aList: MutableList<List<List<BusAmenities>>>,
+        bLayoutList: MutableList<List<BusLayout>>
     ) {
         var amenity = 1
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertPartnerData(pList)
             val partnerList = repository.getPartnerData()
             for(busSet in bList.indices){
-                for(bus in bList[busSet]){
-                    val newBus = bus
-                    newBus.partnerId = partnerList[busSet].partnerId
-                    repository.insertBusData(newBus)
+                for(bus in bList[busSet]) {
+                    bus.partnerId = partnerList[busSet].partnerId
+                    repository.insertBusData(bus)
                 }
                 val busesOfPartner = repository.getBusOfPartner(partnerList[busSet].partnerId)
 
+                for(busIndex in busesOfPartner.indices){
+                    bLayoutList[busSet][busIndex].busId = busesOfPartner[busIndex].busId
+                    repository.insertBusLayoutData(bLayoutList[busSet][busIndex])
+                }
+
                 for(index in busesOfPartner.indices){
-                    for(amenities in aList[busSet][index]){
-                        println("AMENITY = $amenities")
-                        val newAmenity = amenities
-                        newAmenity.busId = busesOfPartner[index].busId
-                        newAmenity.busAmenityId = amenity
-                        amenity = amenity + 1
-                        repository.insertBusAmenitiesData(newAmenity)
+                    for(amenities in aList[busSet][index]) {
+                        amenities.busId = busesOfPartner[index].busId
+                        amenities.busAmenityId = amenity
+                        amenity += 1
+                        repository.insertBusAmenitiesData(amenities)
                     }
                 }
             }
         }
     }
+
 
 //    Bus boarding and dropping
 
@@ -407,7 +427,57 @@ class BusViewModel(
     var droppingPoint = MutableLiveData("")
 
 
-//    Sort and filter related operations
 
+//    seat layout feature related
+
+     val numberOfDecks = 2
+
+    val lowerLeftColumnCount = 2
+    val lowerRightColumnCount = 2
+    val upperLeftColumnCount = 1
+    val upperRightColumnCount = 2
+
+     val lowerLeftSeatCount = 20
+    val lowerRightSeatCount = 20
+    val upperLeftSeatCount = 5
+    val upperRightSeatCount = 10
+
+    val lowerBusSeatType = BusSeatType.SEATER
+     val upperBusSeatType = BusSeatType.SLEEPER
+
+    val busSelectedSeats = mutableListOf<String>()
+
+    var bookedSeatsNumber = listOf<String>(
+
+    )
+
+
+    var numberOfSeatsSelected = MutableLiveData<Int>(0)
+
+    lateinit var newBusLayout: BusLayout
+
+
+    lateinit var selectedBusLayout: BusLayout
+
+    var isBusLayoutDataFetched = MutableLiveData<Boolean>(null)
+
+    fun fetchBusLayoutData(selectedBusId: Int, date: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            lateinit var busLayout: BusLayout
+            var seatsList = listOf<String>()
+            val job = launch {
+                busLayout = repository.getLayoutOfBus(selectedBusId)
+                seatsList = repository.getBookedSeats(selectedBusId, date)
+
+//                fetchBusSeatsData()
+            }
+            job.join()
+            withContext(Dispatchers.Main){
+                selectedBusLayout = busLayout
+                bookedSeatsNumber = seatsList
+                isBusLayoutDataFetched.value = true
+            }
+        }
+    }
 
 }

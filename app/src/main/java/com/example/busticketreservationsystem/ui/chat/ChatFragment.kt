@@ -46,7 +46,6 @@ class ChatFragment : Fragment() {
     private lateinit var userViewModel: UserViewModel
     private lateinit var adminViewModel: AdminViewModel
 
-
     private lateinit var chatList: List<Chat>
 
     private var chatUserId: Int = 0
@@ -77,7 +76,7 @@ class ChatFragment : Fragment() {
     ): View {
 
         (activity as AppCompatActivity).supportActionBar!!.apply {
-            title = "Live Chat Support"
+            title = getString(R.string.live_chat_support)
             setDisplayHomeAsUpEnabled(true)
         }
 
@@ -110,6 +109,7 @@ class ChatFragment : Fragment() {
                                 setCustomAnimations(R.anim.from_right, R.anim.to_left)
                                 replace(R.id.adminPanelFragmentContainer, UserDetailFragment())
                             }
+                            adminViewModel.isUserFetched.value = null
                         }
                     }
                 })
@@ -177,11 +177,11 @@ class ChatFragment : Fragment() {
         })
 
         binding.sendButton.setOnClickListener {
-            val message = binding.enterMessageEditText.text.toString()
+            val message = binding.enterMessageInput.text.toString()
             if(helper.isValidMessage(message)){
                 chatViewModel.newChat = Chat(0, chatUserId, message, helper.getTimeStamp(), messageType)
                 chatViewModel.insertChat()
-                binding.enterMessageEditText.setText("")
+                binding.enterMessageInput.setText("")
             }
         }
 

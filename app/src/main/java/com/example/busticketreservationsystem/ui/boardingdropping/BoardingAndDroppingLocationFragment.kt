@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.ViewPager2
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.databinding.FragmentBoardingAndDroppingLocationBinding
 import com.example.busticketreservationsystem.listeners.OnItemClickListener
@@ -46,7 +47,7 @@ class BoardingAndDroppingLocationFragment : Fragment() {
         // Inflate the layout for this fragment
         (activity as AppCompatActivity).supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
-            title = "Boarding and Dropping Points"
+            title = getString(R.string.boarding_dropping_points)
         }
         binding = FragmentBoardingAndDroppingLocationBinding.inflate(inflater, container, false)
         return binding.root
@@ -77,6 +78,7 @@ class BoardingAndDroppingLocationFragment : Fragment() {
                 boardingDroppingLocationsAdapter.setSelectedPosition(position)
                 if(currentPosition == 0){
                     busViewModel.boardingPoint.value = busViewModel.boardingPoints[position]
+                    requireActivity().findViewById<ViewPager2>(R.id.boarding_dropping_viewPager).setCurrentItem(2, true)
                 }else if(currentPosition == 1){
                     busViewModel.droppingPoint.value = busViewModel.droppingPoints[position]
                 }

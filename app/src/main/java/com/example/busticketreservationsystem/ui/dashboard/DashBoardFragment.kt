@@ -5,37 +5,44 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.view.*
+import android.view.animation.AlphaAnimation
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.busticketreservationsystem.R
+import com.example.busticketreservationsystem.data.database.AppDatabase
+import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.databinding.FragmentDashBoardBinding
 import com.example.busticketreservationsystem.enums.LocationOptions
 import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.listeners.OnItemClickListener
 import com.example.busticketreservationsystem.listeners.OnRemoveClickListener
-import com.example.busticketreservationsystem.data.database.AppDatabase
-import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.ui.busresults.BusResultsFragment
 import com.example.busticketreservationsystem.ui.chat.ChatFragment
 import com.example.busticketreservationsystem.ui.locationsearch.SearchFragment
-import com.example.busticketreservationsystem.ui.selectedbus.SelectedBusFragment
+import com.example.busticketreservationsystem.ui.seatselection.SeatSelectionFragment
+import com.example.busticketreservationsystem.utils.Helper
 import com.example.busticketreservationsystem.viewmodel.*
-import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
-import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
+import com.example.busticketreservationsystem.viewmodel.livedata.BookingViewModel
 import com.example.busticketreservationsystem.viewmodel.livedata.BusViewModel
 import com.example.busticketreservationsystem.viewmodel.livedata.UserViewModel
+import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BookingViewModelFactory
+import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
+import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
+
 class DashBoardFragment : Fragment() {
+
+    private val helper = Helper()
 
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
     private val searchViewModel: SearchViewModel by activityViewModels()
@@ -52,6 +59,7 @@ class DashBoardFragment : Fragment() {
 
     private lateinit var userViewModel: UserViewModel
     private lateinit var busViewModel: BusViewModel
+    private lateinit var bookingViewModel: BookingViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +72,9 @@ class DashBoardFragment : Fragment() {
         val busViewModelFactory = BusViewModelFactory(repository)
         busViewModel = ViewModelProvider(requireActivity(), busViewModelFactory)[BusViewModel::class.java]
 
+        val bookingViewModelFactory = BookingViewModelFactory(repository)
+        bookingViewModel = ViewModelProvider(requireActivity(), bookingViewModelFactory)[BookingViewModel::class.java]
+
         setHasOptionsMenu(true)
 
     }
@@ -72,10 +83,10 @@ class DashBoardFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         (activity as AppCompatActivity).supportActionBar!!.apply {
             setDisplayHomeAsUpEnabled(false)
             title = resources.getString(R.string.dashboard_title)
+//            elevation=0F
         }
 
         binding = FragmentDashBoardBinding.inflate(inflater, container, false)
@@ -106,7 +117,9 @@ class DashBoardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        userViewModel.isLoggedIn.value = null
+//        userViewModel.isLoggedIn.value = null
+
+        bookingViewModel.currentScreenPosition = 0
 
         clearAllValues()
 
@@ -141,7 +154,6 @@ class DashBoardFragment : Fragment() {
                 userViewModel.fetchRecentlyViewedData()
             })
 
-
         }else{
 
             binding.recentlyViewedRecyclerView.visibility = View.GONE
@@ -174,45 +186,59 @@ class DashBoardFragment : Fragment() {
                 busViewModel.droppingPoints = locationViewModel.fetchAreas(busViewModel.selectedBus.destination)
 
                 navigationViewModel.fragment = DashBoardFragment()
-                parentFragmentManager.commit {
-                    setCustomAnimations(R.anim.from_right, R.anim.to_left)
-                    replace(R.id.homePageFragmentContainer, SelectedBusFragment())
-                }
+
+                busViewModel.fetchBusLayoutData(busViewModel.selectedBus.busId, busViewModel.selectedDate)
+
+                busViewModel.isBusLayoutDataFetched.observe(viewLifecycleOwner, Observer{
+                    if(it != null){
+                        println("BOOKED SEATS = ${busViewModel.bookedSeatsNumber}")
+                        parentFragmentManager.commit {
+                            setCustomAnimations(R.anim.from_right, R.anim.to_left)
+                            replace(R.id.homePageFragmentContainer, SeatSelectionFragment())
+                        }
+                        busViewModel.isBusLayoutDataFetched.value = null
+                    }
+                })
+
             }
         })
 
-        binding.sourceText.doOnTextChanged { text, start, before, count ->
+        binding.sourceInput.doOnTextChanged { text, start, before, count ->
             if(searchViewModel.sourceLocation.isNotEmpty()){
-                binding.sourceText.setTextColor(resources.getColor(R.color.searchColor))
-                binding.enterSourceErrorIcon.visibility = View.GONE
+                binding.sourceInput.setTextColor(resources.getColor(R.color.searchColor))
+//                binding.enterSourceErrorIcon.visibility = View.GONE
             }
         }
 
-        binding.destinationText.doOnTextChanged { text, start, before, count ->
+        binding.destinationInput.doOnTextChanged { text, start, before, count ->
             if(searchViewModel.destinationLocation.isNotEmpty()){
-                binding.destinationText.setTextColor(resources.getColor(R.color.searchColor))
+                binding.destinationInput.setTextColor(resources.getColor(R.color.searchColor))
 
-                binding.enterDestinationErrorIcon.visibility = View.GONE
+//                binding.enterDestinationErrorIcon.visibility = View.GONE
             }
         }
 
-        binding.dateText.doOnTextChanged { text, start, before, count ->
-            binding.dateText.setTextColor(resources.getColor(R.color.searchColor))
+        binding.dateInput.doOnTextChanged { text, start, before, count ->
+            binding.dateInput.setTextColor(resources.getColor(R.color.searchColor))
 
-                binding.enterDateErrorIcon.visibility = View.GONE
+//                binding.enterDateErrorIcon.visibility = View.GONE
         }
 
         binding.searchBusButton.setOnClickListener {
+
             if(searchViewModel.sourceLocation.isNotEmpty() && searchViewModel.destinationLocation.isNotEmpty() && searchViewModel.year != 0){
 
-                busViewModel.sourceLocation = searchViewModel.sourceLocation
-                busViewModel.destinationLocation = searchViewModel.destinationLocation
+                if(searchViewModel.sourceLocation == searchViewModel.destinationLocation){
+                    Toast.makeText(requireContext(), "Buses not available for the selected locations", Toast.LENGTH_SHORT).show()
+                }else{
+                    busViewModel.sourceLocation = searchViewModel.sourceLocation
+                    busViewModel.destinationLocation = searchViewModel.destinationLocation
+                    busViewModel.selectedDate = "${helper.getNumberFormat(searchViewModel.date)}/${helper.getNumberFormat(searchViewModel.month)}/${helper.getNumberFormat(searchViewModel.year)}"
 
-                busViewModel.selectedDate = "${searchViewModel.date}/${searchViewModel.month}/${searchViewModel.year}"
-
-                parentFragmentManager.commit {
-                    setCustomAnimations(R.anim.from_right, R.anim.to_left)
-                    replace(R.id.homePageFragmentContainer, BusResultsFragment())
+                    parentFragmentManager.commit {
+                        setCustomAnimations(R.anim.from_right, R.anim.to_left)
+                        replace(R.id.homePageFragmentContainer, BusResultsFragment())
+                    }
                 }
             }else{
                 checkErrorInput()
@@ -233,35 +259,48 @@ class DashBoardFragment : Fragment() {
             setLocation()
             if (searchViewModel.sourceLocation.isNotEmpty() || searchViewModel.destinationLocation.isNotEmpty()) {
                 binding.switchCircle.startAnimation(rotateAnimation)
+                val fadeOut = AlphaAnimation(1.0f, 0.0f)
+                fadeOut.duration = 1000
+                fadeOut.fillAfter = true
+
+                val fadeIn = AlphaAnimation(0.0f, 1.0f)
+                fadeIn.duration = 1000
+                fadeIn.fillAfter = true
+
+                binding.sourceInput.startAnimation(fadeOut)
+                binding.sourceInput.startAnimation(fadeIn)
+
+                binding.destinationInput.startAnimation(fadeOut)
+                binding.destinationInput.startAnimation(fadeIn)
             }
         }
 
-        binding.sourceLayout.setOnClickListener {
+        binding.sourceInput.setOnClickListener {
             searchViewModel.currentSearch = LocationOptions.SOURCE.name
             openSearchFragment()
         }
 
-        binding.destinationLayout.setOnClickListener {
+        binding.destinationInput.setOnClickListener {
             searchViewModel.currentSearch = LocationOptions.DESTINATION.name
             openSearchFragment()
         }
 
 
-        binding.dateLayout.setOnClickListener {
+        binding.dateInput.setOnClickListener {
             val datePickerFragment = TravelDatePickerFragment()
             datePickerFragment.show(parentFragmentManager, "datePicker")
         }
 
         dateViewModel.travelDateEdited.observe(viewLifecycleOwner, Observer {
             if(dateViewModel.travelYear != 0){
-                binding.dateText.text = "${dateViewModel.travelDate} - ${dateViewModel.travelMonth} - ${dateViewModel.travelYear}"
+                binding.dateInput.setText("${helper.getNumberFormat(dateViewModel.travelDate)} / ${helper.getNumberFormat(dateViewModel.travelMonth)} / ${helper.getNumberFormat(dateViewModel.travelYear)}")
                 searchViewModel.apply {
                     year = dateViewModel.travelYear
                     month = dateViewModel.travelMonth
                     date = dateViewModel.travelDate
                 }
 
-                binding.enterDateErrorIcon.visibility = View.INVISIBLE
+//                binding.enterDateErrorIcon.visibility = View.INVISIBLE
             }else{
                 searchViewModel.apply {
                     year = 0
@@ -274,24 +313,24 @@ class DashBoardFragment : Fragment() {
 
     private fun checkErrorInput() {
         if(searchViewModel.sourceLocation.isEmpty()){
-            binding.sourceText.setTextColor(Color.RED)
-            binding.enterSourceErrorIcon.visibility = View.VISIBLE
+            binding.sourceInput.setHintTextColor(Color.RED)
+//            binding.enterSourceErrorIcon.visibility = View.VISIBLE
         }else{
-            binding.enterSourceErrorIcon.visibility = View.INVISIBLE
+//            binding.enterSourceErrorIcon.visibility = View.INVISIBLE
         }
 
         if(searchViewModel.destinationLocation.isEmpty()){
-            binding.destinationText.setTextColor(Color.RED)
-            binding.enterDestinationErrorIcon.visibility = View.VISIBLE
+            binding.destinationInput.setHintTextColor(Color.RED)
+//            binding.enterDestinationErrorIcon.visibility = View.VISIBLE
         }else{
-            binding.enterDestinationErrorIcon.visibility = View.INVISIBLE
+//            binding.enterDestinationErrorIcon.visibility = View.INVISIBLE
         }
 
         if(searchViewModel.year == 0){
-            binding.dateText.setTextColor(Color.RED)
-            binding.enterDateErrorIcon.visibility = View.VISIBLE
+            binding.dateInput.setHintTextColor(Color.RED)
+//            binding.enterDateErrorIcon.visibility = View.VISIBLE
         }else{
-            binding.enterDateErrorIcon.visibility = View.INVISIBLE
+//            binding.enterDateErrorIcon.visibility = View.INVISIBLE
         }
     }
 
@@ -305,34 +344,43 @@ class DashBoardFragment : Fragment() {
     private fun setLocation(){
         val source = searchViewModel.sourceLocation
         val destination = searchViewModel.destinationLocation
+
+
         if(source.isEmpty() && destination.isEmpty()){
-            binding.sourceText.text = "Enter Source"
-            binding.destinationText.text = "Enter Destination"
-            binding.sourceText.setTextColor(Color.parseColor("#808080"))
-            binding.destinationText.setTextColor(Color.parseColor("#808080"))
+            binding.sourceInput.setText("")
+            binding.destinationInput.setText("")
+            binding.sourceInput.setHintTextColor(Color.parseColor("#808080"))
+            binding.destinationInput.setHintTextColor(Color.parseColor("#808080"))
         }
         if(source.isNotEmpty() && destination.isNotEmpty()){
-            binding.sourceText.text = source
-            binding.destinationText.text = destination
+            binding.sourceInput.setText(source)
+            binding.destinationInput.setText(destination)
 
         }else if(source.isNotEmpty() && destination.isEmpty()){
-            binding.sourceText.text = source
-            binding.destinationText.text = "Enter Destination"
+//            binding.sourceText.text = source
+            binding.sourceInput.setText(source)
+//            binding.destinationText.text = getString(R.string.enter_destination)
+            binding.destinationInput.setText("")
 //            binding.sourceText.setTextColor(Color.parseColor("#000000"))
-            binding.destinationText.setTextColor(Color.parseColor("#808080"))
+//            binding.destinationText.setTextColor(Color.parseColor("#808080"))
+            binding.destinationInput.setHintTextColor(Color.parseColor("#808080"))
+
 
         }else if(source.isEmpty() && destination.isNotEmpty()) {
-            binding.sourceText.text = "Enter Source"
-            binding.destinationText.text = destination
-            binding.sourceText.setTextColor(Color.parseColor("#808080"))
+//            binding.sourceText.text = getString(R.string.enter_source)
+            binding.sourceInput.setText("")
+//            binding.destinationText.text = destination
+            binding.destinationInput.setText(destination)
+
+//            binding.sourceText.setTextColor(Color.parseColor("#808080"))
 //            binding.destinationText.setTextColor(Color.parseColor("#000000"))
+            binding.sourceInput.setHintTextColor(Color.parseColor("#808080"))
 
         }
     }
 
     private fun openSearchFragment() {
         parentFragmentManager.commit {
-            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             setCustomAnimations(R.anim.from_right, R.anim.to_left)
             replace(R.id.homePageFragmentContainer, SearchFragment())
         }

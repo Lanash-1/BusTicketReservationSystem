@@ -19,5 +19,6 @@ data class PassengerInformation(
     var passengerName: String,
     var passengerAge: Int,
     var passengerGender: String,
-    var passengerSeatCode: String
+    var passengerSeatCode: String,
+    var ticketStatus: String
 )

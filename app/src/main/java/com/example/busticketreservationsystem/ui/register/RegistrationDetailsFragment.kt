@@ -21,13 +21,17 @@ import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.ui.editprofile.DatePickerFragment
 import com.example.busticketreservationsystem.ui.homepage.HomePageFragment
+import com.example.busticketreservationsystem.utils.Helper
 import com.example.busticketreservationsystem.viewmodel.DateViewModel
+import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.livedata.UserViewModel
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
 class RegistrationDetailsFragment : Fragment() {
+
+    private val helper = Helper()
 
     private lateinit var binding: FragmentRegistrationDetailsBinding
 
@@ -62,9 +66,8 @@ class RegistrationDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         (activity as AppCompatActivity).supportActionBar!!.apply {
-            title = "Register"
+            title = getString(R.string.register)
             setDisplayHomeAsUpEnabled(false)
         }
 
@@ -98,18 +101,24 @@ class RegistrationDetailsFragment : Fragment() {
         usernameInput = view.findViewById(R.id.username_input)
 
 
-        binding.calenderIcon.setOnClickListener {
+        binding.dobInput.setOnClickListener {
             val datePickerFragment = DatePickerFragment()
             datePickerFragment.show(parentFragmentManager, "datePicker")
         }
 
-        binding.dob.setOnClickListener {
-            val datePickerFragment = DatePickerFragment()
-            datePickerFragment.show(parentFragmentManager, "datePicker")
-        }
+//        binding.dob.setOnClickListener {
+//            val datePickerFragment = DatePickerFragment()
+//            datePickerFragment.show(parentFragmentManager, "datePicker")
+//        }
+
+//        dateViewModel.birthDateEdited.observe(viewLifecycleOwner, Observer{
+//            binding.dob.text = "${dateViewModel.birthDate} - ${dateViewModel.birthMonth} - ${dateViewModel.birthYear}"
+//        })
 
         dateViewModel.birthDateEdited.observe(viewLifecycleOwner, Observer{
-            binding.dob.text = "${dateViewModel.birthDate} - ${dateViewModel.birthMonth} - ${dateViewModel.birthYear}"
+            if(it != null){
+                binding.dobInput.setText("${helper.getNumberFormat(dateViewModel.birthDate)} / ${helper.getNumberFormat(dateViewModel.birthMonth)} / ${dateViewModel.birthYear}")
+            }
         })
 
         genderRadioGroup.setOnCheckedChangeListener { _, checkedId ->
@@ -140,7 +149,7 @@ class RegistrationDetailsFragment : Fragment() {
                 this.emailId = emailInput.text.toString()
 
                 if(dateViewModel.birthYear != 0){
-                    this.dob = "${dateViewModel.birthDate} - ${dateViewModel.birthMonth} - ${dateViewModel.birthYear}"
+                    this.dob = "${helper.getNumberFormat(dateViewModel.birthDate)} / ${helper.getNumberFormat(dateViewModel.birthMonth)} / ${dateViewModel.birthYear}"
                 }else{
                     this.dob = ""
                 }
@@ -199,6 +208,7 @@ class RegistrationDetailsFragment : Fragment() {
 
         return "Invalid Email Address"
     }
+
 
 
 

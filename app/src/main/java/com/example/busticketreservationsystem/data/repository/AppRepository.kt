@@ -102,7 +102,7 @@ interface AppRepository {
 
     fun getParticularBooking(bookingId: Int): Bookings
 
-    fun getBookedTicketPassengerInfo(bookingId: Int): List<PassengerInformation>
+//    fun getBookedTicketPassengerInfo(bookingId: Int): List<PassengerInformation>
 
     fun getBusOfRoute(sourceLocation: String, destinationLocation: String): List<Bus>
 
@@ -129,5 +129,17 @@ interface AppRepository {
     fun insertPartnerData(partner: List<Partners>)
     fun insertBusData(bus: List<Bus>)
     fun insertBusAmenitiesData(amenity: List<BusAmenities>)
+
+
+//    seat layout feature related
+    fun insertBusLayoutData(newBusLayout: BusLayout)
+    fun getLayoutOfBus(busId: Int): BusLayout
+    fun getAllBookings(): List<Bookings>
+    fun updatePassengerTicketStatus(ticketStatus: String, bookingId: Int)
+    fun checkPassengerTicketStatus(ticketStatus: String, bookingId: Int): Int
+    fun getBookedTicketPassengerInformation(bookingId: Int, ticketStatus: String): List<PassengerInformation>
+    fun cancelPassengerTicket(passengerId: Int)
+    fun removeBookedSeats(bookingId: Int, seatCode: String)
+    fun updateBookingData(bookingId: Int, totalCost: Double, noOfTicketsBooked: Int)
 
 }

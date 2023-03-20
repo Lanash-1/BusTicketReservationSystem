@@ -53,7 +53,7 @@ class ReviewsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         (activity as AppCompatActivity).supportActionBar?.apply {
-            title ="Ratings & Reviews"
+            title =getString(R.string.ratings_reviews)
             setDisplayHomeAsUpEnabled(true)
         }
         binding = FragmentReviewsBinding.inflate(inflater, container, false)

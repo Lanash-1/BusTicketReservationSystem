@@ -33,7 +33,7 @@
         android:id="@+id/next_Button"
         android:text="Continue"
         android:textColor="@color/white"
-        android:background="@color/customRed"
+        android:background="@color/appMainColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

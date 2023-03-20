@@ -29,6 +29,7 @@ import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.ui.boardingdropping.BoardingAndDroppingFragment
 import com.example.busticketreservationsystem.ui.bookedticket.BookedTicketFragment
 import com.example.busticketreservationsystem.ui.login.LoginFragment
+import com.example.busticketreservationsystem.utils.Helper
 import com.example.busticketreservationsystem.viewmodel.*
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BookingViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
@@ -39,6 +40,8 @@ import com.example.busticketreservationsystem.viewmodel.livedata.UserViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class BookingDetailsFragment : Fragment() {
+
+    private val helper = Helper()
 
     private lateinit var binding: FragmentBookingDetailsBinding
 
@@ -75,7 +78,7 @@ class BookingDetailsFragment : Fragment() {
     ): View {
         (activity as AppCompatActivity).supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
-            title = "Booking details"
+            title = getString(R.string.booking_details)
         }
 
         binding = FragmentBookingDetailsBinding.inflate(inflater, container, false)
@@ -103,7 +106,7 @@ class BookingDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
-            binding.proceedCardView.visibility = View.VISIBLE
+            binding.proceedLayout.visibility = View.VISIBLE
         }else{
             binding.loginRegisterButton.visibility = View.VISIBLE
         }
@@ -136,13 +139,21 @@ class BookingDetailsFragment : Fragment() {
             bookingViewModel.contactEmailId = it.toString()
         }
 
+
+        setBusDetailsData()
+
         binding.proceedText.setOnClickListener {
             passengerInfoAdapter.setCheck()
             passengerInfoAdapter.notifyDataSetChanged()
             binding.emailLayout.error = validEmail()
+            validMobile()
 
             val validEmail = binding.emailLayout.error == null
-            if(validEmail && binding.mobileInput.text?.isNotEmpty() == true){
+            val validMobile = binding.mobileLayout.error == null
+            if(validEmail && validMobile){
+
+//                binding.mobileLayout.error = null
+
                 var result = true
                 for(i in 0 until bookingViewModel.passengerInfo.size){
                     if(bookingViewModel.passengerInfo[i].name != null && bookingViewModel.passengerInfo[i].age != null && bookingViewModel.passengerInfo[i].gender != null){
@@ -161,18 +172,18 @@ class BookingDetailsFragment : Fragment() {
                     bookBusTickets()
                 }
             }else{
-                if(binding.mobileInput.text?.length != 10){
-                    binding.mobileLayout.error = "Enter a valid mobile number"
-                }else if(binding.mobileInput.text?.isEmpty() == true){
-                    binding.mobileLayout.error = "Enter mobile number to proceed"
-                }else{
-                    binding.mobileLayout.error = null
-                }
+//                if(binding.mobileInput.text?.length != 10){
+//                    binding.mobileLayout.error = getString(R.string.enter_valid_mobile_number)
+//                }else if(binding.mobileInput.text?.isEmpty() == true){
+//                    binding.mobileLayout.error = getString(R.string.enter_mobile_to_proceed)
+//                }else{
+//                    binding.mobileLayout.error = null
+//                }
             }
         }
         if(bookingViewModel.passengerInfo.isEmpty() || bookingViewModel.passengerInfo.size != bookingViewModel.selectedSeats.size){
             bookingViewModel.passengerInfo.clear()
-            for(i in 0 until bookingViewModel.selectedSeats.size){
+            for(index in 0 until bookingViewModel.selectedSeats.size){
                 bookingViewModel.passengerInfo.add(PassengerInfoModel(null, null, null))
             }
         }
@@ -201,28 +212,57 @@ class BookingDetailsFragment : Fragment() {
                 bookingViewModel.passengerInfo[position].name = name
             }
 
-            override fun onPassengerAgeChanged(position: Int, age: Int) {
+            override fun onPassengerAgeChanged(position: Int, age: Int?) {
                 bookingViewModel.passengerInfo[position].age = age
             }
 
             override fun onPassengerGenderSelected(position: Int, gender: Gender) {
                 bookingViewModel.passengerInfo[position].gender = gender
+//                passengerInfoAdapter.setPassengerInfoList(bookingViewModel.passengerInfo)
+//                passengerInfoAdapter.notifyDataSetChanged()
             }
         })
     }
 
+    private fun setBusDetailsData() {
+        binding.busNameText.text = bookingViewModel.selectedBus.busName
+        binding.dateText.text = busViewModel.selectedDate
+        binding.sourceCityText.text = bookingViewModel.selectedBus.sourceLocation
+        binding.destinationCityText.text = bookingViewModel.selectedBus.destination
+        binding.sourcePointText.text = busViewModel.boardingPoint.value
+        binding.destinationPointText.text = busViewModel.droppingPoint.value
+        binding.startingTimeText.text = bookingViewModel.selectedBus.startTime
+        binding.reachTimeText.text = bookingViewModel.selectedBus.reachTime
+    }
+
+    private fun validMobile() {
+        if(binding.mobileInput.text?.length == 0){
+            binding.mobileLayout.error = getString(R.string.should_not_be_empty)
+        }
+        else if(binding.mobileInput.text?.length != 10){
+            binding.mobileLayout.error = getString(R.string.enter_valid_mobile_number)
+        }else if(binding.mobileInput.text?.isEmpty() == true){
+            binding.mobileLayout.error = getString(R.string.enter_mobile_to_proceed)
+        }else{
+            binding.mobileLayout.error = null
+        }
+    }
+
     private fun bookBusTickets(){
         bookingViewModel.selectedBus = busViewModel.selectedBus
-        val booking = Bookings(0, userViewModel.user.userId, bookingViewModel.selectedBus.busId, bookingViewModel.contactEmailId!!, bookingViewModel.contactMobileNumber!!, bookingViewModel.boardingLocation, bookingViewModel.droppingLocation, bookingViewModel.totalTicketCost, BookedTicketStatus.UPCOMING.name, bookingViewModel.selectedSeats.size, busViewModel.selectedDate)
+        val booking = Bookings(0, userViewModel.user.userId, bookingViewModel.selectedBus.busId, bookingViewModel.contactEmailId!!, bookingViewModel.contactMobileNumber!!, busViewModel.boardingPoint.value!!, busViewModel.droppingPoint.value!!, bookingViewModel.totalTicketCost, bookingViewModel.selectedSeats.size, busViewModel.selectedDate)
 
         bookingViewModel.insertBookingOperation(booking, busViewModel.selectedDate, userViewModel.user.userId)
 
+
         bookingViewModel.isTicketBooked.observe(viewLifecycleOwner, Observer{
-            navigationViewModel.fragment = BookingDetailsFragment()
-            parentFragmentManager.commit {
-                setCustomAnimations(R.anim.from_right, R.anim.to_left)
-                replace(R.id.homePageFragmentContainer, BookedTicketFragment())
+            if(it != null){
+                navigationViewModel.fragment = BookingDetailsFragment()
+                moveToNextFragment(R.id.homePageFragmentContainer, BookedTicketFragment())
+
+                bookingViewModel.isTicketBooked.value = null
             }
+
         })
     }
 
@@ -239,5 +279,19 @@ class BookingDetailsFragment : Fragment() {
         }
 
         return "Enter a valid email address"
+    }
+
+    private fun moveToNextFragment(fragmentContainer: Int, fragment: Fragment){
+
+        busViewModel.numberOfSeatsSelected.value = 0
+        busViewModel.busSelectedSeats.clear()
+
+        busViewModel.boardingPoint.value = null
+        busViewModel.droppingPoint.value = null
+
+        parentFragmentManager.commit {
+            setCustomAnimations(R.anim.from_right, R.anim.to_left)
+            replace(fragmentContainer, fragment)
+        }
     }
 }

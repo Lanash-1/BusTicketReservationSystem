@@ -3,4 +3,5 @@
     <color name="searchColor">#ffffff</color>
     <color name="defaultModeColor">#ffffff</color>
     <color name="whiteAndBlack">#000000</color>
+    <color name="dashboard_background_tint">#000000</color>
 </resources>

@@ -23,9 +23,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.entity.Bus
+import com.example.busticketreservationsystem.data.entity.BusLayout
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.databinding.FragmentAddBusBinding
 import com.example.busticketreservationsystem.enums.BusAmenities
+import com.example.busticketreservationsystem.enums.BusSeatType
 import com.example.busticketreservationsystem.enums.BusTypes
 import com.example.busticketreservationsystem.ui.adminservice.AdminServicesFragment
 import com.example.busticketreservationsystem.utils.Helper
@@ -75,7 +77,7 @@ class AddBusFragment : Fragment() {
 
         (activity as AppCompatActivity).supportActionBar!!.apply {
             setDisplayHomeAsUpEnabled(true)
-            title="Add Bus"
+            title=getString(R.string.add_bus)
         }
 
         binding = FragmentAddBusBinding.inflate(inflater, container, false)
@@ -233,7 +235,7 @@ class AddBusFragment : Fragment() {
                 binding.sourceCityView.visibility = View.VISIBLE
             }
             locationViewModel.selectedSourceCity.value = null
-            binding.sourceCityView.text = "Select City"
+            binding.sourceCityView.text = getString(R.string.select_city)
             locationViewModel.fetchCities(locationViewModel.selectedSourceState.value!!)
         })
 
@@ -269,7 +271,7 @@ class AddBusFragment : Fragment() {
                 binding.destinationCityView.visibility = View.VISIBLE
             }
             locationViewModel.selectedDestinationCity.value = null
-            binding.destinationCityView.text = "Select City"
+            binding.destinationCityView.text = getString(R.string.select_city)
             locationViewModel.fetchCities(locationViewModel.selectedDestinationState.value!!)
         })
 
@@ -299,6 +301,21 @@ class AddBusFragment : Fragment() {
         val validAmenities = validAmenities()
         if(validPartner && validBusName && validBoardingDetails && validDestinationDetails && validTimingDetails && validPriceDetail && validBusType && validAmenities){
             val duration = helper.getDuration(binding.startTimePickerInput.text.toString(), binding.reachTimePickerInput.text.toString())
+            busViewModel.newBusLayout = BusLayout(
+                0,
+                0,
+                2,
+                BusSeatType.SEATER.name,
+                2,
+                2,
+                1,
+                2,
+                10,
+                10,
+                5,
+                10
+            )
+            val totalSeatCount = busViewModel.newBusLayout.lowerLeftSeatCount + busViewModel.newBusLayout.lowerRightSeatCount + busViewModel.newBusLayout.upperLeftSeatCount + busViewModel.newBusLayout.upperRightSeatCount
             adminViewModel.newBus = Bus(
                 0,
                 adminViewModel.partner.partnerId,
@@ -307,8 +324,8 @@ class AddBusFragment : Fragment() {
                 adminViewModel.destinationCity,
                 adminViewModel.perTicketCost.toDouble(),
                 adminViewModel.busType,
-                30,
-                30,
+                totalSeatCount,
+                totalSeatCount,
                 adminViewModel.startTime,
                 adminViewModel.reachTime,
                 duration,
@@ -347,7 +364,6 @@ class AddBusFragment : Fragment() {
         }
         adminViewModel.amenities = amenitiesList
         return true
-
     }
 
     private fun validBusType(): Boolean {
@@ -470,9 +486,9 @@ class AddBusFragment : Fragment() {
             }
 
             if(timeText == binding.startTimePickerInput){
-                adminViewModel.startTime = "$hourOfDay:$minute"
+                adminViewModel.startTime = timeText.text.toString()
             }else{
-                adminViewModel.reachTime = "$hourOfDay:$minute"
+                adminViewModel.reachTime = timeText.text.toString()
             }
         },
             hour,

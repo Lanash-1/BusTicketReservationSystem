@@ -40,7 +40,7 @@ class AdminSettingsFragment : Fragment() {
 
         (activity as AppCompatActivity).supportActionBar!!.apply {
             setDisplayHomeAsUpEnabled(false)
-            title="Settings"
+            title=getString(R.string.settings)
         }
 
         binding = FragmentAdminSettingsBinding.inflate(inflater, container, false)

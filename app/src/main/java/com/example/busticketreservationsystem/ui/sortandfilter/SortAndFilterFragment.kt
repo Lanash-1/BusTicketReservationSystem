@@ -45,7 +45,7 @@ class SortAndFilterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         (activity as AppCompatActivity).supportActionBar?.apply {
-            title = "Sort and Filter"
+            title = getString(R.string.sort_and_filter)
             setDisplayHomeAsUpEnabled(true)
         }
         binding = FragmentSortAndFilterBinding.inflate(inflater, container, false)
@@ -123,15 +123,11 @@ class SortAndFilterFragment : Fragment() {
             clearFilters()
             moveToBusResults()
         }
-
-
     }
-
 
 
     private fun moveToBusResults() {
         parentFragmentManager.commit {
-            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
             setCustomAnimations(R.anim.from_left, R.anim.to_right)
             replace(R.id.homePageFragmentContainer, BusResultsFragment())
         }
@@ -150,10 +146,10 @@ class SortAndFilterFragment : Fragment() {
         val checkedList = mutableListOf<Int>()
 
 
-            if(binding.acCheckbox.isChecked){
-                checkedList.add(R.id.ac_checkbox)
+        if(binding.acCheckbox.isChecked){
+            checkedList.add(R.id.ac_checkbox)
 
-            }
+        }
 
 
         if(binding.nonAcCheckbox.isChecked){

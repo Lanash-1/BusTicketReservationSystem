@@ -55,7 +55,7 @@ class AnalyticsPageFragment : Fragment() {
         // Inflate the layout for this fragment
         (activity as AppCompatActivity).supportActionBar!!.apply {
             setDisplayHomeAsUpEnabled(false)
-            title="Analytics"
+            title=getString(R.string.analytics)
         }
         binding = FragmentAnalyticsBinding.inflate(inflater, container, false)
         return binding.root

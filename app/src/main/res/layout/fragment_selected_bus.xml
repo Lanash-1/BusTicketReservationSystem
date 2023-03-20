@@ -156,7 +156,7 @@
                 app:layout_constraintTop_toBottomOf="@id/seat_name_text"
                 android:text="Select Boarding and Dropping Point"
                 android:drawableEnd="@drawable/ic_baseline_keyboard_double_arrow_right_24"
-                android:background="@color/customRed"
+                android:background="@color/appMainColor"
                 style="@style/ButtonIconColor"
                 android:textColor="@color/white"/>
 
@@ -180,7 +180,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/about_bus_button"
             android:text="Bus info"
-            android:background="@color/customRed"
+            android:background="@color/appMainColor"
             android:textStyle="bold"
             />
 

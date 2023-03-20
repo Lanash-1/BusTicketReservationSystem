@@ -20,13 +20,19 @@ class WelcomeViewPagerAdapter: RecyclerView.Adapter<WelcomeViewPagerAdapter.Welc
         holder.binding.apply {
             when(position){
                 0 -> {
-                    welcomeImage.setImageResource(R.drawable.welcome_screen_1)
+                    welcomeImage.setImageResource(R.drawable.welcome_screen_welcome)
+                    title.setText(R.string.welcome_title_1)
+                    subTitle.setText(R.string.subtitle_1)
                 }
                 1 -> {
-                    welcomeImage.setImageResource(R.drawable.welcome_screen_2)
+                    welcomeImage.setImageResource(R.drawable.welcome_screen_affordable)
+                    title.setText(R.string.welcome_title_2)
+                    subTitle.setText(R.string.subtitle_2)
                 }
                 2 -> {
-                    welcomeImage.setImageResource(R.drawable.welcome_screen_3)
+                    welcomeImage.setImageResource(R.drawable.welcome_image_start)
+                    title.setText(R.string.welcome_title_3)
+                    subTitle.setText(R.string.subtitle_3)
                 }
             }
         }

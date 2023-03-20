@@ -12,12 +12,10 @@ interface ChatDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertChat(chat: Chat)
 
-
     @Query("select * from chat_table where userId like :userId")
     fun getChatOfAUser(userId: Int): List<Chat>
 
     @Query("select distinct userId from chat_table")
     fun getUserList(): List<Int>
-
 
 }

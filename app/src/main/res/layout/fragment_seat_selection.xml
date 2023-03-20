@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.seatselection.SeatSelectionFragment"
+    >
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/seat_color_info_card_view"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/seat_color_info_layout"
+            >
+
+
+        <TextView
+            android:id="@+id/available_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/available"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/not_available_text"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:drawablePadding="8dp"
+            app:drawableStartCompat="@drawable/available_info"
+            android:gravity="center"
+            android:textSize="14sp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/not_available"
+            android:id="@+id/not_available_text"
+            app:layout_constraintStart_toEndOf="@id/available_text"
+            app:layout_constraintTop_toTopOf="@id/available_text"
+            app:layout_constraintEnd_toStartOf="@id/selected_text"
+            android:drawablePadding="8dp"
+            app:drawableStartCompat="@drawable/not_available_info"
+            android:gravity="center"
+            android:textSize="14sp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/selected"
+            android:id="@+id/selected_text"
+            app:layout_constraintTop_toTopOf="@id/available_text"
+            app:layout_constraintStart_toEndOf="@id/not_available_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:drawablePadding="8dp"
+            app:drawableStartCompat="@drawable/selected_info"
+            android:gravity="center"
+            android:textSize="14sp"
+            />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/seat_layout_layout"
+        app:layout_constraintTop_toBottomOf="@id/seat_color_info_card_view"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/continue_button_card_view"
+        app:layout_constraintVertical_bias="0"
+        android:scrollbars="none"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        >
+
+
+
+
+
+            <!-- Horizontal scrolling content -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fillViewport="true"
+                android:scrollbars="none"
+                android:overScrollMode="never"
+
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/seat_selection_parent_layout"
+                    >
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/lower_deck_card_view"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/upper_deck_card_view"
+                        android:layout_margin="16dp"
+                        >
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/lower_deck_layout"
+                            >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/lower_deck_title"
+                                android:text="@string/lower_deck"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                android:layout_margin="16dp"
+                                style="@style/TextDefault"
+                                android:textSize="16sp"
+                            />
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:id="@+id/steering_icon"
+                                app:layout_constraintTop_toTopOf="@id/lower_deck_title"
+                                app:layout_constraintBottom_toBottomOf="@id/lower_deck_title"
+                                app:layout_constraintRight_toRightOf="parent"
+                                android:layout_marginRight="16dp"
+                                android:src="@drawable/steering_wheel"
+                                app:tint="@color/defaultModeColor"
+                                />
+
+                            <com.google.android.material.divider.MaterialDivider
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/lower_deck_divider"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/lower_deck_title"
+                                android:layout_marginTop="16dp"
+                                />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/lower_left_recycler_view"
+                                app:layout_constraintTop_toBottomOf="@id/lower_deck_divider"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                tools:listitem="@layout/item_seat"
+                                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                                app:spanCount="1"
+                                tools:itemCount="10"
+                                android:layout_margin="16dp"
+                                android:overScrollMode="never"
+                                android:nestedScrollingEnabled="true"
+                                />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/lower_right_recycler_view"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/lower_deck_divider"
+                                app:layout_constraintLeft_toRightOf="@id/lower_left_recycler_view"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                android:layout_marginHorizontal="16dp"
+                                android:layout_marginStart="32dp"
+                                tools:listitem="@layout/item_seat"
+                                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                                app:spanCount="2"
+                                tools:itemCount="20"
+                                android:overScrollMode="never"
+                                android:nestedScrollingEnabled="true"
+
+                                />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/upper_deck_card_view"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/lower_deck_card_view"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:layout_marginVertical="16dp"
+                        android:layout_marginEnd="16dp"
+                        >
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/upper_deck_layout"
+                            >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/upper_deck_title"
+                                android:text="@string/upper_deck"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                android:layout_margin="16dp"
+                                style="@style/TextDefault"
+                                android:textSize="16sp"
+                                />
+
+                            <com.google.android.material.divider.MaterialDivider
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/upper_deck_divider"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/upper_deck_title"
+                                android:layout_marginTop="16dp"
+                                />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/upper_left_recycler_view"
+                                app:layout_constraintTop_toBottomOf="@id/upper_deck_divider"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                tools:listitem="@layout/item_seat"
+                                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                                app:spanCount="1"
+                                tools:itemCount="10"
+                                android:layout_margin="16dp"
+                                android:overScrollMode="never"
+                                android:nestedScrollingEnabled="false"
+                                />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/upper_right_recycler_view"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/upper_deck_divider"
+                                app:layout_constraintLeft_toRightOf="@id/upper_left_recycler_view"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                android:layout_marginHorizontal="16dp"
+                                android:layout_marginStart="32dp"
+                                tools:listitem="@layout/item_seat"
+                                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                                app:spanCount="2"
+                                tools:itemCount="20"
+                                android:nestedScrollingEnabled="false"
+                                android:overScrollMode="never"
+                                />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    </androidx.cardview.widget.CardView>
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </HorizontalScrollView>
+
+
+
+
+    </androidx.core.widget.NestedScrollView>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/continue_button_card_view"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:cardElevation="8dp"
+        >
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/seat_name_text"
+                android:text="LW1, "
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                app:layout_constraintRight_toLeftOf="@id/price_text"
+                android:background="@color/white"
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/price_text"
+                android:text="@string/_1400"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/seat_name_text"
+                android:padding="8dp"
+                android:textAlignment="viewEnd"
+                android:background="@color/white"
+                />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/continue_button"
+                android:text="@string/continue_text"
+                android:enabled="false"
+                android:background="@color/appMainColor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/price_text"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

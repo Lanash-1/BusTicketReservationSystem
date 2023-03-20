@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.welcome.WelcomeFragment">
+    tools:context=".ui.welcome.WelcomeFragment"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/welcomePage_viewPager"
@@ -46,7 +52,6 @@
                 android:id="@+id/dot1"
                 android:src="@color/black"
                 />
-
 
         </androidx.cardview.widget.CardView>
 
@@ -95,7 +100,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/continue_as_text"
-        android:text="Continue as"
+        android:text="@string/continue_as"
         style="@style/TextDefault"
         app:layout_constraintLeft_toLeftOf="@id/adminBtn"
         app:layout_constraintRight_toRightOf="@id/userBtn"
@@ -107,7 +112,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/adminBtn"
-        android:text="Admin"
+        android:text="@string/admin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/userBtn"
@@ -117,7 +122,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="OR"
+        android:text="@string/or"
         app:layout_constraintTop_toTopOf="@id/adminBtn"
         app:layout_constraintBottom_toBottomOf="@id/adminBtn"
         app:layout_constraintLeft_toRightOf="@id/adminBtn"
@@ -129,11 +134,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/userBtn"
-        android:text="user"
+        android:text="@string/user"
         app:layout_constraintBottom_toBottomOf="@id/adminBtn"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toRightOf="@id/adminBtn"/>
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

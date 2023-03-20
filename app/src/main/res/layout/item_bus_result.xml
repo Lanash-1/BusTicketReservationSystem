@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="130dp"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clickable="true"
     android:focusable="true"
@@ -16,17 +16,16 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_margin="16dp"
         style="@style/TitleTextStyle"
-        android:textSize="24sp"
         />
 
     <androidx.cardview.widget.CardView
         android:layout_width="56dp"
         android:layout_height="48dp"
-        app:layout_constraintEnd_toEndOf="@id/price_text"
-        app:layout_constraintTop_toBottomOf="@id/price_text"
         android:layout_marginTop="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="16dp"
         app:cardCornerRadius="5dp"
-        android:elevation="1dp"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -39,16 +38,15 @@
             android:layout_height="24dp"
             android:id="@+id/rating_text"
             android:text="4.5"
-            android:drawableStart="@drawable/ic_baseline_star_24"
             android:drawablePadding="2dp"
             android:background="#37B87C"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:padding="2dp"
-            />
+            app:drawableStartCompat="@drawable/ic_baseline_star_24" />
 
         <TextView
             android:layout_width="match_parent"
@@ -59,6 +57,7 @@
             app:layout_constraintTop_toBottomOf="@id/rating_text"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
+            android:textSize="12sp"
             android:padding="2dp"
             android:drawablePadding="4dp"/>
 
@@ -66,30 +65,30 @@
 
     </androidx.cardview.widget.CardView>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/bus_icon"
-        android:src="@drawable/ic_baseline_directions_bus_24"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="13dp"
-        style="@style/IconTint"
-        />
+<!--    <ImageView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/bus_icon"-->
+<!--        android:src="@drawable/ic_baseline_directions_bus_24"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:layout_marginLeft="13dp"-->
+<!--        style="@style/IconTint"-->
+<!--        />-->
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/travels_text"
-        android:text="Orange Travels"
-        android:textStyle="bold"
-        android:textColor="#EE0256"
-        android:textSize="20sp"
-        app:layout_constraintLeft_toRightOf="@id/bus_icon"
-        app:layout_constraintTop_toTopOf="@id/bus_icon"
-        app:layout_constraintBottom_toBottomOf="@id/bus_icon"
-        android:layout_marginLeft="8dp"
+        android:text="Travels Sample name"
+        android:maxLines="1"
+        style="@style/TitleTextStyle"
+        android:textStyle="normal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/price_text"
+        android:layout_margin="16dp"
         />
 
     <TextView
@@ -99,8 +98,8 @@
         android:text="21:15"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="3dp"
-        app:layout_constraintStart_toStartOf="@id/bus_icon"
-        app:layout_constraintTop_toBottomOf="@id/bus_icon"
+        app:layout_constraintStart_toStartOf="@id/travels_text"
+        app:layout_constraintTop_toBottomOf="@id/travels_text"
         style="@style/TitleTextStyle"
         />
 
@@ -208,6 +207,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bus_type_text"
+        android:layout_marginTop="16dp"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

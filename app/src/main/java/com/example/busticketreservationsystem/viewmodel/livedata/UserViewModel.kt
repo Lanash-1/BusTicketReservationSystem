@@ -7,6 +7,7 @@ import com.example.busticketreservationsystem.data.entity.Bus
 import com.example.busticketreservationsystem.data.entity.RecentlyViewed
 import com.example.busticketreservationsystem.data.entity.User
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
+import com.example.busticketreservationsystem.enums.BookedTicketStatus
 import com.example.busticketreservationsystem.utils.Helper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,6 +20,8 @@ class UserViewModel(
     private val helper = Helper()
 
 //    User Details Related
+
+
 
     lateinit var user: User
 
@@ -158,13 +161,11 @@ class UserViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             lateinit var newUser: User
             val job = launch {
-                println("USER : $user")
                 repository.updateUserData(user)
                 newUser = repository.getUserAccount(user.userId)
             }
             job.join()
             withContext(Dispatchers.Main){
-                println("INSIDE UPDATE FUNCTION: $newUser")
                 user = newUser
             }
         }
@@ -219,6 +220,20 @@ class UserViewModel(
         }
     }
 
+    var isUserPasswordUpdated = MutableLiveData<Boolean>(null)
+
+    fun updateUserPassword(mobileNumber: String, password: String){
+        viewModelScope.launch(Dispatchers.IO) {
+            val job = launch {
+                repository.updateUserPassword(password, mobileNumber)
+            }
+            job.join()
+            withContext(Dispatchers.Main){
+                isUserPasswordUpdated.value = true
+            }
+        }
+    }
+
     fun deleteUserAccount() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteUserAccount(user.userId)
@@ -226,5 +241,34 @@ class UserViewModel(
     }
 
 
+    var upcomingCount = 0
+    var completedCount = 0
+    var cancelledCount = MutableLiveData<Int>(0)
+//    fun fetchUserTicketCount(userId: Int) {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            var upcoming = 0
+//            var completed = 0
+//            var cancelled = 0
+//            val job = launch {
+//                val ticketList = repository.getUserBookings(userId)
+//                upcoming = ticketList.filter {
+//                    it.bookedTicketStatus == BookedTicketStatus.UPCOMING.name
+//                }.size
+//                completed = ticketList.filter {
+//                    it.bookedTicketStatus == BookedTicketStatus.COMPLETED.name
+//                }.size
+//                cancelled = ticketList.filter {
+//                    it.bookedTicketStatus == BookedTicketStatus.CANCELLED.name
+//                }.size
+//            }
+//            job.join()
+//            withContext(Dispatchers.Main){
+//                upcomingCount = upcoming
+//                completedCount = completed
+//                cancelledCount.value = cancelled
+//            }
+//        }
+//
+//    }
 
 }

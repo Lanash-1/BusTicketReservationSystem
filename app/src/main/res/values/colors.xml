@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -9,15 +10,19 @@
     <color name="white">#FFFFFFFF</color>
     <color name="customYellow">#F8C31F</color>
     <color name="customBlue">#0E1B38</color>
-    <color name="customRed">#5AB351</color>
-<!--    <color name="seatGreen">#5AB351</color>-->
-    <color name="seatGreen">#0DAC86</color>
+<!--    <color name="customRed">#5AB351</color>-->
+    <color name="seatGray">#D8D8D8</color>
+    <color name="seatGreen">#4CAF50</color>
+    <color name="seatBlue">#2196F3</color>
+    <color name="seatRed">#F44336</color>
+    <color name="appMainColor">#0DAC86</color>
+    <color name="errorColor">#B00020</color>
+    <color name="successColor">#4BB543</color>
 
-    <color name="sliderGray">#E0E0E0</color>
+    <color name="sliderGray">#808080</color>
     <color name="searchColor">#000000</color>
     <color name="defaultModeColor">#000000</color>
     <color name="whiteAndBlack">#ffffff</color>
-    <!--    <color name="customRed">#D84E55</color>-->
+    <color name="dashboard_background_tint">#0DAC86</color>
 
-    <!--    <color name="redForStatus">#D13140</color>-->
 </resources>
