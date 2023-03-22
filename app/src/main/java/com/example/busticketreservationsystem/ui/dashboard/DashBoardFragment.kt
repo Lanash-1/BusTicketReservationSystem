@@ -160,6 +160,10 @@ class DashBoardFragment : Fragment() {
             binding.recentlyViewedText.visibility = View.GONE
         }
 
+        if(busViewModel.selectedDate.isNotEmpty()){
+            binding.dateInput.setText(busViewModel.selectedDate)
+        }
+
         userViewModel.recentlyViewedList.observe(viewLifecycleOwner, Observer{
             if(it.isNotEmpty()){
                 recentlyViewedAdapter.setRecentlyViewedList(userViewModel.recentlyViewedBusList, userViewModel.recentlyViewedList.value!!, userViewModel.recentlyViewedPartnerList)
@@ -292,22 +296,26 @@ class DashBoardFragment : Fragment() {
         }
 
         dateViewModel.travelDateEdited.observe(viewLifecycleOwner, Observer {
-            if(dateViewModel.travelYear != 0){
-                binding.dateInput.setText("${helper.getNumberFormat(dateViewModel.travelDate)} / ${helper.getNumberFormat(dateViewModel.travelMonth)} / ${helper.getNumberFormat(dateViewModel.travelYear)}")
-                searchViewModel.apply {
-                    year = dateViewModel.travelYear
-                    month = dateViewModel.travelMonth
-                    date = dateViewModel.travelDate
-                }
+            if(it != null){
+                if(dateViewModel.travelYear != 0){
+                    binding.dateInput.setText("${helper.getNumberFormat(dateViewModel.travelDate)} / ${helper.getNumberFormat(dateViewModel.travelMonth)} / ${helper.getNumberFormat(dateViewModel.travelYear)}")
+                    searchViewModel.apply {
+                        year = dateViewModel.travelYear
+                        month = dateViewModel.travelMonth
+                        date = dateViewModel.travelDate
+                    }
 
 //                binding.enterDateErrorIcon.visibility = View.INVISIBLE
-            }else{
-                searchViewModel.apply {
-                    year = 0
-                    month = 0
-                    date = 0
+                }else{
+                    searchViewModel.apply {
+                        year = 0
+                        month = 0
+                        date = 0
+                    }
                 }
+                dateViewModel.travelDateEdited.value = null
             }
+
         })
     }
 

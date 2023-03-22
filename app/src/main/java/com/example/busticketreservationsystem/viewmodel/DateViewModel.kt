@@ -30,7 +30,7 @@ class DateViewModel: ViewModel() {
     var travelMonth = 0
     var travelYear = 0
 
-    var travelDateEdited = MutableLiveData<Boolean>()
+    var travelDateEdited = MutableLiveData<Boolean>(null)
 
 
 //    edit profile date related

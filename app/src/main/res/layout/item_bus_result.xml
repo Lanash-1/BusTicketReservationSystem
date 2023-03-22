@@ -5,7 +5,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clickable="true"
     android:focusable="true"
-    android:background="?android:selectableItemBackground">
+    android:background="?android:selectableItemBackground"
+    android:elevation="4dp"
+    >
 
     <TextView
         android:layout_width="wrap_content"
@@ -65,17 +67,6 @@
 
     </androidx.cardview.widget.CardView>
 
-<!--    <ImageView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:id="@+id/bus_icon"-->
-<!--        android:src="@drawable/ic_baseline_directions_bus_24"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        android:layout_marginTop="16dp"-->
-<!--        android:layout_marginLeft="13dp"-->
-<!--        style="@style/IconTint"-->
-<!--        />-->
 
     <TextView
         android:layout_width="0dp"
@@ -102,17 +93,6 @@
         app:layout_constraintTop_toBottomOf="@id/travels_text"
         style="@style/TitleTextStyle"
         />
-
-<!--    <TextView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:id="@+id/dash"-->
-<!--        android:text="-"-->
-<!--        app:layout_constraintLeft_toRightOf="@id/startTime_text"-->
-<!--        app:layout_constraintTop_toTopOf="@id/startTime_text"-->
-<!--        android:layout_marginHorizontal="8dp"-->
-<!--        android:textStyle="bold"-->
-<!--        />-->
 
         <TextView
             android:layout_width="wrap_content"
@@ -147,27 +127,6 @@
         app:layout_constraintLeft_toRightOf="@id/time_divider"
         app:layout_constraintTop_toTopOf="@id/startTime_text"
         android:layout_marginLeft="8dp" />
-
-<!--    <TextView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:id="@+id/duration_text"-->
-<!--        android:text="8.15 hrs"-->
-<!--        app:layout_constraintStart_toStartOf="@id/startTime_text"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/startTime_text"-->
-<!--        android:layout_marginTop="8dp"-->
-<!--        android:textStyle="bold"-->
-<!--        />-->
-
-<!--    <TextView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:id="@+id/point1"-->
-<!--        android:text="•"-->
-<!--        android:textStyle="bold"-->
-<!--        app:layout_constraintLeft_toRightOf="@id/duration_text"-->
-<!--        app:layout_constraintTop_toTopOf="@id/duration_text"-->
-<!--        android:layout_marginLeft="8dp" />-->
 
 
     <TextView

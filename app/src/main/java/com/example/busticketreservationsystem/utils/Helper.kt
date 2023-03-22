@@ -143,6 +143,58 @@ open class Helper {
         return sdf.parse(current)
     }
 
+    fun getCurrentDateString(): String{
+        val sdf = SimpleDateFormat("dd/MM/yyyy")
+        val time = Calendar.getInstance().time
+        val current = sdf.format(time)
+        return current
+    }
+
+    fun getDateExpandedFormat(inputDate: String): String{
+        val normalFormatter = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
+        val date = normalFormatter.parse(inputDate)
+        val expandedFormatter = SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH)
+        val formattedDate = expandedFormatter.format(date!!)
+        println("DaTE = $formattedDate")
+        return formattedDate
+    }
+
+    fun getPreviousDate(inputDateStr: String): String {
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+        val inputDate = dateFormat.parse(inputDateStr)
+
+        val calendar = Calendar.getInstance()
+        calendar.time = inputDate
+
+        // Get the previous date
+        calendar.add(Calendar.DAY_OF_YEAR, -1)
+        val prevDate = dateFormat.format(calendar.time)
+        println("Previous date: $prevDate")
+
+        return prevDate
+    }
+
+    fun getNextDate(inputDateStr: String): String{
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+        val inputDate = dateFormat.parse(inputDateStr)
+
+        val calendar = Calendar.getInstance()
+        calendar.time = inputDate
+
+        // Get the next date
+        calendar.add(Calendar.DAY_OF_YEAR, 1)
+        val nextDate = dateFormat.format(calendar.time)
+        println("Next date: $nextDate")
+
+
+
+        return nextDate
+    }
+
+//    fun getPreviousExpandedDate(inputDate: String): String{
+//
+//    }
+
     fun validPassword(passwordText: Editable?): Boolean {
         if(passwordText != null){
             if(passwordText.length < 8)
@@ -231,5 +283,7 @@ open class Helper {
             }
         }
     }
+
+
 
 }

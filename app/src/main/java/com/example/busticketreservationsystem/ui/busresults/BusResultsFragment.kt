@@ -1,10 +1,13 @@
 package com.example.busticketreservationsystem.ui.busresults
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.*
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
@@ -17,10 +20,12 @@ import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.listeners.OnItemClickListener
 import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
+import com.example.busticketreservationsystem.ui.dashboard.TravelDatePickerFragment
 import com.example.busticketreservationsystem.ui.homepage.HomePageFragment
 import com.example.busticketreservationsystem.ui.seatselection.SeatSelectionFragment
 import com.example.busticketreservationsystem.ui.selectedbus.SelectedBusFragment
 import com.example.busticketreservationsystem.ui.sortandfilter.SortAndFilterFragment
+import com.example.busticketreservationsystem.utils.Helper
 import com.example.busticketreservationsystem.viewmodel.*
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.UserViewModelFactory
@@ -32,8 +37,12 @@ class BusResultsFragment : Fragment() {
 
     private lateinit var binding: FragmentBusResultsBinding
 
+    private val helper = Helper()
+
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
     private val locationViewModel: LocationViewModel by activityViewModels()
+    private val dateViewModel: DateViewModel by activityViewModels()
+    private val searchViewModel: SearchViewModel by activityViewModels()
 
     private var busResultAdapter = BusResultAdapter()
 
@@ -122,6 +131,50 @@ class BusResultsFragment : Fragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
+        binding.sourceLocationText.text = busViewModel.sourceLocation
+        binding.destinationLocationText.text = busViewModel.destinationLocation
+
+        binding.dateTitle.text = helper.getDateExpandedFormat(busViewModel.selectedDate)
+
+        binding.previousDateButton.isEnabled = busViewModel.selectedDate != helper.getCurrentDateString()
+
+        binding.dateTitle.setOnClickListener{
+            val datePickerFragment = TravelDatePickerFragment()
+            datePickerFragment.show(parentFragmentManager, "datePicker")
+        }
+
+        dateViewModel.travelDateEdited.observe(viewLifecycleOwner, Observer {
+            if(it != null){
+                if(dateViewModel.travelYear != 0){
+                    val selectedDate = "${helper.getNumberFormat(dateViewModel.travelDate)}/${helper.getNumberFormat(dateViewModel.travelMonth)}/${helper.getNumberFormat(dateViewModel.travelYear)}"
+                    if(selectedDate != busViewModel.selectedDate){
+                        busViewModel.selectedDate = selectedDate
+                        binding.dateTitle.text = helper.getDateExpandedFormat(busViewModel.selectedDate)
+                    }
+                    searchViewModel.apply {
+                        year = dateViewModel.travelYear
+                        month = dateViewModel.travelMonth
+                        date = dateViewModel.travelDate
+                    }
+//                binding.enterDateErrorIcon.visibility = View.INVISIBLE
+                }else{
+                    searchViewModel.apply {
+                        year = 0
+                        month = 0
+                        date = 0
+                    }
+                }
+
+                dateViewModel.travelDateEdited.value = null
+            }
+        })
+
+        binding.dateTitle.addTextChangedListener{
+            binding.previousDateButton.isEnabled = busViewModel.selectedDate != helper.getCurrentDateString()
+            busViewModel.fetchBusResultsDetails()
+        }
+
+
         busViewModel.boardingPoints = locationViewModel.fetchAreas(busViewModel.sourceLocation)
         busViewModel.droppingPoints = locationViewModel.fetchAreas(busViewModel.destinationLocation)
 
@@ -140,6 +193,17 @@ class BusResultsFragment : Fragment() {
         })
 
         busViewModel.fetchBusResultsDetails()
+
+        binding.previousDateButton.setOnClickListener {
+//            busViewModel.selectedDate = helper.getPreviousDate(busViewModel.selectedDate)
+            busViewModel.selectedDate = helper.getPreviousDate(busViewModel.selectedDate)
+            binding.dateTitle.text = helper.getDateExpandedFormat(busViewModel.selectedDate)
+        }
+
+        binding.nextDateButton.setOnClickListener {
+            busViewModel.selectedDate = helper.getNextDate(busViewModel.selectedDate)
+            binding.dateTitle.text = helper.getDateExpandedFormat(busViewModel.selectedDate)
+        }
 
         busResultAdapter.setOnItemClickListener(object : OnItemClickListener{
             override fun onItemClick(position: Int) {

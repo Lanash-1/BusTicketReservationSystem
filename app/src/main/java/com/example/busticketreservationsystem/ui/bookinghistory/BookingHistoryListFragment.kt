@@ -193,7 +193,6 @@ class BookingHistoryListFragment : Fragment() {
                             }
                         }
                     }
-
                 }
                 LoginStatus.LOGGED_IN -> {
                     when (position) {

@@ -189,4 +189,6 @@
     <string name="ok">Ok</string>
     <string name="cancel">Cancel</string>
     <string name="seat_count">Seat count</string>
+    <string name="thiruvananthapuram">Thiruvananthapuram</string>
+    <string name="date_text_format">23 September 2023</string>
 </resources>
