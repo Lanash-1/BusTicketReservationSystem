@@ -92,9 +92,6 @@ class BookingHistoryFragment : Fragment() {
 //            binding.bookingHistoryViewPager.setCurrentItem(savedInstanceState.getInt("view_pager_position"));
 //        }
 
-
-
-
         return binding.root
     }
 
@@ -169,29 +166,6 @@ class BookingHistoryFragment : Fragment() {
 
                     }
                 })
-
-//                bookingViewModel.bookingDataFetched.observe(viewLifecycleOwner, Observer{
-//                    if(it != null){
-//                        adapter.setBookingData(bookingViewModel.bookingHistoryBookingList, bookingViewModel.bookingHistoryBusList, bookingViewModel.bookingHistoryPartnerList)
-//                        binding.bookingHistoryViewPager.adapter = adapter
-//
-//                        TabLayoutMediator(binding.bookingHistoryTabLayout, binding.bookingHistoryViewPager){tab, position ->
-//                            when(position){
-//                                0 -> {
-//                                    tab.text = "Upcoming"
-//                                }
-//                                1 -> {
-//                                    tab.text = "Completed"
-//                                }
-//                                2 -> {
-//                                    tab.text = "Cancelled"
-//                                }
-//                            }
-//                        }.attach()
-//                        bookingViewModel.bookingDataFetched.value = null
-//                    }
-//
-//                })
             }
             LoginStatus.ADMIN_LOGGED_IN -> {
                 requireActivity().findViewById<BottomNavigationView>(R.id.admin_bottomNavigationView).visibility = View.GONE
@@ -278,6 +252,8 @@ class BookingHistoryFragment : Fragment() {
 
                 binding.bookingHistoryViewPager.adapter = adapter
 
+                binding.bookingHistoryTabLayout.selectTab(binding.bookingHistoryTabLayout.getTabAt(bookingViewModel.currentScreenPosition))
+                binding.bookingHistoryViewPager.setCurrentItem(bookingViewModel.currentScreenPosition, false)
 
                 TabLayoutMediator(binding.bookingHistoryTabLayout, binding.bookingHistoryViewPager){tab, position ->
                     when(position){

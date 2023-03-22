@@ -25,7 +25,9 @@ import com.example.busticketreservationsystem.ui.partners.PartnerListFragment
 import com.example.busticketreservationsystem.ui.user.UserListFragment
 import com.example.busticketreservationsystem.viewmodel.NavigationViewModel
 import com.example.busticketreservationsystem.viewmodel.livedata.AdminViewModel
+import com.example.busticketreservationsystem.viewmodel.livedata.BookingViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.AdminViewModelFactory
+import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BookingViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class AnalyticsPageFragment : Fragment() {
@@ -36,6 +38,7 @@ class AnalyticsPageFragment : Fragment() {
 
     private lateinit var adminViewModel: AdminViewModel
     private val navigationViewModel: NavigationViewModel by activityViewModels()
+    private lateinit var bookingViewModel: BookingViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +49,9 @@ class AnalyticsPageFragment : Fragment() {
 
         val adminViewModelFactory = AdminViewModelFactory(repository)
         adminViewModel = ViewModelProvider(requireActivity(), adminViewModelFactory)[AdminViewModel::class.java]
+
+        val bookingViewModelFactory = BookingViewModelFactory(repository)
+        bookingViewModel = ViewModelProvider(requireActivity(), bookingViewModelFactory)[BookingViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -65,6 +71,8 @@ class AnalyticsPageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         requireActivity().findViewById<BottomNavigationView>(R.id.admin_bottomNavigationView).visibility = View.VISIBLE
+
+        bookingViewModel.currentScreenPosition = 0
 
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true){

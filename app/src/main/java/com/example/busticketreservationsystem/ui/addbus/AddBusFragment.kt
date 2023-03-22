@@ -481,7 +481,7 @@ class AddBusFragment : Fragment() {
         }
         val validAmenities = validAmenities()
 
-        if(validPartner && validBusName && validTicketCost && validBoardingState && validBoardingCity && validDroppingState && validDroppingCity && validTimingDetails && validBusType && validLowerDeckDetails && validUpperDeckDetails){
+        if(validPartner && validBusName && validAmenities && validTicketCost && validBoardingState && validBoardingCity && validDroppingState && validDroppingCity && validTimingDetails && validBusType && validLowerDeckDetails && validUpperDeckDetails){
             val duration = helper.getDuration(binding.startTimePickerInput.text.toString(), binding.reachTimePickerInput.text.toString())
             busViewModel.newBusLayout = BusLayout(
                 0,

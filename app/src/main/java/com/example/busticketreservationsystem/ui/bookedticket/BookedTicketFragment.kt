@@ -226,7 +226,13 @@ class BookedTicketFragment : Fragment() {
 
         // fetch booked ticket data
 //        bookingViewModel.fetchBookedTicketDetails(bookingId)
-        bookingViewModel.fetchBookedTicketDetails(bookingId, bookingViewModel.filteredTicketStatus.name)
+
+        if(loginStatusViewModel.status == LoginStatus.ADMIN_LOGGED_IN){
+            bookingViewModel.fetchBookedTicketDetails(bookingId, adminViewModel.filteredTicketStatus.name)
+        }else{
+            bookingViewModel.fetchBookedTicketDetails(bookingId, bookingViewModel.filteredTicketStatus.name)
+        }
+
 
 
         bookingViewModel.bookedTicketDataFetched.observe(viewLifecycleOwner, Observer{

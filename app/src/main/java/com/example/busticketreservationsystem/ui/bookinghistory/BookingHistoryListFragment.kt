@@ -128,125 +128,6 @@ class BookingHistoryListFragment : Fragment() {
 //                    println("GET FUNCTION VIEW PAGER SELECTED = $position")
                     getFilteredData(position)
 
-//                    val filteredTickets = mutableListOf<Bookings>()
-//                    val filteredBuses = mutableListOf<Bus>()
-//                    val filteredPartner = mutableListOf<String>()
-
-//                    when (loginStatusViewModel.status) {
-//                        LoginStatus.ADMIN_LOGGED_IN -> {
-//                            when (position) {
-//                                0 -> {
-////                                    for (i in adminViewModel.bookedTicketList.indices) {
-////                                        if (adminViewModel.bookedTicketList[i].bookedTicketStatus == BookedTicketStatus.UPCOMING.name) {
-////                                            filteredTickets.add(adminViewModel.bookedTicketList[i])
-////                                            filteredBuses.add(adminViewModel.bookedBusList[i])
-////                                            filteredPartner.add(adminViewModel.bookedPartnerList.value!![i])
-////                                        }
-////                                    }
-//                                    adminViewModel.apply {
-//                                        this.filteredPartnerList = bookingViewModel.upcomingPartner
-//                                        this.filteredBookingList = bookingViewModel.upcomingBooking
-//                                        this.filteredBusList = bookingViewModel.upcomingBus
-//                                        this.filteredTicketStatus = BookedTicketStatus.UPCOMING
-//                                    }
-//                                }
-//                                1 -> {
-////                                    for (i in adminViewModel.bookedTicketList.indices) {
-////                                        if (adminViewModel.bookedTicketList[i].bookedTicketStatus == BookedTicketStatus.COMPLETED.name) {
-////                                            filteredTickets.add(adminViewModel.bookedTicketList[i])
-////                                            filteredBuses.add(adminViewModel.bookedBusList[i])
-////                                            filteredPartner.add(adminViewModel.bookedPartnerList.value!![i])
-////                                        }
-////                                    }
-//                                    adminViewModel.apply {
-//                                        this.filteredPartnerList = completedPartner
-//                                        this.filteredBookingList = completedBooking
-//                                        this.filteredBusList = completedBus
-//                                        this.filteredTicketStatus = BookedTicketStatus.COMPLETED
-//                                    }
-//                                }
-//                                2 -> {
-////                                    for (i in adminViewModel.bookedTicketList.indices) {
-////                                        if (adminViewModel.bookedTicketList[i].bookedTicketStatus == BookedTicketStatus.CANCELLED.name) {
-////                                            filteredTickets.add(adminViewModel.bookedTicketList[i])
-////                                            filteredBuses.add(adminViewModel.bookedBusList[i])
-////                                            filteredPartner.add(adminViewModel.bookedPartnerList.value!![i])
-////                                        }
-////                                    }
-//                                    adminViewModel.apply {
-//                                        this.filteredPartnerList = cancelledPartner
-//                                        this.filteredBookingList = cancelledBooking
-//                                        this.filteredBusList = cancelledBus
-//                                        this.filteredTicketStatus = BookedTicketStatus.CANCELLED
-//                                    }
-//                                }
-//                            }
-////                            adminViewModel.apply {
-////                                this.filteredPartnerList = filteredPartner
-////                                this.filteredBookingList = filteredTickets
-////                                this.filteredBusList = filteredBuses
-////                            }
-////                            super.onPageSelected(position)
-//                        }
-//                        LoginStatus.LOGGED_IN -> {
-//                            when (position) {
-//                                0 -> {
-////                                    for (i in bookingViewModel.bookingHistoryBookingList.indices) {
-////                                        if (bookingViewModel.bookingHistoryBookingList[i].bookedTicketStatus == BookedTicketStatus.UPCOMING.name) {
-////                                            filteredTickets.add(bookingViewModel.bookingHistoryBookingList[i])
-////                                            filteredBuses.add(bookingViewModel.bookingHistoryBusList[i])
-////                                            filteredPartner.add(bookingViewModel.bookingHistoryPartnerList[i])
-////                                        }
-////                                    }
-//                                    bookingViewModel.apply {
-//                                        this.filteredPartnerList = bookingViewModel.upcomingPartner
-//                                        this.filteredBookingList = bookingViewModel.upcomingBooking
-//                                        this.filteredBusList = bookingViewModel.upcomingBus
-//                                        this.filteredTicketStatus = BookedTicketStatus.UPCOMING
-//                                    }
-//                                }
-//                                1 -> {
-////                                    for (i in bookingViewModel.bookingHistoryBookingList.indices) {
-////                                        if (bookingViewModel.bookingHistoryBookingList[i].bookedTicketStatus == BookedTicketStatus.COMPLETED.name) {
-////                                            filteredTickets.add(bookingViewModel.bookingHistoryBookingList[i])
-////                                            filteredBuses.add(bookingViewModel.bookingHistoryBusList[i])
-////                                            filteredPartner.add(bookingViewModel.bookingHistoryPartnerList[i])
-////                                        }
-////                                    }
-//                                    bookingViewModel.apply {
-//                                        this.filteredPartnerList = completedPartner
-//                                        this.filteredBookingList = completedBooking
-//                                        this.filteredBusList = completedBus
-//                                        this.filteredTicketStatus = BookedTicketStatus.COMPLETED
-//                                    }
-//                                }
-//                                2 -> {
-////                                    for (i in bookingViewModel.bookingHistoryBookingList.indices) {
-////                                        if (bookingViewModel.bookingHistoryBookingList[i].bookedTicketStatus == BookedTicketStatus.CANCELLED.name) {
-////                                            filteredTickets.add(bookingViewModel.bookingHistoryBookingList[i])
-////                                            filteredBuses.add(bookingViewModel.bookingHistoryBusList[i])
-////                                            filteredPartner.add(bookingViewModel.bookingHistoryPartnerList[i])
-////                                        }
-////                                    }
-//                                    bookingViewModel.apply {
-//                                        this.filteredPartnerList = cancelledPartner
-//                                        this.filteredBookingList = cancelledBooking
-//                                        this.filteredBusList = cancelledBus
-//                                        this.filteredTicketStatus = BookedTicketStatus.CANCELLED
-//                                    }
-//                                }
-//                            }
-////                            bookingViewModel.apply {
-////                                this.filteredPartnerList = filteredPartner
-////                                this.filteredBookingList = filteredTickets
-////                                this.filteredBusList = filteredBuses
-////                            }
-////                            super.onPageSelected(position)
-//                        }
-//                        else -> {
-//                            println("OTHER LOGIN - [BOOKING HISTORY LIST FRAGMENT]")
-//                        }
-//                    }
                 }
             }
         )
@@ -286,7 +167,6 @@ class BookingHistoryListFragment : Fragment() {
                 LoginStatus.ADMIN_LOGGED_IN -> {
                     when (position) {
                         0 -> {
-
                             adminViewModel.apply {
                                 this.filteredPartnerList = bookingViewModel.upcomingPartner
                                 this.filteredBookingList = bookingViewModel.upcomingBooking
