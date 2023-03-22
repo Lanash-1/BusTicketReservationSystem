@@ -8,7 +8,6 @@ class LocationViewModel: ViewModel() {
 
     var locationData = mutableListOf<LocationModel>()
 
-
     var states = mutableListOf<String>()
     var cities = mutableListOf<String>()
     var areas = mutableListOf<String>()

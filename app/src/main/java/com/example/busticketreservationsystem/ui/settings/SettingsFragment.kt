@@ -148,16 +148,16 @@ class SettingsFragment : Fragment() {
     }
 
     private fun deleteAction() {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setMessage("All your data will be deleted.")
-        builder.setTitle("Confirm Delete Account?")
-        builder.setCancelable(true)
+        AlertDialog.Builder(requireContext())
+            .setMessage("All your data will be deleted.")
+            .setTitle("Confirm Delete Account?")
+        .setCancelable(true)
 
-        builder.setNegativeButton("No"){
+        .setNegativeButton("No"){
                 dialog, _ -> dialog.cancel()
         }
 
-        builder.setPositiveButton("Yes"){
+        .setPositiveButton("Yes"){
                 _, _ ->
             run {
 
@@ -176,10 +176,10 @@ class SettingsFragment : Fragment() {
                 }
             }
         }
-        val alertDialog = builder.create()
-        if(alertDialog.window != null){
-            alertDialog.window!!.attributes.windowAnimations = R.style.DialogFragmentAnimation
-        }
-        alertDialog.show()
+        .create()
+//        if(alertDialog.window != null){
+//            alertDialog.window!!.attributes.windowAnimations = R.style.DialogFragmentAnimation
+//        }
+        .show()
     }
 }

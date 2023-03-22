@@ -1,14 +1,11 @@
 package com.example.busticketreservationsystem.ui.bookingdetails
 
-import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
-import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.databinding.ItemPassengerInfoBinding
 import com.example.busticketreservationsystem.enums.Gender
 import com.example.busticketreservationsystem.listeners.PassengerInfoChangeListener
@@ -172,9 +169,9 @@ class PassengerInfoAdapter: RecyclerView.Adapter<PassengerInfoAdapter.PassengerI
         return selectedSeats.size
     }
 
-    override fun onViewRecycled(holder: PassengerInfoViewHolder) {
-        super.onViewRecycled(holder)
-        println("TEXT IN SECOND = ${holder.binding.passengerNameInput.text}")
-    }
+//    override fun onViewRecycled(holder: PassengerInfoViewHolder) {
+//        super.onViewRecycled(holder)
+//        println("TEXT IN SECOND = ${holder.binding.passengerNameInput.text}")
+//    }
 
 }

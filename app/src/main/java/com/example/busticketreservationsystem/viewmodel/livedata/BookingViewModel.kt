@@ -395,7 +395,7 @@ class BookingViewModel(
                 val perTicketCost = booking.totalCost / booking.noOfTicketsBooked
                 booking.noOfTicketsBooked = booking.noOfTicketsBooked - passengerIdToBeCancelled.size
                 booking.totalCost = booking.totalCost - (passengerIdToBeCancelled.size * perTicketCost)
-                println("TOTAL COST AFTER = ${booking.totalCost}")
+//                println("TOTAL COST AFTER = ${booking.totalCost}")
                 repository.updateBookingData(booking.bookingId, booking.totalCost, booking.noOfTicketsBooked)
             }
             job.join()

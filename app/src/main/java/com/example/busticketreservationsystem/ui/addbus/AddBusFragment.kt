@@ -14,12 +14,15 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.entity.Bus
@@ -29,6 +32,7 @@ import com.example.busticketreservationsystem.databinding.FragmentAddBusBinding
 import com.example.busticketreservationsystem.enums.BusAmenities
 import com.example.busticketreservationsystem.enums.BusSeatType
 import com.example.busticketreservationsystem.enums.BusTypes
+import com.example.busticketreservationsystem.listeners.OnItemClickListener
 import com.example.busticketreservationsystem.ui.adminservice.AdminServicesFragment
 import com.example.busticketreservationsystem.utils.Helper
 import com.example.busticketreservationsystem.viewmodel.livedata.AdminViewModel
@@ -37,7 +41,9 @@ import com.example.busticketreservationsystem.viewmodel.livedata.BusViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.AdminViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputEditText
 import java.util.*
 
 class AddBusFragment : Fragment() {
@@ -45,14 +51,19 @@ class AddBusFragment : Fragment() {
     private lateinit var binding: FragmentAddBusBinding
     private val helper = Helper()
 
+    private var isEdited: Boolean = false
+
     private lateinit var busViewModel: BusViewModel
     private val locationViewModel: LocationViewModel by activityViewModels()
     private lateinit var adminViewModel: AdminViewModel
 
     private lateinit var dialog: Dialog
+    private lateinit var numberPickerDialog: Dialog
 
     private var selectedSourceLocation = MutableLiveData<String>()
     private var selectedDestinationLocation = MutableLiveData<String>()
+
+    private val busTypeAdapter = BusTypeRecyclerViewAdapter()
 
     private val partnerList = mutableListOf<String>()
 
@@ -94,8 +105,7 @@ class AddBusFragment : Fragment() {
     }
 
     private fun backPressOperation() {
-        if(checkEdited()) {
-
+        if(isEdited) {
             val builder = AlertDialog.Builder(requireContext())
             builder.setMessage("Bus details will not be saved")
             builder.setTitle("Discard Registration?")
@@ -107,16 +117,30 @@ class AddBusFragment : Fragment() {
 
             builder.setPositiveButton("Discard") { _, _ ->
                 run {
-                    locationViewModel.apply {
-                        selectedSourceState.value = ""
-                        selectedDestinationState.value = ""
-                        selectedSourceCity.value = ""
-                        selectedDestinationCity.value = ""
-                    }
+
 
                     adminViewModel.apply {
-                        reachTime = ""
-                        startTime = ""
+                        selectedPartnerId = -1
+                        newBusName= ""
+                        ticketCost= 0
+                        selectedBoardingState = ""
+                        selectedBoardingCity = ""
+                        selectedDroppingState= ""
+                        selectedDroppingCity = ""
+                        busStartingTime = ""
+                        busDroppingTime= ""
+                        newBusType = null
+                        hasUpperDeck.value = null
+                        numberOfDecks= 0
+                        lowerDeckSeatType = ""
+                        lowerLeftColumnCount = 0
+                        lowerRightColumnCount = 0
+                        lowerLeftSeatCount = 0
+                        lowerRightSeatCount = 0
+                        upperLeftColumnCount = 0
+                        upperRightColumnCount= 0
+                        upperLeftSeatCount= 0
+                        upperRightSeatCount = 0
                     }
 
                     parentFragmentManager.commit {
@@ -126,10 +150,11 @@ class AddBusFragment : Fragment() {
                 }
             }
             val alertDialog = builder.create()
-            if (alertDialog.window != null) {
-                alertDialog.window!!.attributes.windowAnimations = R.style.DialogFragmentAnimation
-            }
+//            if (alertDialog.window != null) {
+//                alertDialog.window!!.attributes.windowAnimations = R.style.DialogFragmentAnimation
+//            }
             alertDialog.show()
+
         }else{
             parentFragmentManager.commit {
                 setCustomAnimations(R.anim.from_left, R.anim.to_right)
@@ -138,46 +163,7 @@ class AddBusFragment : Fragment() {
         }
     }
 
-    private fun checkEdited(): Boolean {
-        if(partnerList.contains(binding.autoCompleteTextView.text.toString())){
-            return true
-        }
-        if(binding.busNameInput.text?.isNotEmpty() == true){
-            return true
-        }
-        if(locationViewModel.selectedSourceCity.value?.isNotEmpty() == true || locationViewModel.selectedSourceState.value?.isNotEmpty() == true || locationViewModel.selectedDestinationCity.value?.isNotEmpty() == true || locationViewModel.selectedDestinationState.value?.isNotEmpty() == true){
-            return true
-        }
-        if(adminViewModel.startTime.isNotEmpty() || adminViewModel.reachTime.isNotEmpty()){
-            return true
-        }
-        if(binding.priceInput.text?.isNotEmpty() == true){
-            return true
-        }
-        for(busType in BusTypes.values()){
-            if(busType.name == binding.busTypeAutoCompleteTextView.text.toString()){
-                return true
-            }
-        }
-        if(validAmenities() && adminViewModel.amenities.isNotEmpty()){
-            return true
-        }
-        return false
-    }
 
-    override fun onResume() {
-        super.onResume()
-        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, partnerList)
-        val partnerAutocompleteTextView = binding.autoCompleteTextView
-        partnerAutocompleteTextView.setAdapter(arrayAdapter)
-
-        val busTypeList = mutableListOf<String>()
-        for(busType in BusTypes.values()){
-            busTypeList.add(busType.name)
-        }
-        val busTypeArrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, busTypeList)
-        binding.busTypeAutoCompleteTextView.setAdapter(busTypeArrayAdapter)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -197,88 +183,7 @@ class AddBusFragment : Fragment() {
             partnerList.add(partner.partnerName)
         }
 
-        binding.addBusButton.setOnClickListener {
-            addBusOperation()
-        }
-
-        binding.autoCompleteTextView.setOnClickListener{
-            if(partnerList.isEmpty()){
-                Toast.makeText(requireContext(), "No partners registered!", Toast.LENGTH_SHORT)
-                    .show()
-            }
-        }
-
-        binding.sourceStateView.setOnClickListener {
-            locationViewModel.fetchStates()
-            val list = locationViewModel.states
-
-            openSearchableDialogSource(list)
-
-            selectedSourceLocation.observe(viewLifecycleOwner) {
-                if (locationViewModel.states.contains(selectedSourceLocation.value)) {
-                    locationViewModel.selectedSourceState.value = selectedSourceLocation.value
-                } else {
-                    locationViewModel.selectedSourceCity.value = selectedSourceLocation.value
-                }
-            }
-        }
-
-        locationViewModel.selectedSourceCity.observe(viewLifecycleOwner, Observer{
-            if(it != null){
-                binding.sourceCityView.text = it.toString()
-            }
-        })
-
-        locationViewModel.selectedSourceState.observe(viewLifecycleOwner, Observer{
-            binding.sourceStateView.text = it.toString()
-            if(locationViewModel.selectedSourceState.value?.isNotEmpty() == true){
-                binding.sourceCityView.visibility = View.VISIBLE
-            }
-            locationViewModel.selectedSourceCity.value = null
-            binding.sourceCityView.text = getString(R.string.select_city)
-            locationViewModel.fetchCities(locationViewModel.selectedSourceState.value!!)
-        })
-
-        binding.sourceCityView.setOnClickListener {
-            locationViewModel.fetchCities(locationViewModel.selectedSourceState.value.toString())
-            openSearchableDialogSource(locationViewModel.cities)
-        }
-
-        binding.destinationStateView.setOnClickListener {
-            locationViewModel.fetchStates()
-            val list = locationViewModel.states
-
-            openSearchableDialogDestination(list)
-
-            selectedDestinationLocation.observe(viewLifecycleOwner, Observer{
-                if(locationViewModel.states.contains(selectedDestinationLocation.value)){
-                    locationViewModel.selectedDestinationState.value = selectedDestinationLocation.value
-                }else{
-                    locationViewModel.selectedDestinationCity.value = selectedDestinationLocation.value
-                }
-            })
-        }
-
-        locationViewModel.selectedDestinationCity.observe(viewLifecycleOwner, Observer{
-            if(it != null){
-                binding.destinationCityView.text = it.toString()
-            }
-        })
-
-        locationViewModel.selectedDestinationState.observe(viewLifecycleOwner, Observer{
-            binding.destinationStateView.text = it.toString()
-            if(locationViewModel.selectedDestinationState.value?.isNotEmpty() == true){
-                binding.destinationCityView.visibility = View.VISIBLE
-            }
-            locationViewModel.selectedDestinationCity.value = null
-            binding.destinationCityView.text = getString(R.string.select_city)
-            locationViewModel.fetchCities(locationViewModel.selectedDestinationState.value!!)
-        })
-
-        binding.destinationCityView.setOnClickListener {
-            locationViewModel.fetchCities(locationViewModel.selectedDestinationState.value.toString())
-            openSearchableDialogDestination(locationViewModel.cities)
-        }
+        locationViewModel.fetchStates()
 
         binding.startTimePickerInput.setOnClickListener {
             openTimePicker(binding.startTimePickerInput)
@@ -288,46 +193,323 @@ class AddBusFragment : Fragment() {
             openTimePicker(binding.reachTimePickerInput)
         }
 
+        binding.partnerInput.setOnClickListener{
+            openSearchableDialog(partnerList, "Select Partner", binding.partnerInput)
+        }
+
+        binding.partnerInput.addTextChangedListener{
+            val index = partnerList.indexOf(it.toString())
+            adminViewModel.selectedPartnerId = busViewModel.partners[index].partnerId
+            binding.partnerInputLayout.isErrorEnabled = false
+            isEdited = true
+        }
+
+        binding.busNameInput.addTextChangedListener {
+            adminViewModel.newBusName = it.toString()
+            if(adminViewModel.newBusName.isNotEmpty()){
+                binding.busNameInputLayout.isErrorEnabled = false
+                isEdited = true
+            }
+        }
+
+        binding.priceInput.addTextChangedListener(object: TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                if(p0.toString() == "0"){
+                    binding.priceInput.setText("")
+                }else if(p0.toString().isNotEmpty()){
+                    adminViewModel.ticketCost = p0.toString().toInt()
+                    binding.pricingInputLayout.isErrorEnabled = false
+                    isEdited = true
+                }
+            }
+        })
+
+        binding.upperDeckRadioGroup.setOnCheckedChangeListener { radioGroup, i ->
+            when(i){
+                R.id.yes_radio_button -> {
+                    adminViewModel.hasUpperDeck.value = true
+                }
+                R.id.no_radio_button -> {
+                    adminViewModel.hasUpperDeck.value = false
+                }
+            }
+        }
+
+        adminViewModel.hasUpperDeck.observe(viewLifecycleOwner, Observer{
+            if(it != null){
+                if(it){
+                    binding.upperDeckDetailsLayout.visibility = View.VISIBLE
+                }else{
+                    binding.upperDeckDetailsLayout.visibility = View.GONE
+                }
+            }
+        })
+
+        binding.boardingStateInput.setOnClickListener {
+            openSearchableDialog(locationViewModel.states, "Select State", binding.boardingStateInput)
+        }
+
+        binding.boardingStateInput.addTextChangedListener {
+            if(adminViewModel.selectedBoardingState != it.toString()){
+                adminViewModel.selectedBoardingState = it.toString()
+                binding.boardingCityTitle.visibility = View.VISIBLE
+                binding.boardingCityInputLayout.visibility = View.VISIBLE
+                binding.boardingCityInput.setText("")
+                binding.boardingStateInputLayout.isErrorEnabled = false
+                isEdited = true
+            }
+        }
+
+        binding.boardingCityInput.setOnClickListener {
+            locationViewModel.fetchCities(adminViewModel.selectedBoardingState)
+            openSearchableDialog(locationViewModel.cities, "Select City", binding.boardingCityInput)
+        }
+
+        binding.boardingCityInput.addTextChangedListener{
+            adminViewModel.selectedBoardingCity = it.toString()
+            if(adminViewModel.selectedBoardingCity.isNotEmpty()){
+                binding.boardingCityInputLayout.isErrorEnabled = false
+            }
+        }
+
+        binding.droppingStateInput.setOnClickListener {
+            openSearchableDialog(locationViewModel.states, "Select State", binding.droppingStateInput)
+        }
+
+        binding.droppingStateInput.addTextChangedListener{
+            if(adminViewModel.selectedDroppingState != it.toString()){
+                adminViewModel.selectedDroppingState = it.toString()
+                binding.droppingCityTitle.visibility = View.VISIBLE
+                binding.droppingCityInputLayout.visibility = View.VISIBLE
+                binding.droppingCityInput.setText("")
+                binding.droppingStateInputLayout.isErrorEnabled = false
+                isEdited = true
+            }
+        }
+
+        binding.droppingCityInput.setOnClickListener {
+            locationViewModel.fetchCities(adminViewModel.selectedDroppingState)
+            openSearchableDialog(locationViewModel.cities, "Select City", binding.droppingCityInput)
+        }
+
+        binding.droppingCityInput.addTextChangedListener{
+            adminViewModel.selectedDroppingCity = it.toString()
+            if(adminViewModel.selectedDroppingCity.isNotEmpty()){
+                binding.droppingCityInputLayout.isErrorEnabled = false
+            }
+        }
+
+
+        binding.busTypeInput.setOnClickListener {
+            openBusTypeBottomSheet()
+        }
+
+        binding.busTypeInput.addTextChangedListener {
+            binding.lowerDeckDetailsLayout.visibility = View.VISIBLE
+            binding.busTypeLayout.isErrorEnabled = false
+            isEdited = true
+            when(adminViewModel.newBusType!!){
+                BusTypes.AC_SEATER -> {
+                    binding.radioGroupLayout.visibility = View.GONE
+                    adminViewModel.lowerDeckSeatType = BusSeatType.SEATER.name
+                    adminViewModel.hasUpperDeck.value = false
+                    binding.upperDeckDetailsLayout.visibility = View.GONE
+
+                }
+                BusTypes.NON_AC_SEATER -> {
+                    binding.radioGroupLayout.visibility = View.GONE
+                    adminViewModel.hasUpperDeck.value = false
+                    adminViewModel.lowerDeckSeatType = BusSeatType.SEATER.name
+
+                    binding.upperDeckDetailsLayout.visibility = View.GONE
+                }
+                BusTypes.SLEEPER -> {
+                    binding.radioGroupLayout.visibility = View.VISIBLE
+                    binding.noRadioButton.isChecked = true
+                    binding.yesRadioButton.isChecked = false
+                    adminViewModel.hasUpperDeck.value = false
+                    binding.upperDeckDetailsLayout.visibility = View.GONE
+                    adminViewModel.lowerDeckSeatType = BusSeatType.SLEEPER.name
+                }
+                BusTypes.SEATER_SLEEPER -> {
+                    binding.radioGroupLayout.visibility = View.GONE
+                    adminViewModel.hasUpperDeck.value = true
+                    binding.upperDeckDetailsLayout.visibility = View.VISIBLE
+                    adminViewModel.lowerDeckSeatType = BusSeatType.SEATER.name
+                }
+            }
+        }
+
+        binding.lowerLeftColumnCountInput.setOnClickListener {
+            openNumberPickerDialog(adminViewModel.lowerLeftColumnCount,4, binding.lowerLeftColumnCountInput)
+        }
+
+        binding.lowerLeftColumnCountInput.addTextChangedListener{
+            adminViewModel.lowerLeftColumnCount = it.toString().toInt()
+            binding.lowerLeftColumnCountLayout.isErrorEnabled = false
+        }
+
+        binding.lowerRightColumnCountInput.setOnClickListener {
+            openNumberPickerDialog(adminViewModel.lowerRightColumnCount,4, binding.lowerRightColumnCountInput)
+        }
+
+        binding.lowerRightColumnCountInput.addTextChangedListener{
+            adminViewModel.lowerRightColumnCount = it.toString().toInt()
+            binding.lowerRightColumnCountLayout.isErrorEnabled = false
+        }
+
+        binding.upperLeftColumnCountInput.setOnClickListener {
+            openNumberPickerDialog(adminViewModel.upperLeftColumnCount,4, binding.upperLeftColumnCountInput)
+        }
+
+        binding.upperLeftColumnCountInput.addTextChangedListener{
+            adminViewModel.upperLeftColumnCount = it.toString().toInt()
+            binding.upperLeftColumnCountLayout.isErrorEnabled = false
+        }
+
+        binding.upperRightColumnCountInput.setOnClickListener {
+            openNumberPickerDialog(adminViewModel.upperRightColumnCount,4, binding.upperRightColumnCountInput)
+        }
+
+        binding.upperRightColumnCountInput.addTextChangedListener{
+            adminViewModel.upperRightColumnCount = it.toString().toInt()
+            binding.upperRightColumnCountLayout.isErrorEnabled = false
+        }
+
+        binding.lowerLeftSeatCountInput.setOnClickListener {
+            openNumberPickerDialog(adminViewModel.lowerLeftSeatCount, 40, binding.lowerLeftSeatCountInput)
+        }
+
+        binding.lowerLeftSeatCountInput.addTextChangedListener {
+            adminViewModel.lowerLeftSeatCount = it.toString().toInt()
+            binding.lowerLeftSeatCountLayout.isErrorEnabled = false
+        }
+
+        binding.lowerRightSeatCountInput.setOnClickListener {
+            openNumberPickerDialog(adminViewModel.lowerRightSeatCount, 40, binding.lowerRightSeatCountInput)
+        }
+
+        binding.lowerRightSeatCountInput.addTextChangedListener {
+            adminViewModel.lowerRightSeatCount = it.toString().toInt()
+            binding.lowerRightSeatCountLayout.isErrorEnabled = false
+        }
+
+        binding.upperLeftSeatCountInput.setOnClickListener {
+            openNumberPickerDialog(adminViewModel.upperLeftSeatCount, 40, binding.upperLeftSeatCountInput)
+        }
+
+        binding.upperLeftSeatCountInput.addTextChangedListener {
+            adminViewModel.upperLeftSeatCount = it.toString().toInt()
+            binding.upperLeftSeatCountLayout.isErrorEnabled = false
+        }
+
+        binding.upperRightSeatCountInput.setOnClickListener {
+            openNumberPickerDialog(adminViewModel.upperRightSeatCount, 40, binding.upperRightSeatCountInput)
+        }
+
+        binding.upperRightSeatCountInput.addTextChangedListener {
+            adminViewModel.upperRightSeatCount = it.toString().toInt()
+            binding.upperRightSeatCountLayout.isErrorEnabled = false
+        }
+
+
+        binding.addBusButton.setOnClickListener {
+            addBusOperation()
+        }
+
+
+    }
+
+
+
+
+    private fun openBusTypeBottomSheet() {
+        val dialog = BottomSheetDialog(requireContext())
+        val view = layoutInflater.inflate(R.layout.bus_type_bottom_sheet, null)
+        dialog.setCancelable(true)
+        dialog.setContentView(view)
+        dialog.show()
+
+        val busTypeRecyclerView = view.findViewById<RecyclerView>(R.id.bus_type_recycler_view)
+        busTypeRecyclerView.layoutManager = LinearLayoutManager(context)
+        if(adminViewModel.newBusType != null){
+            busTypeAdapter.setSelectedBusType(adminViewModel.newBusType!!)
+        }
+        busTypeRecyclerView.adapter = busTypeAdapter
+
+        busTypeAdapter.setOnItemClickListener(object : OnItemClickListener{
+            override fun onItemClick(position: Int) {
+                if(adminViewModel.newBusType != BusTypes.values()[position]){
+                    adminViewModel.newBusType = BusTypes.values()[position]
+                    binding.busTypeInput.setText(helper.getBusTypeText(adminViewModel.newBusType!!.name))
+                    busTypeAdapter.setSelectedBusType(adminViewModel.newBusType!!)
+                    busTypeAdapter.notifyDataSetChanged()
+                }
+            }
+        })
     }
 
     private fun addBusOperation() {
         val validPartner = validPartner()
         val validBusName = validBusName()
-        val validBoardingDetails = validBoardingDetails()
-        val validDestinationDetails = validDestinationDetails()
+        val validTicketCost = validTicketCost()
+        val validBoardingState = validBoardingState()
+        val validBoardingCity = validBoardingCity()
+        val validDroppingState = validDroppingState()
+        val validDroppingCity = validDroppingCity()
         val validTimingDetails = validTimingDetails()
-        val validPriceDetail = validPriceDetail()
         val validBusType = validBusType()
+        val validLowerDeckDetails = validLowerDeckDetails()
+        var validUpperDeckDetails = false
+        if(adminViewModel.hasUpperDeck.value != null){
+            if(adminViewModel.hasUpperDeck.value == false){
+                validUpperDeckDetails = true
+                adminViewModel.numberOfDecks = 1
+            } else{
+                adminViewModel.numberOfDecks = 2
+                validUpperDeckDetails = validUpperDeckDetails()
+            }
+        }else{
+            adminViewModel.numberOfDecks = 1
+        }
         val validAmenities = validAmenities()
-        if(validPartner && validBusName && validBoardingDetails && validDestinationDetails && validTimingDetails && validPriceDetail && validBusType && validAmenities){
+
+        if(validPartner && validBusName && validTicketCost && validBoardingState && validBoardingCity && validDroppingState && validDroppingCity && validTimingDetails && validBusType && validLowerDeckDetails && validUpperDeckDetails){
             val duration = helper.getDuration(binding.startTimePickerInput.text.toString(), binding.reachTimePickerInput.text.toString())
             busViewModel.newBusLayout = BusLayout(
                 0,
                 0,
-                2,
-                BusSeatType.SEATER.name,
-                2,
-                2,
-                1,
-                2,
-                10,
-                10,
-                5,
-                10
+                adminViewModel.numberOfDecks,
+                adminViewModel.lowerDeckSeatType,
+                adminViewModel.lowerLeftColumnCount,
+                adminViewModel.lowerRightColumnCount,
+                adminViewModel.upperLeftColumnCount,
+                adminViewModel.upperRightColumnCount,
+                adminViewModel.lowerLeftSeatCount,
+                adminViewModel.lowerRightSeatCount,
+                adminViewModel.upperLeftSeatCount,
+                adminViewModel.upperRightSeatCount
             )
-            val totalSeatCount = busViewModel.newBusLayout.lowerLeftSeatCount + busViewModel.newBusLayout.lowerRightSeatCount + busViewModel.newBusLayout.upperLeftSeatCount + busViewModel.newBusLayout.upperRightSeatCount
+            val totalSeatCount = adminViewModel.lowerLeftSeatCount + adminViewModel.lowerRightSeatCount + adminViewModel.upperLeftSeatCount + adminViewModel.upperRightSeatCount
             adminViewModel.newBus = Bus(
                 0,
-                adminViewModel.partner.partnerId,
-                adminViewModel.busName,
-                adminViewModel.sourceCity,
-                adminViewModel.destinationCity,
-                adminViewModel.perTicketCost.toDouble(),
-                adminViewModel.busType,
+                adminViewModel.selectedPartnerId,
+                adminViewModel.newBusName,
+                adminViewModel.selectedBoardingCity,
+                adminViewModel.selectedDroppingCity,
+                adminViewModel.ticketCost.toDouble(),
+                adminViewModel.newBusType!!.name,
                 totalSeatCount,
                 totalSeatCount,
-                adminViewModel.startTime,
-                adminViewModel.reachTime,
+                adminViewModel.busStartingTime,
+                adminViewModel.busDroppingTime,
                 duration,
                 0.0,
                 0
@@ -339,8 +521,117 @@ class AddBusFragment : Fragment() {
                 setCustomAnimations(R.anim.from_left, R.anim.to_right)
                 replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
             }
+
         }
+
     }
+
+    private fun validLowerDeckDetails(): Boolean {
+        if(adminViewModel.lowerLeftColumnCount == 0){
+            binding.lowerLeftColumnCountLayout.error = "Select a number"
+        }
+        if(adminViewModel.lowerLeftSeatCount == 0){
+            binding.lowerLeftSeatCountLayout.error = "Select a number"
+        }
+        if(adminViewModel.lowerRightColumnCount == 0){
+            binding.lowerRightColumnCountLayout.error = "Select a number"
+        }
+        if(adminViewModel.lowerRightSeatCount == 0){
+            binding.lowerRightSeatCountLayout.error = "Select a number"
+        }
+
+        return adminViewModel.lowerRightSeatCount != 0 && adminViewModel.lowerLeftSeatCount != 0 && adminViewModel.lowerRightColumnCount != 0 && adminViewModel.lowerLeftColumnCount != 0
+
+    }
+    private fun validUpperDeckDetails(): Boolean {
+        if(adminViewModel.upperLeftColumnCount == 0){
+            binding.upperLeftColumnCountLayout.error = "Select a number"
+        }
+        if(adminViewModel.upperLeftSeatCount == 0){
+            binding.upperLeftSeatCountLayout.error = "Select a number"
+        }
+        if(adminViewModel.upperRightColumnCount == 0){
+            binding.upperRightColumnCountLayout.error = "Select a number"
+        }
+        if(adminViewModel.upperRightSeatCount == 0){
+            binding.upperRightSeatCountLayout.error = "Select a number"
+        }
+
+        return adminViewModel.upperRightColumnCount != 0 && adminViewModel.upperRightSeatCount != 0 && adminViewModel.upperLeftSeatCount != 0 && adminViewModel.upperLeftColumnCount != 0
+
+    }
+
+
+
+    private fun validBusType(): Boolean {
+        if(adminViewModel.newBusType != null){
+            return true
+        }else{
+            binding.busTypeLayout.error = "Bus type should be selected"
+        }
+        return false
+    }
+
+    private fun validBoardingState(): Boolean {
+        if(adminViewModel.selectedBoardingState.isNotEmpty()){
+            return true
+        }else{
+            binding.boardingStateInputLayout.error = "Should be selected"
+        }
+        return false
+    }
+    private fun validBoardingCity(): Boolean {
+        if(adminViewModel.selectedBoardingCity.isNotEmpty()){
+            return true
+        }else{
+            binding.boardingCityInputLayout.error = "Should be selected"
+        }
+        return false
+    }
+    private fun validDroppingState(): Boolean {
+        if(adminViewModel.selectedDroppingState.isNotEmpty()){
+            return true
+        }else{
+            binding.droppingStateInputLayout.error = "Should be selected"
+        }
+        return false
+    }
+    private fun validDroppingCity(): Boolean {
+        if(adminViewModel.selectedDroppingCity.isNotEmpty()){
+            return true
+        }else{
+            binding.droppingCityInputLayout.error = "Should be selected"
+        }
+        return false
+    }
+
+    private fun validTicketCost(): Boolean {
+        if(adminViewModel.ticketCost > 0){
+            return true
+        }else{
+            binding.pricingInputLayout.error = "Should not be empty"
+        }
+        return false
+    }
+
+    private fun validBusName(): Boolean {
+        if(adminViewModel.newBusName.isNotEmpty()){
+            return true
+        }else{
+            binding.busNameInputLayout.error = "Should not be empty"
+        }
+        return false
+    }
+
+    private fun validPartner(): Boolean {
+        if(adminViewModel.selectedPartnerId != -1){
+            return true
+        }else{
+            binding.partnerInputLayout.error = "Partner should be selected"
+        }
+        return false
+    }
+
 
     private fun validAmenities(): Boolean {
         val amenitiesList = mutableListOf<String>()
@@ -366,35 +657,6 @@ class AddBusFragment : Fragment() {
         return true
     }
 
-    private fun validBusType(): Boolean {
-        return when(binding.busTypeAutoCompleteTextView.text.toString()){
-            BusTypes.SLEEPER.name,
-            BusTypes.NON_AC_SEATER.name,
-            BusTypes.AC_SEATER.name -> {
-                adminViewModel.busType = binding.busTypeAutoCompleteTextView.text.toString()
-                binding.busTypeDropdown.isErrorEnabled = false
-                true
-            }
-            else -> {
-                binding.busTypeDropdown.isErrorEnabled = true
-                binding.busTypeDropdown.error = "Select bus type"
-                false
-            }
-        }
-    }
-
-    private fun validPriceDetail(): Boolean {
-        return if (binding.priceInput.text.toString().isNotEmpty()){
-            binding.priceInputLayout.isErrorEnabled = false
-            adminViewModel.perTicketCost = binding.priceInput.text.toString().toInt()
-            true
-        }else{
-            binding.priceInputLayout.isErrorEnabled = true
-            binding.priceInputLayout.error = "Enter Ticket cost"
-            false
-        }
-    }
-
     private fun validTimingDetails(): Boolean {
         if(adminViewModel.startTime.isNotEmpty()){
             binding.startTimePicker.error = null
@@ -415,61 +677,6 @@ class AddBusFragment : Fragment() {
         return false
     }
 
-    private fun validDestinationDetails(): Boolean {
-        if(locationViewModel.selectedDestinationState.value?.isNotEmpty() == true){
-            binding.destinationStateView.error = null
-            if(locationViewModel.selectedDestinationCity.value?.isNotEmpty() == true){
-                binding.destinationCityView.error = null
-                adminViewModel.destinationCity = locationViewModel.selectedDestinationCity.value.toString()
-                return true
-            }else{
-                binding.destinationCityView.error = "Field Not selected"
-            }
-        }else{
-            binding.destinationStateView.error = "Field not selected"
-        }
-        return false
-    }
-
-    private fun validBoardingDetails(): Boolean {
-        if(locationViewModel.selectedSourceState.value?.isNotEmpty() == true){
-            binding.sourceStateView.error = null
-            if(locationViewModel.selectedSourceCity.value?.isNotEmpty() == true){
-                binding.sourceCityView.error = null
-                adminViewModel.sourceCity = locationViewModel.selectedSourceCity.value.toString()
-                return true
-            }else{
-                binding.sourceCityView.error = "Field Not selected"
-            }
-        }else{
-            binding.sourceStateView.error = "Field not selected"
-        }
-        return false
-    }
-
-    private fun validBusName(): Boolean {
-        adminViewModel.busName = binding.busNameInput.text.toString()
-        return if(adminViewModel.busName.isEmpty()){
-            binding.busNameInputLayout.isErrorEnabled = true
-            binding.busNameInputLayout.error = "Field Should not be empty"
-            false
-        }else{
-            binding.busNameInputLayout.isErrorEnabled = false
-            true
-        }
-    }
-
-    private fun validPartner(): Boolean {
-        return if(partnerList.contains(binding.autoCompleteTextView.text.toString())){
-            binding.selectPartnerDropdown.isErrorEnabled = false
-            adminViewModel.partner = busViewModel.partners[partnerList.indexOf(binding.autoCompleteTextView.text.toString())]
-            true
-        }else{
-            binding.selectPartnerDropdown.isErrorEnabled = true
-            binding.selectPartnerDropdown.error = "Partner not selected"
-            false
-        }
-    }
 
     private fun openTimePicker(timeText: TextView) {
         val calendar = Calendar.getInstance()
@@ -487,8 +694,12 @@ class AddBusFragment : Fragment() {
 
             if(timeText == binding.startTimePickerInput){
                 adminViewModel.startTime = timeText.text.toString()
+                adminViewModel.busStartingTime = timeText.text.toString()
+                isEdited = true
             }else{
                 adminViewModel.reachTime = timeText.text.toString()
+                adminViewModel.busDroppingTime = timeText.text.toString()
+                isEdited = true
             }
         },
             hour,
@@ -498,12 +709,55 @@ class AddBusFragment : Fragment() {
         timePickerDialog.show()
     }
 
-    private fun openSearchableDialogSource(list: List<String>, ){
+    private fun openNumberPickerDialog(currentCount: Int, maxCount: Int, textInputEditText: TextInputEditText) {
+        numberPickerDialog = Dialog(requireContext())
+        numberPickerDialog.setContentView(R.layout.dialog_number_picker)
+        val numberPicker = numberPickerDialog.findViewById<NumberPicker>(R.id.number_picker)
+        numberPicker.maxValue = maxCount
+        numberPicker.minValue = 1
+        if(currentCount == 0){
+            numberPicker.value = 1
+        }else{
+            numberPicker.value = currentCount
+        }
+        numberPickerDialog.setCancelable(false)
 
+        numberPickerDialog.window?.setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+        numberPickerDialog.show()
+
+        var numberPicked: Int = 1
+
+        numberPicker.setOnValueChangedListener { numberPicker, previousValue, currentValue ->
+            numberPicked = currentValue
+        }
+
+        val positiveButton = numberPickerDialog.findViewById<Button>(R.id.positive_button)
+        val negativeButton = numberPickerDialog.findViewById<Button>(R.id.negative_button)
+
+        positiveButton.setOnClickListener {
+//            adminViewModel.lowerLeftColumnCount = numberPicked
+            textInputEditText.setText("$numberPicked")
+            numberPickerDialog.dismiss()
+        }
+
+        negativeButton.setOnClickListener {
+            numberPickerDialog.dismiss()
+        }
+
+
+
+    }
+
+    private fun openSearchableDialog(
+        list: List<String>,
+        dialogTitle: String,
+        textView: TextInputEditText
+    ){
         dialog = Dialog(requireContext())
         dialog.setContentView(R.layout.dialog_searchable_spinner)
+        dialog.findViewById<TextView>(R.id.select_title_text).text = dialogTitle
 
-        dialog.window?.setLayout(800, LayoutParams.WRAP_CONTENT)
+        dialog.window?.setLayout(LayoutParams.MATCH_PARENT, 2000)
 
         dialog.show()
 
@@ -535,52 +789,11 @@ class AddBusFragment : Fragment() {
 
         listView.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id -> // when item selected from list
-                selectedSourceLocation.value = adapter.getItem(position)!!
+//                selectedDestinationLocation.value = adapter.getItem(position)!!
+                textView.setText(adapter.getItem(position))
                 dialog.dismiss()
             }
+
     }
 
-    private fun openSearchableDialogDestination(list: List<String>, ){
-
-
-        dialog = Dialog(requireContext())
-        dialog.setContentView(R.layout.dialog_searchable_spinner)
-
-        dialog.window?.setLayout(800, LayoutParams.WRAP_CONTENT)
-
-        dialog.show()
-
-        val listView = dialog.findViewById<ListView>(R.id.list_view)
-        val editText = dialog.findViewById<EditText>(R.id.edit_text)
-
-        val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
-            requireContext(),
-            android.R.layout.simple_list_item_1,
-            list
-        )
-
-        listView.adapter = adapter
-
-        editText.addTextChangedListener(object: TextWatcher{
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                adapter.filter.filter(p0)
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-
-            }
-
-        })
-
-        listView.onItemClickListener =
-            AdapterView.OnItemClickListener { parent, view, position, id -> // when item selected from list
-                selectedDestinationLocation.value = adapter.getItem(position)!!
-
-                dialog.dismiss()
-            }
-    }
 }

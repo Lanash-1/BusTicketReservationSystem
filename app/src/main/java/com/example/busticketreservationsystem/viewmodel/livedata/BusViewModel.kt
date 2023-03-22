@@ -443,7 +443,6 @@ class BusViewModel(
     val upperRightSeatCount = 10
 
     val lowerBusSeatType = BusSeatType.SEATER
-     val upperBusSeatType = BusSeatType.SLEEPER
 
     val busSelectedSeats = mutableListOf<String>()
 

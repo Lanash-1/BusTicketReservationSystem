@@ -6,6 +6,7 @@
         android:layout_width="match_parent"
         style="@style/TextDefault"
         android:textStyle="bold"
-        android:padding="16dp"
         android:layout_height="wrap_content"
+        android:paddingVertical="12dp"
+        android:paddingHorizontal="16dp"
         android:text="TextView" />

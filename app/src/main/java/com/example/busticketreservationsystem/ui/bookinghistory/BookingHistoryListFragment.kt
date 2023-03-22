@@ -94,7 +94,7 @@ class BookingHistoryListFragment : Fragment() {
 
 //        println("CURRENT POSITION ON VIEW CREATED = $currentPosition")
 
-        println("GET FUNCTION CURRENT POSITION = $currentPosition")
+//        println("GET FUNCTION CURRENT POSITION = $currentPosition")
         getFilteredData(bookingViewModel.currentScreenPosition)
 
 //        bookingViewModel.currentScreenPosition = currentPosition
@@ -104,7 +104,7 @@ class BookingHistoryListFragment : Fragment() {
                 if (tab != null) {
                     selectedPosition = tab.position
                     bookingViewModel.currentScreenPosition = tab.position
-                    println("GET FUNCTION TAB POSITION = ${bookingViewModel.currentScreenPosition}")
+//                    println("GET FUNCTION TAB POSITION = ${bookingViewModel.currentScreenPosition}")
                     getFilteredData(tab.position)
                 }
             }
@@ -125,7 +125,7 @@ class BookingHistoryListFragment : Fragment() {
 //                    println("ON PAGE SELECTED = $position")
 
                     bookingViewModel.currentScreenPosition = position
-                    println("GET FUNCTION VIEW PAGER SELECTED = $position")
+//                    println("GET FUNCTION VIEW PAGER SELECTED = $position")
                     getFilteredData(position)
 
 //                    val filteredTickets = mutableListOf<Bookings>()
@@ -278,7 +278,7 @@ class BookingHistoryListFragment : Fragment() {
     }
 
     private fun getFilteredData(position: Int) {
-        println("INSIDE FUNCTION POSITION = $position")
+//        println("INSIDE FUNCTION POSITION = $position")
 //        var selectedTabPosition: Int? = -1
 //        selectedTabPosition = requireActivity().findViewById<TabLayout>(R.id.booking_history_tabLayout)?.selectedTabPosition
 //        if(position == selectedPosition){
@@ -348,7 +348,7 @@ class BookingHistoryListFragment : Fragment() {
 
                 }
                 else -> {
-                    println("OTHER LOGIN - [BOOKING HISTORY LIST FRAGMENT]")
+//                    println("OTHER LOGIN - [BOOKING HISTORY LIST FRAGMENT]")
                 }
             }
 //        }
@@ -366,8 +366,8 @@ class BookingHistoryListFragment : Fragment() {
             }
             LoginStatus.LOGGED_IN -> {
 
-                println("LIST SIZE TAB POSITION = ${bookingViewModel.currentScreenPosition}")
-                println("LIST SIZE = ${bookingViewModel.filteredBusList.size}")
+//                println("LIST SIZE TAB POSITION = ${bookingViewModel.currentScreenPosition}")
+//                println("LIST SIZE = ${bookingViewModel.filteredBusList.size}")
 
                 bookingViewModel.selectedTicket = position
                 bookingViewModel.selectedBus = bookingViewModel.filteredBusList[position]
@@ -375,7 +375,7 @@ class BookingHistoryListFragment : Fragment() {
                 moveToNextFragment(R.id.homePageFragmentContainer, BookedTicketFragment())
             }
             else -> {
-                println("OTHER USER LOGGED IN [BOOKING HISTORY LIST FRAGMENT]")
+//                println("OTHER USER LOGGED IN [BOOKING HISTORY LIST FRAGMENT]")
             }
         }
     }

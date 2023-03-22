@@ -182,7 +182,7 @@ class BookedTicketFragment : Fragment() {
                 })
 
             }else{
-                println("${bookingViewModel.filteredBookingList[bookingViewModel.selectedTicket]}")
+//                println("${bookingViewModel.filteredBookingList[bookingViewModel.selectedTicket]}")
 
                 selectedTicketOperations(bookingViewModel.filteredBookingList[bookingViewModel.selectedTicket].bookingId)
             }

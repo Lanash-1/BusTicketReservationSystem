@@ -9,6 +9,7 @@ import com.example.busticketreservationsystem.data.entity.Partners
 import com.example.busticketreservationsystem.data.entity.User
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.enums.BookedTicketStatus
+import com.example.busticketreservationsystem.enums.BusTypes
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -355,5 +356,43 @@ class AdminViewModel(
     }
 
 
+
+//  new add bus operations
+
+//    adminViewModel.partner.partnerId,
+    //                adminViewModel.busName,
+//                adminViewModel.sourceCity,
+//                adminViewModel.destinationCity,
+//                adminViewModel.perTicketCost.toDouble(),
+//                adminViewModel.busType,
+//                totalSeatCount,
+//                totalSeatCount,
+//                adminViewModel.startTime,
+//                adminViewModel.reachTime,
+//                duration,
+//                0.0,
+//                0
+
+    var selectedPartnerId: Int = -1
+    var newBusName: String = ""
+    var ticketCost: Int = 0
+    var selectedBoardingState: String = ""
+    var selectedBoardingCity: String = ""
+    var selectedDroppingState: String = ""
+    var selectedDroppingCity: String = ""
+    var busStartingTime: String = ""
+    var busDroppingTime: String = ""
+    var newBusType: BusTypes? = null
+    var hasUpperDeck = MutableLiveData<Boolean>(null)
+    var numberOfDecks: Int = 0
+    var lowerDeckSeatType: String = ""
+    var lowerLeftColumnCount: Int = 0
+    var lowerRightColumnCount: Int = 0
+    var lowerLeftSeatCount: Int = 0
+    var lowerRightSeatCount: Int = 0
+    var upperLeftColumnCount: Int = 0
+    var upperRightColumnCount: Int = 0
+    var upperLeftSeatCount: Int = 0
+    var upperRightSeatCount: Int = 0
 
 }

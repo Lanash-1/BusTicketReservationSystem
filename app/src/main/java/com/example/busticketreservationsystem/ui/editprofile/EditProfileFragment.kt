@@ -126,9 +126,9 @@ class EditProfileFragment : Fragment() {
             }
         }
         val alertDialog = builder.create()
-        if(alertDialog.window != null){
-            alertDialog.window!!.attributes.windowAnimations = R.style.DialogFragmentAnimation
-        }
+//        if(alertDialog.window != null){
+//            alertDialog.window!!.attributes.windowAnimations = R.style.DialogFragmentAnimation
+//        }
         alertDialog.show()
     }
 

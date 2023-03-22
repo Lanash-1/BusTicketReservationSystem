@@ -13,7 +13,6 @@ import androidx.room.PrimaryKey
         parentColumns = ["partnerId"]
     )]
 )
-
 data class Bus(
     @PrimaryKey (autoGenerate = true) val busId: Int,
     @ColumnInfo(index = true) var partnerId: Int,

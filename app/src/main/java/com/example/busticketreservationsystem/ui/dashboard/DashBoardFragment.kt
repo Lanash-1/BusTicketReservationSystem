@@ -191,7 +191,7 @@ class DashBoardFragment : Fragment() {
 
                 busViewModel.isBusLayoutDataFetched.observe(viewLifecycleOwner, Observer{
                     if(it != null){
-                        println("BOOKED SEATS = ${busViewModel.bookedSeatsNumber}")
+//                        println("BOOKED SEATS = ${busViewModel.bookedSeatsNumber}")
                         parentFragmentManager.commit {
                             setCustomAnimations(R.anim.from_right, R.anim.to_left)
                             replace(R.id.homePageFragmentContainer, SeatSelectionFragment())
