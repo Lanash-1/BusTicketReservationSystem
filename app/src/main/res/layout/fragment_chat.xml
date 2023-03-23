@@ -17,7 +17,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/enter_message_layout"
+        app:layout_constraintBottom_toTopOf="@id/message_box_card_view"
         tools:listitem="@layout/item_sent_message"
         />
 
@@ -48,62 +48,73 @@
 <!--        android:scrollHorizontally="false"-->
 <!--        />-->
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="0dp"
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxHeight="175dp"
-        android:id="@+id/enter_message_layout"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/chat_recyclerView"
-        app:layout_constraintRight_toLeftOf="@id/send_button"
-        app:hintEnabled="false"
-        android:layout_margin="16dp"
-        app:shapeAppearance="@style/Rounded"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/message_box_card_view"
+        app:cardElevation="8dp"
         >
 
-        <com.google.android.material.textfield.TextInputEditText
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxHeight="175dp"
-            android:id="@+id/enter_message_input"
-            android:hint="@string/enter_here"
-            android:inputType="textMultiLine"
-            android:cursorVisible="true"
-            android:textCursorDrawable="@drawable/red_cursor"
-            android:scrollHorizontally="false"
-            />
+            android:id="@+id/message_box_layout"
+            >
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:maxHeight="175dp"
+                android:id="@+id/enter_message_layout"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/send_button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:hintEnabled="false"
+                android:layout_margin="16dp"
+                app:shapeAppearance="@style/Rounded"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxHeight="175dp"
+                    android:id="@+id/enter_message_input"
+                    android:hint="@string/enter_your_query"
+                    android:inputType="textMultiLine"
+                    android:cursorVisible="true"
+                    android:textCursorDrawable="@drawable/red_cursor"
+                    android:scrollHorizontally="false"
+                    />
 
 
-    </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-<!--    <Button-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:id="@+id/send_button"-->
-<!--        android:text="@string/send"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintLeft_toRightOf="@id/enter_message_layout"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        android:layout_marginBottom="16dp"-->
-<!--        android:layout_marginRight="16dp"-->
-<!--        />-->
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/send_button"
+                android:src="@drawable/baseline_send_24"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/enter_message_layout"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="16dp"
+                android:layout_marginRight="16dp"
+                android:padding="12dp"
+                app:tint="@color/appMainColor"
+                app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+                />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/send_button"
-            android:src="@drawable/baseline_send_24"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/enter_message_layout"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="16dp"
-            android:layout_marginRight="16dp"
-            android:padding="12dp"
-            app:tint="@color/appMainColor"
-            app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
-            />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:layout_width="wrap_content"

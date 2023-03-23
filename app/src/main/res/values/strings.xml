@@ -193,4 +193,6 @@
     <string name="date_text_format">23 September 2023</string>
     <string name="partner_registration">Partner Registration</string>
     <string name="all_bookings">All Bookings</string>
+    <string name="enter_your_query_here">Enter your query here</string>
+    <string name="enter_your_query">Enter your query</string>
 </resources>

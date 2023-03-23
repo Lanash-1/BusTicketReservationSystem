@@ -179,7 +179,7 @@ class ChatFragment : Fragment() {
         binding.sendButton.setOnClickListener {
             val message = binding.enterMessageInput.text.toString()
             if(helper.isValidMessage(message)){
-                chatViewModel.newChat = Chat(0, chatUserId, message, helper.getTimeStamp(), messageType)
+                chatViewModel.newChat = Chat(0, chatUserId, message.trim(), helper.getTimeStamp(), messageType)
                 chatViewModel.insertChat()
                 binding.enterMessageInput.setText("")
             }
