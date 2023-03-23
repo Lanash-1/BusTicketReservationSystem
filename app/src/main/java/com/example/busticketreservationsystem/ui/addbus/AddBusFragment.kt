@@ -198,26 +198,32 @@ class AddBusFragment : Fragment() {
         }
 
         binding.partnerInput.addTextChangedListener{
-            val index = partnerList.indexOf(it.toString())
-            adminViewModel.selectedPartnerId = busViewModel.partners[index].partnerId
-            binding.partnerInputLayout.isErrorEnabled = false
-            isEdited = true
+            if(it != null && it.toString().isNotEmpty()){
+                println("PRINTING")
+                val index = partnerList.indexOf(it.toString())
+                adminViewModel.selectedPartnerId = busViewModel.partners[index].partnerId
+                binding.partnerInputLayout.isErrorEnabled = false
+                isEdited = true
+            }
         }
 
         binding.busNameInput.addTextChangedListener {
-            adminViewModel.newBusName = it.toString()
-            if(adminViewModel.newBusName.isNotEmpty()){
-                binding.busNameInputLayout.isErrorEnabled = false
-                isEdited = true
+            if(it != null && it.toString().isNotEmpty()){
+                adminViewModel.newBusName = it.toString()
+                if(adminViewModel.newBusName.isNotEmpty()){
+                    binding.busNameInputLayout.isErrorEnabled = false
+                    isEdited = true
+                }
             }
         }
 
         binding.priceInput.addTextChangedListener(object: TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                println("before")
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
+                println("between -$p0-sentece")
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -229,7 +235,27 @@ class AddBusFragment : Fragment() {
                     isEdited = true
                 }
             }
+//                else if(p0.toString().isNotEmpty()){
+//                    adminViewModel.ticketCost = p0.toString().toInt()
+//                    binding.pricingInputLayout.isErrorEnabled = false
+//                    isEdited = true
+//                }else{
+//                    binding.priceInput.setText("")
+//                }
+
         })
+
+//        binding.priceInput.addTextChangedListener {
+//            if(it != null && it.toString().isNotEmpty()){
+//                if(it.toString().toInt() == 0){
+//                    binding.priceInput.setText("")
+//                }else{
+//                    adminViewModel.ticketCost = it.toString().toInt()
+//                    binding.pricingInputLayout.isErrorEnabled = false
+//                    isEdited = true
+//                }
+//            }
+//        }
 
         binding.upperDeckRadioGroup.setOnCheckedChangeListener { radioGroup, i ->
             when(i){
@@ -257,13 +283,15 @@ class AddBusFragment : Fragment() {
         }
 
         binding.boardingStateInput.addTextChangedListener {
-            if(adminViewModel.selectedBoardingState != it.toString()){
-                adminViewModel.selectedBoardingState = it.toString()
-                binding.boardingCityTitle.visibility = View.VISIBLE
-                binding.boardingCityInputLayout.visibility = View.VISIBLE
-                binding.boardingCityInput.setText("")
-                binding.boardingStateInputLayout.isErrorEnabled = false
-                isEdited = true
+            if(it != null && it.toString().isNotEmpty()){
+                if(adminViewModel.selectedBoardingState != it.toString()){
+                    adminViewModel.selectedBoardingState = it.toString()
+                    binding.boardingCityTitle.visibility = View.VISIBLE
+                    binding.boardingCityInputLayout.visibility = View.VISIBLE
+                    binding.boardingCityInput.setText("")
+                    binding.boardingStateInputLayout.isErrorEnabled = false
+                    isEdited = true
+                }
             }
         }
 
@@ -284,13 +312,15 @@ class AddBusFragment : Fragment() {
         }
 
         binding.droppingStateInput.addTextChangedListener{
-            if(adminViewModel.selectedDroppingState != it.toString()){
-                adminViewModel.selectedDroppingState = it.toString()
-                binding.droppingCityTitle.visibility = View.VISIBLE
-                binding.droppingCityInputLayout.visibility = View.VISIBLE
-                binding.droppingCityInput.setText("")
-                binding.droppingStateInputLayout.isErrorEnabled = false
-                isEdited = true
+            if(it != null && it.toString().isNotEmpty()){
+                if(adminViewModel.selectedDroppingState != it.toString()){
+                    adminViewModel.selectedDroppingState = it.toString()
+                    binding.droppingCityTitle.visibility = View.VISIBLE
+                    binding.droppingCityInputLayout.visibility = View.VISIBLE
+                    binding.droppingCityInput.setText("")
+                    binding.droppingStateInputLayout.isErrorEnabled = false
+                    isEdited = true
+                }
             }
         }
 
@@ -312,37 +342,39 @@ class AddBusFragment : Fragment() {
         }
 
         binding.busTypeInput.addTextChangedListener {
-            binding.lowerDeckDetailsLayout.visibility = View.VISIBLE
-            binding.busTypeLayout.isErrorEnabled = false
-            isEdited = true
-            when(adminViewModel.newBusType!!){
-                BusTypes.AC_SEATER -> {
-                    binding.radioGroupLayout.visibility = View.GONE
-                    adminViewModel.lowerDeckSeatType = BusSeatType.SEATER.name
-                    adminViewModel.hasUpperDeck.value = false
-                    binding.upperDeckDetailsLayout.visibility = View.GONE
+            if (it != null && it.toString().isNotEmpty()) {
+                binding.lowerDeckDetailsLayout.visibility = View.VISIBLE
+                binding.busTypeLayout.isErrorEnabled = false
+                isEdited = true
+                when (adminViewModel.newBusType!!) {
+                    BusTypes.AC_SEATER -> {
+                        binding.radioGroupLayout.visibility = View.GONE
+                        adminViewModel.lowerDeckSeatType = BusSeatType.SEATER.name
+                        adminViewModel.hasUpperDeck.value = false
+                        binding.upperDeckDetailsLayout.visibility = View.GONE
 
-                }
-                BusTypes.NON_AC_SEATER -> {
-                    binding.radioGroupLayout.visibility = View.GONE
-                    adminViewModel.hasUpperDeck.value = false
-                    adminViewModel.lowerDeckSeatType = BusSeatType.SEATER.name
+                    }
+                    BusTypes.NON_AC_SEATER -> {
+                        binding.radioGroupLayout.visibility = View.GONE
+                        adminViewModel.hasUpperDeck.value = false
+                        adminViewModel.lowerDeckSeatType = BusSeatType.SEATER.name
 
-                    binding.upperDeckDetailsLayout.visibility = View.GONE
-                }
-                BusTypes.SLEEPER -> {
-                    binding.radioGroupLayout.visibility = View.VISIBLE
-                    binding.noRadioButton.isChecked = true
-                    binding.yesRadioButton.isChecked = false
-                    adminViewModel.hasUpperDeck.value = false
-                    binding.upperDeckDetailsLayout.visibility = View.GONE
-                    adminViewModel.lowerDeckSeatType = BusSeatType.SLEEPER.name
-                }
-                BusTypes.SEATER_SLEEPER -> {
-                    binding.radioGroupLayout.visibility = View.GONE
-                    adminViewModel.hasUpperDeck.value = true
-                    binding.upperDeckDetailsLayout.visibility = View.VISIBLE
-                    adminViewModel.lowerDeckSeatType = BusSeatType.SEATER.name
+                        binding.upperDeckDetailsLayout.visibility = View.GONE
+                    }
+                    BusTypes.SLEEPER -> {
+                        binding.radioGroupLayout.visibility = View.VISIBLE
+                        binding.noRadioButton.isChecked = true
+                        binding.yesRadioButton.isChecked = false
+                        adminViewModel.hasUpperDeck.value = false
+                        binding.upperDeckDetailsLayout.visibility = View.GONE
+                        adminViewModel.lowerDeckSeatType = BusSeatType.SLEEPER.name
+                    }
+                    BusTypes.SEATER_SLEEPER -> {
+                        binding.radioGroupLayout.visibility = View.GONE
+                        adminViewModel.hasUpperDeck.value = true
+                        binding.upperDeckDetailsLayout.visibility = View.VISIBLE
+                        adminViewModel.lowerDeckSeatType = BusSeatType.SEATER.name
+                    }
                 }
             }
         }
@@ -352,8 +384,11 @@ class AddBusFragment : Fragment() {
         }
 
         binding.lowerLeftColumnCountInput.addTextChangedListener{
-            adminViewModel.lowerLeftColumnCount = it.toString().toInt()
-            binding.lowerLeftColumnCountLayout.isErrorEnabled = false
+            println("LOWER COLUMN")
+            if(it != null && it.toString().isNotEmpty()) {
+                adminViewModel.lowerLeftColumnCount = it.toString().toInt()
+                binding.lowerLeftColumnCountLayout.isErrorEnabled = false
+            }
         }
 
         binding.lowerRightColumnCountInput.setOnClickListener {
@@ -361,8 +396,10 @@ class AddBusFragment : Fragment() {
         }
 
         binding.lowerRightColumnCountInput.addTextChangedListener{
-            adminViewModel.lowerRightColumnCount = it.toString().toInt()
-            binding.lowerRightColumnCountLayout.isErrorEnabled = false
+            if(it != null && it.toString().isNotEmpty()) {
+                adminViewModel.lowerRightColumnCount = it.toString().toInt()
+                binding.lowerRightColumnCountLayout.isErrorEnabled = false
+            }
         }
 
         binding.upperLeftColumnCountInput.setOnClickListener {
@@ -370,8 +407,10 @@ class AddBusFragment : Fragment() {
         }
 
         binding.upperLeftColumnCountInput.addTextChangedListener{
-            adminViewModel.upperLeftColumnCount = it.toString().toInt()
-            binding.upperLeftColumnCountLayout.isErrorEnabled = false
+            if(it != null && it.toString().isNotEmpty()) {
+                adminViewModel.upperLeftColumnCount = it.toString().toInt()
+                binding.upperLeftColumnCountLayout.isErrorEnabled = false
+            }
         }
 
         binding.upperRightColumnCountInput.setOnClickListener {
@@ -379,8 +418,10 @@ class AddBusFragment : Fragment() {
         }
 
         binding.upperRightColumnCountInput.addTextChangedListener{
-            adminViewModel.upperRightColumnCount = it.toString().toInt()
-            binding.upperRightColumnCountLayout.isErrorEnabled = false
+            if(it != null && it.toString().isNotEmpty()) {
+                adminViewModel.upperRightColumnCount = it.toString().toInt()
+                binding.upperRightColumnCountLayout.isErrorEnabled = false
+            }
         }
 
         binding.lowerLeftSeatCountInput.setOnClickListener {
@@ -388,8 +429,11 @@ class AddBusFragment : Fragment() {
         }
 
         binding.lowerLeftSeatCountInput.addTextChangedListener {
-            adminViewModel.lowerLeftSeatCount = it.toString().toInt()
-            binding.lowerLeftSeatCountLayout.isErrorEnabled = false
+            if(it != null && it.toString().isNotEmpty()) {
+
+                adminViewModel.lowerLeftSeatCount = it.toString().toInt()
+                binding.lowerLeftSeatCountLayout.isErrorEnabled = false
+            }
         }
 
         binding.lowerRightSeatCountInput.setOnClickListener {
@@ -397,8 +441,11 @@ class AddBusFragment : Fragment() {
         }
 
         binding.lowerRightSeatCountInput.addTextChangedListener {
-            adminViewModel.lowerRightSeatCount = it.toString().toInt()
+            if(it != null && it.toString().isNotEmpty()) {
+
+                adminViewModel.lowerRightSeatCount = it.toString().toInt()
             binding.lowerRightSeatCountLayout.isErrorEnabled = false
+            }
         }
 
         binding.upperLeftSeatCountInput.setOnClickListener {
@@ -406,8 +453,11 @@ class AddBusFragment : Fragment() {
         }
 
         binding.upperLeftSeatCountInput.addTextChangedListener {
-            adminViewModel.upperLeftSeatCount = it.toString().toInt()
-            binding.upperLeftSeatCountLayout.isErrorEnabled = false
+            if(it != null && it.toString().isNotEmpty()) {
+
+                adminViewModel.upperLeftSeatCount = it.toString().toInt()
+                binding.upperLeftSeatCountLayout.isErrorEnabled = false
+            }
         }
 
         binding.upperRightSeatCountInput.setOnClickListener {
@@ -415,8 +465,11 @@ class AddBusFragment : Fragment() {
         }
 
         binding.upperRightSeatCountInput.addTextChangedListener {
-            adminViewModel.upperRightSeatCount = it.toString().toInt()
-            binding.upperRightSeatCountLayout.isErrorEnabled = false
+            if(it != null && it.toString().isNotEmpty()) {
+
+                adminViewModel.upperRightSeatCount = it.toString().toInt()
+                binding.upperRightSeatCountLayout.isErrorEnabled = false
+            }
         }
 
 
@@ -772,20 +825,20 @@ class AddBusFragment : Fragment() {
 
         listView.adapter = adapter
 
-        editText.addTextChangedListener(object: TextWatcher{
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                adapter.filter.filter(p0)
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-
-            }
-
-        })
+//        editText.addTextChangedListener(object: TextWatcher{
+//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//
+//            }
+//
+//            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//                adapter.filter.filter(p0)
+//            }
+//
+//            override fun afterTextChanged(p0: Editable?) {
+//
+//            }
+//
+//        })
 
         listView.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id -> // when item selected from list

@@ -207,10 +207,10 @@ class AddPartnerFragment : Fragment() {
                 binding.partnerMobileInputLayout.isErrorEnabled = false
                 return true
             }else{
-                binding.partnerMobileInputLayout.error = "Invalid mobile number"
+                binding.partnerMobileInputLayout.error = getString(R.string.invalid_mobile_number)
             }
         }else{
-            binding.partnerMobileInputLayout.error = "Should not be empty"
+            binding.partnerMobileInputLayout.error = getString(R.string.should_not_be_empty)
         }
         binding.partnerMobileInputLayout.isErrorEnabled = true
         return false
@@ -236,7 +236,7 @@ class AddPartnerFragment : Fragment() {
             true
         }else{
             binding.partnerNameLayout.isErrorEnabled = true
-            binding.partnerNameLayout.error = "Should not be empty"
+            binding.partnerNameLayout.error = getString(R.string.should_not_be_empty)
             false
         }
     }
