@@ -168,9 +168,9 @@ class BookingHistoryListFragment : Fragment() {
                     when (position) {
                         0 -> {
                             adminViewModel.apply {
-                                this.filteredPartnerList = bookingViewModel.upcomingPartner
-                                this.filteredBookingList = bookingViewModel.upcomingBooking
-                                this.filteredBusList = bookingViewModel.upcomingBus
+                                this.filteredPartnerList = upcomingPartner
+                                this.filteredBookingList = upcomingBooking
+                                this.filteredBusList = upcomingBus
                                 this.filteredTicketStatus = BookedTicketStatus.UPCOMING
                             }
                         }

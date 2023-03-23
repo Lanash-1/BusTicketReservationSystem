@@ -1,6 +1,5 @@
 package com.example.busticketreservationsystem.ui.bookedticket
 
-import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -234,7 +233,6 @@ class BookedTicketFragment : Fragment() {
         }
 
 
-
         bookingViewModel.bookedTicketDataFetched.observe(viewLifecycleOwner, Observer{
             if(it != null){
                 setTicketDataToView()
@@ -245,10 +243,8 @@ class BookedTicketFragment : Fragment() {
 
     private fun setTicketDataToView() {
 
-
         passengerListAdapter.setPassengerInformationList(bookingViewModel.bookedPassengerInformation)
         passengerListAdapter.notifyDataSetChanged()
-
 
         binding.busTypeText.text = helper.getBusTypeText(bookingViewModel.bookedBus.busType)
         binding.sourceCityText.text = bookingViewModel.bookedBus.sourceLocation

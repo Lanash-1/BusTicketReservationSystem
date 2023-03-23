@@ -191,4 +191,6 @@
     <string name="seat_count">Seat count</string>
     <string name="thiruvananthapuram">Thiruvananthapuram</string>
     <string name="date_text_format">23 September 2023</string>
+    <string name="partner_registration">Partner Registration</string>
+    <string name="all_bookings">All Bookings</string>
 </resources>

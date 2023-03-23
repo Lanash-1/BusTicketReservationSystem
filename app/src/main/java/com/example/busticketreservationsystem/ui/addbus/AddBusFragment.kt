@@ -757,7 +757,7 @@ class AddBusFragment : Fragment() {
         dialog.setContentView(R.layout.dialog_searchable_spinner)
         dialog.findViewById<TextView>(R.id.select_title_text).text = dialogTitle
 
-        dialog.window?.setLayout(LayoutParams.MATCH_PARENT, 2000)
+        dialog.window?.setLayout(LayoutParams.MATCH_PARENT, 1500)
 
         dialog.show()
 

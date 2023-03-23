@@ -79,10 +79,11 @@ class BookingHistoryFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar!!.apply {
             if(loginStatusViewModel.status == LoginStatus.ADMIN_LOGGED_IN){
                 setDisplayHomeAsUpEnabled(true)
+                title = getString(R.string.all_bookings)
             }else{
+                title = getString(R.string.my_bookings)
                 setDisplayHomeAsUpEnabled(false)
             }
-            title = getString(R.string.my_bookings)
         }
         binding = FragmentBookingHistoryBinding.inflate(inflater, container, false)
 

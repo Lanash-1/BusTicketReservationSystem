@@ -22,12 +22,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Partner Registration"
-            android:textSize="24sp"
+            android:text="@string/partner_registration"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:visibility="visible"
+            android:textSize="16sp"
             />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -44,8 +44,6 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title_text"
             android:layout_marginTop="16dp"
-            app:counterEnabled="true"
-            app:counterMaxLength="30"
             app:startIconDrawable="@drawable/ic_baseline_abc_24"
             >
 

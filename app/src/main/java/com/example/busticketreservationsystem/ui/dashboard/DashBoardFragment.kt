@@ -230,14 +230,14 @@ class DashBoardFragment : Fragment() {
 
         binding.searchBusButton.setOnClickListener {
 
-            if(searchViewModel.sourceLocation.isNotEmpty() && searchViewModel.destinationLocation.isNotEmpty() && searchViewModel.year != 0){
+            if(searchViewModel.sourceLocation.isNotEmpty() && searchViewModel.destinationLocation.isNotEmpty() && busViewModel.selectedDate.isNotEmpty()){
 
                 if(searchViewModel.sourceLocation == searchViewModel.destinationLocation){
                     Toast.makeText(requireContext(), "Buses not available for the selected locations", Toast.LENGTH_SHORT).show()
                 }else{
                     busViewModel.sourceLocation = searchViewModel.sourceLocation
                     busViewModel.destinationLocation = searchViewModel.destinationLocation
-                    busViewModel.selectedDate = "${helper.getNumberFormat(searchViewModel.date)}/${helper.getNumberFormat(searchViewModel.month)}/${helper.getNumberFormat(searchViewModel.year)}"
+//                    busViewModel.selectedDate = "${helper.getNumberFormat(searchViewModel.date)}/${helper.getNumberFormat(searchViewModel.month)}/${helper.getNumberFormat(searchViewModel.year)}"
 
                     parentFragmentManager.commit {
                         setCustomAnimations(R.anim.from_right, R.anim.to_left)
@@ -298,7 +298,9 @@ class DashBoardFragment : Fragment() {
         dateViewModel.travelDateEdited.observe(viewLifecycleOwner, Observer {
             if(it != null){
                 if(dateViewModel.travelYear != 0){
-                    binding.dateInput.setText("${helper.getNumberFormat(dateViewModel.travelDate)} / ${helper.getNumberFormat(dateViewModel.travelMonth)} / ${helper.getNumberFormat(dateViewModel.travelYear)}")
+                    binding.dateInput.setText("${helper.getNumberFormat(dateViewModel.travelDate)}/${helper.getNumberFormat(dateViewModel.travelMonth)}/${helper.getNumberFormat(dateViewModel.travelYear)}")
+//                    busViewModel.selectedDate = "${helper.getNumberFormat(searchViewModel.date)}/${helper.getNumberFormat(searchViewModel.month)}/${helper.getNumberFormat(searchViewModel.year)}"
+                    busViewModel.selectedDate = binding.dateInput.text.toString()
                     searchViewModel.apply {
                         year = dateViewModel.travelYear
                         month = dateViewModel.travelMonth
@@ -315,7 +317,6 @@ class DashBoardFragment : Fragment() {
                 }
                 dateViewModel.travelDateEdited.value = null
             }
-
         })
     }
 
