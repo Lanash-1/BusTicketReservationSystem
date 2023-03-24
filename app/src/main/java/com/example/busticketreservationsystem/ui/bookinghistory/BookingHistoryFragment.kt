@@ -109,7 +109,6 @@ class BookingHistoryFragment : Fragment() {
                         }
                     }
                 }
-
             }
         }
         return super.onOptionsItemSelected(item)

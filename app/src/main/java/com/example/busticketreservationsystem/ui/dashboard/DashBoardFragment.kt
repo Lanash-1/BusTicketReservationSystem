@@ -136,7 +136,6 @@ class DashBoardFragment : Fragment() {
             }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
-
         if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
             (activity as AppCompatActivity).apply {
                 writeSharedPreferences = getSharedPreferences("LoginStatus",

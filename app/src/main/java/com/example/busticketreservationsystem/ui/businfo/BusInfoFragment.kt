@@ -112,14 +112,6 @@ class BusInfoFragment : Fragment() {
                             replace(R.id.adminPanelFragmentContainer, BusesListFragment())
                         }
                     }
-                    else -> {
-                        parentFragmentManager.commit {
-                            setCustomAnimations(R.anim.from_left, R.anim.to_right)
-//                            replace(R.id.homePageFragmentContainer, SelectedBusFragment())
-                            replace(R.id.homePageFragmentContainer, SeatSelectionFragment())
-
-                        }
-                    }
                 }
             }
             else -> {

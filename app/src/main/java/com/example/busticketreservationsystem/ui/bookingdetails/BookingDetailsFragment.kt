@@ -88,7 +88,14 @@ class BookingDetailsFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home -> {
-                backPressOperation()
+                when(navigationViewModel.fragment){
+                    is BookingDetailsFragment -> {
+                        println("booking fragment")
+                    }else -> {
+                        println("on back press")
+                        backPressOperation()
+                    }
+                }
             }
         }
         return super.onOptionsItemSelected(item)
@@ -96,6 +103,7 @@ class BookingDetailsFragment : Fragment() {
 
     private fun backPressOperation() {
         bookingViewModel.passengerInfo.clear()
+        navigationViewModel.fragment = null
         parentFragmentManager.commit {
             setCustomAnimations(R.anim.from_left, R.anim.to_right)
             replace(R.id.homePageFragmentContainer, BoardingAndDroppingFragment())
@@ -104,6 +112,8 @@ class BookingDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+//        navigationViewModel.fragment = BookingDetailsFragment()
 
         if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){
             binding.proceedLayout.visibility = View.VISIBLE
@@ -124,7 +134,9 @@ class BookingDetailsFragment : Fragment() {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true){
                 override fun handleOnBackPressed() {
-                    backPressOperation()
+//                    if(navigationViewModel.fragment != BookingDetailsFragment()){
+                        backPressOperation()
+//                    }
                 }
             }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
@@ -286,8 +298,8 @@ class BookingDetailsFragment : Fragment() {
         busViewModel.numberOfSeatsSelected.value = 0
         busViewModel.busSelectedSeats.clear()
 
-        busViewModel.boardingPoint.value = null
-        busViewModel.droppingPoint.value = null
+        busViewModel.boardingPoint.value = ""
+        busViewModel.droppingPoint.value = ""
 
         parentFragmentManager.commit {
             setCustomAnimations(R.anim.from_right, R.anim.to_left)
