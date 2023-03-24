@@ -45,6 +45,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import java.util.*
+import kotlin.collections.ArrayList
 
 class AddBusFragment : Fragment() {
 
@@ -825,20 +826,31 @@ class AddBusFragment : Fragment() {
 
         listView.adapter = adapter
 
-//        editText.addTextChangedListener(object: TextWatcher{
-//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//
-//            }
-//
-//            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//                adapter.filter.filter(p0)
-//            }
-//
-//            override fun afterTextChanged(p0: Editable?) {
-//
-//            }
-//
-//        })
+        editText.addTextChangedListener(object: TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                adapter.filter.filter(p0)
+//                if(p0 != null){
+//                    val newList = mutableListOf<String>()
+//                    list.forEach {
+//                        if(it.contains(p0)){
+//                            newList.add(it)
+//                        }
+//                    }
+
+//                    val newList = list.contains(p0) as kotlin.collections.ArrayList<String>
+//                    adapter.clear()
+//                    adapter.addAll(newList as kotlin.collections.ArrayList<String>)
+                }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+
+        })
 
         listView.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id -> // when item selected from list

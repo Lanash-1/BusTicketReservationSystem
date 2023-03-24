@@ -18,6 +18,7 @@ import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.databinding.FragmentBookingHistoryBinding
 import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.ui.analytics.AnalyticsPageFragment
+import com.example.busticketreservationsystem.ui.bookingdetails.BookingDetailsFragment
 import com.example.busticketreservationsystem.ui.homepage.HomePageFragment
 import com.example.busticketreservationsystem.ui.login.LoginFragment
 import com.example.busticketreservationsystem.ui.myaccount.MyAccountFragment
@@ -99,10 +100,16 @@ class BookingHistoryFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home -> {
-                parentFragmentManager.commit {
-                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
-                    replace(R.id.adminPanelFragmentContainer, AnalyticsPageFragment())
+                when(navigationViewModel.fragment){
+                    is AnalyticsPageFragment -> {
+                        navigationViewModel.fragment = null
+                        parentFragmentManager.commit {
+                            setCustomAnimations(R.anim.from_left, R.anim.to_right)
+                            replace(R.id.adminPanelFragmentContainer, AnalyticsPageFragment())
+                        }
+                    }
                 }
+
             }
         }
         return super.onOptionsItemSelected(item)
@@ -208,13 +215,13 @@ class BookingHistoryFragment : Fragment() {
                         is AnalyticsPageFragment -> {
                             navigationViewModel.fragment = null
                             parentFragmentManager.commit {
-                                setCustomAnimations(R.anim.from_right, R.anim.to_left)
+                                setCustomAnimations(R.anim.from_left, R.anim.to_right)
                                 replace(R.id.adminPanelFragmentContainer, AnalyticsPageFragment())
                             }
-                            requireActivity().findViewById<BottomNavigationView>(R.id.admin_bottomNavigationView).apply {
-                                visibility = View.VISIBLE
-                                selectedItemId = R.id.analytics
-                            }
+//                            requireActivity().findViewById<BottomNavigationView>(R.id.admin_bottomNavigationView).apply {
+////                                visibility = View.VISIBLE
+//                                selectedItemId = R.id.analytics
+//                            }
                         }
                         else -> {
                             bookingViewModel.currentScreenPosition = 0

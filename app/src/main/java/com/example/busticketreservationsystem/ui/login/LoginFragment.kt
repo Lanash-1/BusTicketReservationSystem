@@ -90,9 +90,9 @@ class LoginFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
         when(item.itemId){
             android.R.id.home -> {
+                println("Home press called")
                 backPressOperation()
             }
             R.id.skip -> {
@@ -130,6 +130,7 @@ class LoginFragment : Fragment() {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true){
                 override fun handleOnBackPressed() {
+//                    println("Back press called")
                     backPressOperation()
                 }
             }
