@@ -40,6 +40,7 @@ class BusViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             val job = launch {
                 repository.insertPartnerData(partner)
+
             }
             job.join()
             withContext(Dispatchers.Main){
@@ -64,6 +65,19 @@ class BusViewModel(
             withContext(Dispatchers.Main){
                 //
             }
+        }
+    }
+
+    fun updateBusDetails(bus: Bus, busLayout: BusLayout, amenities: List<String>){
+        viewModelScope.launch(Dispatchers.IO) {
+//            val job = launch {
+            repository.updateBusDetails(bus, busLayout)
+            repository.removeBusAmenities(bus.busId)
+            for(amenity in amenities){
+                repository.insertBusAmenitiesData(BusAmenities(0, bus.busId, amenity))
+            }
+
+//            }
         }
     }
 
@@ -474,6 +488,26 @@ class BusViewModel(
             withContext(Dispatchers.Main){
                 selectedBusLayout = busLayout
                 bookedSeatsNumber = seatsList
+                isBusLayoutDataFetched.value = true
+            }
+        }
+    }
+
+
+//    var isBusLayoutDataFetched = MutableLiveData<Boolean>(null)
+
+
+    lateinit var selectedBusLayoutAdmin: BusLayout
+
+    fun fetchBusSeatLayoutData(selectedBusId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            lateinit var busLayout: BusLayout
+            val job = launch {
+                busLayout = repository.getLayoutOfBus(selectedBusId)
+            }
+            job.join()
+            withContext(Dispatchers.Main){
+                selectedBusLayoutAdmin = busLayout
                 isBusLayoutDataFetched.value = true
             }
         }

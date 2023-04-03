@@ -57,6 +57,9 @@ class AppRepositoryImpl(
 
 //    Bus related Data
 
+    override fun decreaseBusCount(partnerId: Int){
+        appDb.partnersDao().decreaseBusCount(partnerId)
+    }
 
     override fun updateBusCount(partnerId: Int) {
         appDb.partnersDao().updateBusCount(partnerId)
@@ -289,6 +292,11 @@ class AppRepositoryImpl(
         return appDb.busLayoutDao().getLayoutOfBus(busId)
     }
 
+    override fun updateBusDetails(bus: Bus, busLayout: BusLayout) {
+        appDb.busLayoutDao().updateBusLayout(busLayout)
+        appDb.busDao().updateBus(bus)
+    }
+
     override fun getAllBookings(): List<Bookings> {
         return appDb.bookingsDao().getAllBookings()
     }
@@ -313,5 +321,11 @@ class AppRepositoryImpl(
     override fun updateBookingData(bookingId: Int, totalCost: Double, noOfTicketsBooked: Int) {
         appDb.bookingsDao().updateBookingData(bookingId, totalCost, noOfTicketsBooked)
     }
+
+
+    override fun removeBusAmenities(busId: Int) {
+        appDb.busAmenitiesDao().removeBusAmenities(busId)
+    }
+
 
 }

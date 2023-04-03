@@ -142,4 +142,12 @@ interface AppRepository {
     fun removeBookedSeats(bookingId: Int, seatCode: String)
     fun updateBookingData(bookingId: Int, totalCost: Double, noOfTicketsBooked: Int)
 
+    fun updateBusDetails(bus: Bus, busLayout: BusLayout)
+
+
+
+
+    fun decreaseBusCount(partnerId: Int)
+    fun removeBusAmenities(busId: Int)
+
 }

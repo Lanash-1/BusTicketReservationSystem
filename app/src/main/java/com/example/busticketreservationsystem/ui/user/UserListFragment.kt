@@ -99,7 +99,7 @@ class UserListFragment : Fragment() {
             if(it.isNotEmpty()){
                 binding.emptyListLayout.visibility = View.GONE
                 userListAdapter.setUserList(it)
-                userListAdapter.notifyItemRangeChanged(0, it.size)
+                userListAdapter.notifyDataSetChanged()
             }else{
                 binding.emptyListLayout.visibility = View.VISIBLE
             }

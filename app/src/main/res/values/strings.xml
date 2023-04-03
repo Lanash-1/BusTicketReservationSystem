@@ -205,4 +205,8 @@
     <string name="users_registered">Users Registered</string>
     <string name="sample_username">Sample username</string>
     <string name="no_username">[no username]</string>
+    <string name="select_if_any">(Select if any)</string>
+    <string name="edit_bus_details">Edit Bus Details</string>
+    <string name="update_details">Update Details</string>
+    <string name="confirm_password">Confirm password</string>
 </resources>

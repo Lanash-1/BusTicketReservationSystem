@@ -25,16 +25,7 @@ class LocationViewModel: ViewModel() {
         }
     }
 
-    fun fetchCities(state: String){
-        cities.clear()
-        for(location in locationData){
-            if(location.state == state){
-                for(city in location.cities){
-                    cities.add(city)
-                }
-            }
-        }
-    }
+
 
 
     fun fetchAreas(selectedCity: String): List<String>{
@@ -74,8 +65,30 @@ class LocationViewModel: ViewModel() {
         allCities.sorted()
     }
 
-    fun fetchSourceCities(): List<String> {
-        TODO("Not yet implemented")
+//    fun fetchSourceCities(): List<String> {
+//        TODO("Not yet implemented")
+//    }
+
+    fun fetchCities(state: String){
+        cities.clear()
+        for(location in locationData){
+            if(location.state == state){
+                for(city in location.cities){
+                    cities.add(city)
+                }
+            }
+        }
+    }
+
+    fun fetchStateOfCity(inputCity: String): String {
+        for(location in locationData){
+            for(city in location.cities){
+                if(inputCity == city){
+                    return location.state
+                }
+            }
+        }
+        return ""
     }
 
 

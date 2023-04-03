@@ -26,7 +26,7 @@ class ReviewsAdapter: RecyclerView.Adapter<ReviewsAdapter.ReviewsViewHolder>() {
         holder.binding.apply {
             ratingText.text = reviewsList[position].rating.toString()
             reviewText.text = reviewsList[position].feedback
-            feedbackText.text = "Feedback #${position+1}"
+            feedbackText.text = "Review #${position+1}"
             dateText.text = reviewsList[position].date
         }
     }

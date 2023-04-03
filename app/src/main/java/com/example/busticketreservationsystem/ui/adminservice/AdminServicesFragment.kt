@@ -90,6 +90,10 @@ class AdminServicesFragment : Fragment() {
             override fun onItemClick(position: Int) {
                 when(AdminServices.values()[position]){
                     AdminServices.ADD_BUS -> {
+                        adminViewModel.apply {
+                            busToEdit = null
+                            busLayoutToEdit = null
+                        }
                         parentFragmentManager.commit {
                             setCustomAnimations(R.anim.from_right, R.anim.to_left)
                             replace(R.id.adminPanelFragmentContainer, AddBusFragment())

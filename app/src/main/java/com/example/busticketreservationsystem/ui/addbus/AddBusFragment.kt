@@ -7,10 +7,7 @@ import android.app.TimePickerDialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -34,9 +31,11 @@ import com.example.busticketreservationsystem.enums.BusSeatType
 import com.example.busticketreservationsystem.enums.BusTypes
 import com.example.busticketreservationsystem.listeners.OnItemClickListener
 import com.example.busticketreservationsystem.ui.adminservice.AdminServicesFragment
+import com.example.busticketreservationsystem.ui.businfo.BusInfoFragment
 import com.example.busticketreservationsystem.utils.Helper
 import com.example.busticketreservationsystem.viewmodel.livedata.AdminViewModel
 import com.example.busticketreservationsystem.viewmodel.LocationViewModel
+import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
 import com.example.busticketreservationsystem.viewmodel.livedata.BusViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.AdminViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
@@ -45,7 +44,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import java.util.*
-import kotlin.collections.ArrayList
 
 class AddBusFragment : Fragment() {
 
@@ -57,6 +55,7 @@ class AddBusFragment : Fragment() {
     private lateinit var busViewModel: BusViewModel
     private val locationViewModel: LocationViewModel by activityViewModels()
     private lateinit var adminViewModel: AdminViewModel
+    private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
 
     private lateinit var dialog: Dialog
     private lateinit var numberPickerDialog: Dialog
@@ -89,7 +88,11 @@ class AddBusFragment : Fragment() {
 
         (activity as AppCompatActivity).supportActionBar!!.apply {
             setDisplayHomeAsUpEnabled(true)
-            title=getString(R.string.add_bus)
+            title = if(adminViewModel.busToEdit != null){
+                getString(R.string.edit_bus_details)
+            }else{
+                getString(R.string.add_bus)
+            }
         }
 
         binding = FragmentAddBusBinding.inflate(inflater, container, false)
@@ -101,6 +104,7 @@ class AddBusFragment : Fragment() {
             android.R.id.home -> {
                 backPressOperation()
             }
+
         }
         return super.onOptionsItemSelected(item)
     }
@@ -119,51 +123,65 @@ class AddBusFragment : Fragment() {
             builder.setPositiveButton("Discard") { _, _ ->
                 run {
 
+                    clearValues()
 
-                    adminViewModel.apply {
-                        selectedPartnerId = -1
-                        newBusName= ""
-                        ticketCost= 0
-                        selectedBoardingState = ""
-                        selectedBoardingCity = ""
-                        selectedDroppingState= ""
-                        selectedDroppingCity = ""
-                        busStartingTime = ""
-                        busDroppingTime= ""
-                        newBusType = null
-                        hasUpperDeck.value = null
-                        numberOfDecks= 0
-                        lowerDeckSeatType = ""
-                        lowerLeftColumnCount = 0
-                        lowerRightColumnCount = 0
-                        lowerLeftSeatCount = 0
-                        lowerRightSeatCount = 0
-                        upperLeftColumnCount = 0
-                        upperRightColumnCount= 0
-                        upperLeftSeatCount= 0
-                        upperRightSeatCount = 0
+                    if(adminViewModel.busToEdit != null){
+                        parentFragmentManager.commit {
+                            setCustomAnimations(R.anim.from_left, R.anim.to_right)
+                            replace(R.id.adminPanelFragmentContainer, BusInfoFragment())
+                        }
+                    }else{
+                        parentFragmentManager.commit {
+                            setCustomAnimations(R.anim.from_left, R.anim.to_right)
+                            replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
+                        }
                     }
 
-                    parentFragmentManager.commit {
-                        setCustomAnimations(R.anim.from_left, R.anim.to_right)
-                        replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
-                    }
                 }
             }
             val alertDialog = builder.create()
-//            if (alertDialog.window != null) {
-//                alertDialog.window!!.attributes.windowAnimations = R.style.DialogFragmentAnimation
-//            }
             alertDialog.show()
 
         }else{
-            parentFragmentManager.commit {
-                setCustomAnimations(R.anim.from_left, R.anim.to_right)
-                replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
+            if(adminViewModel.busToEdit != null){
+                parentFragmentManager.commit {
+                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
+                    replace(R.id.adminPanelFragmentContainer, BusInfoFragment())
+                }
+            }else{
+                parentFragmentManager.commit {
+                    setCustomAnimations(R.anim.from_left, R.anim.to_right)
+                    replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
+                }
             }
         }
     }
 
+    private fun clearValues() {
+        adminViewModel.apply {
+            selectedPartnerId = -1
+            newBusName= ""
+            ticketCost= 0
+            selectedBoardingState = ""
+            selectedBoardingCity = ""
+            selectedDroppingState= ""
+            selectedDroppingCity = ""
+            busStartingTime = ""
+            busDroppingTime= ""
+            newBusType = null
+            hasUpperDeck.value = null
+            numberOfDecks= 0
+            lowerDeckSeatType = ""
+            lowerLeftColumnCount = 0
+            lowerRightColumnCount = 0
+            lowerLeftSeatCount = 0
+            lowerRightSeatCount = 0
+            upperLeftColumnCount = 0
+            upperRightColumnCount= 0
+            upperLeftSeatCount= 0
+            upperRightSeatCount = 0
+        }
+    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -179,6 +197,12 @@ class AddBusFragment : Fragment() {
             }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
+        if(adminViewModel.busToEdit != null && adminViewModel.busLayoutToEdit != null){
+            binding.addBusButton.text = getString(R.string.update_details)
+            binding.titleText.visibility = View.GONE
+            fillFormDetails(adminViewModel.busToEdit!!, adminViewModel.busLayoutToEdit!!)
+        }
 
         for(partner in busViewModel.partners){
             partnerList.add(partner.partnerName)
@@ -200,9 +224,9 @@ class AddBusFragment : Fragment() {
 
         binding.partnerInput.addTextChangedListener{
             if(it != null && it.toString().isNotEmpty()){
-                println("PRINTING")
                 val index = partnerList.indexOf(it.toString())
                 adminViewModel.selectedPartnerId = busViewModel.partners[index].partnerId
+                println("Partner ID = ${adminViewModel.selectedPartnerId}")
                 binding.partnerInputLayout.isErrorEnabled = false
                 isEdited = true
             }
@@ -337,7 +361,6 @@ class AddBusFragment : Fragment() {
             }
         }
 
-
         binding.busTypeInput.setOnClickListener {
             openBusTypeBottomSheet()
         }
@@ -385,7 +408,6 @@ class AddBusFragment : Fragment() {
         }
 
         binding.lowerLeftColumnCountInput.addTextChangedListener{
-            println("LOWER COLUMN")
             if(it != null && it.toString().isNotEmpty()) {
                 adminViewModel.lowerLeftColumnCount = it.toString().toInt()
                 binding.lowerLeftColumnCountLayout.isErrorEnabled = false
@@ -431,7 +453,6 @@ class AddBusFragment : Fragment() {
 
         binding.lowerLeftSeatCountInput.addTextChangedListener {
             if(it != null && it.toString().isNotEmpty()) {
-
                 adminViewModel.lowerLeftSeatCount = it.toString().toInt()
                 binding.lowerLeftSeatCountLayout.isErrorEnabled = false
             }
@@ -443,7 +464,6 @@ class AddBusFragment : Fragment() {
 
         binding.lowerRightSeatCountInput.addTextChangedListener {
             if(it != null && it.toString().isNotEmpty()) {
-
                 adminViewModel.lowerRightSeatCount = it.toString().toInt()
             binding.lowerRightSeatCountLayout.isErrorEnabled = false
             }
@@ -455,7 +475,6 @@ class AddBusFragment : Fragment() {
 
         binding.upperLeftSeatCountInput.addTextChangedListener {
             if(it != null && it.toString().isNotEmpty()) {
-
                 adminViewModel.upperLeftSeatCount = it.toString().toInt()
                 binding.upperLeftSeatCountLayout.isErrorEnabled = false
             }
@@ -467,21 +486,145 @@ class AddBusFragment : Fragment() {
 
         binding.upperRightSeatCountInput.addTextChangedListener {
             if(it != null && it.toString().isNotEmpty()) {
-
                 adminViewModel.upperRightSeatCount = it.toString().toInt()
                 binding.upperRightSeatCountLayout.isErrorEnabled = false
             }
         }
 
-
         binding.addBusButton.setOnClickListener {
-            addBusOperation()
+            if(adminViewModel.busToEdit != null){
+                updateBusDetails()
+            }else{
+                addBusOperation()
+            }
         }
-
 
     }
 
 
+
+    private fun fillFormDetails(bus: Bus, busLayout: BusLayout) {
+        binding.apply {
+//            visibility
+            droppingStateInputLayout.visibility = View.VISIBLE
+            droppingCityInputLayout.visibility = View.VISIBLE
+            boardingCityInputLayout.visibility = View.VISIBLE
+            boardingCityTitle.visibility = View.VISIBLE
+            droppingCityTitle.visibility = View.VISIBLE
+
+            partnerInput.setText(adminViewModel.partnerToEdit.partnerName)
+            adminViewModel.selectedPartnerId = adminViewModel.partnerToEdit.partnerId
+            busNameInput.setText(bus.busName)
+            adminViewModel.newBusName = bus.busName
+            priceInput.setText(bus.perTicketCost.toInt().toString())
+            adminViewModel.ticketCost = bus.perTicketCost.toInt()
+
+//            timing details
+            startTimePickerInput.setText(bus.startTime)
+            adminViewModel.busStartingTime = bus.startTime
+            adminViewModel.startTime = bus.startTime
+            reachTimePickerInput.setText(bus.reachTime)
+            adminViewModel.busDroppingTime = bus.reachTime
+            adminViewModel.reachTime = bus.reachTime
+
+//            boarding and dropping location
+            boardingStateInput.setText(locationViewModel.fetchStateOfCity(bus.sourceLocation))
+            adminViewModel.selectedBoardingState = boardingStateInput.text.toString()
+            droppingStateInput.setText(locationViewModel.fetchStateOfCity(bus.destination))
+            adminViewModel.selectedDroppingState = droppingStateInput.text.toString()
+
+            boardingCityInput.setText(bus.sourceLocation)
+            adminViewModel.selectedBoardingCity = bus.sourceLocation
+            droppingCityInput.setText(bus.destination)
+            adminViewModel.selectedDroppingCity = bus.destination
+
+//            bus type
+            busTypeInput.setText(helper.getBusTypeText(bus.busType))
+            adminViewModel.newBusType = helper.getBusType(bus.busType)
+
+
+            lowerDeckDetailsLayout.visibility = View.VISIBLE
+            lowerLeftSeatCountInput.setText(busLayout.lowerLeftSeatCount.toString())
+            lowerRightSeatCountInput.setText(busLayout.lowerRightSeatCount.toString())
+            lowerLeftColumnCountInput.setText(busLayout.lowerLeftColumnCount.toString())
+            lowerRightColumnCountInput.setText(busLayout.lowerRightColumnCount.toString())
+            adminViewModel.apply {
+                lowerLeftSeatCount = busLayout.lowerLeftSeatCount
+                lowerRightSeatCount = busLayout.lowerRightSeatCount
+                lowerLeftColumnCount = busLayout.lowerLeftColumnCount
+                lowerRightColumnCount = busLayout.lowerRightColumnCount
+            }
+
+            adminViewModel.lowerDeckSeatType = BusSeatType.SEATER.name
+
+            if(busLayout.numberOfDecks == 2){
+                if(adminViewModel.newBusType == BusTypes.SLEEPER){
+                    adminViewModel.lowerDeckSeatType = BusSeatType.SLEEPER.name
+                }
+                adminViewModel.hasUpperDeck.value = true
+                upperDeckDetailsLayout.visibility = View.VISIBLE
+                upperLeftSeatCountInput.setText(busLayout.upperLeftSeatCount.toString())
+                upperRightSeatCountInput.setText(busLayout.upperRightSeatCount.toString())
+                upperLeftColumnCountInput.setText(busLayout.upperLeftColumnCount.toString())
+                upperRightColumnCountInput.setText(busLayout.upperRightColumnCount.toString())
+                adminViewModel.apply {
+                    upperLeftSeatCount = busLayout.upperLeftSeatCount
+                    upperRightSeatCount = busLayout.upperRightSeatCount
+                    upperLeftColumnCount = busLayout.upperLeftColumnCount
+                    upperRightColumnCount = busLayout.upperRightColumnCount
+
+                    numberOfDecks = 2
+                }
+            }else{
+                adminViewModel.hasUpperDeck.value = false
+            }
+
+            if(bus.busType == BusTypes.SLEEPER.name){
+                radioGroupLayout.visibility = View.VISIBLE
+                if(busLayout.numberOfDecks == 2){
+                    yesRadioButton.isChecked = true
+                    noRadioButton.isChecked = false
+                }else{
+                    yesRadioButton.isChecked = false
+                    noRadioButton.isChecked = true
+                }
+            }
+
+
+//            amenities check
+//            fetch bus amenities and get data and display
+
+                for(amenities in busViewModel.busAmenities.value!!){
+                    when(amenities){
+                        BusAmenities.WIFI.name -> {
+                            binding.wifi.isChecked = true
+                        }
+                        BusAmenities.EMERGENCY_CONTACT_NUMBER.name -> {
+                            binding.emergencyContactNumber.isChecked = true
+
+                        }
+                        BusAmenities.TRACK_MY_BUS.name -> {
+                            binding.trackMyBus.isChecked = true
+
+                        }
+                        BusAmenities.BLANKETS.name -> {
+                            binding.blanket.isChecked = true
+
+                        }
+                        BusAmenities.WATER_BOTTLE.name -> {
+                            binding.waterBottle.isChecked = true
+
+                        }
+                        BusAmenities.CHARGING_POINT.name -> {
+                            binding.chargingPoint.isChecked = true
+
+                        }
+
+                    }
+                }
+
+        }
+    }
 
 
     private fun openBusTypeBottomSheet() {
@@ -508,6 +651,79 @@ class AddBusFragment : Fragment() {
                 }
             }
         })
+    }
+
+
+    private fun updateBusDetails() {
+        val validPartner = validPartner()
+        val validBusName = validBusName()
+        val validTicketCost = validTicketCost()
+        val validBoardingState = validBoardingState()
+        val validBoardingCity = validBoardingCity()
+        val validDroppingState = validDroppingState()
+        val validDroppingCity = validDroppingCity()
+        val validTimingDetails = validTimingDetails()
+        val validBusType = validBusType()
+        val validLowerDeckDetails = validLowerDeckDetails()
+        var validUpperDeckDetails = false
+        if(adminViewModel.hasUpperDeck.value != null){
+            if(adminViewModel.hasUpperDeck.value == false){
+                validUpperDeckDetails = true
+                adminViewModel.numberOfDecks = 1
+            } else{
+                adminViewModel.numberOfDecks = 2
+                validUpperDeckDetails = validUpperDeckDetails()
+            }
+        }else{
+            adminViewModel.numberOfDecks = 1
+        }
+        val validAmenities = validAmenities()
+
+        if(validPartner && validBusName && validAmenities && validTicketCost && validBoardingState && validBoardingCity && validDroppingState && validDroppingCity && validTimingDetails && validBusType && validLowerDeckDetails && validUpperDeckDetails){
+            val duration = helper.getDuration(binding.startTimePickerInput.text.toString(), binding.reachTimePickerInput.text.toString())
+            busViewModel.newBusLayout = BusLayout(
+                adminViewModel.busLayoutToEdit!!.busLayoutId,
+                adminViewModel.busToEdit!!.busId,
+                adminViewModel.numberOfDecks,
+                adminViewModel.lowerDeckSeatType,
+                adminViewModel.lowerLeftColumnCount,
+                adminViewModel.lowerRightColumnCount,
+                adminViewModel.upperLeftColumnCount,
+                adminViewModel.upperRightColumnCount,
+                adminViewModel.lowerLeftSeatCount,
+                adminViewModel.lowerRightSeatCount,
+                adminViewModel.upperLeftSeatCount,
+                adminViewModel.upperRightSeatCount
+            )
+            val totalSeatCount = adminViewModel.lowerLeftSeatCount + adminViewModel.lowerRightSeatCount + adminViewModel.upperLeftSeatCount + adminViewModel.upperRightSeatCount
+            adminViewModel.newBus = Bus(
+                adminViewModel.busToEdit!!.busId,
+                adminViewModel.selectedPartnerId,
+                adminViewModel.newBusName,
+                adminViewModel.selectedBoardingCity,
+                adminViewModel.selectedDroppingCity,
+                adminViewModel.ticketCost.toDouble(),
+                adminViewModel.newBusType!!.name,
+                totalSeatCount,
+                totalSeatCount,
+                adminViewModel.busStartingTime,
+                adminViewModel.busDroppingTime,
+                duration,
+                adminViewModel.busToEdit!!.ratingOverall,
+                adminViewModel.busToEdit!!.ratingPeopleCount
+            )
+            if(adminViewModel.busToEdit!!.partnerId != adminViewModel.selectedPartnerId){
+                adminViewModel.updatePartnerBusCount(adminViewModel.busToEdit!!.partnerId)
+            }
+            busViewModel.updateBusDetails(adminViewModel.newBus, busViewModel.newBusLayout, adminViewModel.amenities)
+            Snackbar.make(requireView(), "Bus Updated Successfully", Snackbar.LENGTH_SHORT).show()
+            adminViewModel.selectedBus = adminViewModel.newBus
+            clearValues()
+            parentFragmentManager.commit {
+                setCustomAnimations(R.anim.from_left, R.anim.to_right)
+                replace(R.id.adminPanelFragmentContainer, BusInfoFragment())
+            }
+        }
     }
 
     private fun addBusOperation() {
@@ -571,6 +787,7 @@ class AddBusFragment : Fragment() {
             busViewModel.registerNewBus(adminViewModel.newBus, adminViewModel.amenities)
             Snackbar.make(requireView(), "Bus Added Successfully", Snackbar.LENGTH_SHORT).show()
 
+            clearValues()
             parentFragmentManager.commit {
                 setCustomAnimations(R.anim.from_left, R.anim.to_right)
                 replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())

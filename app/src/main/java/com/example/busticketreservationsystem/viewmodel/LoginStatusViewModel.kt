@@ -10,6 +10,7 @@ class LoginStatusViewModel: ViewModel() {
     lateinit var status: LoginStatus
 
     var isUserEnteredPassword: Boolean = false
+    var isUserReEnteredPassword: Boolean = false
 
     var bitmapValue: Bitmap? = null
 

@@ -28,7 +28,6 @@
         android:textColorHint="#808080"
         android:textColor="@color/black"
         android:cursorVisible="true"
-        android:text="hello"
         android:textCursorDrawable="@drawable/red_cursor"
         />
 

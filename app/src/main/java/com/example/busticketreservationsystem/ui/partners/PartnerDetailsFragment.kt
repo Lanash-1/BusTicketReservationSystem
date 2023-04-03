@@ -97,7 +97,6 @@ class PartnerDetailsFragment : Fragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
-
         setDataToView(adminViewModel.selectedPartner)
 
         adminViewModel.fetchBookedTicketCount(adminViewModel.selectedPartner.partnerId)

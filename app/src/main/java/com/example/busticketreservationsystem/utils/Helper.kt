@@ -305,6 +305,25 @@ open class Helper {
         }
     }
 
+    fun getBusType(busType: String): BusTypes {
+        return when(busType){
+            BusTypes.AC_SEATER.name -> {
+                BusTypes.AC_SEATER
+            }
+            BusTypes.NON_AC_SEATER.name -> {
+                BusTypes.NON_AC_SEATER
+            }
+            BusTypes.SLEEPER.name -> {
+                BusTypes.SLEEPER
+            }
+            BusTypes.SEATER_SLEEPER.name -> {
+                BusTypes.SEATER_SLEEPER
+            }
+            else -> {
+                BusTypes.AC_SEATER
+            }
+        }
+    }
 
 
 }

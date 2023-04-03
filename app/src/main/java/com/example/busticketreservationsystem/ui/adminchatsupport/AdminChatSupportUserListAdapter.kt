@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.data.entity.User
-import com.example.busticketreservationsystem.databinding.ItemChatUserBinding
 import com.example.busticketreservationsystem.databinding.ItemUserBinding
 import com.example.busticketreservationsystem.listeners.OnItemClickListener
 import com.example.busticketreservationsystem.utils.Helper
@@ -33,7 +32,6 @@ class AdminChatSupportUserListAdapter: RecyclerView.Adapter<AdminChatSupportUser
         }
     }
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserListViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemUserBinding.inflate(inflater, parent, false)
@@ -52,7 +50,7 @@ class AdminChatSupportUserListAdapter: RecyclerView.Adapter<AdminChatSupportUser
                 imageSingleText.text = "#"
                 usernameTextView.text = holder.itemView.context.getString(R.string.no_username)
             }
-            useridTextView.text = "Id - ${userList[position].userId}"
+            useridTextView.text = "ID - ${userList[position].userId}"
         }
     }
 

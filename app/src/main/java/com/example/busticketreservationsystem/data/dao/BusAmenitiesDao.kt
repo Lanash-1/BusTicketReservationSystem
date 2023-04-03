@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.busticketreservationsystem.data.entity.Bus
 import com.example.busticketreservationsystem.data.entity.BusAmenities
 
 @Dao
@@ -19,6 +18,8 @@ interface BusAmenitiesDao {
     @Query("select amenity from bus_amenities_table where busId like :busId")
     fun getBusAmenities(busId: Int): List<String>
 
+    @Query("delete from bus_amenities_table where busId like :busId")
+    fun removeBusAmenities(busId: Int)
 
 
 }

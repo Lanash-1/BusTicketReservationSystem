@@ -32,7 +32,6 @@ class ReviewsFragment : Fragment() {
 
     private var reviewsAdapter = ReviewsAdapter()
 
-
     private lateinit var busViewModel: BusViewModel
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
 
@@ -85,7 +84,6 @@ class ReviewsFragment : Fragment() {
         }
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -99,7 +97,6 @@ class ReviewsFragment : Fragment() {
                 }
             }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
-
 
         busViewModel.busReviewsList.value?.let { reviewsAdapter.setReviewsList(it) }
         binding.reviewsRecyclerView.adapter = reviewsAdapter

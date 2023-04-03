@@ -56,7 +56,7 @@ class UserListAdapter: RecyclerView.Adapter<UserListAdapter.UserListViewHolder>(
                 imageSingleText.text = "#"
                 usernameTextView.text = holder.itemView.context.getString(R.string.no_username)
             }
-            useridTextView.text = "Id - ${userList[position].userId}"
+            useridTextView.text = "ID - ${userList[position].userId}"
         }
     }
 

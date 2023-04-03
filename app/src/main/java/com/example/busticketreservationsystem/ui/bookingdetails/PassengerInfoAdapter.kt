@@ -91,7 +91,7 @@ class PassengerInfoAdapter: RecyclerView.Adapter<PassengerInfoAdapter.PassengerI
                     if(infoList[position].name == null || infoList[position].name?.isEmpty() == true){
                         passengerNameLayout.error = "Name should not be empty"
                         passengerNameLayout.isErrorEnabled = true
-                        ageInput.setText("")
+                        passengerNameInput.setText("")
                     }else{
                         passengerNameLayout.isErrorEnabled = false
                         passengerNameInput.setText(infoList[position].name)
@@ -172,6 +172,15 @@ class PassengerInfoAdapter: RecyclerView.Adapter<PassengerInfoAdapter.PassengerI
 //    override fun onViewRecycled(holder: PassengerInfoViewHolder) {
 //        super.onViewRecycled(holder)
 //        println("TEXT IN SECOND = ${holder.binding.passengerNameInput.text}")
+//    }
+
+//    override fun onViewRecycled(holder: PassengerInfoViewHolder) {
+//        super.onViewRecycled(holder)
+//        holder.binding.apply {
+//            passengerNameInput.setText("")
+//            ageInput.setText("")
+//
+//        }
 //    }
 
 }

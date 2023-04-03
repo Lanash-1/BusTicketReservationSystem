@@ -3,10 +3,7 @@ package com.example.busticketreservationsystem.viewmodel.livedata
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.busticketreservationsystem.data.entity.Bookings
-import com.example.busticketreservationsystem.data.entity.Bus
-import com.example.busticketreservationsystem.data.entity.Partners
-import com.example.busticketreservationsystem.data.entity.User
+import com.example.busticketreservationsystem.data.entity.*
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.enums.BookedTicketStatus
 import com.example.busticketreservationsystem.enums.BusTypes
@@ -355,6 +352,12 @@ class AdminViewModel(
         }
     }
 
+    fun updatePartnerBusCount(partnerId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.decreaseBusCount(partnerId)
+            repository.updateBusCount(selectedPartnerId)
+        }
+    }
 
 
 //  new add bus operations
@@ -394,5 +397,13 @@ class AdminViewModel(
     var upperRightColumnCount: Int = 0
     var upperLeftSeatCount: Int = 0
     var upperRightSeatCount: Int = 0
+
+
+//    ]
+
+    var busToEdit: Bus? = null
+    var busLayoutToEdit: BusLayout? = null
+    lateinit var partnerToEdit: Partners
+
 
 }

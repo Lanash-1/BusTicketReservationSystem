@@ -2,11 +2,8 @@ package com.example.busticketreservationsystem.ui.businfo
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
 import android.widget.RatingBar
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -24,6 +21,7 @@ import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.entity.Bus
 import com.example.busticketreservationsystem.data.entity.Partners
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
+import com.example.busticketreservationsystem.ui.addbus.AddBusFragment
 import com.example.busticketreservationsystem.ui.bookedticket.BookedTicketFragment
 import com.example.busticketreservationsystem.ui.buseslist.BusesListFragment
 import com.example.busticketreservationsystem.ui.reviews.ReviewsFragment
@@ -85,10 +83,34 @@ class BusInfoFragment : Fragment() {
         return binding.root
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        if(loginStatusViewModel.status == LoginStatus.ADMIN_LOGGED_IN){
+            inflater.inflate(R.menu.edit_menu, menu)
+        }
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home -> {
                 backPressOperation()
+            }
+            R.id.edit_icon -> {
+                busViewModel.fetchBusSeatLayoutData(busViewModel.selectedBus.busId)
+
+                busViewModel.isBusLayoutDataFetched.observe(viewLifecycleOwner, Observer{
+                    if(it != null){
+                        adminViewModel.busToEdit = busViewModel.selectedBus
+                        adminViewModel.busLayoutToEdit = busViewModel.selectedBusLayoutAdmin
+                        adminViewModel.partnerToEdit = busViewModel.selectedPartner.value!!
+                        parentFragmentManager.commit {
+                            setCustomAnimations(R.anim.from_right, R.anim.to_left)
+                            replace(R.id.adminPanelFragmentContainer, AddBusFragment())
+                        }
+
+                        busViewModel.isBusLayoutDataFetched.value = null
+                    }
+                })
+
             }
         }
         return super.onOptionsItemSelected(item)
@@ -126,7 +148,6 @@ class BusInfoFragment : Fragment() {
                     else -> {
                         parentFragmentManager.commit {
                             setCustomAnimations(R.anim.from_left, R.anim.to_right)
-//                            replace(R.id.homePageFragmentContainer, SelectedBusFragment())
                             replace(R.id.homePageFragmentContainer, SeatSelectionFragment())
                         }
                     }
@@ -152,13 +173,12 @@ class BusInfoFragment : Fragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
-        amenitiesAdapter.setContext(requireContext())
-
         when(navigationViewModel.fragment){
             is BusesListFragment -> {
                 busViewModel.selectedBus = adminViewModel.selectedBus!!
             }
             else -> {
+
             }
         }
 

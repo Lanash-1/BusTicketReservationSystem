@@ -221,6 +221,7 @@ class BookingDetailsFragment : Fragment() {
         passengerInfoAdapter.setPassengerInfoChangeListener(object: PassengerInfoChangeListener{
 
             override fun onPassengerNameChanged(position: Int, name: String) {
+                println("POSITION = $position")
                 bookingViewModel.passengerInfo[position].name = name
             }
 

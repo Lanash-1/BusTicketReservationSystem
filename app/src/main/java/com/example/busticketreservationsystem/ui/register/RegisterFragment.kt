@@ -158,6 +158,20 @@ class RegisterFragment : Fragment() {
             }
         }
 
+        binding.confirmPasswordInput?.addTextChangedListener {
+            if(it != null){
+                if(it.isNotEmpty()){
+                    loginStatusViewModel.isUserReEnteredPassword = true
+                }
+                if(loginStatusViewModel.isUserReEnteredPassword){
+                    if(it.toString() != binding.newPasswordInput.text.toString()){
+                        binding.confirmPasswordInputLayout?.error = "Password not matching"
+                    }else{
+                        binding.confirmPasswordInputLayout?.isErrorEnabled = false
+                    }
+                }
+            }
+        }
     }
 
     private fun validatePasswordText(it: Editable?) {
@@ -281,7 +295,11 @@ class RegisterFragment : Fragment() {
                         mobileLayout.helperText = resources.getString(R.string.mobile_exists_text)
                     }else{
                         if(helper.validPassword(binding.newPasswordInput.text)){
-                            registerNewUser()
+                            if(binding.newPasswordInput.text.toString() == binding.confirmPasswordInput?.text.toString()){
+                                registerNewUser()
+                            }else{
+                                binding.confirmPasswordInputLayout?.error = "Password not matching"
+                            }
                         }else{
                             validatePasswordText(binding.newPasswordInput.text)
                         }
@@ -291,7 +309,6 @@ class RegisterFragment : Fragment() {
                 }
             })
         }
-
     }
 
     private fun registerNewUser() {
