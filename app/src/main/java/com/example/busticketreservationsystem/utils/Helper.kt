@@ -12,6 +12,27 @@ import java.util.*
 
 open class Helper {
 
+    companion object {
+
+        private val colors = listOf(
+            "#1A1E38",   // Navy blue
+            "#0B6623",   // Forest green
+            "#7B1FA2",   // Rich purple
+            "#FF5722",   // Burnt orange
+            "#8B0000",   // Dark red
+            "#43464B",   // Steel grey
+            "#0A3D91",   // Royal blue
+            "#006064",   // Deep teal
+            "#FFC107",   // Golden yellow
+            "#C62828"    // Brick red
+        )
+
+        fun getRandomColor(): String {
+            return colors.random()
+        }
+
+    }
+
     fun validEmail(email: String): String{
         return if(email.isNotEmpty()){
             if(Patterns.EMAIL_ADDRESS.matcher(email).matches()){

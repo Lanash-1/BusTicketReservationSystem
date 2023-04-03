@@ -117,7 +117,7 @@
     <string name="your_booking_is_confirmed">Your booking is confirmed!</string>
     <string name="example_partner_name">Example partner name</string>
     <string name="each_700">Each 700</string>
-    <string name="a_c_seater_sleeper">A/C Seater</string>
+    <string name="a_c_seater">A/C Seater</string>
     <string name="bengaluru">Bengaluru</string>
     <string name="contact_information">Contact Information</string>
     <string name="_22_male">22, Male</string>
@@ -196,4 +196,13 @@
     <string name="enter_your_query_here">Enter your query here</string>
     <string name="enter_your_query">Enter your query</string>
     <string name="search">Search...</string>
+    <string name="buses_operated">Buses Operated</string>
+    <string name="non_ac_seater">Non A/C Seater</string>
+    <string name="sleeper">Sleeper</string>
+    <string name="user_id_">User Id: #</string>
+    <string name="partners_registered">Partners Registered</string>
+    <string name="tickets_booked">Tickets booked</string>
+    <string name="users_registered">Users Registered</string>
+    <string name="sample_username">Sample username</string>
+    <string name="no_username">[no username]</string>
 </resources>

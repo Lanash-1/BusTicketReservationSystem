@@ -83,7 +83,6 @@ class AdminChatSupportFragment : Fragment() {
             }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
-
         val userListRecyclerView = binding.chatUserListRecyclerView
         userListRecyclerView.adapter = chatUserListAdapter
         userListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -103,14 +102,15 @@ class AdminChatSupportFragment : Fragment() {
             override fun onItemClick(position: Int) {
                 adminViewModel.transitionPosition = position
                 val fragment = ChatFragment()
-                adminViewModel.chatUserId = chatViewModel.usersList.value!![position]
+                adminViewModel.chatUserId = chatViewModel.usersList.value!![position].userId
                 parentFragmentManager.commit {
-                    val item = userListRecyclerView.findViewHolderForAdapterPosition(position)?.itemView
-                    item!!.transitionName = "chat_transition${position}"
-                    addSharedElement(item, "chat_transition${position}")
-                    fragment.sharedElementEnterTransition = MaterialContainerTransform().apply {
-                        duration = 500L
-                    }
+//                    val item = userListRecyclerView.findViewHolderForAdapterPosition(position)?.itemView
+//                    item!!.transitionName = "chat_transition${position}"
+//                    addSharedElement(item, "chat_transition${position}")
+//                    fragment.sharedElementEnterTransition = MaterialContainerTransform().apply {
+//                        duration = 500L
+//                    }
+                    setCustomAnimations(R.anim.from_right, R.anim.to_left)
                     replace(R.id.adminPanelFragmentContainer, fragment)
                 }
             }

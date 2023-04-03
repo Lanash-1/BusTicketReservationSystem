@@ -223,8 +223,6 @@ class BookedTicketFragment : Fragment() {
             binding.cancelTicketButton.visibility = View.GONE
         }
 
-        // fetch booked ticket data
-//        bookingViewModel.fetchBookedTicketDetails(bookingId)
 
         if(loginStatusViewModel.status == LoginStatus.ADMIN_LOGGED_IN){
             bookingViewModel.fetchBookedTicketDetails(bookingId, adminViewModel.filteredTicketStatus.name)
@@ -254,98 +252,17 @@ class BookedTicketFragment : Fragment() {
         binding.partnerNameText.text = bookingViewModel.bookedPartner.partnerName
         binding.busEmailText.text = bookingViewModel.bookedPartner.partnerEmailId
         binding.busMobileText.text = bookingViewModel.bookedPartner.partnerMobile
-
-//        val list = bookingViewModel.booking.date.split("/")
-//        binding.dayText.text = list[0]
-//        binding.monthText.text = Month.values()[list[1].toInt()-1].toString()
-//        binding.yearText.text = list[2]
+        binding.dateText.text = helper.getDateExpandedFormat(bookingViewModel.booking.date)
 
         binding.startTimeText.text = bookingViewModel.bookedBus.startTime
         binding.reachTimeText.text = bookingViewModel.bookedBus.reachTime
 
-//        binding.ticketCountText.text = "Tickets: ${bookingViewModel.booking.noOfTicketsBooked}"
         binding.priceText.text = "₹ ${bookingViewModel.booking.totalCost}"
         binding.perPersonPriceText.text = "Each ${bookingViewModel.bookedBus.perTicketCost}"
 
         binding.mailInputTextView.text = bookingViewModel.booking.contactEmail
         binding.mobileInputTextView.text = bookingViewModel.booking.contactNumber
 
-//        for(ticketIndex in 0 until bookingViewModel.bookedPassengerInformation.size){
-//            when(ticketIndex+1){
-//                1 -> {
-//                    binding.row1no.text = "1."
-//                    binding.row1name.text = bookingViewModel.bookedPassengerInformation[0].passengerName
-//                    binding.row1seat.text = bookingViewModel.bookedPassengerInformation[0].passengerSeatCode
-//                    binding.row2.visibility = View.GONE
-//                    binding.row3.visibility = View.GONE
-//                    binding.row4.visibility = View.GONE
-//                    binding.row5.visibility = View.GONE
-//                    binding.row6.visibility = View.GONE
-//                }
-//                2 -> {
-//                    binding.row2.visibility = View.VISIBLE
-//                    binding.row2no.text = "2."
-//                    binding.row2name.text = bookingViewModel.bookedPassengerInformation[1].passengerName
-//                    binding.row2seat.text = bookingViewModel.bookedPassengerInformation[1].passengerSeatCode
-//                }
-//                3 -> {
-//
-//                    binding.row3.visibility = View.VISIBLE
-//                    binding.row3no.text = "3."
-//                    binding.row3name.text = bookingViewModel.bookedPassengerInformation[2].passengerName
-//                    binding.row3seat.text = bookingViewModel.bookedPassengerInformation[2].passengerSeatCode
-//                }
-//                4 -> {
-//
-//                    binding.row4.visibility = View.VISIBLE
-//                    binding.row4no.text = "4."
-//                    binding.row4name.text = bookingViewModel.bookedPassengerInformation[3].passengerName
-//                    binding.row4seat.text = bookingViewModel.bookedPassengerInformation[3].passengerSeatCode
-//                }
-//                5 -> {
-//
-//                    binding.row5.visibility = View.VISIBLE
-//                    binding.row5no.text = "5."
-//                    binding.row5name.text = bookingViewModel.bookedPassengerInformation[4].passengerName
-//                    binding.row5seat.text = bookingViewModel.bookedPassengerInformation[4].passengerSeatCode
-//                }
-//                6 -> {
-//
-//                    binding.row6.visibility = View.VISIBLE
-//                    binding.row6no.text = "6."
-//                    binding.row6name.text = bookingViewModel.bookedPassengerInformation[5].passengerName
-//                    binding.row6seat.text = bookingViewModel.bookedPassengerInformation[5].passengerSeatCode
-//                }
-//            }
-//        }
     }
-
-
-//    private fun cancelTicketAction(bookingId: Int) {
-//        val builder = AlertDialog.Builder(requireContext())
-//        builder.setMessage("Your Amount will be refunded with 2 business days")
-//        builder.setTitle("Confirm Cancellation?")
-//        builder.setCancelable(true)
-//
-//        builder.setNegativeButton("No") { dialog, _ ->
-//            dialog.cancel()
-//        }
-//
-//        builder.setPositiveButton("Yes") { _, _ ->
-//            run {
-//                bookingViewModel.cancelBookedTicket(bookingViewModel.booking.bookingId)
-//
-//                bookingViewModel.isTicketCancelled.observe(viewLifecycleOwner, Observer{
-//                    parentFragmentManager.commit {
-//                        setCustomAnimations(R.anim.from_left, R.anim.to_right)
-//                        replace(R.id.homePageFragmentContainer, BookingHistoryFragment())
-//                    }
-//                })
-//
-//            }
-//        }
-//        val alertDialog = builder.create()
-//        alertDialog.show()
-//    }
 
 }

@@ -4,6 +4,9 @@
     android:layout_height="48dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:transitionName="chat_transition"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:selectableItemBackground"
     >
 
     <TextView

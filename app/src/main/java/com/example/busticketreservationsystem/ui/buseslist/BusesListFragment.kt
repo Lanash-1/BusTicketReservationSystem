@@ -53,7 +53,7 @@ class BusesListFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         (activity as AppCompatActivity).supportActionBar!!.apply {
-            title = "Buses Operated"
+            title = getString(R.string.buses_operated)
             setDisplayHomeAsUpEnabled(true)
         }
         binding = FragmentBusesListBinding.inflate(inflater, container, false)
@@ -128,7 +128,6 @@ class BusesListFragment : Fragment() {
                 adminViewModel.selectedBus = adminViewModel.allBuses.value!![position]
                 moveToBusInfoFragment()
             }
-
         })
 
     }

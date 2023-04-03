@@ -1,24 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="48dp"
+    android:layout_height="72dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/user_layout"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?android:selectableItemBackground">
-
+    
+    <com.google.android.material.imageview.ShapeableImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/user_profile_image"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:background="@color/appMainColor"
+        app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+        android:layout_marginStart="16dp"
+        />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/user_textView"
-        android:text="#00 UserName"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:id="@+id/image_single_text"
+        android:text="#"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="16sp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginLeft="16dp"
+        app:layout_constraintLeft_toLeftOf="@id/user_profile_image"
+        app:layout_constraintRight_toRightOf="@id/user_profile_image"
+        />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/userid_textView"
+        android:text="# 1000"
+        app:layout_constraintLeft_toRightOf="@id/user_profile_image"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/user_profile_image"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         style="@style/TextDefault"
+        android:textSize="16sp"
+        />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/username_textView"
+        android:text="@string/sample_username"
+        app:layout_constraintTop_toBottomOf="@id/userid_textView"
+        app:layout_constraintLeft_toLeftOf="@id/userid_textView"
+        app:layout_constraintRight_toRightOf="@id/userid_textView"
+        android:textSize="14sp"
         />
 
     <com.google.android.material.divider.MaterialDivider

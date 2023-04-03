@@ -1,5 +1,6 @@
 package com.example.busticketreservationsystem.ui.adminservice
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -35,11 +36,11 @@ class AdminServicesAdapter: RecyclerView.Adapter<AdminServicesAdapter.AdminServi
             when(AdminServices.values()[position]){
                 AdminServices.ADD_BUS -> {
                     serviceIcon.setImageResource(R.drawable.ic_baseline_add_box_24)
-                    serviceTitleTextView.text = "Add Bus"
+                    serviceTitleTextView.text = holder.itemView.context.getString(R.string.add_bus)
                 }
                 AdminServices.ADD_PARTNER -> {
                     serviceIcon.setImageResource(R.drawable.ic_baseline_add_box_24)
-                    serviceTitleTextView.text = "Add Partner"
+                    serviceTitleTextView.text = holder.itemView.context.getString(R.string.add_partner)
                 }
             }
         }

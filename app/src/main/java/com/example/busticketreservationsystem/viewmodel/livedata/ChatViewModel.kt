@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.busticketreservationsystem.data.entity.Chat
+import com.example.busticketreservationsystem.data.entity.User
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -45,17 +46,21 @@ class ChatViewModel(
     }
 
 
-    var usersList = MutableLiveData<List<Int>>()
+    var usersList = MutableLiveData<List<User>>()
 
     fun fetchUsersFromChat() {
         viewModelScope.launch(Dispatchers.IO) {
             var list = listOf<Int>()
+            val userList = mutableListOf<User>()
             val fetchJob = launch {
                 list = repository.getUserListFromChat()
+                for(userId in list){
+                    userList.add(repository.getUserAccount(userId))
+                }
             }
             fetchJob.join()
             withContext(Dispatchers.Main){
-                usersList.value = list
+                usersList.value = userList
             }
         }
     }

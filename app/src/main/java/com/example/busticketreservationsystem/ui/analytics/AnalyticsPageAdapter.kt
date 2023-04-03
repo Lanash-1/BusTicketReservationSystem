@@ -3,6 +3,7 @@ package com.example.busticketreservationsystem.ui.analytics
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.databinding.ItemAnalyticsBinding
 import com.example.busticketreservationsystem.enums.Analytics
 import com.example.busticketreservationsystem.listeners.OnItemClickListener
@@ -45,19 +46,19 @@ class AnalyticsPageAdapter: RecyclerView.Adapter<AnalyticsPageAdapter.AnalyticsP
         holder.binding.apply {
             when(Analytics.values()[position]){
                 Analytics.PARTNERS_REGISTERED -> {
-                    titleTextView.text = "Partners Registered"
+                    titleTextView.text = holder.itemView.context.getString(R.string.partners_registered)
                     countTextView.text = "$partnerCount"
                 }
                 Analytics.BUSES_OPERATED -> {
-                    titleTextView.text = "Buses Operated"
+                    titleTextView.text = holder.itemView.context.getString(R.string.buses_operated)
                     countTextView.text = "$busCount"
                 }
                 Analytics.TICKETS_BOOKED -> {
-                    titleTextView.text = "Overall Bookings"
+                    titleTextView.text = holder.itemView.context.getString(R.string.tickets_booked)
                     countTextView.text = "$ticketsCount"
                 }
                 Analytics.USERS_REGISTERED -> {
-                    titleTextView.text = "Users Registered"
+                    titleTextView.text = holder.itemView.context.getString(R.string.users_registered)
                     countTextView.text = "$userCount"
                 }
             }

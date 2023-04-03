@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.databinding.ItemSingleLineItemTickBinding
 import com.example.busticketreservationsystem.enums.BusTypes
 import com.example.busticketreservationsystem.listeners.OnItemClickListener
@@ -43,16 +44,16 @@ class BusTypeRecyclerViewAdapter: RecyclerView.Adapter<BusTypeRecyclerViewAdapte
         holder.binding.apply {
             when(BusTypes.values()[position]){
                 BusTypes.AC_SEATER -> {
-                    itemText.text = "A/C Seater"
+                    itemText.text = holder.itemView.context.getString(R.string.a_c_seater)
                 }
                 BusTypes.NON_AC_SEATER -> {
-                    itemText.text = "Non A/C Seater"
+                    itemText.text = holder.itemView.context.getString(R.string.non_ac_seater)
                 }
                 BusTypes.SLEEPER -> {
-                    itemText.text = "Sleeper"
+                    itemText.text = holder.itemView.context.getString(R.string.sleeper)
                 }
                 BusTypes.SEATER_SLEEPER -> {
-                    itemText.text = "Seater/Sleeper"
+                    itemText.text = holder.itemView.context.getString(R.string.seater_sleeper)
                 }
             }
             if(isSelected(BusTypes.values()[position])){

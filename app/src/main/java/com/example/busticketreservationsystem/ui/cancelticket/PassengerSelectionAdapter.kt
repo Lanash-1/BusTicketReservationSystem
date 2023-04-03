@@ -12,9 +12,7 @@ class PassengerSelectionAdapter: RecyclerView.Adapter<PassengerSelectionAdapter.
     private var passengerInformation = listOf<PassengerInformation>()
     private var checkedStatus = listOf<Boolean>()
 
-    fun setPassengerInformation(passengerInformation: List<PassengerInformation>,
-                                checkedStatus: List<Boolean>
-    ) {
+    fun setPassengerInformation(passengerInformation: List<PassengerInformation>, checkedStatus: List<Boolean>) {
         this.passengerInformation = passengerInformation
         this.checkedStatus = checkedStatus
     }
@@ -24,7 +22,6 @@ class PassengerSelectionAdapter: RecyclerView.Adapter<PassengerSelectionAdapter.
     fun setOnItemClickListener(listener: OnItemClickListener){
         this.listener = listener
     }
-
 
     inner class PassengerSelectionViewHolder(val binding: ItemCheckboxBinding): RecyclerView.ViewHolder(binding.root) {
         init {

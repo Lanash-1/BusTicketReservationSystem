@@ -1,11 +1,14 @@
 package com.example.busticketreservationsystem.ui.user
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.data.entity.User
 import com.example.busticketreservationsystem.databinding.ItemUserBinding
 import com.example.busticketreservationsystem.listeners.OnItemClickListener
+import com.example.busticketreservationsystem.utils.Helper
 
 class UserListAdapter: RecyclerView.Adapter<UserListAdapter.UserListViewHolder>() {
 
@@ -37,11 +40,23 @@ class UserListAdapter: RecyclerView.Adapter<UserListAdapter.UserListViewHolder>(
 
     override fun onBindViewHolder(holder: UserListViewHolder, position: Int) {
         holder.binding.apply {
-            if(userList[position].username.isEmpty()){
-                userTextView.text = "#${userList[position].userId} - [no username]"
+
+//            if(userList[position].username.isEmpty()){
+//                userTextView.text = "#${userList[position].userId} - [no username]"
+//            }else{
+//                userTextView.text = "#${userList[position].userId} - ${userList[position].username}"
+//            }
+
+            userProfileImage.setBackgroundColor(Color.parseColor(Helper.getRandomColor()))
+
+            if(userList[position].username.isNotEmpty()){
+                imageSingleText.text = userList[position].username[0].toString()
+                usernameTextView.text = userList[position].username
             }else{
-                userTextView.text = "#${userList[position].userId} - ${userList[position].username}"
+                imageSingleText.text = "#"
+                usernameTextView.text = holder.itemView.context.getString(R.string.no_username)
             }
+            useridTextView.text = "Id - ${userList[position].userId}"
         }
     }
 

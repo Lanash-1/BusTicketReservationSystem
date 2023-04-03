@@ -300,13 +300,16 @@ class RegisterFragment : Fragment() {
             mobileInput.text.toString()
         )
         userViewModel.isNewUserInserted.observe(viewLifecycleOwner, Observer{
-            editor.putInt("userId", userViewModel.user.userId)
-            editor.commit()
-            editor.putString("status", LoginStatus.LOGGED_IN.name)
-            editor.commit()
-            loginStatusViewModel.status = LoginStatus.LOGGED_IN
-            loginStatusViewModel.isUserEnteredPassword = false
-            moveToNextFragment(R.id.main_fragment_container, RegistrationDetailsFragment())
+            if(it != null) {
+                editor.putInt("userId", userViewModel.user.userId)
+                editor.commit()
+                editor.putString("status", LoginStatus.LOGGED_IN.name)
+                editor.commit()
+                loginStatusViewModel.status = LoginStatus.LOGGED_IN
+                loginStatusViewModel.isUserEnteredPassword = false
+                moveToNextFragment(R.id.main_fragment_container, RegistrationDetailsFragment())
+                userViewModel.isNewUserInserted.value = null
+            }
         })
     }
 

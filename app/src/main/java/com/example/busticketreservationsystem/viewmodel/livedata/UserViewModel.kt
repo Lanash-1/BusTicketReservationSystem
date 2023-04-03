@@ -125,7 +125,7 @@ class UserViewModel(
 
 //    Login and Signup related
 
-    var isNewUserInserted = MutableLiveData<Boolean>()
+    var isNewUserInserted = MutableLiveData<Boolean>(null)
     var isMobileExists = MutableLiveData<Boolean>()
     var isPasswordMatching = MutableLiveData<Boolean>()
 

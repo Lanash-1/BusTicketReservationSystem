@@ -1,16 +1,21 @@
 package com.example.busticketreservationsystem.ui.adminchatsupport
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.busticketreservationsystem.R
+import com.example.busticketreservationsystem.data.entity.User
 import com.example.busticketreservationsystem.databinding.ItemChatUserBinding
+import com.example.busticketreservationsystem.databinding.ItemUserBinding
 import com.example.busticketreservationsystem.listeners.OnItemClickListener
+import com.example.busticketreservationsystem.utils.Helper
 
 class AdminChatSupportUserListAdapter: RecyclerView.Adapter<AdminChatSupportUserListAdapter.UserListViewHolder>() {
 
-    private var userList = listOf<Int>()
+    private var userList = listOf<User>()
 
-    fun setUserList(userList: List<Int>){
+    fun setUserList(userList: List<User>){
         this.userList = userList
     }
 
@@ -20,23 +25,34 @@ class AdminChatSupportUserListAdapter: RecyclerView.Adapter<AdminChatSupportUser
         this.listener = listener
     }
 
-    inner class UserListViewHolder(val binding: ItemChatUserBinding): RecyclerView.ViewHolder(binding.root){
+    inner class UserListViewHolder(val binding:ItemUserBinding): RecyclerView.ViewHolder(binding.root) {
         init {
-            itemView.setOnClickListener{
+            binding.userLayout.setOnClickListener {
                 listener.onItemClick(absoluteAdapterPosition)
             }
         }
     }
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserListViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ItemChatUserBinding.inflate(inflater, parent, false)
+        val binding = ItemUserBinding.inflate(inflater, parent, false)
         return UserListViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: UserListViewHolder, position: Int) {
         holder.binding.apply {
-            userIdTextView.text = "User Id: #${userList[position]}"
+//            userIdTextView.text = "User Id: #${userList[position]}"
+            userProfileImage.setBackgroundColor(Color.parseColor(Helper.getRandomColor()))
+
+            if(userList[position].username.isNotEmpty()){
+                imageSingleText.text = userList[position].username[0].toString()
+                usernameTextView.text = userList[position].username
+            }else{
+                imageSingleText.text = "#"
+                usernameTextView.text = holder.itemView.context.getString(R.string.no_username)
+            }
+            useridTextView.text = "Id - ${userList[position].userId}"
         }
     }
 
