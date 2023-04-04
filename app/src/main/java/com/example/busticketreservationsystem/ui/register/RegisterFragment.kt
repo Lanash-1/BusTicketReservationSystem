@@ -149,6 +149,10 @@ class RegisterFragment : Fragment() {
             validatePasswordText(binding.newPasswordInput.text)
         }
 
+//        binding.mobileInput.addTextChangedListener{
+//
+//        }
+
         binding.newPasswordInput.addTextChangedListener{
             if(it?.isNotEmpty() == true){
                 loginStatusViewModel.isUserEnteredPassword = true
