@@ -17,6 +17,7 @@ class AdminViewModel(
 
 //    Analytics related data
 
+    var testingVariable = MutableLiveData<Boolean>(null)
 
     var selectedBookingId: Int = 0
 

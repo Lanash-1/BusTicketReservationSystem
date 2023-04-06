@@ -18,6 +18,7 @@
         style="@style/TextDefault"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginLeft="16dp"
+        android:textSize="16sp"
         />
 
     <com.google.android.material.divider.MaterialDivider

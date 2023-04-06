@@ -8,8 +8,8 @@
     android:id="@+id/add_bus_layout"
     android:transitionName="service_transition1"
     android:transitionGroup="true"
+    style="@style/PageBackground"
     >
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -28,777 +28,885 @@
             app:layout_constraintTop_toTopOf="parent"
             />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/partner_name_title"
-                android:text="@string/partner"
-                app:layout_constraintTop_toBottomOf="@id/title_text"
                 app:layout_constraintLeft_toLeftOf="parent"
-                style="@style/FormTitle"
-                android:layout_margin="16dp"
-                />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/partner_input_layout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:hintEnabled="false"
-                app:layout_constraintTop_toBottomOf="@id/partner_name_title"
-                app:layout_constraintLeft_toLeftOf="@id/partner_name_title"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="8dp"
-                android:focusable="false"
-                app:helperTextTextColor="@color/errorColor"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/partner_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:cursorVisible="false"
-                android:hint="@string/select_partner"
-                android:focusable="false"
-                />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/bus_name_title"
-            android:text="@string/bus_name"
-            app:layout_constraintTop_toBottomOf="@id/partner_input_layout"
-            app:layout_constraintLeft_toLeftOf="parent"
-            style="@style/FormTitle"
-            android:layout_margin="16dp"
-            />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/bus_name_input_layout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:hintEnabled="false"
-            app:helperTextTextColor="@color/errorColor"
-            app:layout_constraintTop_toBottomOf="@id/bus_name_title"
-            app:layout_constraintLeft_toLeftOf="@id/bus_name_title"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/bus_name_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:cursorVisible="true"
-                android:textCursorDrawable="@drawable/red_cursor"
-                android:hint="@string/enter_bus_name"
-                android:inputType="text"
-                android:maxLines="1"
-                android:maxLength="30"
-                />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/price_title"
-            android:text="@string/ticket_cost"
-            app:layout_constraintTop_toBottomOf="@id/bus_name_input_layout"
-            app:layout_constraintLeft_toLeftOf="parent"
-            style="@style/FormTitle"
-            android:layout_margin="16dp"
-            />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/pricing_input_layout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:hintEnabled="false"
-            app:helperTextTextColor="@color/errorColor"
-            app:layout_constraintTop_toBottomOf="@id/price_title"
-            app:layout_constraintLeft_toLeftOf="@id/bus_name_title"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/price_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:cursorVisible="true"
-                android:textCursorDrawable="@drawable/red_cursor"
-                android:hint="@string/enter_price"
-                android:inputType="number"
-                android:maxLength="4"
-                />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/boarding_name_title"
-            android:text="@string/boarding_location_details"
-            app:layout_constraintTop_toBottomOf="@id/pricing_input_layout"
-            app:layout_constraintLeft_toLeftOf="parent"
-            style="@style/TitleTextStyle"
-            android:layout_margin="16dp"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/boarding_state_title"
-            android:text="@string/boarding_state"
-            app:layout_constraintTop_toBottomOf="@id/boarding_name_title"
-            app:layout_constraintLeft_toLeftOf="parent"
-            style="@style/FormTitle"
-            android:layout_margin="16dp"
-            />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/boarding_state_input_layout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:hintEnabled="false"
-            app:helperTextTextColor="@color/errorColor"
-            app:layout_constraintTop_toBottomOf="@id/boarding_state_title"
-            app:layout_constraintLeft_toLeftOf="@id/bus_name_title"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
-            android:focusable="false"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/boarding_state_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:cursorVisible="false"
-                android:hint="@string/select_boarding_state"
-                android:focusable="false"
-                />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/boarding_city_title"
-            android:text="@string/boarding_city"
-            app:layout_constraintTop_toBottomOf="@id/boarding_state_input_layout"
-            app:layout_constraintLeft_toLeftOf="parent"
-            style="@style/FormTitle"
-            android:layout_margin="16dp"
-            android:visibility="gone"
-            />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/boarding_city_input_layout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:hintEnabled="false"
-            app:helperTextTextColor="@color/errorColor"
-            app:layout_constraintTop_toBottomOf="@id/boarding_city_title"
-            app:layout_constraintLeft_toLeftOf="@id/bus_name_title"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
-            android:focusable="false"
-            android:visibility="gone"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/boarding_city_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:cursorVisible="false"
-                android:hint="@string/select_boarding_city"
-                android:focusable="false"
-                />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/dropping_name_title"
-            android:text="@string/dropping_location_details"
-            app:layout_constraintTop_toBottomOf="@id/boarding_city_input_layout"
-            app:layout_constraintLeft_toLeftOf="parent"
-            style="@style/TitleTextStyle"
-            android:layout_margin="16dp"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/dropping_state_title"
-            android:text="@string/dropping_state"
-            app:layout_constraintTop_toBottomOf="@id/dropping_name_title"
-            app:layout_constraintLeft_toLeftOf="parent"
-            style="@style/FormTitle"
-            android:layout_margin="16dp"
-            />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/dropping_state_input_layout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:hintEnabled="false"
-            app:helperTextTextColor="@color/errorColor"
-            app:layout_constraintTop_toBottomOf="@id/dropping_state_title"
-            app:layout_constraintLeft_toLeftOf="@id/bus_name_title"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
-            android:focusable="false"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/dropping_state_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:cursorVisible="false"
-                android:hint="@string/select_dropping_state"
-                android:focusable="false"
-                />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/dropping_city_title"
-            android:text="@string/dropping_city"
-            app:layout_constraintTop_toBottomOf="@id/dropping_state_input_layout"
-            app:layout_constraintLeft_toLeftOf="parent"
-            style="@style/FormTitle"
-            android:layout_margin="16dp"
-            android:visibility="gone"
-            />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/dropping_city_input_layout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:hintEnabled="false"
-            app:helperTextTextColor="@color/errorColor"
-            app:layout_constraintTop_toBottomOf="@id/dropping_city_title"
-            app:layout_constraintLeft_toLeftOf="@id/bus_name_title"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
-            android:focusable="false"
-            android:visibility="gone"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/dropping_city_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:cursorVisible="false"
-                android:hint="@string/select_dropping_city"
-                android:focusable="false"
-                />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/timing_details_title"
-            android:text="@string/timing_details"
-            app:layout_constraintTop_toBottomOf="@id/dropping_city_input_layout"
-            app:layout_constraintLeft_toLeftOf="parent"
-            style="@style/TitleTextStyle"
-            android:layout_margin="16dp"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/start_time_title"
-            android:text="@string/start_time"
-            app:layout_constraintTop_toBottomOf="@id/timing_details_title"
-            app:layout_constraintLeft_toLeftOf="parent"
-            style="@style/FormTitle"
-            android:layout_margin="16dp"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/reach_time_title"
-            android:text="@string/reach_time"
-            app:layout_constraintBottom_toTopOf="@id/reach_time_picker"
-            app:layout_constraintLeft_toLeftOf="@id/reach_time_picker"
-            android:layout_marginBottom="8dp"
-            style="@style/FormTitle"
-            />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/start_time_picker"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/time_format"
-                app:helperTextTextColor="@color/errorColor"
-                app:layout_constraintTop_toBottomOf="@id/start_time_title"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/reach_time_picker"
-                android:layout_marginTop="8dp"
-                android:layout_marginHorizontal="16dp"
-                android:focusable="false"
-                app:errorEnabled="true"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/start_time_picker_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:cursorVisible="false"
-                    android:focusable="false"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/reach_time_picker"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/time_format"
-                app:errorEnabled="true"
-                app:helperTextTextColor="@color/errorColor"
-                app:layout_constraintTop_toTopOf="@id/start_time_picker"
-                app:layout_constraintBottom_toBottomOf="@id/start_time_picker"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/start_time_picker"
-                android:layout_marginHorizontal="16dp"
-                android:focusable="false"
+                app:layout_constraintTop_toBottomOf="@id/title_text"
+                android:layout_marginTop="16dp"
+                android:id="@+id/bus_and_partner_layout"
+                android:background="@color/whiteAndBlack"
                 >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/reach_time_picker_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:cursorVisible="false"
-                    android:focusable="false"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/bus_seats_details_title"
-            android:text="@string/bus_seat_details"
-            app:layout_constraintTop_toBottomOf="@id/start_time_picker"
-            app:layout_constraintLeft_toLeftOf="parent"
-            style="@style/TitleTextStyle"
-            android:layout_marginHorizontal="16dp"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/bus_type_title"
-            android:text="@string/bus_type"
-            style="@style/FormTitle"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/bus_seats_details_title"
-            android:layout_margin="16dp"
-            />
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/bus_type_layout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:hintEnabled="false"
-            app:layout_constraintTop_toBottomOf="@id/bus_type_title"
-            app:layout_constraintLeft_toLeftOf="@id/bus_type_title"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
-            android:focusable="false"
-            app:helperTextTextColor="@color/errorColor"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/bus_type_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:cursorVisible="false"
-                android:hint="@string/select_bus_type"
-                android:focusable="false"
-                />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/lower_deck_details_layout"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/bus_type_layout"
-            android:visibility="gone"
-            >
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/lower_deck_details_title"
-            android:text="@string/lower_deck_details"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            style="@style/TitleTextStyle"
-            android:layout_margin="16dp"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/lower_left_seat_details"
-            android:text="@string/lower_left_seat_details"
-            app:layout_constraintTop_toBottomOf="@id/lower_deck_details_title"
-            app:layout_constraintLeft_toLeftOf="parent"
-            style="@style/FormTitle"
-            android:layout_margin="16dp"
-            />
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lower_left_seat_details"
-            app:layout_constraintRight_toLeftOf="@id/lower_left_seat_count_layout"
-            android:layout_marginTop="8dp"
-            android:layout_marginHorizontal="16dp"
-            android:id="@+id/lower_left_column_count_layout"
-            android:layout_weight="1"
-            android:focusable="false"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/lower_left_column_count_input"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="none"
-                android:focusable="false"
-                android:hint="@string/column_count"
-                />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/lower_left_seat_count_layout"
-            app:layout_constraintTop_toTopOf="@id/lower_left_column_count_layout"
-            app:layout_constraintBottom_toBottomOf="@id/lower_left_column_count_layout"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/lower_left_column_count_layout"
-            android:layout_marginHorizontal="16dp"
-            android:layout_weight="1"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/lower_left_seat_count_input"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="none"
-                android:focusable="false"
-                android:hint="@string/seat_count"
-                />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/lower_right_seat_details"
-            android:text="@string/lower_right_seat_details"
-            app:layout_constraintTop_toBottomOf="@id/lower_left_column_count_layout"
-            app:layout_constraintLeft_toLeftOf="parent"
-            style="@style/FormTitle"
-            android:layout_margin="16dp"
-            />
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lower_right_seat_details"
-            app:layout_constraintRight_toLeftOf="@id/lower_right_seat_count_layout"
-            android:layout_marginTop="8dp"
-            android:layout_marginHorizontal="16dp"
-            android:id="@+id/lower_right_column_count_layout"
-            android:layout_weight="1"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/lower_right_column_count_input"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="none"
-                android:focusable="false"
-                android:hint="@string/column_count"
-                />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/lower_right_seat_count_layout"
-            app:layout_constraintTop_toTopOf="@id/lower_right_column_count_layout"
-            app:layout_constraintBottom_toBottomOf="@id/lower_right_column_count_layout"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/lower_right_column_count_layout"
-            android:layout_marginHorizontal="16dp"
-            android:layout_weight="1"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/lower_right_seat_count_input"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="none"
-                android:focusable="false"
-                android:hint="@string/seat_count"
-                />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/radio_group_layout"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/lower_deck_details_layout"
-            android:visibility="gone"
-            >
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/has_upper_deck_title"
-            android:text="@string/has_upper_deck"
-            style="@style/TitleTextStyle"
-            app:layout_constraintTop_toTopOf="@id/upper_deck_radio_group"
-            app:layout_constraintBottom_toBottomOf="@id/upper_deck_radio_group"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_margin="16dp"
-            />
-
-        <RadioGroup
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/upper_deck_radio_group"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/has_upper_deck_title"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="16dp"
-            >
-
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:id="@+id/yes_radio_button"
-                android:layout_weight="1"
-                />
-
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:id="@+id/no_radio_button"
-                android:layout_weight="1"
-                />
-
-        </RadioGroup>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/upper_deck_details_layout"
-            app:layout_constraintTop_toBottomOf="@id/radio_group_layout"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:visibility="gone"
-            >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/upper_deck_details_title"
-            android:text="@string/upper_deck_details"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            style="@style/TitleTextStyle"
-            android:layout_margin="16dp"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/upper_left_seat_details"
-            android:text="@string/upper_left_seat_details"
-            app:layout_constraintTop_toBottomOf="@id/upper_deck_details_title"
-            app:layout_constraintLeft_toLeftOf="parent"
-            style="@style/FormTitle"
-            android:layout_margin="16dp"
-            />
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/upper_left_seat_details"
-            app:layout_constraintRight_toLeftOf="@id/upper_left_seat_count_layout"
-            android:layout_marginTop="8dp"
-            android:layout_marginHorizontal="16dp"
-            android:id="@+id/upper_left_column_count_layout"
-            android:layout_weight="1"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/upper_left_column_count_input"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="none"
-                android:focusable="false"
-                android:hint="@string/column_count"
-                />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/upper_left_seat_count_layout"
-            app:layout_constraintTop_toTopOf="@id/upper_left_column_count_layout"
-            app:layout_constraintBottom_toBottomOf="@id/upper_left_column_count_layout"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/upper_left_column_count_layout"
-            android:layout_marginHorizontal="16dp"
-            android:layout_weight="1"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/upper_left_seat_count_input"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="none"
-                android:focusable="false"
-                android:hint="@string/seat_count"
-                />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/upper_right_seat_details"
-            android:text="@string/upper_right_seat_details"
-            app:layout_constraintTop_toBottomOf="@id/upper_left_column_count_layout"
-            app:layout_constraintLeft_toLeftOf="parent"
-            style="@style/FormTitle"
-            android:layout_margin="16dp"
-            />
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/upper_right_seat_details"
-            app:layout_constraintRight_toLeftOf="@id/upper_right_seat_count_layout"
-            android:layout_marginTop="8dp"
-            android:layout_marginHorizontal="16dp"
-            android:id="@+id/upper_right_column_count_layout"
-            android:layout_weight="1"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/upper_right_column_count_input"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="none"
-                android:focusable="false"
-                android:hint="@string/column_count"
-                />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/upper_right_seat_count_layout"
-            app:layout_constraintTop_toTopOf="@id/upper_right_column_count_layout"
-            app:layout_constraintBottom_toBottomOf="@id/upper_right_column_count_layout"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/upper_right_column_count_layout"
-            android:layout_marginHorizontal="16dp"
-            android:layout_weight="1"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/upper_right_seat_count_input"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="none"
-                android:focusable="false"
-                android:hint="@string/seat_count"
-                />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/amenities_title_textView"
-                    android:text="Amenities"
+                    android:id="@+id/bus_and_partner_title"
+                    android:text="@string/bus_and_partner_details"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/upper_deck_details_layout"
+                    android:layout_margin="16dp"
+                    style="@style/TitleTextStyle"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/partner_name_title"
+                    android:text="@string/partner"
+                    app:layout_constraintTop_toBottomOf="@id/bus_and_partner_title"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    style="@style/FormTitle"
+                    android:layout_margin="16dp"
+                    />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/partner_input_layout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintEnabled="false"
+                    app:layout_constraintTop_toBottomOf="@id/partner_name_title"
+                    app:layout_constraintLeft_toLeftOf="@id/partner_name_title"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="8dp"
+                    android:focusable="false"
+                    app:helperTextTextColor="@color/errorColor"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/partner_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:cursorVisible="false"
+                        android:hint="@string/select_partner"
+                        android:focusable="false"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/bus_name_title"
+                    android:text="@string/bus_name"
+                    app:layout_constraintTop_toBottomOf="@id/partner_input_layout"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    style="@style/FormTitle"
+                    android:layout_margin="16dp"
+                    />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/bus_name_input_layout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintEnabled="false"
+                    app:helperTextTextColor="@color/errorColor"
+                    app:layout_constraintTop_toBottomOf="@id/bus_name_title"
+                    app:layout_constraintLeft_toLeftOf="@id/bus_name_title"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="8dp"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/bus_name_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:cursorVisible="true"
+                        android:textCursorDrawable="@drawable/red_cursor"
+                        android:hint="@string/enter_bus_name"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:maxLength="30"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/bus_and_partner_layout"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="16dp"
+                android:id="@+id/price_info_layout"
+                android:background="@color/whiteAndBlack"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/pricing_title"
+                    android:text="@string/pricing_details"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_margin="16dp"
+                    style="@style/TitleTextStyle"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/price_title"
+                    android:text="@string/ticket_cost"
+                    app:layout_constraintTop_toBottomOf="@id/pricing_title"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    style="@style/FormTitle"
+                    android:layout_margin="16dp"
+                    />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/pricing_input_layout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintEnabled="false"
+                    app:helperTextTextColor="@color/errorColor"
+                    app:layout_constraintTop_toBottomOf="@id/price_title"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="8dp"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/price_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:cursorVisible="true"
+                        android:textCursorDrawable="@drawable/red_cursor"
+                        android:hint="@string/enter_price"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="16dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/price_info_layout"
+                android:layout_marginTop="16dp"
+                android:id="@+id/boarding_dropping_layout"
+                android:background="@color/whiteAndBlack"
+
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/boarding_and_dropping_title"
+                    android:text="@string/boarding_and_dropping_details"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_margin="16dp"
+                    style="@style/TitleTextStyle"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/boarding_name_title"
+                    android:text="@string/boarding_location_details"
+                    app:layout_constraintTop_toBottomOf="@id/boarding_and_dropping_title"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    style="@style/TitleTextStyle"
+                    android:layout_margin="16dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/boarding_state_title"
+                    android:text="@string/boarding_state"
+                    app:layout_constraintTop_toBottomOf="@id/boarding_name_title"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    style="@style/FormTitle"
+                    android:layout_margin="16dp"
+                    />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/boarding_state_input_layout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintEnabled="false"
+                    app:helperTextTextColor="@color/errorColor"
+                    app:layout_constraintTop_toBottomOf="@id/boarding_state_title"
+                    app:layout_constraintLeft_toLeftOf="@id/boarding_state_title"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="8dp"
+                    android:focusable="false"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/boarding_state_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:cursorVisible="false"
+                        android:hint="@string/select_boarding_state"
+                        android:focusable="false"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/boarding_city_title"
+                    android:text="@string/boarding_city"
+                    app:layout_constraintTop_toBottomOf="@id/boarding_state_input_layout"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    style="@style/FormTitle"
+                    android:layout_margin="16dp"
+                    android:visibility="gone"
+                    />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/boarding_city_input_layout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintEnabled="false"
+                    app:helperTextTextColor="@color/errorColor"
+                    app:layout_constraintTop_toBottomOf="@id/boarding_city_title"
+                    app:layout_constraintLeft_toLeftOf="@id/boarding_city_title"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="8dp"
+                    android:focusable="false"
+                    android:visibility="gone"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/boarding_city_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:cursorVisible="false"
+                        android:hint="@string/select_boarding_city"
+                        android:focusable="false"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/dropping_name_title"
+                    android:text="@string/dropping_location_details"
+                    app:layout_constraintTop_toBottomOf="@id/boarding_city_input_layout"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    style="@style/TitleTextStyle"
+                    android:layout_margin="16dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/dropping_state_title"
+                    android:text="@string/dropping_state"
+                    app:layout_constraintTop_toBottomOf="@id/dropping_name_title"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    style="@style/FormTitle"
+                    android:layout_margin="16dp"
+                    />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/dropping_state_input_layout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintEnabled="false"
+                    app:helperTextTextColor="@color/errorColor"
+                    app:layout_constraintTop_toBottomOf="@id/dropping_state_title"
+                    app:layout_constraintLeft_toLeftOf="@id/dropping_state_title"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="8dp"
+                    android:focusable="false"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/dropping_state_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:cursorVisible="false"
+                        android:hint="@string/select_dropping_state"
+                        android:focusable="false"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/dropping_city_title"
+                    android:text="@string/dropping_city"
+                    app:layout_constraintTop_toBottomOf="@id/dropping_state_input_layout"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    style="@style/FormTitle"
+                    android:layout_margin="16dp"
+                    android:visibility="gone"
+                    />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/dropping_city_input_layout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintEnabled="false"
+                    app:helperTextTextColor="@color/errorColor"
+                    app:layout_constraintTop_toBottomOf="@id/dropping_city_title"
+                    app:layout_constraintLeft_toLeftOf="@id/dropping_city_title"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="8dp"
+                    android:focusable="false"
+                    android:visibility="gone"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/dropping_city_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:cursorVisible="false"
+                        android:hint="@string/select_dropping_city"
+                        android:focusable="false"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/boarding_dropping_layout"
+                android:layout_marginTop="16dp"
+                android:id="@+id/timing_details_layout"
+                android:background="@color/whiteAndBlack"
+
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/timing_details_title"
+                    android:text="@string/timing_details"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    style="@style/TitleTextStyle"
+                    android:layout_margin="16dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/start_time_title"
+                    android:text="@string/start_time"
+                    app:layout_constraintTop_toBottomOf="@id/timing_details_title"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    style="@style/FormTitle"
+                    android:layout_margin="16dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/reach_time_title"
+                    android:text="@string/reach_time"
+                    app:layout_constraintBottom_toTopOf="@id/reach_time_picker"
+                    app:layout_constraintLeft_toLeftOf="@id/reach_time_picker"
+                    android:layout_marginBottom="8dp"
+                    style="@style/FormTitle"
+                    />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/start_time_picker"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/time_format"
+                    app:helperTextTextColor="@color/errorColor"
+                    app:layout_constraintTop_toBottomOf="@id/start_time_title"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/reach_time_picker"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:focusable="false"
+                    app:errorEnabled="true"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/start_time_picker_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/reach_time_picker"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/time_format"
+                    app:errorEnabled="true"
+                    app:helperTextTextColor="@color/errorColor"
+                    app:layout_constraintTop_toTopOf="@id/start_time_picker"
+                    app:layout_constraintBottom_toBottomOf="@id/start_time_picker"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/start_time_picker"
+                    android:layout_marginHorizontal="16dp"
+                    android:focusable="false"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/reach_time_picker_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="16dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/timing_details_layout"
+                android:layout_marginTop="16dp"
+                android:id="@+id/seat_info_layout"
+                android:background="@color/whiteAndBlack"
+                >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/bus_seats_details_title"
+                android:text="@string/bus_seat_details"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                style="@style/TitleTextStyle"
+                android:layout_margin="16dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/bus_type_title"
+                android:text="@string/bus_type"
+                style="@style/FormTitle"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/bus_seats_details_title"
+                android:layout_margin="16dp"
+                />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/bus_type_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:hintEnabled="false"
+                app:layout_constraintTop_toBottomOf="@id/bus_type_title"
+                app:layout_constraintLeft_toLeftOf="@id/bus_type_title"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:focusable="false"
+                app:helperTextTextColor="@color/errorColor"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/bus_type_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:cursorVisible="false"
+                    android:hint="@string/select_bus_type"
+                    android:focusable="false"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/lower_deck_details_layout"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/bus_type_layout"
+                android:visibility="gone"
+                >
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/lower_deck_details_title"
+                    android:text="@string/lower_deck_details"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    style="@style/TitleTextStyle"
+                    android:layout_margin="16dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/lower_left_seat_details"
+                    android:text="@string/lower_left_seat_details"
+                    app:layout_constraintTop_toBottomOf="@id/lower_deck_details_title"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    style="@style/FormTitle"
+                    android:layout_margin="16dp"
+                    />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lower_left_seat_details"
+                    app:layout_constraintRight_toLeftOf="@id/lower_left_seat_count_layout"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:id="@+id/lower_left_column_count_layout"
+                    android:layout_weight="1"
+                    android:focusable="false"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/lower_left_column_count_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="none"
+                        android:focusable="false"
+                        android:hint="@string/column_count"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/lower_left_seat_count_layout"
+                    app:layout_constraintTop_toTopOf="@id/lower_left_column_count_layout"
+                    app:layout_constraintBottom_toBottomOf="@id/lower_left_column_count_layout"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/lower_left_column_count_layout"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_weight="1"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/lower_left_seat_count_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="none"
+                        android:focusable="false"
+                        android:hint="@string/seat_count"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/lower_right_seat_details"
+                    android:text="@string/lower_right_seat_details"
+                    app:layout_constraintTop_toBottomOf="@id/lower_left_column_count_layout"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    style="@style/FormTitle"
+                    android:layout_margin="16dp"
+                    />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lower_right_seat_details"
+                    app:layout_constraintRight_toLeftOf="@id/lower_right_seat_count_layout"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:id="@+id/lower_right_column_count_layout"
+                    android:layout_weight="1"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/lower_right_column_count_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="none"
+                        android:focusable="false"
+                        android:hint="@string/column_count"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/lower_right_seat_count_layout"
+                    app:layout_constraintTop_toTopOf="@id/lower_right_column_count_layout"
+                    app:layout_constraintBottom_toBottomOf="@id/lower_right_column_count_layout"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/lower_right_column_count_layout"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_weight="1"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/lower_right_seat_count_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="none"
+                        android:focusable="false"
+                        android:hint="@string/seat_count"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/radio_group_layout"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lower_deck_details_layout"
+                android:visibility="gone"
+                >
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/has_upper_deck_title"
+                    android:text="@string/has_upper_deck"
+                    style="@style/TitleTextStyle"
+                    app:layout_constraintTop_toTopOf="@id/upper_deck_radio_group"
+                    app:layout_constraintBottom_toBottomOf="@id/upper_deck_radio_group"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_margin="16dp"
+                    />
+
+                <RadioGroup
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/upper_deck_radio_group"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/has_upper_deck_title"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
+                    >
+
+                    <RadioButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/yes"
+                        android:id="@+id/yes_radio_button"
+                        android:layout_weight="1"
+                        />
+
+                    <RadioButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/no"
+                        android:id="@+id/no_radio_button"
+                        android:layout_weight="1"
+                        />
+
+                </RadioGroup>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/upper_deck_details_layout"
+                app:layout_constraintTop_toBottomOf="@id/radio_group_layout"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:visibility="gone"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/upper_deck_details_title"
+                    android:text="@string/upper_deck_details"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    style="@style/TitleTextStyle"
+                    android:layout_margin="16dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/upper_left_seat_details"
+                    android:text="@string/upper_left_seat_details"
+                    app:layout_constraintTop_toBottomOf="@id/upper_deck_details_title"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    style="@style/FormTitle"
+                    android:layout_margin="16dp"
+                    />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/upper_left_seat_details"
+                    app:layout_constraintRight_toLeftOf="@id/upper_left_seat_count_layout"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:id="@+id/upper_left_column_count_layout"
+                    android:layout_weight="1"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/upper_left_column_count_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="none"
+                        android:focusable="false"
+                        android:hint="@string/column_count"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/upper_left_seat_count_layout"
+                    app:layout_constraintTop_toTopOf="@id/upper_left_column_count_layout"
+                    app:layout_constraintBottom_toBottomOf="@id/upper_left_column_count_layout"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/upper_left_column_count_layout"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_weight="1"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/upper_left_seat_count_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="none"
+                        android:focusable="false"
+                        android:hint="@string/seat_count"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/upper_right_seat_details"
+                    android:text="@string/upper_right_seat_details"
+                    app:layout_constraintTop_toBottomOf="@id/upper_left_column_count_layout"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    style="@style/FormTitle"
+                    android:layout_margin="16dp"
+                    />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/upper_right_seat_details"
+                    app:layout_constraintRight_toLeftOf="@id/upper_right_seat_count_layout"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:id="@+id/upper_right_column_count_layout"
+                    android:layout_weight="1"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/upper_right_column_count_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="none"
+                        android:focusable="false"
+                        android:hint="@string/column_count"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/upper_right_seat_count_layout"
+                    app:layout_constraintTop_toTopOf="@id/upper_right_column_count_layout"
+                    app:layout_constraintBottom_toBottomOf="@id/upper_right_column_count_layout"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/upper_right_column_count_layout"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_weight="1"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/upper_right_seat_count_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="none"
+                        android:focusable="false"
+                        android:hint="@string/seat_count"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="16dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/seat_info_layout"
+                android:layout_marginTop="16dp"
+                android:id="@+id/amenities_layout"
+                android:background="@color/whiteAndBlack"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/amenities_title_textView"
+                    android:text="@string/amenities"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     android:layout_margin="16dp"
                     style="@style/TitleTextStyle"
                     />
@@ -831,6 +939,7 @@
                         android:text="@string/blankets"
                         style="@style/TextDefault"
                         android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
                         />
 
                     <CheckBox
@@ -840,6 +949,7 @@
                         android:text="@string/charging_point"
                         style="@style/TextDefault"
                         android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
                         />
 
                     <CheckBox
@@ -849,6 +959,7 @@
                         android:text="@string/emergency_contact_number"
                         style="@style/TextDefault"
                         android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
                         />
 
                     <CheckBox
@@ -858,6 +969,7 @@
                         android:text="@string/bus_tracking"
                         style="@style/TextDefault"
                         android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
                         />
 
                     <CheckBox
@@ -867,6 +979,7 @@
                         android:text="@string/wifi"
                         style="@style/TextDefault"
                         android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
                         />
 
                     <CheckBox
@@ -876,9 +989,12 @@
                         android:text="@string/water_bottle"
                         style="@style/TextDefault"
                         android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
                         />
 
                 </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
             android:layout_width="wrap_content"
@@ -887,11 +1003,10 @@
             android:text="@string/register_bus"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/checkBox_linearLayout"
+            app:layout_constraintTop_toBottomOf="@id/amenities_layout"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_margin="16dp"
             />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

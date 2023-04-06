@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -18,7 +19,9 @@ import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.databinding.FragmentPartnersListBinding
 import com.example.busticketreservationsystem.listeners.OnExpandIconClickListener
 import com.example.busticketreservationsystem.listeners.OnItemClickListener
+import com.example.busticketreservationsystem.ui.addpartner.AddPartnerFragment
 import com.example.busticketreservationsystem.ui.analytics.AnalyticsPageFragment
+import com.example.busticketreservationsystem.viewmodel.NavigationViewModel
 import com.example.busticketreservationsystem.viewmodel.livedata.AdminViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.AdminViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -29,6 +32,7 @@ class PartnerListFragment : Fragment() {
     private lateinit var binding: FragmentPartnersListBinding
 
     private lateinit var adminViewModel: AdminViewModel
+    private val navigationViewModel: NavigationViewModel by activityViewModels()
 
     private val partnerListAdapter = PartnerListAdapter()
 
@@ -90,6 +94,14 @@ class PartnerListFragment : Fragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
+
+        binding.addPartnerFab.setOnClickListener{
+            navigationViewModel.fabNavigation = PartnerListFragment()
+            parentFragmentManager.commit {
+                setCustomAnimations(R.anim.from_right, R.anim.to_left)
+                replace(R.id.adminPanelFragmentContainer, AddPartnerFragment())
+            }
+        }
 
         val partnerListRecyclerView = binding.partnersListRecyclerView
         partnerListRecyclerView.layoutManager = LinearLayoutManager(requireContext())

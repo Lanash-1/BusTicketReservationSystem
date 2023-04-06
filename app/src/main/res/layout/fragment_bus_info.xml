@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.businfo.BusInfoFragment">
+    tools:context=".ui.businfo.BusInfoFragment"
+    style="@style/PageBackground"
+    >
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -12,548 +14,634 @@
         android:id="@+id/busInfo_scrollView"
         >
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/ratings_and_review_layout">
+            android:id="@+id/bus_info_layout"
+            >
 
-            <TextView
-                android:layout_width="wrap_content"
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/partnerName_textView"
-                android:text="Partner Name"
+                android:id="@+id/bus_and_pricing_layout"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                style="@style/TitleTextStyle"
-                android:textSize="24sp"
-                android:layout_marginTop="16dp"
-                />
+                android:background="@color/whiteAndBlack"
+                >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/contactInfo_textView"
-                android:text="Contact Details"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/partnerName_textView"
-                android:layout_margin="16dp"
-                style="@style/TitleTextStyle"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/bus_and_pricing_title"
+                    android:text="@string/bus_and_pricing_information"
+                    style="@style/TitleTextStyle"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_margin="16dp"
+                    />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/bus_mobile_textView"
-                android:text="0987654321"
-                android:drawableStart="@drawable/ic_baseline_local_phone_24"
-                style="@style/TextDefault"
-                android:drawableTint="#808080"
-                android:autoLink="phone"
-                app:layout_constraintLeft_toLeftOf="@id/contactInfo_textView"
-                app:layout_constraintTop_toBottomOf="@id/contactInfo_textView"
-                android:layout_marginTop="16dp"
-                android:drawablePadding="16dp"
-                />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/bus_name_title"
+                    android:text="@string/bus_name"
+                    app:layout_constraintTop_toBottomOf="@id/bus_and_pricing_title"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:textSize="14sp"
+                    android:layout_margin="16dp"
+                    />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/bus_email_textView"
-                android:text="sidjncks@ksjndc.sdnc"
-                android:drawableStart="@drawable/ic_baseline_email_24"
-                style="@style/TextDefault"
-                android:drawableTint="#808080"
-                android:autoLink="email"
-                app:layout_constraintLeft_toLeftOf="@id/contactInfo_textView"
-                app:layout_constraintTop_toBottomOf="@id/bus_mobile_textView"
-                android:layout_marginTop="16dp"
-                android:drawablePadding="16dp"
-                />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/bus_name_textView"
+                    android:text="@string/example_bus_name"
+                    app:layout_constraintTop_toBottomOf="@id/bus_name_title"
+                    app:layout_constraintLeft_toLeftOf="@id/bus_name_title"
+                    style="@style/TextDefault16"
+                    />
 
-            <com.google.android.material.divider.MaterialDivider
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/divider_1"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/bus_email_textView"
-                android:layout_marginTop="16dp"
-                />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/bus_type_title"
+                    android:text="@string/bus_type"
+                    app:layout_constraintTop_toBottomOf="@id/bus_name_textView"
+                    app:layout_constraintLeft_toLeftOf="@id/bus_name_textView"
+                    android:layout_marginTop="16dp"
+                    android:textSize="14sp"
+                    />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/route_info_textView"
-                android:text="Route Information"
-                app:layout_constraintLeft_toLeftOf="@id/contactInfo_textView"
-                app:layout_constraintTop_toBottomOf="@id/divider_1"
-                android:layout_marginTop="16dp"
-                style="@style/TitleTextStyle"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/bus_type_textView"
+                    android:text="@string/seater_sleeper"
+                    app:layout_constraintTop_toBottomOf="@id/bus_type_title"
+                    app:layout_constraintLeft_toLeftOf="@id/bus_type_title"
+                    style="@style/TextDefault16"
+                    android:autoLink="phone"
+                    />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ticket_cost_title"
+                    android:text="@string/ticket_price"
+                    app:layout_constraintTop_toBottomOf="@id/bus_type_textView"
+                    app:layout_constraintLeft_toLeftOf="@id/bus_type_textView"
+                    android:layout_marginTop="16dp"
+                    android:textSize="14sp"
+                    />
 
-            <TextView
-                android:layout_width="48dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/startTime_textView"
-                android:text="11:50"
-                app:layout_constraintTop_toBottomOf="@id/route_info_textView"
-                app:layout_constraintLeft_toLeftOf="@id/route_info_textView"
-                android:layout_marginTop="16dp"
-                style="@style/TextDefault" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/price_textView"
+                    android:text="@string/_1400"
+                    app:layout_constraintTop_toBottomOf="@id/ticket_cost_title"
+                    app:layout_constraintLeft_toLeftOf="@id/ticket_cost_title"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="16dp"
+                    style="@style/TextDefault16"
+                    android:autoLink="email"
+                    />
 
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:id="@+id/source_radio_icon"
-                android:src="@drawable/sharp_radio_button_unchecked_24"
-                app:layout_constraintLeft_toRightOf="@id/startTime_textView"
-                app:layout_constraintTop_toTopOf="@id/startTime_textView"
-                app:layout_constraintBottom_toBottomOf="@id/startTime_textView"
-                android:layout_marginStart="8dp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/source_location_textView"
-                android:text="Chennai"
-                style="@style/TextDefault"
-                app:layout_constraintTop_toTopOf="@id/source_radio_icon"
-                app:layout_constraintBottom_toBottomOf="@id/source_radio_icon"
-                app:layout_constraintLeft_toRightOf="@id/source_radio_icon"
-                android:layout_marginStart="16dp"/>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="100dp"
+                    android:id="@+id/partner_details_layout"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/bus_and_pricing_layout"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/whiteAndBlack"
+                    >
 
-            <com.google.android.material.divider.MaterialDivider
-                android:layout_width="0dp"
-                android:layout_height="2dp"
-                android:rotation="90"
-                app:layout_constraintTop_toBottomOf="@id/source_radio_icon"
-                app:layout_constraintBottom_toTopOf="@id/destination_radio_icon"
-                app:layout_constraintLeft_toLeftOf="@id/source_radio_icon"
-                app:layout_constraintRight_toRightOf="@id/source_radio_icon"
-                style="@style/DividerColor"
-                />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/partner_title"
+                        android:text="@string/partner_information"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_margin="16dp"
+                        style="@style/TitleTextStyle"
+                        />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/partner_name_title"
+                        android:text="@string/partner_name"
+                        app:layout_constraintTop_toBottomOf="@id/partner_title"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:textSize="14sp"
+                        android:layout_margin="16dp"
+                        />
 
-            <TextView
-                android:layout_width="48dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/reachTime_textView"
-                android:text="5:50"
-                app:layout_constraintTop_toBottomOf="@id/startTime_textView"
-                app:layout_constraintLeft_toLeftOf="@id/startTime_textView"
-                android:layout_marginTop="16dp"
-                style="@style/TextDefault" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/partner_name_textView"
+                        android:text="@string/example_partner_name"
+                        app:layout_constraintTop_toBottomOf="@id/partner_name_title"
+                        app:layout_constraintLeft_toLeftOf="@id/partner_name_title"
+                        style="@style/TextDefault16"
+                        />
 
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:id="@+id/destination_radio_icon"
-                android:src="@drawable/baseline_circle_24"
-                app:layout_constraintTop_toTopOf="@id/reachTime_textView"
-                app:layout_constraintBottom_toBottomOf="@id/reachTime_textView"
-                app:layout_constraintLeft_toLeftOf="@id/source_radio_icon"
-                app:layout_constraintRight_toRightOf="@id/source_radio_icon"
-                />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/partner_mobile_title"
+                        android:text="@string/partner_mobile_number"
+                        app:layout_constraintTop_toBottomOf="@id/partner_name_textView"
+                        app:layout_constraintLeft_toLeftOf="@id/partner_name_textView"
+                        android:layout_marginTop="16dp"
+                        android:textSize="14sp"
+                        />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/destination_location_textView"
-                android:text="Bengaluru"
-                style="@style/TextDefault"
-                app:layout_constraintTop_toTopOf="@id/destination_radio_icon"
-                app:layout_constraintBottom_toBottomOf="@id/destination_radio_icon"
-                app:layout_constraintLeft_toRightOf="@id/destination_radio_icon"
-                android:layout_marginStart="16dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/partner_mobile_textView"
+                        android:text="@string/sample_mobile"
+                        app:layout_constraintTop_toBottomOf="@id/partner_mobile_title"
+                        app:layout_constraintLeft_toLeftOf="@id/partner_mobile_title"
+                        style="@style/TextDefault16"
+                        android:autoLink="phone"
+                        />
 
-            <com.google.android.material.divider.MaterialDivider
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/divider_2"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/destination_location_textView"
-                android:layout_marginTop="16dp"
-                />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/partner_email_title"
+                        android:text="@string/partner_e_mail"
+                        app:layout_constraintTop_toBottomOf="@id/partner_mobile_textView"
+                        app:layout_constraintLeft_toLeftOf="@id/partner_mobile_textView"
+                        android:layout_marginTop="16dp"
+                        android:textSize="14sp"
+                        />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/pricing_textView"
-                android:text="Price: "
-                app:layout_constraintTop_toBottomOf="@id/divider_2"
-                app:layout_constraintLeft_toLeftOf="@id/reachTime_textView"
-                android:layout_marginTop="16dp"
-                style="@style/TextDefault"
-                android:textSize="16sp"
-                />
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/price_text"
-                android:text="₹ 1250"
-                android:textAlignment="viewEnd"
-                app:layout_constraintTop_toTopOf="@id/pricing_textView"
-                app:layout_constraintBottom_toBottomOf="@id/pricing_textView"
-                app:layout_constraintLeft_toRightOf="@id/pricing_textView"
-                android:layout_marginLeft="8dp"
-                style="@style/TitleTextStyle" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/perPerson_textView"
-                android:text=" / per person"
-                app:layout_constraintTop_toTopOf="@id/price_text"
-                app:layout_constraintBottom_toBottomOf="@id/price_text"
-                app:layout_constraintLeft_toRightOf="@id/price_text"
-                android:layout_marginRight="16dp"
-                android:textColor="#808080"
-                />
-
-            <com.google.android.material.divider.MaterialDivider
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/divider_3"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/price_text"
-                android:layout_marginTop="16dp"
-                />
-
-<!--
-        price
--->
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/ratings_and_reviews_text"
-                android:text="Ratings &amp; Reviews"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/divider_3"
-                style="@style/TitleTextStyle"
-                android:layout_margin="16dp"
-                />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/read_reviews_button"
-                android:src="@drawable/baseline_arrow_forward_24"
-                app:layout_constraintTop_toTopOf="@id/ratings_and_reviews_text"
-                app:layout_constraintBottom_toBottomOf="@id/ratings_and_reviews_text"
-                app:layout_constraintRight_toRightOf="parent"
-                android:padding="12dp"
-                android:paddingEnd="16dp"
-                style="@style/IconTint"
-                android:clickable="true"
-                android:focusable="true"
-                android:background="?android:selectableItemBackgroundBorderless"
-                />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/partner_email_textView"
+                        android:text="@string/sample_mail"
+                        app:layout_constraintTop_toBottomOf="@id/partner_email_title"
+                        app:layout_constraintLeft_toLeftOf="@id/partner_email_title"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginBottom="16dp"
+                        style="@style/TextDefault16"
+                        android:autoLink="email"
+                        />
 
 
-<!--            <ImageView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:id="@+id/star_icon"-->
-<!--                android:src="@drawable/ic_baseline_star_24"-->
-<!--                app:layout_constraintStart_toStartOf="@id/ratings_and_reviews_text"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/ratings_and_reviews_text"-->
-<!--                app:tint="@color/black"-->
-<!--                android:layout_marginTop="16dp"-->
-<!--                />-->
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/rating_text"
-                android:text="4.6"
-                android:drawableTint="#808080"
-                android:drawablePadding="8dp"
-                android:layout_marginTop="16dp"
-                app:layout_constraintStart_toStartOf="@id/ratings_and_reviews_text"
-                app:layout_constraintTop_toBottomOf="@id/ratings_and_reviews_text"
-                style="@style/TitleTextStyle"
-                android:textSize="24sp"
-                app:drawableStartCompat="@drawable/ic_baseline_star_24" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/rating_count_text"
-                android:text="(183 ratings)"
-                app:layout_constraintLeft_toRightOf="@id/rating_text"
-                app:layout_constraintTop_toTopOf="@id/rating_text"
-                app:layout_constraintBottom_toBottomOf="@id/rating_text"
-                android:layout_marginLeft="8dp"
-                android:textSize="16sp"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/rating_5_text"
-                android:text="5"
-                style="@style/TextColor"
-                app:layout_constraintStart_toStartOf="@id/rating_text"
-                app:layout_constraintTop_toBottomOf="@id/rating_text"
-                android:layout_marginTop="16dp"
-                android:textSize="16sp" />
 
-            <ProgressBar
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/progress_bar_5"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                app:layout_constraintLeft_toRightOf="@id/rating_5_text"
-                app:layout_constraintTop_toTopOf="@id/rating_5_text"
-                app:layout_constraintBottom_toBottomOf="@id/rating_5_text"
-                app:layout_constraintRight_toLeftOf="@id/percentage_text5"
-                android:layout_marginStart="16dp"
-                android:scaleY="2"
-                android:layout_marginHorizontal="16dp"
-                />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/partner_details_layout"
+                    android:layout_marginTop="16dp"
+                    android:id="@+id/route_information_layout"
+                    android:background="@color/whiteAndBlack"
+                    >
 
-            <TextView
-                android:textAlignment="viewEnd"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/percentage_text5"
-                app:layout_constraintTop_toTopOf="@id/rating_5_text"
-                app:layout_constraintBottom_toBottomOf="@id/rating_5_text"
-                app:layout_constraintRight_toRightOf="parent"
-                android:layout_marginEnd="16dp"
-                android:text="100%"
-                style="@style/TextColor"
-                android:textSize="16sp"
-                />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/route_info_textView"
+                        android:text="@string/route_information"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_margin="16dp"
+                        style="@style/TitleTextStyle"
+                        />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/rating_4_text"
-                android:text="4"
-                style="@style/TextColor"
-                app:layout_constraintStart_toStartOf="@id/rating_text"
-                app:layout_constraintTop_toBottomOf="@id/percentage_text5"
-                android:layout_marginTop="16dp"
-                android:textSize="16sp" />
+                    <TextView
+                        android:layout_width="48dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/startTime_textView"
+                        android:text="@string/_11_50"
+                        app:layout_constraintTop_toBottomOf="@id/route_info_textView"
+                        app:layout_constraintLeft_toLeftOf="@id/route_info_textView"
+                        android:layout_marginTop="16dp"
+                        style="@style/TextDefault"
+                        android:textSize="16sp"
+                        />
 
-            <ProgressBar
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/progress_bar_4"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                app:layout_constraintLeft_toRightOf="@id/rating_4_text"
-                app:layout_constraintTop_toTopOf="@id/rating_4_text"
-                app:layout_constraintBottom_toBottomOf="@id/rating_4_text"
-                app:layout_constraintRight_toLeftOf="@id/percentage_text4"
-                android:layout_marginLeft="16dp"
-                android:scaleY="2"
-                android:layout_marginHorizontal="16dp"
-                />
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:id="@+id/source_radio_icon"
+                        android:src="@drawable/sharp_radio_button_unchecked_24"
+                        app:layout_constraintLeft_toRightOf="@id/startTime_textView"
+                        app:layout_constraintTop_toTopOf="@id/startTime_textView"
+                        app:layout_constraintBottom_toBottomOf="@id/startTime_textView"
+                        android:layout_marginStart="8dp" />
 
-            <TextView
-                android:textAlignment="viewEnd"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/percentage_text4"
-                app:layout_constraintTop_toTopOf="@id/rating_4_text"
-                app:layout_constraintBottom_toBottomOf="@id/rating_4_text"
-                app:layout_constraintRight_toRightOf="parent"
-                android:layout_marginRight="16dp"
-                android:text="62%"
-                style="@style/TextColor"
-                android:textSize="16sp"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/rating_3_text"
-                android:text="3"
-                style="@style/TextColor"
-                app:layout_constraintStart_toStartOf="@id/rating_text"
-                app:layout_constraintTop_toBottomOf="@id/percentage_text4"
-                android:layout_marginTop="16dp"
-                android:textSize="16sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/source_location_textView"
+                        android:text="@string/chennai"
+                        style="@style/TextDefault"
+                        android:textSize="16sp"
+                        app:layout_constraintTop_toTopOf="@id/source_radio_icon"
+                        app:layout_constraintBottom_toBottomOf="@id/source_radio_icon"
+                        app:layout_constraintLeft_toRightOf="@id/source_radio_icon"
+                        android:layout_marginStart="16dp"/>
 
-            <ProgressBar
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/progress_bar_3"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                app:layout_constraintLeft_toRightOf="@id/rating_3_text"
-                app:layout_constraintTop_toTopOf="@id/rating_3_text"
-                app:layout_constraintBottom_toBottomOf="@id/rating_3_text"
-                app:layout_constraintRight_toLeftOf="@id/percentage_text3"
-                android:layout_marginLeft="16dp"
-                android:scaleY="2"
-                android:layout_marginHorizontal="16dp"
-                />
-
-            <TextView
-                android:textAlignment="viewEnd"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/percentage_text3"
-                app:layout_constraintTop_toTopOf="@id/rating_3_text"
-                app:layout_constraintBottom_toBottomOf="@id/rating_3_text"
-                app:layout_constraintRight_toRightOf="parent"
-                android:layout_marginRight="16dp"
-                android:text="100%"
-                style="@style/TextColor"
-                android:textSize="16sp"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/rating_2_text"
-                android:text="2"
-                style="@style/TextColor"
-                app:layout_constraintStart_toStartOf="@id/rating_text"
-                app:layout_constraintTop_toBottomOf="@id/percentage_text3"
-                android:layout_marginTop="16dp"
-                android:textSize="16sp"
-                />
-
-            <ProgressBar
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/progress_bar_2"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                app:layout_constraintLeft_toRightOf="@id/rating_2_text"
-                app:layout_constraintTop_toTopOf="@id/rating_2_text"
-                app:layout_constraintBottom_toBottomOf="@id/rating_2_text"
-                app:layout_constraintRight_toLeftOf="@id/percentage_text2"
-                android:layout_marginLeft="16dp"
-                android:scaleY="2"
-                android:layout_marginHorizontal="16dp"
-                />
-
-            <TextView
-                android:textAlignment="viewEnd"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/percentage_text2"
-                app:layout_constraintTop_toTopOf="@id/rating_2_text"
-                app:layout_constraintBottom_toBottomOf="@id/rating_2_text"
-                app:layout_constraintRight_toRightOf="parent"
-                android:layout_marginRight="16dp"
-                android:text="62%"
-                style="@style/TextColor"
-                android:textSize="16sp"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/rating_1_text"
-                android:text="1"
-                style="@style/TextColor"
-                app:layout_constraintStart_toStartOf="@id/rating_text"
-                app:layout_constraintTop_toBottomOf="@id/percentage_text2"
-                android:layout_marginTop="16dp"
-                android:textSize="16sp" />
-
-            <ProgressBar
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/progress_bar_1"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                app:layout_constraintLeft_toRightOf="@id/rating_1_text"
-                app:layout_constraintTop_toTopOf="@id/rating_1_text"
-                app:layout_constraintBottom_toBottomOf="@id/rating_1_text"
-                app:layout_constraintRight_toLeftOf="@id/percentage_text1"
-                android:layout_marginStart="16dp"
-                android:scaleY="2"
-                android:layout_marginHorizontal="16dp"
-                />
-
-            <TextView
-                android:textAlignment="viewEnd"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/percentage_text1"
-                app:layout_constraintTop_toTopOf="@id/rating_1_text"
-                app:layout_constraintBottom_toBottomOf="@id/rating_1_text"
-                app:layout_constraintRight_toRightOf="parent"
-                android:layout_marginEnd="16dp"
-                android:text="100%"
-                style="@style/TextColor"
-                android:textSize="16sp"
-                />
-
-<!--            <Button-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:id="@+id/read_reviews_button"-->
-<!--                android:text="Read All Reviews"-->
-<!--                app:layout_constraintLeft_toLeftOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/percentage_text1"-->
-<!--                app:layout_constraintRight_toLeftOf="@id/update_bus_rating_button"-->
-<!--                android:layout_marginTop="16dp"-->
-<!--                />-->
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/rate_bus_button"
-                android:text="rate bus"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rating_1_text"
-                android:layout_marginTop="16dp"
-                android:visibility="gone"
-                />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/update_bus_rating_button"
-                android:text="Update rating"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rating_1_text"
-                android:layout_marginTop="16dp"
-                android:visibility="gone"
-                />
+                    <com.google.android.material.divider.MaterialDivider
+                        android:layout_width="0dp"
+                        android:layout_height="2dp"
+                        android:rotation="90"
+                        app:layout_constraintTop_toBottomOf="@id/source_radio_icon"
+                        app:layout_constraintBottom_toTopOf="@id/destination_radio_icon"
+                        app:layout_constraintLeft_toLeftOf="@id/source_radio_icon"
+                        app:layout_constraintRight_toRightOf="@id/source_radio_icon"
+                        style="@style/DividerColor"
+                        />
 
 
-            <com.google.android.material.divider.MaterialDivider
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/divider1"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/update_bus_rating_button"
-                android:layout_marginTop="16dp"
-                />
+                    <TextView
+                        android:layout_width="48dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/reachTime_textView"
+                        android:text="@string/_5_50"
+                        app:layout_constraintTop_toBottomOf="@id/startTime_textView"
+                        app:layout_constraintLeft_toLeftOf="@id/startTime_textView"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginTop="16dp"
+                        style="@style/TextDefault"
+                        android:textSize="16sp"
+                        />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/amenities_text"
-                android:text="Amenities"
-                style="@style/TitleTextStyle"
-                app:layout_constraintTop_toBottomOf="@id/divider1"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp" />
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:id="@+id/destination_radio_icon"
+                        android:src="@drawable/baseline_circle_24"
+                        app:layout_constraintTop_toTopOf="@id/reachTime_textView"
+                        app:layout_constraintBottom_toBottomOf="@id/reachTime_textView"
+                        app:layout_constraintLeft_toLeftOf="@id/source_radio_icon"
+                        app:layout_constraintRight_toRightOf="@id/source_radio_icon"
+                        />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/amenity_recycler_view"
-                app:layout_constraintTop_toBottomOf="@id/amenities_text"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/destination_location_textView"
+                        android:text="Bengaluru"
+                        style="@style/TextDefault"
+                        android:textSize="16sp"
+                        app:layout_constraintTop_toTopOf="@id/destination_radio_icon"
+                        app:layout_constraintBottom_toBottomOf="@id/destination_radio_icon"
+                        app:layout_constraintLeft_toRightOf="@id/destination_radio_icon"
+                        android:layout_marginStart="16dp"/>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="16dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/route_information_layout"
+                    android:layout_marginTop="16dp"
+                    android:id="@+id/rating_and_review_layout"
+                    android:background="@color/whiteAndBlack"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ratings_and_reviews_text"
+                        android:text="Ratings &amp; Reviews"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        style="@style/TitleTextStyle"
+                        android:layout_margin="16dp"
+                        />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/read_reviews_button"
+                        android:src="@drawable/baseline_arrow_forward_24"
+                        app:layout_constraintTop_toTopOf="@id/ratings_and_reviews_text"
+                        app:layout_constraintBottom_toBottomOf="@id/ratings_and_reviews_text"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:padding="12dp"
+                        android:paddingEnd="16dp"
+                        style="@style/IconTint"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?android:selectableItemBackgroundBorderless"
+                        />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rating_text"
+                        android:text="4.6"
+                        android:drawableTint="#808080"
+                        android:drawablePadding="8dp"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintStart_toStartOf="@id/ratings_and_reviews_text"
+                        app:layout_constraintTop_toBottomOf="@id/ratings_and_reviews_text"
+                        style="@style/TitleTextStyle"
+                        android:textSize="20sp"
+                        app:drawableStartCompat="@drawable/ic_baseline_star_24" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rating_count_text"
+                        android:text="(183 ratings)"
+                        app:layout_constraintLeft_toRightOf="@id/rating_text"
+                        app:layout_constraintTop_toTopOf="@id/rating_text"
+                        app:layout_constraintBottom_toBottomOf="@id/rating_text"
+                        android:layout_marginLeft="8dp"
+                        android:textSize="14sp"/>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rating_5_text"
+                        android:text="5"
+                        style="@style/TextColor"
+                        app:layout_constraintStart_toStartOf="@id/rating_text"
+                        app:layout_constraintTop_toBottomOf="@id/rating_text"
+                        android:layout_marginTop="16dp"
+                        android:textSize="16sp" />
+
+                    <ProgressBar
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/progress_bar_5"
+                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                        app:layout_constraintLeft_toRightOf="@id/rating_5_text"
+                        app:layout_constraintTop_toTopOf="@id/rating_5_text"
+                        app:layout_constraintBottom_toBottomOf="@id/rating_5_text"
+                        app:layout_constraintRight_toLeftOf="@id/percentage_text5"
+                        android:layout_marginStart="16dp"
+                        android:scaleY="2"
+                        android:layout_marginHorizontal="16dp"
+                        />
+
+                    <TextView
+                        android:textAlignment="viewEnd"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/percentage_text5"
+                        app:layout_constraintTop_toTopOf="@id/rating_5_text"
+                        app:layout_constraintBottom_toBottomOf="@id/rating_5_text"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:layout_marginEnd="16dp"
+                        android:text="100%"
+                        style="@style/TextColor"
+                        android:textSize="16sp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rating_4_text"
+                        android:text="4"
+                        style="@style/TextColor"
+                        app:layout_constraintStart_toStartOf="@id/rating_text"
+                        app:layout_constraintTop_toBottomOf="@id/percentage_text5"
+                        android:layout_marginTop="16dp"
+                        android:textSize="16sp" />
+
+                    <ProgressBar
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/progress_bar_4"
+                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                        app:layout_constraintLeft_toRightOf="@id/rating_4_text"
+                        app:layout_constraintTop_toTopOf="@id/rating_4_text"
+                        app:layout_constraintBottom_toBottomOf="@id/rating_4_text"
+                        app:layout_constraintRight_toLeftOf="@id/percentage_text4"
+                        android:layout_marginLeft="16dp"
+                        android:scaleY="2"
+                        android:layout_marginHorizontal="16dp"
+                        />
+
+                    <TextView
+                        android:textAlignment="viewEnd"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/percentage_text4"
+                        app:layout_constraintTop_toTopOf="@id/rating_4_text"
+                        app:layout_constraintBottom_toBottomOf="@id/rating_4_text"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:layout_marginRight="16dp"
+                        android:text="62%"
+                        style="@style/TextColor"
+                        android:textSize="16sp"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rating_3_text"
+                        android:text="3"
+                        style="@style/TextColor"
+                        app:layout_constraintStart_toStartOf="@id/rating_text"
+                        app:layout_constraintTop_toBottomOf="@id/percentage_text4"
+                        android:layout_marginTop="16dp"
+                        android:textSize="16sp" />
+
+                    <ProgressBar
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/progress_bar_3"
+                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                        app:layout_constraintLeft_toRightOf="@id/rating_3_text"
+                        app:layout_constraintTop_toTopOf="@id/rating_3_text"
+                        app:layout_constraintBottom_toBottomOf="@id/rating_3_text"
+                        app:layout_constraintRight_toLeftOf="@id/percentage_text3"
+                        android:layout_marginLeft="16dp"
+                        android:scaleY="2"
+                        android:layout_marginHorizontal="16dp"
+                        />
+
+                    <TextView
+                        android:textAlignment="viewEnd"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/percentage_text3"
+                        app:layout_constraintTop_toTopOf="@id/rating_3_text"
+                        app:layout_constraintBottom_toBottomOf="@id/rating_3_text"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:layout_marginRight="16dp"
+                        android:text="100%"
+                        style="@style/TextColor"
+                        android:textSize="16sp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rating_2_text"
+                        android:text="2"
+                        style="@style/TextColor"
+                        app:layout_constraintStart_toStartOf="@id/rating_text"
+                        app:layout_constraintTop_toBottomOf="@id/percentage_text3"
+                        android:layout_marginTop="16dp"
+                        android:textSize="16sp"
+                        />
+
+                    <ProgressBar
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/progress_bar_2"
+                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                        app:layout_constraintLeft_toRightOf="@id/rating_2_text"
+                        app:layout_constraintTop_toTopOf="@id/rating_2_text"
+                        app:layout_constraintBottom_toBottomOf="@id/rating_2_text"
+                        app:layout_constraintRight_toLeftOf="@id/percentage_text2"
+                        android:layout_marginLeft="16dp"
+                        android:scaleY="2"
+                        android:layout_marginHorizontal="16dp"
+                        />
+
+                    <TextView
+                        android:textAlignment="viewEnd"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/percentage_text2"
+                        app:layout_constraintTop_toTopOf="@id/rating_2_text"
+                        app:layout_constraintBottom_toBottomOf="@id/rating_2_text"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:layout_marginRight="16dp"
+                        android:text="62%"
+                        style="@style/TextColor"
+                        android:textSize="16sp"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rating_1_text"
+                        android:text="1"
+                        style="@style/TextColor"
+                        app:layout_constraintStart_toStartOf="@id/rating_text"
+                        app:layout_constraintTop_toBottomOf="@id/percentage_text2"
+                        android:layout_marginTop="16dp"
+                        android:textSize="16sp" />
+
+                    <ProgressBar
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/progress_bar_1"
+                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                        app:layout_constraintLeft_toRightOf="@id/rating_1_text"
+                        app:layout_constraintTop_toTopOf="@id/rating_1_text"
+                        app:layout_constraintBottom_toBottomOf="@id/rating_1_text"
+                        app:layout_constraintRight_toLeftOf="@id/percentage_text1"
+                        android:layout_marginStart="16dp"
+                        android:scaleY="2"
+                        android:layout_marginHorizontal="16dp"
+                        />
+
+                    <TextView
+                        android:textAlignment="viewEnd"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/percentage_text1"
+                        app:layout_constraintTop_toTopOf="@id/rating_1_text"
+                        app:layout_constraintBottom_toBottomOf="@id/rating_1_text"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:layout_marginEnd="16dp"
+                        android:text="100%"
+                        style="@style/TextColor"
+                        android:textSize="16sp"
+                        />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rate_bus_button"
+                        android:text="rate bus"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/rating_1_text"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginTop="16dp"
+                        android:visibility="gone"
+                        />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/update_bus_rating_button"
+                        android:text="Update rating"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/rating_1_text"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginTop="16dp"
+                        android:visibility="gone"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rating_and_review_layout"
+                    android:layout_marginTop="16dp"
+                    android:id="@+id/amenities_layout"
+                    android:background="@color/whiteAndBlack"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/amenities_text"
+                        android:text="@string/amenities"
+                        style="@style/TitleTextStyle"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/amenity_recycler_view"
+                        app:layout_constraintTop_toBottomOf="@id/amenities_text"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        tools:listitem="@layout/item_amenity"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        app:spanCount="4"
+                        tools:itemCount="6"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -562,28 +650,5 @@
 
     </androidx.core.widget.NestedScrollView>
 
-
-<!--    <Button-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:background="@color/customRed"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        android:id="@+id/rate_bus_button"-->
-<!--        android:text="rate bus"-->
-<!--        />-->
-
-<!--    <Button-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:background="@color/customRed"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        android:id="@+id/update_bus_rating_button"-->
-<!--        android:text="Update Rating"-->
-<!--        android:visibility="gone"-->
-<!--        />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

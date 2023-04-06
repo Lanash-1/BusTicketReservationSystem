@@ -76,6 +76,7 @@ class PartnerDetailsFragment : Fragment() {
     }
 
     private fun backPressOperation() {
+        adminViewModel.selectedPartner = Partners(0, "", 0, "", "")
         navigationViewModel.adminNavigation = null
         parentFragmentManager.commit {
             setCustomAnimations(R.anim.from_left, R.anim.to_right)

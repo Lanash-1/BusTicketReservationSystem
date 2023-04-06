@@ -32,6 +32,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/partnerName_textView"
             android:layout_margin="16dp"
+            app:cardCornerRadius="5dp"
             >
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,13 +41,25 @@
                 android:id="@+id/partnerContact_layout"
                 >
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/partner_contact_details_title"
+                    android:text="@string/contact_details"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_margin="16dp"
+                    style="@style/TitleTextStyle"
+                    />
+
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/contact_icon"
                     android:src="@drawable/ic_baseline_local_phone_24"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/partner_contact_details_title"
                     android:layout_margin="16dp"
                     app:tint="#808080" />
 
@@ -62,6 +75,7 @@
                     style="@style/TextDefault"
                     android:autoLink="phone"
                     android:textIsSelectable="true"
+                    android:textSize="16sp"
                     />
 
                 <ImageView
@@ -86,6 +100,7 @@
                     android:layout_marginLeft="16dp"
                     style="@style/TextDefault"
                     android:autoLink="email"
+                    android:textSize="16sp"
                     />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -105,6 +120,7 @@
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:selectableItemBackground"
+            app:cardCornerRadius="5dp"
             >
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -147,12 +163,13 @@
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
             android:id="@+id/tickets_cardView"
-            android:layout_margin="16dp"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/buses_operated_cardView"
             app:layout_constraintBottom_toBottomOf="@id/buses_operated_cardView"
             app:layout_constraintLeft_toRightOf="@id/buses_operated_cardView"
+            app:cardCornerRadius="5dp"
             >
 
             <androidx.constraintlayout.widget.ConstraintLayout

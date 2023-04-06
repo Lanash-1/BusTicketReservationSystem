@@ -156,7 +156,7 @@
     <string name="select_boarding_state">Select boarding state</string>
     <string name="boarding_location_details">Boarding location details</string>
     <string name="boarding_city">Boarding City</string>
-    <string name="dropping_location_details">Dropping Location Details</string>
+    <string name="dropping_location_details">Dropping location details</string>
     <string name="dropping_state">Dropping State</string>
     <string name="select_dropping_state">Select dropping state</string>
     <string name="dropping_city">Dropping City</string>
@@ -209,4 +209,18 @@
     <string name="edit_bus_details">Edit Bus Details</string>
     <string name="update_details">Update Details</string>
     <string name="confirm_password">Confirm password</string>
+    <string name="partner_name">Partner name</string>
+    <string name="partner_mobile_number">Partner mobile number</string>
+    <string name="partner_e_mail">Partner email address</string>
+    <string name="route_information">Route Information</string>
+    <string name="amenities">Amenities</string>
+    <string name="bus_and_partner_details">Bus and Partner details</string>
+    <string name="pricing_details">Pricing details</string>
+    <string name="boarding_and_dropping_details">Boarding and Dropping Details</string>
+    <string name="bus_and_pricing_information">Bus and Pricing Information</string>
+    <string name="ticket_price">Ticket price</string>
+    <string name="partner_information">Partner Information</string>
+    <string name="_11_50">11:50</string>
+    <string name="chennai">Chennai</string>
+    <string name="_5_50">5:50</string>
 </resources>

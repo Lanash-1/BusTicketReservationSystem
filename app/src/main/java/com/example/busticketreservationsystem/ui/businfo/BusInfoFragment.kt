@@ -26,6 +26,7 @@ import com.example.busticketreservationsystem.ui.bookedticket.BookedTicketFragme
 import com.example.busticketreservationsystem.ui.buseslist.BusesListFragment
 import com.example.busticketreservationsystem.ui.reviews.ReviewsFragment
 import com.example.busticketreservationsystem.ui.seatselection.SeatSelectionFragment
+import com.example.busticketreservationsystem.utils.Helper
 import com.example.busticketreservationsystem.viewmodel.*
 import com.example.busticketreservationsystem.viewmodel.livedata.AdminViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
@@ -43,6 +44,7 @@ class BusInfoFragment : Fragment() {
     private lateinit var binding: FragmentBusInfoBinding
 
     private var amenitiesAdapter = AmenitiesAdapter()
+    private val helper = Helper()
 
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
     private val navigationViewModel: NavigationViewModel by activityViewModels()
@@ -188,7 +190,6 @@ class BusInfoFragment : Fragment() {
             setDataToView(busViewModel.selectedBus, busViewModel.selectedPartner.value!!)
         })
 
-
 //        fetch amenities of the bus
 
         binding.amenityRecyclerView.adapter = amenitiesAdapter
@@ -314,19 +315,20 @@ class BusInfoFragment : Fragment() {
         }
 
 
-
     }
 
     private fun setDataToView(bus: Bus, partner: Partners) {
         binding.partnerNameTextView.text = partner.partnerName
         binding.apply {
-            busMobileTextView.text = partner.partnerMobile
-            busEmailTextView.text = partner.partnerEmailId
+            partnerMobileTextView.text = partner.partnerMobile
+            partnerEmailTextView.text = partner.partnerEmailId
             startTimeTextView.text = bus.startTime
             reachTimeTextView.text = bus.reachTime
             sourceLocationTextView.text = bus.sourceLocation
             destinationLocationTextView.text = bus.destination
-            priceText.text = "₹ ${bus.perTicketCost}"
+            busNameTextView.text = bus.busName
+            busTypeTextView.text = helper.getBusTypeText(bus.busType)
+            priceTextView.text = "₹ ${bus.perTicketCost}"
         }
     }
 

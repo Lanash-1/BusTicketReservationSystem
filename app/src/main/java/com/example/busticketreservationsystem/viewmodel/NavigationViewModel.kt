@@ -11,4 +11,6 @@ class NavigationViewModel: ViewModel() {
 
     var adminNavigation: Fragment? = null
 
+    var fabNavigation: Fragment? = null
+
 }

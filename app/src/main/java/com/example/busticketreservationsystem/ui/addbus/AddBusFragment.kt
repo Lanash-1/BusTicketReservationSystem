@@ -20,6 +20,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.Recycler
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.entity.Bus
@@ -31,11 +32,13 @@ import com.example.busticketreservationsystem.enums.BusSeatType
 import com.example.busticketreservationsystem.enums.BusTypes
 import com.example.busticketreservationsystem.listeners.OnItemClickListener
 import com.example.busticketreservationsystem.ui.adminservice.AdminServicesFragment
+import com.example.busticketreservationsystem.ui.analytics.AnalyticsPageFragment
 import com.example.busticketreservationsystem.ui.businfo.BusInfoFragment
 import com.example.busticketreservationsystem.utils.Helper
 import com.example.busticketreservationsystem.viewmodel.livedata.AdminViewModel
 import com.example.busticketreservationsystem.viewmodel.LocationViewModel
 import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel
+import com.example.busticketreservationsystem.viewmodel.NavigationViewModel
 import com.example.busticketreservationsystem.viewmodel.livedata.BusViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.AdminViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
@@ -47,6 +50,7 @@ import java.util.*
 
 class AddBusFragment : Fragment() {
 
+
     private lateinit var binding: FragmentAddBusBinding
     private val helper = Helper()
 
@@ -56,6 +60,7 @@ class AddBusFragment : Fragment() {
     private val locationViewModel: LocationViewModel by activityViewModels()
     private lateinit var adminViewModel: AdminViewModel
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
+    private val navigationViewModel: NavigationViewModel by activityViewModels()
 
     private lateinit var dialog: Dialog
     private lateinit var numberPickerDialog: Dialog
@@ -133,10 +138,10 @@ class AddBusFragment : Fragment() {
                     }else{
                         parentFragmentManager.commit {
                             setCustomAnimations(R.anim.from_left, R.anim.to_right)
-                            replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
+//                            replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
+                            replace(R.id.adminPanelFragmentContainer, navigationViewModel.fabNavigation!!)
                         }
                     }
-
                 }
             }
             val alertDialog = builder.create()
@@ -144,14 +149,17 @@ class AddBusFragment : Fragment() {
 
         }else{
             if(adminViewModel.busToEdit != null){
+                adminViewModel.busToEdit = null
                 parentFragmentManager.commit {
                     setCustomAnimations(R.anim.from_left, R.anim.to_right)
                     replace(R.id.adminPanelFragmentContainer, BusInfoFragment())
                 }
             }else{
+                clearValues()
                 parentFragmentManager.commit {
                     setCustomAnimations(R.anim.from_left, R.anim.to_right)
-                    replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
+//                    replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
+                    replace(R.id.adminPanelFragmentContainer, navigationViewModel.fabNavigation!!)
                 }
             }
         }
@@ -681,11 +689,8 @@ class AddBusFragment : Fragment() {
 
         if(validPartner && validBusName && validAmenities && validTicketCost && validBoardingState && validBoardingCity && validDroppingState && validDroppingCity && validTimingDetails && validBusType && validLowerDeckDetails && validUpperDeckDetails){
             val duration = helper.getDuration(binding.startTimePickerInput.text.toString(), binding.reachTimePickerInput.text.toString())
-            busViewModel.newBusLayout = BusLayout(
-                adminViewModel.busLayoutToEdit!!.busLayoutId,
-                adminViewModel.busToEdit!!.busId,
-                adminViewModel.numberOfDecks,
-                adminViewModel.lowerDeckSeatType,
+
+            busViewModel.newBusLayout = BusLayout(adminViewModel.busLayoutToEdit!!.busLayoutId, adminViewModel.busToEdit!!.busId, adminViewModel.numberOfDecks, adminViewModel.lowerDeckSeatType,
                 adminViewModel.lowerLeftColumnCount,
                 adminViewModel.lowerRightColumnCount,
                 adminViewModel.upperLeftColumnCount,
@@ -719,6 +724,7 @@ class AddBusFragment : Fragment() {
             Snackbar.make(requireView(), "Bus Updated Successfully", Snackbar.LENGTH_SHORT).show()
             adminViewModel.selectedBus = adminViewModel.newBus
             clearValues()
+            adminViewModel.busToEdit = null
             parentFragmentManager.commit {
                 setCustomAnimations(R.anim.from_left, R.anim.to_right)
                 replace(R.id.adminPanelFragmentContainer, BusInfoFragment())
@@ -790,7 +796,8 @@ class AddBusFragment : Fragment() {
             clearValues()
             parentFragmentManager.commit {
                 setCustomAnimations(R.anim.from_left, R.anim.to_right)
-                replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
+//                replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
+                replace(R.id.adminPanelFragmentContainer, navigationViewModel.fabNavigation!!)
             }
 
         }
@@ -958,9 +965,9 @@ class AddBusFragment : Fragment() {
         val timePickerDialog = TimePickerDialog(requireContext(),{
                view, hourOfDay, minute ->
             if(minute < 10){
-                timeText.text = "$hourOfDay: 0$minute"
+                timeText.text = "$hourOfDay:0$minute"
             }else{
-                timeText.text = "$hourOfDay: $minute"
+                timeText.text = "$hourOfDay:$minute"
             }
 
             if(timeText == binding.startTimePickerInput){
@@ -1033,6 +1040,7 @@ class AddBusFragment : Fragment() {
         dialog.show()
 
         val listView = dialog.findViewById<ListView>(R.id.list_view)
+//        val recyclerView = dialog.findViewById<RecyclerView>(R.id.list_recyclerView)
         val editText = dialog.findViewById<EditText>(R.id.edit_text)
 
         val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
@@ -1050,6 +1058,14 @@ class AddBusFragment : Fragment() {
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 adapter.filter.filter(p0)
+
+//                lateinit var newList: List<String>
+//                if(p0 != null){
+//                    newList = list.filter {
+//                        it.contains(p0)
+//                    }
+//                }
+
 //                if(p0 != null){
 //                    val newList = mutableListOf<String>()
 //                    list.forEach {

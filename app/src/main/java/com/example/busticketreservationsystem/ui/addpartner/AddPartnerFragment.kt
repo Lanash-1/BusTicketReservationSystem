@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
 import com.example.busticketreservationsystem.R
@@ -17,8 +18,10 @@ import com.example.busticketreservationsystem.data.entity.Partners
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.databinding.FragmentAddPartnerBinding
 import com.example.busticketreservationsystem.ui.adminservice.AdminServicesFragment
+import com.example.busticketreservationsystem.ui.analytics.AnalyticsPageFragment
 import com.example.busticketreservationsystem.ui.partners.PartnerDetailsFragment
 import com.example.busticketreservationsystem.utils.Helper
+import com.example.busticketreservationsystem.viewmodel.NavigationViewModel
 import com.example.busticketreservationsystem.viewmodel.livedata.AdminViewModel
 import com.example.busticketreservationsystem.viewmodel.livedata.BusViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.AdminViewModelFactory
@@ -33,7 +36,7 @@ class AddPartnerFragment : Fragment() {
     private lateinit var binding: FragmentAddPartnerBinding
 
     private lateinit var busViewModel: BusViewModel
-
+    private val navigationViewModel: NavigationViewModel by activityViewModels()
     private lateinit var adminViewModel: AdminViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -109,7 +112,8 @@ class AddPartnerFragment : Fragment() {
         }else{
             parentFragmentManager.commit {
                 setCustomAnimations(R.anim.from_left, R.anim.to_right)
-                replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
+//                replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
+                replace(R.id.adminPanelFragmentContainer, navigationViewModel.fabNavigation!!)
             }
         }
     }
@@ -248,7 +252,8 @@ class AddPartnerFragment : Fragment() {
 
         parentFragmentManager.commit {
             setCustomAnimations(R.anim.from_left, R.anim.to_right)
-            replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
+//            replace(R.id.adminPanelFragmentContainer, AdminServicesFragment())
+            replace(R.id.adminPanelFragmentContainer, navigationViewModel.fabNavigation!!)
         }
     }
 

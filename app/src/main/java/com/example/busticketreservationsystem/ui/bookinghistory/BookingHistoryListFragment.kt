@@ -139,6 +139,17 @@ class BookingHistoryListFragment : Fragment() {
         if(tickets.isEmpty()){
             binding.emptyListImage.visibility = View.VISIBLE
             binding.emptyText.visibility = View.VISIBLE
+//            when(bookingViewModel.currentScreenPosition){
+//                0 -> {
+//                    binding.emptyText.setText("No Upcoming travels planned!")
+//                }
+//                1 -> {
+//                    binding.emptyText.setText("You have not completed any journey with us!")
+//                }
+//                2 -> {
+//                    binding.emptyText.setText("You have not cancelled any tickets!")
+//                }
+//            }
         }else{
             binding.emptyListImage.visibility = View.GONE
             binding.emptyText.visibility = View.GONE

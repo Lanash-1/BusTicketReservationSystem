@@ -61,6 +61,20 @@ class HomePageFragment : Fragment() {
             true
         }
 
+        binding.bottomNavigationView.setOnItemReselectedListener {
+            when(it.itemId){
+                R.id.dashboard -> {
+                    println("DASHBOARD RESELECTED")
+                }
+                R.id.bookingHistory -> {
+                    println("BOOKING HISTORY RESELECTED")
+                }
+                R.id.myAccount -> {
+                    println("MY ACCOUNT RESELECTED")
+                }
+            }
+        }
+
         when(navigationViewModel.fragment) {
             is BookingDetailsFragment -> {
                 navigationViewModel.fragment = null

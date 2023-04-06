@@ -238,7 +238,6 @@
             "CHARGING_POINT",
             "WIFI",
             "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
             "TRACK_MY_BUS"
           ],
           "startTime": "08:15",
@@ -266,7 +265,6 @@
             "CHARGING_POINT",
             "WIFI",
             "WATER_BOTTLE",
-            "EMERGENCY_CONTACT_NUMBER",
             "TRACK_MY_BUS"
           ],
           "startTime": "08:15",

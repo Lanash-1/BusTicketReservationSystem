@@ -47,7 +47,7 @@ open class Helper {
 
     fun getDuration(startTime: String, reachTime: String): String {
 
-        val format = SimpleDateFormat("hh:mm")
+        val format = SimpleDateFormat("HH:mm")
         val date1: Date = format.parse(startTime)
         val date2: Date = format.parse(reachTime)
 
@@ -55,7 +55,7 @@ open class Helper {
         val hours = (millis / (1000 * 60 * 60)).toInt()
         val mins = (millis / (1000 * 60) % 60).toInt()
 
-        val diff = "${getNumberFormat(hours)}:${getNumberFormat(mins)}"
+        val diff = "${hours}.${getNumberFormat(mins)}"
 
         return diff
     }

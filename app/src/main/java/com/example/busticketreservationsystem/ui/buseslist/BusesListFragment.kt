@@ -18,6 +18,7 @@ import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.databinding.FragmentBusesListBinding
 import com.example.busticketreservationsystem.listeners.OnItemClickListener
+import com.example.busticketreservationsystem.ui.addbus.AddBusFragment
 import com.example.busticketreservationsystem.ui.analytics.AnalyticsPageFragment
 import com.example.busticketreservationsystem.ui.businfo.BusInfoFragment
 import com.example.busticketreservationsystem.ui.partners.PartnerDetailsFragment
@@ -97,6 +98,14 @@ class BusesListFragment : Fragment() {
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
+        binding.addBusFab.setOnClickListener {
+            navigationViewModel.fabNavigation = BusesListFragment()
+            parentFragmentManager.commit {
+                setCustomAnimations(R.anim.from_right, R.anim.to_left)
+                replace(R.id.adminPanelFragmentContainer, AddBusFragment())
+            }
+        }
 
         val busListRecyclerView = binding.busesListRecyclerView
         busListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
