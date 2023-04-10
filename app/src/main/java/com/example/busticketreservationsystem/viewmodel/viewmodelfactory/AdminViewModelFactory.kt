@@ -12,4 +12,5 @@ class AdminViewModelFactory(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return AdminViewModel(repository) as T
     }
+
 }

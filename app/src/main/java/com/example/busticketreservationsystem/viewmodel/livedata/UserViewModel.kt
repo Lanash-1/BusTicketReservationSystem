@@ -21,8 +21,6 @@ class UserViewModel(
 
 //    User Details Related
 
-
-
     lateinit var user: User
 
     var isUserFetched = MutableLiveData<Boolean>()
