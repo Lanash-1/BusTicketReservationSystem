@@ -1,5 +1,6 @@
 package com.example.busticketreservationsystem.data.repository
 
+import com.example.busticketreservationsystem.cleanarchitecture.data.local.entity.Chat
 import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.entity.*
 import com.example.busticketreservationsystem.enums.BookedTicketStatus

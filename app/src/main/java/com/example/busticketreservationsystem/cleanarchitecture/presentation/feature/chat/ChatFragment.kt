@@ -1,4 +1,4 @@
-package com.example.busticketreservationsystem.ui.chat
+package com.example.busticketreservationsystem.cleanarchitecture.presentation.feature.chat
 
 import android.os.Bundle
 import android.view.*
@@ -7,18 +7,19 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.data.database.AppDatabase
-import com.example.busticketreservationsystem.data.entity.Chat
+import com.example.busticketreservationsystem.cleanarchitecture.data.local.entity.Chat
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.databinding.FragmentChatBinding
 import com.example.busticketreservationsystem.enums.AppUserType
 import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.enums.MessageType
-import com.example.busticketreservationsystem.ui.adminchatsupport.AdminChatSupportFragment
+import com.example.busticketreservationsystem.cleanarchitecture.presentation.feature.adminchatinbox.AdminChatSupportFragment
 import com.example.busticketreservationsystem.ui.homepage.HomePageFragment
 import com.example.busticketreservationsystem.ui.user.UserDetailFragment
 import com.example.busticketreservationsystem.utils.Helper
@@ -40,6 +41,9 @@ class ChatFragment : Fragment() {
 
     private val helper = Helper()
 
+
+    private val cleanChatViewModel: com.example.busticketreservationsystem.cleanarchitecture.presentation.feature.chat.ChatViewModel by viewModels { com.example.busticketreservationsystem.cleanarchitecture.presentation.feature.chat.ChatViewModelFactory(requireActivity().applicationContext) }
+
     private val navigationViewModel: NavigationViewModel by activityViewModels()
     private val loginStatusViewModel: LoginStatusViewModel by activityViewModels()
     private lateinit var chatViewModel: ChatViewModel
@@ -50,7 +54,6 @@ class ChatFragment : Fragment() {
 
     private var chatUserId: Int = 0
     private lateinit var messageType: String
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,6 +70,7 @@ class ChatFragment : Fragment() {
 
         val userViewModelFactory = UserViewModelFactory(repository)
         userViewModel = ViewModelProvider(requireActivity(), userViewModelFactory)[UserViewModel::class.java]
+
 
     }
 
@@ -157,16 +161,30 @@ class ChatFragment : Fragment() {
             chatListAdapter.setUserType(AppUserType.ADMIN)
             messageType = MessageType.RECEIVED.name
             chatUserId = adminViewModel.chatUserId
-            chatViewModel.fetchUserChat(adminViewModel.chatUserId)
+//            chatViewModel.fetchUserChat(adminViewModel.chatUserId)
+//            viewModel.getUserChat(adminViewModel.chatUserId)
+            cleanChatViewModel.getUserChat(adminViewModel.chatUserId)
         }else{
             requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.GONE
             chatListAdapter.setUserType(AppUserType.CUSTOMER)
             chatUserId = userViewModel.user.userId
             messageType = MessageType.SENT.name
-            chatViewModel.fetchUserChat(userViewModel.user.userId)
+//            chatViewModel.fetchUserChat(userViewModel.user.userId)
+//            viewModel.getUserChat(userViewModel.user.userId)
+            cleanChatViewModel.getUserChat(userViewModel.user.userId)
         }
 
-        chatViewModel.userChat.observe(viewLifecycleOwner, Observer{
+//        chatViewModel.userChat.observe(viewLifecycleOwner, Observer{
+//            binding.loaderIcon.visibility = View.GONE
+//            if(it.isNotEmpty()){
+//                chatList = it
+//                chatListAdapter.setMessageList(chatList)
+//                chatListAdapter.notifyDataSetChanged()
+//                chatRecyclerView.scrollToPosition(chatList.size - 1)
+//            }
+//        })
+
+        cleanChatViewModel.userChat.observe(viewLifecycleOwner, Observer{
             binding.loaderIcon.visibility = View.GONE
             if(it.isNotEmpty()){
                 chatList = it
@@ -175,6 +193,20 @@ class ChatFragment : Fragment() {
                 chatRecyclerView.scrollToPosition(chatList.size - 1)
             }
         })
+
+//        viewModel.userChat.observe(viewLifecycleOwner, Observer{
+////            binding.loaderIcon.visibility = View.GONE
+//            if(it.isNotEmpty()){
+//                println("working in if")
+////                chatList = it
+////                chatListAdapter.setMessageList(chatList)
+////                chatListAdapter.notifyDataSetChanged()
+////                chatRecyclerView.scrollToPosition(chatList.size - 1)
+//            }else{
+//                println("Working in else")
+//            }
+//        })
+
 
         binding.sendButton.setOnClickListener {
             val message = binding.enterMessageInput.text.toString()

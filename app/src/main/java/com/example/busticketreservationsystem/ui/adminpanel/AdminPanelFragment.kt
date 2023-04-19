@@ -12,16 +12,11 @@ import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.databinding.FragmentAdminPanelBinding
-import com.example.busticketreservationsystem.ui.adminchatsupport.AdminChatSupportFragment
-import com.example.busticketreservationsystem.ui.adminservice.AdminServicesFragment
+import com.example.busticketreservationsystem.cleanarchitecture.presentation.feature.adminchatinbox.AdminChatSupportFragment
 import com.example.busticketreservationsystem.ui.adminsettings.AdminSettingsFragment
 import com.example.busticketreservationsystem.ui.analytics.AnalyticsPageFragment
 import com.example.busticketreservationsystem.viewmodel.livedata.AdminViewModel
-import com.example.busticketreservationsystem.viewmodel.livedata.BookingViewModel
-import com.example.busticketreservationsystem.viewmodel.livedata.BusViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.AdminViewModelFactory
-import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BookingViewModelFactory
-import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.BusViewModelFactory
 
 class AdminPanelFragment : Fragment() {
 

@@ -141,7 +141,7 @@ class MyAccountFragment : Fragment() {
                     MyAccountOptions.FEEDBACK -> {
                         try{
                             val intent = Intent(Intent.ACTION_SENDTO).apply {
-                                data = Uri.parse("mailto:lanash.db@zohocorp.com")
+                                data = Uri.parse("mailto:support@bookbus.zohodesk.in")
                                 putExtra(Intent.EXTRA_SUBJECT, "App Usage Feedback")
                             }
                             startActivity(intent)
@@ -152,7 +152,6 @@ class MyAccountFragment : Fragment() {
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
-
                     }
                     MyAccountOptions.LOGIN_LOGOUT -> {
                         if(loginStatusViewModel.status == LoginStatus.LOGGED_IN){

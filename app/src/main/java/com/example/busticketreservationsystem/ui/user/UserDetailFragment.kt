@@ -1,11 +1,5 @@
 package com.example.busticketreservationsystem.ui.user
 
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -13,7 +7,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.busticketreservationsystem.R
 import com.example.busticketreservationsystem.data.database.AppDatabase
@@ -22,7 +15,7 @@ import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.databinding.FragmentUserDetailBinding
 import com.example.busticketreservationsystem.enums.Gender
 import com.example.busticketreservationsystem.enums.LoginStatus
-import com.example.busticketreservationsystem.ui.chat.ChatFragment
+import com.example.busticketreservationsystem.cleanarchitecture.presentation.feature.chat.ChatFragment
 import com.example.busticketreservationsystem.ui.editprofile.EditProfileFragment
 import com.example.busticketreservationsystem.ui.myaccount.MyAccountFragment
 import com.example.busticketreservationsystem.viewmodel.LoginStatusViewModel

@@ -1,4 +1,4 @@
-package com.example.busticketreservationsystem.ui.adminchatsupport
+package com.example.busticketreservationsystem.cleanarchitecture.presentation.feature.adminchatinbox
 
 import android.graphics.Color
 import android.view.LayoutInflater

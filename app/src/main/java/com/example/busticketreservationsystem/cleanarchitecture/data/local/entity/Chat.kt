@@ -1,10 +1,11 @@
-package com.example.busticketreservationsystem.data.entity
+package com.example.busticketreservationsystem.cleanarchitecture.data.local.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
+import com.example.busticketreservationsystem.data.entity.User
 
 
 @Entity(

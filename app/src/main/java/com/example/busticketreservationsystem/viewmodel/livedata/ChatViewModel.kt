@@ -3,11 +3,10 @@ package com.example.busticketreservationsystem.viewmodel.livedata
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.busticketreservationsystem.data.entity.Chat
+import com.example.busticketreservationsystem.cleanarchitecture.data.local.entity.Chat
 import com.example.busticketreservationsystem.data.entity.User
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 

@@ -26,7 +26,7 @@ import com.example.busticketreservationsystem.enums.LoginStatus
 import com.example.busticketreservationsystem.listeners.OnItemClickListener
 import com.example.busticketreservationsystem.listeners.OnRemoveClickListener
 import com.example.busticketreservationsystem.ui.busresults.BusResultsFragment
-import com.example.busticketreservationsystem.ui.chat.ChatFragment
+import com.example.busticketreservationsystem.cleanarchitecture.presentation.feature.chat.ChatFragment
 import com.example.busticketreservationsystem.ui.locationsearch.SearchFragment
 import com.example.busticketreservationsystem.ui.seatselection.SeatSelectionFragment
 import com.example.busticketreservationsystem.utils.Helper

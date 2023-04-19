@@ -1,9 +1,9 @@
-package com.example.busticketreservationsystem.ui.chat
+package com.example.busticketreservationsystem.cleanarchitecture.presentation.feature.chat
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.busticketreservationsystem.data.entity.Chat
+import com.example.busticketreservationsystem.cleanarchitecture.data.local.entity.Chat
 import com.example.busticketreservationsystem.databinding.ItemReceivedMessageBinding
 import com.example.busticketreservationsystem.databinding.ItemSentMessageBinding
 import com.example.busticketreservationsystem.enums.AppUserType

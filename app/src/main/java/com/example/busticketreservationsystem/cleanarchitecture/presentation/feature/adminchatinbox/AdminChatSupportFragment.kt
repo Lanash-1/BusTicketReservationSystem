@@ -1,4 +1,4 @@
-package com.example.busticketreservationsystem.ui.adminchatsupport
+package com.example.busticketreservationsystem.cleanarchitecture.presentation.feature.adminchatinbox
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,16 +16,13 @@ import com.example.busticketreservationsystem.data.database.AppDatabase
 import com.example.busticketreservationsystem.data.repository.AppRepositoryImpl
 import com.example.busticketreservationsystem.databinding.FragmentAdminChatSupportBinding
 import com.example.busticketreservationsystem.listeners.OnItemClickListener
-import com.example.busticketreservationsystem.ui.adminservice.AdminServicesFragment
 import com.example.busticketreservationsystem.ui.analytics.AnalyticsPageFragment
-import com.example.busticketreservationsystem.ui.chat.ChatFragment
+import com.example.busticketreservationsystem.cleanarchitecture.presentation.feature.chat.ChatFragment
 import com.example.busticketreservationsystem.viewmodel.livedata.AdminViewModel
 import com.example.busticketreservationsystem.viewmodel.livedata.ChatViewModel
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.AdminViewModelFactory
 import com.example.busticketreservationsystem.viewmodel.viewmodelfactory.ChatViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.transition.MaterialContainerTransform
-import com.google.android.material.transition.MaterialElevationScale
 
 class AdminChatSupportFragment : Fragment() {
 
